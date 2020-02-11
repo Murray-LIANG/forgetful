@@ -182,7 +182,7 @@ server {
 
 注意`服务器端口`，`伪装域名`和`路径`的配置。
 
-![](/images/v2ray-router-client.png) 
+![](/forgetful/images/v2ray-router-client.png) 
 
 ## CDN
 

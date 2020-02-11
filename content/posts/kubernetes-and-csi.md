@@ -100,7 +100,7 @@ Each vendor should implement their respective APIs into gRPC service functions, 
 - NodeGetCapabilities
 
 ### Topology
-![](/images/kubernetes-and-csi.png)
+![](/forgetful/images/kubernetes-and-csi.png)
 
 ### Implementation Tips
 

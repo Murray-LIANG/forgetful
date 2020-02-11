@@ -5,4 +5,4 @@
 
 ## Reverse Proxy: Acting on behalf of service/content producer.
 
-![](/images/network-forward-and-reverse-proxy.png)
+![](/forgetful/images/network-forward-and-reverse-proxy.png)

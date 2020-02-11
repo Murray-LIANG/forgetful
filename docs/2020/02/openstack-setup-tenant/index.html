@@ -133,23 +133,23 @@
 <li>Navigate <code>Project -&gt; Network -&gt; Networks</code>, click <code>Create Network</code>.</li>
 <li>Input the network name and create a <code>Subnet</code>. Suggest using private subnets like: <code>172.16.*.*</code> to <code>172.30.*.*</code>.</li>
 <li>Input the DNS servers.
-<figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/images/openstack-setup-tenant-network-1.png" alt="" class="lazyload"></figure>
+<figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/forgetful/images/openstack-setup-tenant-network-1.png" alt="" class="lazyload"></figure>
 
-<figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/images/openstack-setup-tenant-network-2.png" alt="" class="lazyload"></figure>
+<figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/forgetful/images/openstack-setup-tenant-network-2.png" alt="" class="lazyload"></figure>
 
-<figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/images/openstack-setup-tenant-network-3.png" alt="" class="lazyload"></figure>
+<figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/forgetful/images/openstack-setup-tenant-network-3.png" alt="" class="lazyload"></figure>
 </li>
 <li>Navigate <code>Project -&gt; Network -&gt; Routers</code>, click <code>Create Router</code>. This router makes sure your VMs can access to external networks.</li>
 <li>Input the router name like <code>router-net-ext</code>. Select the <code>net-ext</code> as the external network.
-<figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/images/openstack-setup-tenant-router-1.png" alt="" class="lazyload"></figure>
+<figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/forgetful/images/openstack-setup-tenant-router-1.png" alt="" class="lazyload"></figure>
 </li>
 <li>Navigate the <code>Interfaces</code> tab of <code>router-net-ext</code>, click <code>Add Interface</code>. Select the network created in #1.
-<figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/images/openstack-setup-tenant-router-2.png" alt="" class="lazyload"></figure>
+<figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/forgetful/images/openstack-setup-tenant-router-2.png" alt="" class="lazyload"></figure>
 
-<figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/images/openstack-setup-tenant-router-3.png" alt="" class="lazyload"></figure>
+<figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/forgetful/images/openstack-setup-tenant-router-3.png" alt="" class="lazyload"></figure>
 </li>
 <li>Navigate <code>Project -&gt; Network -&gt; Security Groups</code>, click <code>Manage Rules</code> of <code>default</code> group. To make it easy, I add several rules to allow most of ports.
-<figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/images/openstack-setup-tenant-security-group-1.png" alt="" class="lazyload"></figure>
+<figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/forgetful/images/openstack-setup-tenant-security-group-1.png" alt="" class="lazyload"></figure>
 </li>
 </ol>
 <a class="post-dummy-target" id="boot-a-vm"></a><h3>Boot a VM</h3>
@@ -157,7 +157,7 @@
 <li>Navigate <code>Project -&gt; Compute -&gt; Key Pairs</code>, click <code>Create Key Pair</code>. Store the private key to local path like <code>private.pem</code>. You will need it to ssh to the created VM without password.</li>
 <li>Copy the private key <code>private.pem</code> to <code>10.245.48.66</code>.</li>
 <li>Navigate <code>Project -&gt; Compute -&gt; Instances</code>, click <code>Launch Instance</code>. Select <code>No</code> to <code>Create New Volume</code>.
-<figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/images/openstack-setup-tenant-instance-1.png" alt="" class="lazyload"></figure>
+<figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/forgetful/images/openstack-setup-tenant-instance-1.png" alt="" class="lazyload"></figure>
 </li>
 </ol>
 <a class="post-dummy-target" id="access-the-vm"></a><h3>Access the VM</h3>

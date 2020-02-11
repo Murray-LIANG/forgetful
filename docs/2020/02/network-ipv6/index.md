@@ -33,7 +33,7 @@ https://chrisgrundemann.com/index.php/2012/introducing-ipv6-classifying-ipv6-add
 
 https://chrisgrundemann.com/index.php/2012/introducing-ipv6-classifying-ipv6-addresses/
 
-![](/images/ipv6-global-unicast-ipv6-address-format.png)
+![](/forgetful/images/ipv6-global-unicast-ipv6-address-format.png)
 
 - Global Routing Prefix: The prefix assigned to a site. Typically this is hierarchically structured as it passes from IANA (Internet Assigned Numbers Authority) to the RIR (Regional Internet Registry) to an ISP (Internet Service Provider) or LIR (Local Internet Registry) and then to a customer or a specific customer location. In each of these transactions, a smaller prefix is assigned downstream - creating the hierarchy.
 - Subnet ID: The prefix assigned to a particular link or LAN within the site. In the case of a **/48 being assigned to a site**, there are **16 bits available for Subnet IDs**: this allows a maximum of **65536 /64 subnet** prefixes a that location!

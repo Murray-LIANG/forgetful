@@ -37,7 +37,7 @@ The faulty devices show up under the race condition occurs between `connect_volu
 
 _Copied from Peter's blog._
 
-![](/images/openstack-faulty-device-os-brick-connect-disconnect-volume.png)
+![](/forgetful/images/openstack-faulty-device-os-brick-connect-disconnect-volume.png)
 
 如上的流程在非并发的情况下是表现正常的，host上的device都可以正常连接和清理。
 

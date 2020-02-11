@@ -138,7 +138,7 @@ There is a shared-everything architecture embodied in separate and independently
 <p><strong>3D XPoint</strong> memory is non-volatile, faster than NAND but slower than DRAM.</p>
 <p>There is a <strong>shared-everything</strong> architecture embodied in separate and independently <strong>scalable</strong> <strong>compute nodes</strong> in a loosely-coupled cluster running Universal Filesystem logic. These link across an NVMe link to <strong>databoxes (DBOX3 storage nodes)</strong> which are dumb boxes filled with <strong>flash drives</strong> for data and <strong>Optane XPoint</strong> for metadata.</p>
 <p>In VAST&rsquo;s scheme there are <strong>compute nodes</strong> and <strong>databoxes</strong> - high-availability DF-5615 NVMe JBOFs, connected by NVMe-oF running across Ethernet or InfiniBand. The x86 servers run VAST Universal File System (UFS) software packaged in Docker containers. The 2U databoxes are dumb, and contain 18 * 960GB of Optane 3D XPoint memory and 583TB of NVMe QLC (4bits/cell) SSD (38 * 15.36TB). <strong>Data is striped across the databoxes and their drives with global erasure coding</strong>.</p>
-<p><figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/images/vast-compute-nodes-storage-nodes.jpg" alt="" class="lazyload"></figure>
+<p><figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/forgetful/images/vast-compute-nodes-storage-nodes.jpg" alt="" class="lazyload"></figure>
 </p>
 <p><strong>The XPoint is not a tier. It is used for storing metadata and as an incoming write buffer.</strong></p>
 <p>All writes are <strong>atomic and persisted in XPoint</strong>; there is <strong>no DRAM cache</strong>. <strong>Compute nodes are stateless</strong> and see all the storage in the databoxes. If one compute node fails another can pick up its work with no data loss.</p>
@@ -159,7 +159,7 @@ There is a shared-everything architecture embodied in separate and independently
 </ul>
 <a class="post-dummy-target" id="conceptual-diagram"></a><h2>Conceptual Diagram</h2>
 <p><a href="https://glennklockwood.blogspot.com/2019/02/vast-datas-storage-system-architecture.html">https://glennklockwood.blogspot.com/2019/02/vast-datas-storage-system-architecture.html</a></p>
-<p><figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/images/vast-conceptual-diagram.png" alt="" class="lazyload"></figure>
+<p><figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/forgetful/images/vast-conceptual-diagram.png" alt="" class="lazyload"></figure>
 </p>
 <a class="post-dummy-target" id="jbofs-just-bunch-of-flash-data-boxes-or-ha-enclosures"></a><h3>JBOFs (Just-Bunch-Of-Flash, data boxes or HA enclosures).</h3>
 <p>These things are what contain the storage media itself.</p>

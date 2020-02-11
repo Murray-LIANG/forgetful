@@ -110,8 +110,8 @@ like Linux bridge or Open vSwitch.
 ML2 is used to support the hybrid agent. When using ML2 core plugin,
 the node could use any agent.
 
-![](/images/openstack-neutron-services-plugins.jpg)
+![](/forgetful/images/openstack-neutron-services-plugins.jpg)
 
 
 ## Real-world deployment
-![](/images/openstack-neutron-realworld-deployment.jpg)
+![](/forgetful/images/openstack-neutron-realworld-deployment.jpg)

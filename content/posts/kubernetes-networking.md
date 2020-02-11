@@ -136,7 +136,7 @@ spec:
     nodePort: 30123     # node port
 ```
 
-![](/images/kubernetes-networking-nodeport.png)
+![](/forgetful/images/kubernetes-networking-nodeport.png)
 
 **LoadBalancer service**
 
@@ -148,7 +148,7 @@ The implementation of the LoadBalancer is provided by a `cloud provider` that kn
 
 The request reaches the LoadBalancer. The LoadBalancer picks a Node at random. The Node routes the request to the service. Then `iptables` routes the packet to the pod.
 
-![](/images/kubernetes-networking-loadbalancer.png)
+![](/forgetful/images/kubernetes-networking-loadbalancer.png)
 
 **Ingress controller**
 
@@ -158,4 +158,4 @@ Why we need `Ingress` controllers? Because there is a load balancer for each `Lo
 
 `Ingress` controller doesn't forward the request to related service, but pick a pod endpoint based the definition of the service.
 
-![](/images/kubernetes-networking-ingress.png)
+![](/forgetful/images/kubernetes-networking-ingress.png)

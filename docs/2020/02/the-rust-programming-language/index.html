@@ -1097,7 +1097,7 @@ Shadowing: We can shadow a variable by using the same variable’s name and repe
 </span><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="n">s2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s1</span><span class="p">;</span><span class="w">
 </span></code></pre></td></tr></table>
 </div>
-</div><p><figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/images/rust-move-ownership.svg" alt="" class="lazyload"></figure>
+</div><p><figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/forgetful/images/rust-move-ownership.svg" alt="" class="lazyload"></figure>
 </p>
 <p><code>s2 = s1</code> would move <code>s1</code> into <code>s2</code>. It&rsquo;s like a <code>shallow copy</code>. But it&rsquo;s a move because only <code>s2</code> is valid after the move. When <code>s2</code> goes out of scope, it alone will free the memory.</p>
 <p><strong>NOTE: Rust will never automatically create &ldquo;deep&rdquo; copies of your data. Any automatic copying can be assumed to be inexpensive in terms of runtime performance.</strong></p>
@@ -1195,7 +1195,7 @@ In general, any group of simple scalar values can be <code>Copy</code>, and noth
 </div><a class="post-dummy-target" id="return-values-and-scope"></a><h4>Return Values and Scope</h4>
 <p>Returning values can also transfer ownership.</p>
 <a class="post-dummy-target" id="42-references-and-borrowing"></a><h3>4.2 References and Borrowing</h3>
-<p><figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/images/rust-references.svg" alt="" class="lazyload"></figure>
+<p><figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/forgetful/images/rust-references.svg" alt="" class="lazyload"></figure>
 </p>
 <p><code>References</code> allow you to refer to some value without taking ownership of it. Because the variable is a reference and does not own the value, the value it points to will not be dropped when the reference goes out of scope.</p>
 <a class="post-dummy-target" id="mutable-references"></a><h4>Mutable References</h4>
@@ -1332,7 +1332,7 @@ In general, any group of simple scalar values can be <code>Copy</code>, and noth
 </span></code></pre></td></tr></table>
 </div>
 </div><p>This is similar to taking a reference to the whole <code>String</code> but with the extra <code>[0..5]</code> bit.
-<figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/images/rust-string-slice.svg" alt="" class="lazyload"></figure>
+<figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/forgetful/images/rust-string-slice.svg" alt="" class="lazyload"></figure>
 </p>
 <p>The type that signifies <code>string slice</code> is written as <code>&amp;str</code>.</p>
 <a class="post-dummy-target" id="string-literals-are-slices"></a><h4>String Literals Are Slices</h4>
@@ -4413,7 +4413,7 @@ When you create a closure, Rust infers which trait to use based on how the closu
 </div>
 </div><p>To determine how much space to allocate for a <code>Message</code> value, Rust goes through each of the variants to see <strong>which variant needs the most space</strong>. Rust sees that <code>Message::Quit</code> doesn’t need any space, <code>Message::Move</code> needs enough space to store two <code>i32</code> values, and so forth. Because only one variant will be used, the most space a <code>Message</code> value will need is the space it would take to store the largest of its variants.</p>
 <p><code>List</code> enum above causes infinite calculation of space.
-<figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/images/rust-infinite-cons-variants.svg" alt="" class="lazyload"></figure>
+<figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/forgetful/images/rust-infinite-cons-variants.svg" alt="" class="lazyload"></figure>
 </p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -4616,7 +4616,7 @@ When you create a closure, Rust infers which trait to use based on how the closu
 <p><strong>Note that <code>Rc&lt;T&gt;</code> is only for use in single-threaded scenarios.</strong></p>
 <a class="post-dummy-target" id="using-rct-to-share-data"></a><h4>Using <code>Rc&lt;T&gt;</code> to Share Data</h4>
 <p>Recall that we defined cons list using <code>Box&lt;T&gt;</code>. This time, we’ll create two lists that both share ownership of a third list.
-<figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/images/rust-rc-share-data.svg" alt="" class="lazyload"></figure>
+<figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/forgetful/images/rust-rc-share-data.svg" alt="" class="lazyload"></figure>
 </p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">

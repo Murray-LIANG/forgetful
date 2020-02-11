@@ -298,20 +298,20 @@ There are two <code>SNAT</code> rewriting happening. One happens in the root net
 </span><span class="w">    </span><span class="k">nodePort</span><span class="p">:</span><span class="w"> </span><span class="m">30123</span><span class="w">     </span><span class="c"># node port</span><span class="w">
 </span></code></pre></td></tr></table>
 </div>
-</div><p><figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/images/kubernetes-networking-nodeport.png" alt="" class="lazyload"></figure>
+</div><p><figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/forgetful/images/kubernetes-networking-nodeport.png" alt="" class="lazyload"></figure>
 </p>
 <p><strong>LoadBalancer service</strong></p>
 <p>The <code>NodePort</code> could be a single point of failure cause your client could point to a node for a service. If this node failed, the service cannot access.</p>
 <p>You can create a <code>service</code> of <code>LoadBalancer</code> type. It&rsquo;s like putting a load balancer between the client and nodes. This load balancer is outside of the Kubernetes cluster.</p>
 <p>The implementation of the LoadBalancer is provided by a <code>cloud provider</code> that knows how to create a load balancer for your service.</p>
 <p>The request reaches the LoadBalancer. The LoadBalancer picks a Node at random. The Node routes the request to the service. Then <code>iptables</code> routes the packet to the pod.</p>
-<p><figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/images/kubernetes-networking-loadbalancer.png" alt="" class="lazyload"></figure>
+<p><figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/forgetful/images/kubernetes-networking-loadbalancer.png" alt="" class="lazyload"></figure>
 </p>
 <p><strong>Ingress controller</strong></p>
 <p><code>Ingress</code> controller is a layer 7 load balancer, because it is HTTP aware, knows about URLs and paths. This allows you to segment your service traffic by URL path.</p>
 <p>Why we need <code>Ingress</code> controllers? Because there is a load balancer for each <code>LoadBalancer</code> service, these load balancers have public IP address each. And <code>Ingress</code> only needs one public IP address to provide access for multiple services.</p>
 <p><code>Ingress</code> controller doesn&rsquo;t forward the request to related service, but pick a pod endpoint based the definition of the service.</p>
-<p><figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/images/kubernetes-networking-ingress.png" alt="" class="lazyload"></figure>
+<p><figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/forgetful/images/kubernetes-networking-ingress.png" alt="" class="lazyload"></figure>
 </p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">

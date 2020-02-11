@@ -45,7 +45,7 @@ Remote access to storage - iSCSI vs NVMe-oF
 
 NVMe-oF supports various fabric transports: RDMA, InfiniBand, Fibre Channel, .etc.
 
-![](/images/nvme-of-performance.png)
+![](/forgetful/images/nvme-of-performance.png)
 
 The idea of NVMe-oF is to extend the efficiency of the local NVMe interface over a network fabric, Ethernet or InfiniBand. NVMe commands and data structures are transferred end to end.
 

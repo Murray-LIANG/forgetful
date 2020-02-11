@@ -52,6 +52,6 @@ Provides the abilities to:
 - continue operations when a subset of the nodes are experiencing failures or are unable to communicate with the rest of the cluster.
 
 The topology could be like the one below. The cluster uses three nodes running two redis instances per each.
-![](/images/redis-cluster-3-nodes.png)
+![](/forgetful/images/redis-cluster-3-nodes.png)
 
 Refer to https://www.linode.com/docs/applications/big-data/how-to-install-and-configure-a-redis-cluster-on-ubuntu-1604/

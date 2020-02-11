@@ -134,7 +134,7 @@ How are faulty devices generated? The faulty devices show up under the race cond
 <a class="post-dummy-target" id="how-are-faulty-devices-generated"></a><h3>How are faulty devices generated?</h3>
 <p>The faulty devices show up under the race condition occurs between <code>connect_volume</code> and <code>disconnect_volume</code>.</p>
 <p><em>Copied from Peter&rsquo;s blog.</em></p>
-<p><figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/images/openstack-faulty-device-os-brick-connect-disconnect-volume.png" alt="" class="lazyload"></figure>
+<p><figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/forgetful/images/openstack-faulty-device-os-brick-connect-disconnect-volume.png" alt="" class="lazyload"></figure>
 </p>
 <p>如上的流程在非并发的情况下是表现正常的，host上的device都可以正常连接和清理。</p>
 <p>但是，以上逻辑有个实现上的问题，当高并发情况下，会产生faulty device， 考虑以下执行顺序：</p>

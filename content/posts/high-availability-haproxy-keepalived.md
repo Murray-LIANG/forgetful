@@ -19,7 +19,7 @@ toc: true
 auto_collapse_toc: true
 ---
 
-![](/images/high-availability-haproxy-keepalived-ha-diagram-animated.gif)
+![](/forgetful/images/high-availability-haproxy-keepalived-ha-diagram-animated.gif)
 
 # HAProxy
 

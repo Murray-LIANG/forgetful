@@ -135,7 +135,7 @@ When a variable goes out of scope, Rust calls a special function for us. This fu
 let s1 = String::from("hello");
 let s2 = s1;
 ```
-![](/images/rust-move-ownership.svg)
+![](/forgetful/images/rust-move-ownership.svg)
 
 `s2 = s1` would move `s1` into `s2`. It's like a `shallow copy`. But it's a move because only `s2` is valid after the move. When `s2` goes out of scope, it alone will free the memory.
 
@@ -208,7 +208,7 @@ Returning values can also transfer ownership.
 
 ### 4.2 References and Borrowing
 
-![](/images/rust-references.svg)
+![](/forgetful/images/rust-references.svg)
 
 `References` allow you to refer to some value without taking ownership of it. Because the variable is a reference and does not own the value, the value it points to will not be dropped when the reference goes out of scope.
 
@@ -288,7 +288,7 @@ let hello = &s[0..5];
 let world = &s[6..11];
 ```
 This is similar to taking a reference to the whole `String` but with the extra `[0..5]` bit.
-![](/images/rust-string-slice.svg)
+![](/forgetful/images/rust-string-slice.svg)
 
 The type that signifies `string slice` is written as `&str`.
 
@@ -2180,7 +2180,7 @@ enum Message {
 To determine how much space to allocate for a `Message` value, Rust goes through each of the variants to see **which variant needs the most space**. Rust sees that `Message::Quit` doesn’t need any space, `Message::Move` needs enough space to store two `i32` values, and so forth. Because only one variant will be used, the most space a `Message` value will need is the space it would take to store the largest of its variants.
 
 `List` enum above causes infinite calculation of space.
-![](/images/rust-infinite-cons-variants.svg)
+![](/forgetful/images/rust-infinite-cons-variants.svg)
 
 
 ```rust
@@ -2327,7 +2327,7 @@ We use the `Rc<T>` type when we want to **allocate some data on the heap** for *
 #### Using `Rc<T>` to Share Data
 
 Recall that we defined cons list using `Box<T>`. This time, we’ll create two lists that both share ownership of a third list. 
-![](/images/rust-rc-share-data.svg)
+![](/forgetful/images/rust-rc-share-data.svg)
 ```rust
 enum List {
     Cons(i32, Rc<List>),

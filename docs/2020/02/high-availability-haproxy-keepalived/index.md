@@ -1,7 +1,7 @@
 # High Availability - HAProxy and Keepalived
 
 
-![](/images/high-availability-haproxy-keepalived-ha-diagram-animated.gif)
+![](/forgetful/images/high-availability-haproxy-keepalived-ha-diagram-animated.gif)
 
 # HAProxy
 

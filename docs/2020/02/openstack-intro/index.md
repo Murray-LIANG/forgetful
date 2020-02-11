@@ -36,6 +36,6 @@ Main Nova services and Neutron Agent service run on it.
 
 Here is an example of devstack, putting almost all services on one node.
 
-![](/images/openstack-intro-devstack_layout.jpg)
+![](/forgetful/images/openstack-intro-devstack_layout.jpg)
 
 

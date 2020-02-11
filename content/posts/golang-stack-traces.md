@@ -47,11 +47,11 @@ Line `main.Example(0x2080c3f50, 0x2, 0x4, 0x425c0, 0x5, 0xa)` is the source code
 
 In the above example, the first parameter is a slice of strings. A slice is a reference type in Go. This means the value for a slice is a header value with a pointer to some underlying data. In the case of a slice, the header value is a three word structure that contains a pointer to an underlying array, the length of the slice and the capacity.
 
-![](/images/golang-stack-traces-slice.png)
+![](/forgetful/images/golang-stack-traces-slice.png)
 
 The second parameter is a string. A string is also a reference type but this header value is immutable. The header value for a string is declared as a two word structure that contains a pointer to an underlying byte array and the length of the string.
 
-![](/images/golang-stack-traces-string.png)
+![](/forgetful/images/golang-stack-traces-string.png)
 
 
 

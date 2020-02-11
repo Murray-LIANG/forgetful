@@ -38,4 +38,4 @@ Go uses three entities to explain the Goroutine scheduling.
 
 In any particular Go application the number of threads available for Goroutines to run is equal to the GOMAXPROCS, which by default is equal to the number of cores available for that application.
 
-![](/images/golang-goroutine-scheduling.png)
+![](/forgetful/images/golang-goroutine-scheduling.png)

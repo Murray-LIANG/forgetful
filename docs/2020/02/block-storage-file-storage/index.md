@@ -15,7 +15,7 @@
 
 FUSE (Filesystem in Userspace) is a Linux kernel filesystem that  sends the incoming requests over a file descriptor to userspace. FUSE is a protocol.
 
-![](/images/block-storage-file-storage-fuse-diagram.png)
+![](/forgetful/images/block-storage-file-storage-fuse-diagram.png)
 
 There is a FUSE framework in golang: https://github.com/bazil/fuse.
 

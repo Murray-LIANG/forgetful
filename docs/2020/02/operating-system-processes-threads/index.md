@@ -26,7 +26,7 @@
 1. 系统调用阻塞，同一个进程**一个线程阻塞，整个进程都会阻塞**
 2. **一个进程只能在一个CPU**上获得执行
 
-![](/images/operating-system-processes-threads-user-level-threads.jpg)
+![](/forgetful/images/operating-system-processes-threads-user-level-threads.jpg)
 
 就线程的同时执行而言，任意给定时刻每个进程只能有一个线程在运行，而且只有一个处理器内核会被分配给该进
 程。对于一个进程，可能有成千上万个用户级进程，但是他们对系统资源没有影响。运行时**库**调度并分派这些
@@ -44,14 +44,14 @@
 1. 相对于用户线程来说，**切换开销大**，需要从用户态，进入内核态并且由内核进行切换，因为线程调度和管
 理都在内核实现。
 
-![](/images/operating-system-processes-threads-kernel-supported-threads.jpg)
+![](/forgetful/images/operating-system-processes-threads-kernel-supported-threads.jpg)
 
 内核级线程是内核对象，常驻内核空间。用户线程与之一一对应。运行时 库会为每个用户线程分配一个内核级线
 程。
 
 
 ## 混合方式
-![](/images/operating-system-processes-threads-mixed-mode-threads.jpg)
+![](/forgetful/images/operating-system-processes-threads-mixed-mode-threads.jpg)
 
 结合了以上两种线程。库和操作系统都可以管理线程。**进程有着自己的内核线程池**。可运行的用户线程由运行
 时库分派并标记为准备好执行的可用线程。操作系统选择用户线程并将它映射到线程池中的可用内核线程。

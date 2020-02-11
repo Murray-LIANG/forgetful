@@ -394,7 +394,7 @@ root@k8s-node2:~# ip addr
 
 While the `UDP` backend copies the packet back and forth from the user space to kernel space, so it isn't recommended to use in production as performance concern. But we can still use `UDP` for debugging and testing purpose.
 
-![](/images/kubernetes-overlay-network-flannel-udp.png)
+![](/forgetful/images/kubernetes-overlay-network-flannel-udp.png)
 
 Like in `vxlan`, the packet is sent to `flannel0` according to the routing table.
 The difference is `flannel0` here is a **TUN** device which is created by `flanneld` daemon process. `TUN` is a software interface implemented in linux kernel, it can pass raw ip packet between user program and the kernel. It works in two directions:
@@ -403,7 +403,7 @@ The difference is `flannel0` here is a **TUN** device which is created by `flann
 
 So, it has to copy the packet 3 times between the user space and the kernel space, which will increase the network overhead in a significant way.
 
-![](/images/kubernetes-overlay-network-flannel-udp-packet-copy.png)
+![](/forgetful/images/kubernetes-overlay-network-flannel-udp-packet-copy.png)
 
 ## Flannel IPAM (IP Address Management)
 Flannel doesn't allocate and maintain the IP addresses to pods, `host-local` CNI plugin is responsible for this.

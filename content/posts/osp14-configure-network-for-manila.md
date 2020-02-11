@@ -20,7 +20,7 @@ auto_collapse_toc: true
 ---
 
 ## OSP Network Topology
-![](/images/osp-configure-network-for-manila.png)
+![](/forgetful/images/osp-configure-network-for-manila.png)
 
 ## Environment
 

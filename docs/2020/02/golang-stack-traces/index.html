@@ -148,10 +148,10 @@
 </div>
 </div><p>Line <code>main.Example(0x2080c3f50, 0x2, 0x4, 0x425c0, 0x5, 0xa)</code> is the source code <code>Example(slice, &quot;hello&quot;, 10)</code> with <strong>parameters showing six hexadecimal</strong>. The key to understanding how the values do match up with the parameters requires knowing the implementation for each parameter type.</p>
 <p>In the above example, the first parameter is a slice of strings. A slice is a reference type in Go. This means the value for a slice is a header value with a pointer to some underlying data. In the case of a slice, the header value is a three word structure that contains a pointer to an underlying array, the length of the slice and the capacity.</p>
-<p><figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/images/golang-stack-traces-slice.png" alt="" class="lazyload"></figure>
+<p><figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/forgetful/images/golang-stack-traces-slice.png" alt="" class="lazyload"></figure>
 </p>
 <p>The second parameter is a string. A string is also a reference type but this header value is immutable. The header value for a string is declared as a two word structure that contains a pointer to an underlying byte array and the length of the string.</p>
-<p><figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/images/golang-stack-traces-string.png" alt="" class="lazyload"></figure>
+<p><figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/forgetful/images/golang-stack-traces-string.png" alt="" class="lazyload"></figure>
 </p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">

@@ -9,7 +9,7 @@ There is a **shared-everything** architecture embodied in separate and independe
 
 In VAST's scheme there are **compute nodes** and **databoxes** - high-availability DF-5615 NVMe JBOFs, connected by NVMe-oF running across Ethernet or InfiniBand. The x86 servers run VAST Universal File System (UFS) software packaged in Docker containers. The 2U databoxes are dumb, and contain 18 * 960GB of Optane 3D XPoint memory and 583TB of NVMe QLC (4bits/cell) SSD (38 * 15.36TB). **Data is striped across the databoxes and their drives with global erasure coding**.
 
-![](/images/vast-compute-nodes-storage-nodes.jpg)
+![](/forgetful/images/vast-compute-nodes-storage-nodes.jpg)
 
 **The XPoint is not a tier. It is used for storing metadata and as an incoming write buffer.**
 
@@ -34,7 +34,7 @@ DASE storage architecture breaks from the idea that scalable storage needs to be
 
 https://glennklockwood.blogspot.com/2019/02/vast-datas-storage-system-architecture.html
 
-![](/images/vast-conceptual-diagram.png)
+![](/forgetful/images/vast-conceptual-diagram.png)
 
 ### JBOFs (Just-Bunch-Of-Flash, data boxes or HA enclosures).
 

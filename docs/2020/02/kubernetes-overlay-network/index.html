@@ -810,7 +810,7 @@ root@k8s-node2:~# ip addr
 </div><a class="post-dummy-target" id="udp-encapsulation-vs-vxlan-encapsulation"></a><h2>UDP Encapsulation vs vxlan Encapsulation</h2>
 <p><code>vxlan</code> is the default backend of <code>flannel</code>, because its performance is better than <code>UDP</code>. You can think <code>vxlan</code> as an additional layer above the <code>TCP/UDP</code> layer and <code>vxlan</code> knows how to route vxlan packets (having <code>vxlan</code> header) with its own protocol.</p>
 <p>While the <code>UDP</code> backend copies the packet back and forth from the user space to kernel space, so it isn&rsquo;t recommended to use in production as performance concern. But we can still use <code>UDP</code> for debugging and testing purpose.</p>
-<p><figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/images/kubernetes-overlay-network-flannel-udp.png" alt="" class="lazyload"></figure>
+<p><figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/forgetful/images/kubernetes-overlay-network-flannel-udp.png" alt="" class="lazyload"></figure>
 </p>
 <p>Like in <code>vxlan</code>, the packet is sent to <code>flannel0</code> according to the routing table.
 The difference is <code>flannel0</code> here is a <strong>TUN</strong> device which is created by <code>flanneld</code> daemon process. <code>TUN</code> is a software interface implemented in linux kernel, it can pass raw ip packet between user program and the kernel. It works in two directions:</p>
@@ -819,7 +819,7 @@ The difference is <code>flannel0</code> here is a <strong>TUN</strong> device wh
 <li>when an IP packet arrives to the kernel, and the route tables says it should be routed to <code>flannel0</code> device, kernel will send the packet directly to the process which created this device, which is the <code>flanneld</code> daemon process.</li>
 </ul>
 <p>So, it has to copy the packet 3 times between the user space and the kernel space, which will increase the network overhead in a significant way.</p>
-<p><figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/images/kubernetes-overlay-network-flannel-udp-packet-copy.png" alt="" class="lazyload"></figure>
+<p><figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/forgetful/images/kubernetes-overlay-network-flannel-udp-packet-copy.png" alt="" class="lazyload"></figure>
 </p>
 <a class="post-dummy-target" id="flannel-ipam-ip-address-management"></a><h2>Flannel IPAM (IP Address Management)</h2>
 <p>Flannel doesn&rsquo;t allocate and maintain the IP addresses to pods, <code>host-local</code> CNI plugin is responsible for this.</p>
