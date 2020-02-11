@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>prometheus on Forgetful :/</title>
+    <link>https://murray-liang.github.io/forgetful/tags/prometheus/</link>
+    <description>Recent content in prometheus on Forgetful :/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
+    
+	<atom:link href="https://murray-liang.github.io/forgetful/tags/prometheus/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Prometheus</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/prometheus/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/prometheus/</guid>
+      <description>https://prometheus.io/docs/instrumenting/exporters/
+Unity Exporter Ideas We could develop an exporter for Unity. An prometheus exporter works as a server and prometheus will scrape the metrics from it in a specified interval.
+ Develop an exporter for Unity. Register some real time queries for some common resource (or supporting configured via conf file) When prometheus scrapes the metrics, Collect method of Unity exporter will be called. It will get the latest query result from Unity in the logic of Collect.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Microservices Architecture | Forgetful :/</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="Notes about everything"><link rel="prev" href="https://murray-liang.github.io/forgetful/2020/02/operating-system-multithreading-multiprocessing/" /><link rel="next" href="https://murray-liang.github.io/forgetful/2020/02/linux-interview-questions/" /><link rel="canonical" href="https://murray-liang.github.io/forgetful/2020/02/microservices-architecture/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff"><meta property="og:title" content="Microservices Architecture" />
+<meta property="og:description" content="Service oriented architecture (SOA) resulted in monolithic large services.
+Microservices knows how to size a service.
+Design Principles High Cohesion  Single thing done well Single focus  Identify a single focus. It could be:
+ Business function which has its own clear inputs and outputs. Business domain where the microservice focus is in the form of creating, retrieving, updating, deleting (CRUD) data related to a specific part of the organization." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://murray-liang.github.io/forgetful/2020/02/microservices-architecture/" />
+<meta property="article:published_time" content="2020-02-10T16:37:31+08:00" />
+<meta property="article:modified_time" content="2020-02-10T16:37:31+08:00" />
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Microservices Architecture",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/murray-liang.github.io\/forgetful\/2020\/02\/microservices-architecture\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "https:\/\/murray-liang.github.io\/forgetful\/cover.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "posts","keywords": "microservices, architecture","wordcount":  366 ,
+        "url": "https:\/\/murray-liang.github.io\/forgetful\/2020\/02\/microservices-architecture\/","datePublished": "2020-02-10T16:37:31\x2b08:00","dateModified": "2020-02-10T16:37:31\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "murray",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "https:\/\/murray-liang.github.io\/forgetful\/logo.png",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": ""
+    }
+    </script><link rel="stylesheet" href="/forgetful/css/style.min.css"><link rel="stylesheet" href="/forgetful/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/forgetful/css/lib/forkawesome/forkawesome.min.css"><link rel="stylesheet" href="/forgetful/css/lib/animate/animate.min.css"></head>
+    <body><script>
+            if (!window.localStorage || !window.localStorage.getItem('theme')) {
+                window.isDark = 'dark' === 'dark';
+            } else {
+                window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            }
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header animated bounceIn">
+            <a href="https://murray-liang.github.io/forgetful">Forgetful :/</a>
+        </div>
+        <div class="navbar-menu"><a class="menu-item" href="https://murray-liang.github.io/forgetful/posts" title="">Posts</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/tags" title="">Tags</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/categories" title="">Categories</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"><i class="fas fa-language fa-fw"></i></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav><nav class="navbar-mobile">
+    <div class="navbar-container">
+        <div class="navbar-header">
+            <div class="navbar-header-title animated bounceIn">
+                <a href="https://murray-liang.github.io/forgetful">Forgetful :/</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://murray-liang.github.io/forgetful/posts" title="">Posts</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/tags" title="">Tags</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/categories" title="">Categories</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav>
+<main class="main">
+                <div class="container"><article class="page"><h1 class="post-title animated flipInX">Microservices Architecture</h1><div class="post-meta">
+            <div class="post-meta-main"><a class="author" href="https://github.com/Murray-LIANG" rel="author" target="_blank">
+                    <i class="fas fa-user-circle fa-fw"></i>Murray-LIANG
+                </a>&nbsp;</div>
+            <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-02-10>2020-02-10</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 366 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>2 min&nbsp;</div>
+        </div><div class="post-toc" id="post-toc">
+                <h2 class="post-toc-title">Contents</h2>
+                <div class="post-toc-content"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#design-principles">Design Principles</a>
+      <ul>
+        <li><a href="#high-cohesion">High Cohesion</a></li>
+        <li><a href="#autonomous">Autonomous</a></li>
+        <li><a href="#business-domain-centric">Business Domain Centric</a></li>
+        <li><a href="#resilience">Resilience</a></li>
+        <li><a href="#observable">Observable</a></li>
+        <li><a href="#automation">Automation</a></li>
+      </ul>
+    </li>
+    <li><a href="#technology">Technology</a>
+      <ul>
+        <li><a href="#synchronous-communication">Synchronous Communication</a>
+          <ul>
+            <li><a href="#communication-protocols">Communication Protocols</a></li>
+            <li><a href="#payload-protocols">Payload Protocols</a></li>
+            <li><a href="#synchronous-issues">Synchronous Issues</a></li>
+          </ul>
+        </li>
+        <li><a href="#asynchronous-communication">Asynchronous Communication</a>
+          <ul>
+            <li><a href="#asynchronous-issues">Asynchronous Issues</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div>
+            <div class="post-toc-mobile" id="post-toc-mobile">
+                <details>
+                    <summary>
+                        <div class="post-toc-title">
+                            <span>Contents</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="post-toc-content"><nav id="TableOfContentsMobile">
+  <ul>
+    <li><a href="#design-principles">Design Principles</a>
+      <ul>
+        <li><a href="#high-cohesion">High Cohesion</a></li>
+        <li><a href="#autonomous">Autonomous</a></li>
+        <li><a href="#business-domain-centric">Business Domain Centric</a></li>
+        <li><a href="#resilience">Resilience</a></li>
+        <li><a href="#observable">Observable</a></li>
+        <li><a href="#automation">Automation</a></li>
+      </ul>
+    </li>
+    <li><a href="#technology">Technology</a>
+      <ul>
+        <li><a href="#synchronous-communication">Synchronous Communication</a>
+          <ul>
+            <li><a href="#communication-protocols">Communication Protocols</a></li>
+            <li><a href="#payload-protocols">Payload Protocols</a></li>
+            <li><a href="#synchronous-issues">Synchronous Issues</a></li>
+          </ul>
+        </li>
+        <li><a href="#asynchronous-communication">Asynchronous Communication</a>
+          <ul>
+            <li><a href="#asynchronous-issues">Asynchronous Issues</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+                </details>
+            </div><div class="post-content"><p>Service oriented architecture (SOA) resulted in monolithic large services.</p>
+<p>Microservices knows how to size a service.</p>
+<a class="post-dummy-target" id="design-principles"></a><h2>Design Principles</h2>
+<a class="post-dummy-target" id="high-cohesion"></a><h3>High Cohesion</h3>
+<ul>
+<li>Single thing done well</li>
+<li>Single focus</li>
+</ul>
+<p><strong>Identify a single focus</strong>. It could be:</p>
+<ul>
+<li>Business function which has its own clear inputs and outputs.</li>
+<li>Business domain where the microservice focus is in the form of creating, retrieving, updating, deleting (CRUD) data related to a specific part of the organization.</li>
+</ul>
+<p>Overall to ensure your microservices have high cohesion, continuously question the design of microservices if a new microservice <strong>has one reason to change</strong>.</p>
+<a class="post-dummy-target" id="autonomous"></a><h3>Autonomous</h3>
+<ul>
+<li>Independently changeable</li>
+<li>Independently deployable</li>
+</ul>
+<p><strong>Loosely coupled.</strong> Below things could help achieve this:</p>
+<ul>
+<li>Communication by network
+<ul>
+<li>Synchronous (client waiting for a reply)</li>
+<li>Asynchronous (via message broker distributing messages)</li>
+</ul>
+</li>
+<li>Technology agnostic API (i.e REST API with JSON data)</li>
+<li>Contracts between services (including API ans shared models)</li>
+<li>Avoid sharing between services (including databases, data should be shared by microservices calling each other and sending the data)</li>
+<li>Microservice ownership by team
+<ul>
+<li>responsibility to make autonomous</li>
+<li>agreeing contracts between teams</li>
+<li>responsible for long-term maintenance</li>
+<li>collaborative development</li>
+<li>concurrent development</li>
+</ul>
+</li>
+<li>Versioning
+<ul>
+<li>Avoid breaking changes</li>
+<li>Backwards compatibility</li>
+<li>Integration tests</li>
+<li>Have a versioning strategy
+<ul>
+<li>Concurrent versions if breaking changes cannot avoid</li>
+<li>Coexisting endpoints (<code>/v1/xxx</code> and <code>/v2/xxx</code>)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="business-domain-centric"></a><h3>Business Domain Centric</h3>
+<ul>
+<li>Represent business function/domain</li>
+</ul>
+<a class="post-dummy-target" id="resilience"></a><h3>Resilience</h3>
+<ul>
+<li>Embrace failure</li>
+<li>Default or degrade functionality</li>
+</ul>
+<p><strong>Design system to fail fast and recover fast.</strong> A hanging transaction or a delayed transaction might be as bad as seeing an error in the screen.</p>
+<p><strong>Use timeouts to fail fast</strong></p>
+<a class="post-dummy-target" id="observable"></a><h3>Observable</h3>
+<ul>
+<li>See system health</li>
+<li>Centralized logging and monitoring</li>
+</ul>
+<a class="post-dummy-target" id="automation"></a><h3>Automation</h3>
+<ul>
+<li>Tools for test and feedback</li>
+<li>Tools for deployment</li>
+</ul>
+<a class="post-dummy-target" id="technology"></a><h2>Technology</h2>
+<a class="post-dummy-target" id="synchronous-communication"></a><h3>Synchronous Communication</h3>
+<a class="post-dummy-target" id="communication-protocols"></a><h4>Communication Protocols</h4>
+<ul>
+<li>Remote procedure call (RPC)</li>
+<li>HTTP</li>
+<li>REST. CRUD using HTTP verbs (GET/POST/PUT/DELETE)</li>
+</ul>
+<p><strong>NOTE: you could implement RPC over HTTP. REST works with HTTP.</strong></p>
+<a class="post-dummy-target" id="payload-protocols"></a><h4>Payload Protocols</h4>
+<ul>
+<li>JSON</li>
+<li>XML</li>
+<li>ProtocolBuffers</li>
+</ul>
+<a class="post-dummy-target" id="synchronous-issues"></a><h4>Synchronous Issues</h4>
+<ul>
+<li>Both parties have to be available</li>
+<li>Performance issue due to network</li>
+</ul>
+<a class="post-dummy-target" id="asynchronous-communication"></a><h3>Asynchronous Communication</h3>
+<p><strong>Event Based Communication</strong></p>
+<ul>
+<li>Mitigate the need of client and service availability</li>
+<li>Decouple client and service</li>
+</ul>
+<p>It normally uses <strong>Message Queueing Protocol</strong>, where:</p>
+<ul>
+<li>Events == Messages</li>
+<li>Who generates events == Publisher</li>
+<li>Who processes events == Subscriber</li>
+</ul>
+<p>And messages are buffered by a <strong>message broker</strong>.</p>
+<a class="post-dummy-target" id="asynchronous-issues"></a><h4>Asynchronous Issues</h4>
+<ul>
+<li>Complicated</li>
+<li>Message broker could be another single point of failure</li>
+<li>Manage the messaging queue</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>The article was updated on 2020-02-10</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><span></span></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section><span class="tag">
+                        <a href="https://murray-liang.github.io/forgetful/tags/microservices/"><i class="fas fa-tag fa-fw"></i>&nbsp;microservices</a>&nbsp;
+                    </span><span class="tag">
+                        <a href="https://murray-liang.github.io/forgetful/tags/architecture/"><i class="fas fa-tag fa-fw"></i>&nbsp;architecture</a>&nbsp;
+                    </span></section>
+        <section>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://murray-liang.github.io/forgetful">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="https://murray-liang.github.io/forgetful/2020/02/operating-system-multithreading-multiprocessing/" class="prev" rel="prev" title="Multi-Threading and Multi-Processing"><i class="fas fa-angle-left fa-fw"></i>Multi-Threading and Multi-Processing</a>
+            <a href="https://murray-liang.github.io/forgetful/2020/02/linux-interview-questions/" class="next" rel="next" title="Linux Interview Questions">Linux Interview Questions<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div class="post-comment"></div>
+    </article></div>
+            </main><footer class="footer">
+    <div class="copyright"><div class="copyright-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
+        </div>
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/Murray-LIANG" target="_blank">Murray-LIANG</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+    </div>
+</footer>
+</div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>
+            <span>&nbsp;</span>
+        </a><script src="/forgetful/js/lib/jquery/jquery.slim.min.js"></script><script src="/forgetful/js/lib/lazysizes/lazysizes.min.js"></script><script src="/forgetful/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script><link rel="stylesheet" href="/forgetful/css/lib/katex/katex.min.css"><script src="/forgetful/js/lib/katex/katex.min.js"></script><script defer src="/forgetful/js/lib/katex/auto-render.min.js"></script><link rel="stylesheet" href="/forgetful/css/lib/katex/copy-tex.min.css"><script defer src="/forgetful/js/lib/katex/copy-tex.min.js"></script><script defer src="/forgetful/js/lib/katex/mhchem.min.js"></script><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },{ left: "$", right: "$", display: false },]
+            });
+        });
+    </script><script src="/forgetful/js/blog.min.js"></script>
+</body>
+</html>

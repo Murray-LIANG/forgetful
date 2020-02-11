@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>VAST | Forgetful :/</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="Notes about everything"><link rel="prev" href="https://murray-liang.github.io/forgetful/2020/02/kubernetes-container-pod-what-it-is/" /><link rel="next" href="https://murray-liang.github.io/forgetful/2020/02/v2ray/" /><link rel="canonical" href="https://murray-liang.github.io/forgetful/2020/02/vast/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff"><meta property="og:title" content="VAST" />
+<meta property="og:description" content="VAST Data has found a way to collapse all storage tiers onto one with decoupled compute nodes using NVMeoF to access 2U databoxes filled with QLC flash data drives and Optane XPoint metadata and write-staging drives, with up to 2PB or more of capacity after data reduction.
+3D XPoint memory is non-volatile, faster than NAND but slower than DRAM.
+There is a shared-everything architecture embodied in separate and independently scalable compute nodes in a loosely-coupled cluster running Universal Filesystem logic." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://murray-liang.github.io/forgetful/2020/02/vast/" />
+<meta property="article:published_time" content="2020-02-10T16:37:31+08:00" />
+<meta property="article:modified_time" content="2020-02-10T16:37:31+08:00" />
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "VAST",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/murray-liang.github.io\/forgetful\/2020\/02\/vast\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "https:\/\/murray-liang.github.io\/forgetful\/cover.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "posts","keywords": "vast, nvme","wordcount":  1247 ,
+        "url": "https:\/\/murray-liang.github.io\/forgetful\/2020\/02\/vast\/","datePublished": "2020-02-10T16:37:31\x2b08:00","dateModified": "2020-02-10T16:37:31\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "murray",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "https:\/\/murray-liang.github.io\/forgetful\/logo.png",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": ""
+    }
+    </script><link rel="stylesheet" href="/forgetful/css/style.min.css"><link rel="stylesheet" href="/forgetful/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/forgetful/css/lib/forkawesome/forkawesome.min.css"><link rel="stylesheet" href="/forgetful/css/lib/animate/animate.min.css"></head>
+    <body><script>
+            if (!window.localStorage || !window.localStorage.getItem('theme')) {
+                window.isDark = 'dark' === 'dark';
+            } else {
+                window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            }
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header animated bounceIn">
+            <a href="https://murray-liang.github.io/forgetful">Forgetful :/</a>
+        </div>
+        <div class="navbar-menu"><a class="menu-item" href="https://murray-liang.github.io/forgetful/posts" title="">Posts</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/tags" title="">Tags</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/categories" title="">Categories</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"><i class="fas fa-language fa-fw"></i></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav><nav class="navbar-mobile">
+    <div class="navbar-container">
+        <div class="navbar-header">
+            <div class="navbar-header-title animated bounceIn">
+                <a href="https://murray-liang.github.io/forgetful">Forgetful :/</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://murray-liang.github.io/forgetful/posts" title="">Posts</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/tags" title="">Tags</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/categories" title="">Categories</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav>
+<main class="main">
+                <div class="container"><article class="page"><h1 class="post-title animated flipInX">VAST</h1><div class="post-meta">
+            <div class="post-meta-main"><a class="author" href="https://github.com/Murray-LIANG" rel="author" target="_blank">
+                    <i class="fas fa-user-circle fa-fw"></i>Murray-LIANG
+                </a>&nbsp;</div>
+            <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-02-10>2020-02-10</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 1247 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>6 min&nbsp;</div>
+        </div><div class="post-toc" id="post-toc">
+                <h2 class="post-toc-title">Contents</h2>
+                <div class="post-toc-content"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#dase">DASE</a></li>
+    <li><a href="#three-options-to-deploy">Three Options to Deploy</a></li>
+    <li><a href="#conceptual-diagram">Conceptual Diagram</a>
+      <ul>
+        <li><a href="#jbofs-just-bunch-of-flash-data-boxes-or-ha-enclosures">JBOFs (Just-Bunch-Of-Flash, data boxes or HA enclosures).</a></li>
+        <li><a href="#io-servers-compute-nodes-or-cnodes-these-things-are-what-hpc-cluster-compute-nodes-talk-to-to-perform-io-via-nfs-or-s3">I/O servers (compute nodes or cnodes) These things are what HPC cluster compute nodes talk to to perform I/O via NFS or S3.</a></li>
+      </ul>
+    </li>
+    <li><a href="#system-composition">System Composition</a></li>
+    <li><a href="#shared-everything-consistency">Shared-everything Consistency</a>
+      <ul>
+        <li><a href="#summary">Summary</a></li>
+      </ul>
+    </li>
+    <li><a href="#write-path-flow">Write Path Flow</a></li>
+  </ul>
+</nav></div>
+            </div>
+            <div class="post-toc-mobile" id="post-toc-mobile">
+                <details>
+                    <summary>
+                        <div class="post-toc-title">
+                            <span>Contents</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="post-toc-content"><nav id="TableOfContentsMobile">
+  <ul>
+    <li><a href="#dase">DASE</a></li>
+    <li><a href="#three-options-to-deploy">Three Options to Deploy</a></li>
+    <li><a href="#conceptual-diagram">Conceptual Diagram</a>
+      <ul>
+        <li><a href="#jbofs-just-bunch-of-flash-data-boxes-or-ha-enclosures">JBOFs (Just-Bunch-Of-Flash, data boxes or HA enclosures).</a></li>
+        <li><a href="#io-servers-compute-nodes-or-cnodes-these-things-are-what-hpc-cluster-compute-nodes-talk-to-to-perform-io-via-nfs-or-s3">I/O servers (compute nodes or cnodes) These things are what HPC cluster compute nodes talk to to perform I/O via NFS or S3.</a></li>
+      </ul>
+    </li>
+    <li><a href="#system-composition">System Composition</a></li>
+    <li><a href="#shared-everything-consistency">Shared-everything Consistency</a>
+      <ul>
+        <li><a href="#summary">Summary</a></li>
+      </ul>
+    </li>
+    <li><a href="#write-path-flow">Write Path Flow</a></li>
+  </ul>
+</nav></div>
+                </details>
+            </div><div class="post-content"><p>VAST Data has found a way to collapse all storage tiers onto one with decoupled <strong>compute nodes</strong> using <strong>NVMeoF</strong> to access 2U <strong>databoxes</strong> filled with <strong>QLC flash</strong> data drives and <strong>Optane XPoint</strong> metadata and write-staging drives, with up to 2PB or more of capacity after data reduction.</p>
+<p><strong>3D XPoint</strong> memory is non-volatile, faster than NAND but slower than DRAM.</p>
+<p>There is a <strong>shared-everything</strong> architecture embodied in separate and independently <strong>scalable</strong> <strong>compute nodes</strong> in a loosely-coupled cluster running Universal Filesystem logic. These link across an NVMe link to <strong>databoxes (DBOX3 storage nodes)</strong> which are dumb boxes filled with <strong>flash drives</strong> for data and <strong>Optane XPoint</strong> for metadata.</p>
+<p>In VAST&rsquo;s scheme there are <strong>compute nodes</strong> and <strong>databoxes</strong> - high-availability DF-5615 NVMe JBOFs, connected by NVMe-oF running across Ethernet or InfiniBand. The x86 servers run VAST Universal File System (UFS) software packaged in Docker containers. The 2U databoxes are dumb, and contain 18 * 960GB of Optane 3D XPoint memory and 583TB of NVMe QLC (4bits/cell) SSD (38 * 15.36TB). <strong>Data is striped across the databoxes and their drives with global erasure coding</strong>.</p>
+<p><figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/images/vast-compute-nodes-storage-nodes.jpg" alt="" class="lazyload"></figure>
+</p>
+<p><strong>The XPoint is not a tier. It is used for storing metadata and as an incoming write buffer.</strong></p>
+<p>All writes are <strong>atomic and persisted in XPoint</strong>; there is <strong>no DRAM cache</strong>. <strong>Compute nodes are stateless</strong> and see all the storage in the databoxes. If one compute node fails another can pick up its work with no data loss.</p>
+<p><a href="https://www.vastdata.com/app/pdf/datasheet.pdf">https://www.vastdata.com/app/pdf/datasheet.pdf</a></p>
+<a class="post-dummy-target" id="dase"></a><h2>DASE</h2>
+<p>Disaggregated shared-everything architecture</p>
+<p>DASE storage architecture breaks from the idea that scalable storage needs to be built from shared-nothing clusters. When servers can be disaggregated from storage, everything is better:</p>
+<ul>
+<li>Servers can be <strong>stateless</strong>, and failure of any server never require data reconstruction across a network.</li>
+<li>Servers can be <strong>loosely coupled</strong> in a scalable cluster - each operating independently while all accessing a shared, global namespace, thereby eliminating cluster cross-talk and enabling virtually limitless scale.</li>
+<li>New, global algorithms can be implemented to achieve game-changing levels of efficiency and resilience.</li>
+</ul>
+<a class="post-dummy-target" id="three-options-to-deploy"></a><h2>Three Options to Deploy</h2>
+<ul>
+<li>Full appliance: VAST Quad Server Chassis + Active/Active NVMe Enclosure.</li>
+<li>Software defined: Container software + Active/Active NVMe Enclosure.</li>
+<li>Software only: Run VAST software on Certified QLC hardware.</li>
+</ul>
+<a class="post-dummy-target" id="conceptual-diagram"></a><h2>Conceptual Diagram</h2>
+<p><a href="https://glennklockwood.blogspot.com/2019/02/vast-datas-storage-system-architecture.html">https://glennklockwood.blogspot.com/2019/02/vast-datas-storage-system-architecture.html</a></p>
+<p><figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/images/vast-conceptual-diagram.png" alt="" class="lazyload"></figure>
+</p>
+<a class="post-dummy-target" id="jbofs-just-bunch-of-flash-data-boxes-or-ha-enclosures"></a><h3>JBOFs (Just-Bunch-Of-Flash, data boxes or HA enclosures).</h3>
+<p>These things are what contain the storage media itself.</p>
+<p>JBOFs are dead simple and <strong>their only job is to expose each NVMe device attached to them as an NVMeoF target</strong>.</p>
+<ul>
+<li>2x embedded active/active servers, each with two Intel CPUs and the necessary hardware to support failover.</li>
+<li>4x 100 gigabit NICs, either operating using RoCE or InfiniBand.</li>
+<li>38x 15.36 TB U.2 SSD carriers.</li>
+<li>18x 960 GB U.2 Intel Optane SSDs.</li>
+</ul>
+<p><strong>They are not RAID controllers nor do they do any data motion between the SSDs they host. They literally serve each device out to the network and that&rsquo;s it</strong>.</p>
+<a class="post-dummy-target" id="io-servers-compute-nodes-or-cnodes-these-things-are-what-hpc-cluster-compute-nodes-talk-to-to-perform-io-via-nfs-or-s3"></a><h3>I/O servers (compute nodes or cnodes) These things are what HPC cluster compute nodes talk to to perform I/O via NFS or S3.</h3>
+<p>Here are where the magic happens, and they are physically discrete servers that</p>
+<ol>
+<li>share the same SAN fabric as the JBOFs and speak NVMeoF on one side, and</li>
+<li>share a network with client nodes and talk NFS on the other side.</li>
+</ol>
+<p>These I/O servers are completely <strong>stateless</strong>; all the data is stored in the JBOFs. The I/O servers have <strong>no cache</strong>; their job is to run NFS requests from HPC compute nodes into NVMeoF transfers to JBOFs. Specifically, they perform the following functions:</p>
+<ol>
+<li>Determine which NVMeoF device to talk to to serve an incoming I/O request from NFS client. This is done <strong>using a hashing function</strong>.</li>
+<li>Enforce file permissions, ACLs, and everything else that an NFS client would expect.</li>
+<li>Transfer data to/from SSDs, and transfer data to/from 3D XPoint drives.</li>
+<li>Transfer data between SSDs and 3D XPoint drives.</li>
+<li>Perform &ldquo;global compression&rdquo;, rebuilds from parity and other maintenance tasks.</li>
+</ol>
+<a class="post-dummy-target" id="system-composition"></a><h2>System Composition</h2>
+<p>Because I/O servers are stateless and operate independently, they can be <strong>dynamically added and removed</strong> from the system at any time to <strong>increase or decrease the I/O processing power</strong> available to clients. VAST&rsquo;s position is that the peak I/O performance to the JBOFs is virtually always <strong>CPU limited</strong> since the data path between CPUs (in the I/O servers) and the storage devices (in JBOFs) uses <strong>NVMeoF</strong>. This is a reasonable assertion since NVMeoF is extremely efficient at moving data as a result of its use of <strong>RDMA</strong> ans simple block-level access semantics.</p>
+<p>At the same time, this design requires that every I/O server be able to communicate with every SSD in the entire VAST system via NVMeoF. This means that each I/O server <strong>mounts every SSD</strong> at the same time; in a relatively small two-JBOF system, this results in 112x ( (38+18)*2 ) NVMe targets on every I/O server. This poses two distinct challenges:</p>
+<ol>
+<li>From a implementation standpoint, this is pushing <strong>the limits of how many NVMeoF targets a single Linux host can effectively manage</strong> in practice. For example, a 10 PB VAST system will have over 900 NVMeoF targets mounted on every single I/O server. This scale will exercise pieces of Linux kernel in ways it was never designed to be used.</li>
+<li>From a fundamental standpoint, this puts tremendous pressure on the storage network.</li>
+</ol>
+<a class="post-dummy-target" id="shared-everything-consistency"></a><h2>Shared-everything Consistency</h2>
+<p><strong>NOT FULLY UNDERSTAND THIS SECTION</strong></p>
+<p>Mounting every block device on every server may also sound like anathema to anyone familiar with block-based SANs, and generally speaking, it is. NVMeoF (and every other block-level protocol) does not really have locking, so <strong>if a single device is mounted by two servers, it is up to those servers to communicate with each other to ensure they aren&rsquo;t attempting to modify the same blocks at the same time</strong>. <strong>Typical shared-block</strong> configurations manage this by simply <strong>assigning exclusive ownership</strong> of each drive to a single server and <strong>relying on heartbeating or quorum</strong> (e.g., in HA enclosures or GPFS) <strong>to decide when to change a drive&rsquo;s owner</strong>.</p>
+<p>VAST can avoid a lot of these problems by <strong>simply not caching any I/Os on the I/O servers</strong> and instead passing NFS requests through as NVMeoF requests. This is not unlike how parallel file systems like PVFS (now OrangeFS) avoided the lock contention problem; <strong>not using caches dramatically reduces the window of time during which two conflicting I/Os can collide</strong>. VAST also <strong>claws back some of the latency penalties of doing this sort of direct I/O by issuing all writes to nonvolatile memory instead of flash</strong>; this will be discussed later.</p>
+<p>For the rare cases where two I/O servers are asked to change the same piece of data <strong>at the same time</strong> though, there is a mechanism by which <strong>an extent of a file (which is on the order of 4KiB) can be locked</strong>. I/O servers will flip a lock bit for that extent in the JBOF&rsquo;s memory using an atomic RDMA operation before issuing an update to serialize overlapping I/Os to the same byte range.</p>
+<p>VAST also uses <strong>redirect-on-write</strong> to ensure that writes are always consistent. If a JBOF fails before an I/O is complete, presumably any outstanding locks evaporate since they are resident only in RAM. Any changes that were in flight simply get lost <strong>because the metadata structure that describes the affected file&rsquo;s layout only points to updated extents after they have been successfully written</strong>. Again, the redirect-on-write is achieved using an atomic RDMA operation, so data is always consistent. VAST does not need to maintain a write journal as a result.</p>
+<a class="post-dummy-target" id="summary"></a><h3>Summary</h3>
+<ul>
+<li>No cache</li>
+<li>Issue writes to nonvolatile memory</li>
+<li>Redirect-on-write</li>
+</ul>
+<a class="post-dummy-target" id="write-path-flow"></a><h2>Write Path Flow</h2>
+<p><a href="https://glennklockwood.blogspot.com/2019/02/vast-datas-storage-system-architecture.html">https://glennklockwood.blogspot.com/2019/02/vast-datas-storage-system-architecture.html</a></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>The article was updated on 2020-02-10</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><span></span></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section><span class="tag">
+                        <a href="https://murray-liang.github.io/forgetful/tags/vast/"><i class="fas fa-tag fa-fw"></i>&nbsp;vast</a>&nbsp;
+                    </span><span class="tag">
+                        <a href="https://murray-liang.github.io/forgetful/tags/nvme/"><i class="fas fa-tag fa-fw"></i>&nbsp;nvme</a>&nbsp;
+                    </span></section>
+        <section>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://murray-liang.github.io/forgetful">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="https://murray-liang.github.io/forgetful/2020/02/kubernetes-container-pod-what-it-is/" class="prev" rel="prev" title="What Even Is A Container And A Kubernetes Pod"><i class="fas fa-angle-left fa-fw"></i>What Even Is A Container And A Kubernetes Pod</a>
+            <a href="https://murray-liang.github.io/forgetful/2020/02/v2ray/" class="next" rel="next" title="V2Ray and Related">V2Ray and Related<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div class="post-comment"></div>
+    </article></div>
+            </main><footer class="footer">
+    <div class="copyright"><div class="copyright-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
+        </div>
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/Murray-LIANG" target="_blank">Murray-LIANG</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+    </div>
+</footer>
+</div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>
+            <span>&nbsp;</span>
+        </a><script src="/forgetful/js/lib/jquery/jquery.slim.min.js"></script><script src="/forgetful/js/lib/lazysizes/lazysizes.min.js"></script><script src="/forgetful/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script><link rel="stylesheet" href="/forgetful/css/lib/katex/katex.min.css"><script src="/forgetful/js/lib/katex/katex.min.js"></script><script defer src="/forgetful/js/lib/katex/auto-render.min.js"></script><link rel="stylesheet" href="/forgetful/css/lib/katex/copy-tex.min.css"><script defer src="/forgetful/js/lib/katex/copy-tex.min.js"></script><script defer src="/forgetful/js/lib/katex/mhchem.min.js"></script><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },{ left: "$", right: "$", display: false },]
+            });
+        });
+    </script><script src="/forgetful/js/blog.min.js"></script>
+</body>
+</html>

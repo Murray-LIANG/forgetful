@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Kubernetes What is Pause Container | Forgetful :/</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="Notes about everything"><link rel="prev" href="https://murray-liang.github.io/forgetful/2020/02/ml-basic-knowledge/" /><link rel="next" href="https://murray-liang.github.io/forgetful/2020/02/kubernetes-overlay-network/" /><link rel="canonical" href="https://murray-liang.github.io/forgetful/2020/02/kubernetes-what-is-pause-container/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff"><meta property="og:title" content="Kubernetes What is Pause Container" />
+<meta property="og:description" content="Why We Need Pods Docker supports containers, which are great for deploying single units of software. However, this model can become a bit cumbersome when you want to run multiple pieces of software together. You often see this when developers create Docker images that use supervisord as an entrypoint to start and manage multiple processes. For production systems, many have found that it is instead more useful to deploy those applications in groups of containers that are partially isolated and partially share on environment." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://murray-liang.github.io/forgetful/2020/02/kubernetes-what-is-pause-container/" />
+<meta property="article:published_time" content="2020-02-10T16:37:31+08:00" />
+<meta property="article:modified_time" content="2020-02-10T16:37:31+08:00" />
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Kubernetes What is Pause Container",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/murray-liang.github.io\/forgetful\/2020\/02\/kubernetes-what-is-pause-container\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "https:\/\/murray-liang.github.io\/forgetful\/cover.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "posts","keywords": "kubernetes, k8s, pause container","wordcount":  1252 ,
+        "url": "https:\/\/murray-liang.github.io\/forgetful\/2020\/02\/kubernetes-what-is-pause-container\/","datePublished": "2020-02-10T16:37:31\x2b08:00","dateModified": "2020-02-10T16:37:31\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "murray",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "https:\/\/murray-liang.github.io\/forgetful\/logo.png",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": ""
+    }
+    </script><link rel="stylesheet" href="/forgetful/css/style.min.css"><link rel="stylesheet" href="/forgetful/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/forgetful/css/lib/forkawesome/forkawesome.min.css"><link rel="stylesheet" href="/forgetful/css/lib/animate/animate.min.css"></head>
+    <body><script>
+            if (!window.localStorage || !window.localStorage.getItem('theme')) {
+                window.isDark = 'dark' === 'dark';
+            } else {
+                window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            }
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header animated bounceIn">
+            <a href="https://murray-liang.github.io/forgetful">Forgetful :/</a>
+        </div>
+        <div class="navbar-menu"><a class="menu-item" href="https://murray-liang.github.io/forgetful/posts" title="">Posts</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/tags" title="">Tags</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/categories" title="">Categories</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"><i class="fas fa-language fa-fw"></i></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav><nav class="navbar-mobile">
+    <div class="navbar-container">
+        <div class="navbar-header">
+            <div class="navbar-header-title animated bounceIn">
+                <a href="https://murray-liang.github.io/forgetful">Forgetful :/</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://murray-liang.github.io/forgetful/posts" title="">Posts</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/tags" title="">Tags</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/categories" title="">Categories</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav>
+<main class="main">
+                <div class="container"><article class="page"><h1 class="post-title animated flipInX">Kubernetes What is Pause Container</h1><div class="post-meta">
+            <div class="post-meta-main"><a class="author" href="https://github.com/Murray-LIANG" rel="author" target="_blank">
+                    <i class="fas fa-user-circle fa-fw"></i>Murray-LIANG
+                </a>&nbsp;</div>
+            <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-02-10>2020-02-10</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 1252 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>6 min&nbsp;</div>
+        </div><div class="post-toc" id="post-toc">
+                <h2 class="post-toc-title">Contents</h2>
+                <div class="post-toc-content"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#why-we-need-pods">Why We Need Pods</a></li>
+    <li><a href="#basic-of-namespaces-sharing">Basic of Namespaces Sharing</a>
+      <ul>
+        <li><a href="#first-start-the-pause-container-with-docker-so-that-we-can-add-our-containers-to-the-pod">First start the pause container with Docker so that we can add our containers to the pod.</a></li>
+        <li><a href="#run-nginx-container-and-add-it-to-our-pod">Run nginx container and add it to our pod.</a></li>
+        <li><a href="#run-ghost-container-as-our-application-server">Run ghost container as our application server.</a></li>
+        <li><a href="#if-you-access-httplocalhost8080-you-should-be-able-to-see-ghost-running-through-an-nginx-proxy-because-the-network-namespace-is-shared-among-these-three-containers---pause-nginx-and-ghost">If you access http://localhost:8080, you should be able to see ghost running through an nginx proxy because the network namespace is shared among these three containers - pause, nginx and ghost.</a></li>
+      </ul>
+    </li>
+    <li><a href="#how-pause-container-reaps-zombies">How pause Container Reaps Zombies</a></li>
+  </ul>
+</nav></div>
+            </div>
+            <div class="post-toc-mobile" id="post-toc-mobile">
+                <details>
+                    <summary>
+                        <div class="post-toc-title">
+                            <span>Contents</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="post-toc-content"><nav id="TableOfContentsMobile">
+  <ul>
+    <li><a href="#why-we-need-pods">Why We Need Pods</a></li>
+    <li><a href="#basic-of-namespaces-sharing">Basic of Namespaces Sharing</a>
+      <ul>
+        <li><a href="#first-start-the-pause-container-with-docker-so-that-we-can-add-our-containers-to-the-pod">First start the pause container with Docker so that we can add our containers to the pod.</a></li>
+        <li><a href="#run-nginx-container-and-add-it-to-our-pod">Run nginx container and add it to our pod.</a></li>
+        <li><a href="#run-ghost-container-as-our-application-server">Run ghost container as our application server.</a></li>
+        <li><a href="#if-you-access-httplocalhost8080-you-should-be-able-to-see-ghost-running-through-an-nginx-proxy-because-the-network-namespace-is-shared-among-these-three-containers---pause-nginx-and-ghost">If you access http://localhost:8080, you should be able to see ghost running through an nginx proxy because the network namespace is shared among these three containers - pause, nginx and ghost.</a></li>
+      </ul>
+    </li>
+    <li><a href="#how-pause-container-reaps-zombies">How pause Container Reaps Zombies</a></li>
+  </ul>
+</nav></div>
+                </details>
+            </div><div class="post-content"><a class="post-dummy-target" id="why-we-need-pods"></a><h2>Why We Need Pods</h2>
+<p>Docker supports containers, which are great for deploying single units of software. However, this model can become a bit cumbersome when you want to <strong>run multiple pieces of software together</strong>.
+You often see this when developers create Docker images that use supervisord as an entrypoint to start and manage multiple processes. For production systems, many have found that it is instead more useful to deploy those applications <strong>in groups of containers</strong> that are partially isolated and partially share on environment.</p>
+<p>Kubernetes provides a clean abstraction called <strong>pods</strong> for just this use case. It hides the complexity of Docker flags and the need to babysit the containers, shared volumes, and the like. It also hides differences between container runtimes.</p>
+<p>In principle, anyone can configure Docker to control the level of sharing between groups of containers &ndash; you just have to <strong>create a parent container</strong>, know exactly the right flag setting to use to <strong>create new containers that share the same environment</strong>, and then <strong>manage the lifetime of those containers</strong>.</p>
+<p>In Kubernetes, the <code>pause</code> container serves as the <code>parent container</code> for all of the containers in your pod. The <code>pause</code> container has <strong>two core responsibilities</strong>.</p>
+<ul>
+<li>First it serves as the basis of <strong>Linux namespace sharing</strong> in the pod.</li>
+<li>And second, with PID namespace sharing enabled, it serves as <strong>PID 1</strong> for each pod and <strong>reaps zombie processes</strong>. NOTE: PID namespace sharing can be disabled (which is default value since Kubernetes 1.8).</li>
+</ul>
+<a class="post-dummy-target" id="basic-of-namespaces-sharing"></a><h2>Basic of Namespaces Sharing</h2>
+<p>In Linux, when you run a new process, <strong>the process inherits its namespaces from the parent process</strong>. The way that you run a process in a new namespace is by <code>unsharing</code> the namespace with the parent process thus creating a new namespace.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ # run a shell in new PID, UTS, IPC, and mount namespaces.
+$ sudo unshare --pid --uts --ipc --mount -f chroot rootfs /bin/sh
+</code></pre></td></tr></table>
+</div>
+</div><p>Once the process is running, you can add other processes to the process&rsquo;s namespace to form a pod. New processes can be added to an existing namespace using the <code>setns</code> system call.</p>
+<p>Containers in a pod share namespaces among them. Docker lets you automate the process a bit so let&rsquo;s look at an example of how to create a pod from scratch by using the <code>pause</code> container and sharing namespaces.</p>
+<a class="post-dummy-target" id="first-start-the-pause-container-with-docker-so-that-we-can-add-our-containers-to-the-pod"></a><h3>First start the <code>pause</code> container with Docker so that we can add our containers to the pod.</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ docker run -d --name pause -p 8080:80 gcr.io/google_containers/pause-amd64:3.0
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="run-nginx-container-and-add-it-to-our-pod"></a><h3>Run <code>nginx</code> container and add it to our pod.</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ cat &lt;&lt;EOF &gt;&gt; nginx.conf
+&gt; error_log stderr;
+&gt; events { worker_connections  1024; }
+&gt; http {
+&gt;     access_log /dev/stdout combined;
+&gt;     server {
+&gt;         listen 80 default_server;
+&gt;         server_name example.com www.example.com;
+&gt;         location / {
+&gt;             proxy_pass http://127.0.0.1:2368;
+&gt;         }
+&gt;     }
+&gt; }
+&gt; EOF
+$ docker run -d --name nginx \
+    -v `pwd`/nginx.conf:/etc/nginx/nginx.conf \
+    --net=container:pause \
+    --ipc=container:pause \
+    --pid=container:pause nginx
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>NOTE</strong></p>
+<ul>
+<li><code>nginx</code> container uses the <code>net</code>, <code>ipc</code>, <code>pid</code> namespaces of <code>pause</code> container.</li>
+<li>The port mapping <code>8080</code>(host) to <code>80</code>(container) is set on the parent container - <code>pause</code>, because other containers share the network namespace with <code>pause</code>.</li>
+</ul>
+<a class="post-dummy-target" id="run-ghost-container-as-our-application-server"></a><h3>Run <code>ghost</code> container as our application server.</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ docker run -d --name ghost \
+    --net=container:pause \
+    --ipc=container:pause \
+    --pid=container:pause ghost
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="if-you-access-httplocalhost8080-you-should-be-able-to-see-ghost-running-through-an-nginx-proxy-because-the-network-namespace-is-shared-among-these-three-containers---pause-nginx-and-ghost"></a><h3>If you access <code>http://localhost:8080</code>, you should be able to see <code>ghost</code> running through an <code>nginx</code> proxy because the network namespace is shared among these three containers - <code>pause</code>, <code>nginx</code> and <code>ghost</code>.</h3>
+<a class="post-dummy-target" id="how-pause-container-reaps-zombies"></a><h2>How <code>pause</code> Container Reaps Zombies</h2>
+<p>In Linux, processes in a PID namespace form a tree with each process having a parent process. Only one process at the root of the tree doesn&rsquo;t really have a parent. This is the <code>init</code> process, which has <code>PID 1</code>.</p>
+<p>Processes can start other processes using the <code>fork</code> and <code>exec</code> syscalls. When they do this, the new process&rsquo;s parent is the process that called the <code>fork</code> syscall. <code>fork</code> is used to start another copy of the running process and <code>exec</code> is used to replace the current process with a new one, keeping the same PID.</p>
+<p>In order to run a totally separate application you need to run the <code>fork</code> and <code>exec</code> syscalls.</p>
+<ol>
+<li>A process creates a new copy of itself as a child process with a new PID using <code>fork</code>.</li>
+<li>When the child process runs it checks if it&rsquo;s the child process and runs <code>exec</code> to replace itself with the one you actually want to run.</li>
+</ol>
+<p>Each process has an entry in the OS process table. This records info about the process&rsquo;s state and exit code. <strong>When a child process has finished running, its process table entry remains until the parent process has retrieved its exit code using the <code>wait</code> syscall. This is called <code>reaping</code> zombie processes</strong>.</p>
+<p>Zombie processes are processes that have stopped running but <strong>their process table entry still exists because the parent process hasn&rsquo;t retrieved it via the <code>wait</code> syscall</strong>. Technically each process that terminates is a zombie for a very short period of time but they could live for longer.</p>
+<p>Longer lived zombie processes occur when parent processes don&rsquo;t call the <code>wait</code> syscall after the child process has finished. One situation where this occurs is <strong>when the parent process is poorly written and simply omits the <code>wait</code> call</strong> or <strong>when the parent process dies before the child and the new parent process does not call <code>wait</code> syscall on it</strong>. When a process&rsquo; parent dies before the child, the OS assigns the child process to the <code>init</code> process or <strong>PID 1</strong> (may be another process instead of <code>init</code>). i.e. The <code>init</code> process <code>adopts</code> the child process and becomes its parent. This means that now when the child process exits then new parent (<code>init</code>) must call <code>wait</code> to get its exit code or its process table entry remains forever and it becomes a zombie.</p>
+<p>In containers, one process must be the init process for each PID namespace. With Docker, each container usually has its own PID namespace and <strong>the <code>ENTRYPOINT</code> process is the <code>init</code> process</strong>. For Kubernetes pods, a container can be made to run in another container&rsquo;s namespace. In this case, one container must assume the role of the <code>init</code> process, while others are added to the namespace as children of the <code>init</code> process.</p>
+<p>For example,</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ docker run -d --name nginx -v `pwd`/nginx.conf:/etc/nginx/nginx.conf -p 8080:80 nginx
+$ docker run -d --name ghost --net=container:nginx --ipc=container:nginx --pid=container:nginx ghost
+</code></pre></td></tr></table>
+</div>
+</div><p><strong><code>nginx</code> is assuming the role of <code>PID 1</code> and <code>ghost</code> is added as a child process of <code>nginx</code></strong>. This is mostly fine, but technically <code>nginx</code> is now responsible for any children that <code>ghost</code> orphans. If, for example, <code>ghost</code> forks itself or runs child processes using <code>exec</code>, and crashes before the child finishes, then those children will be adopted by <code>nginx</code>. However, <strong><code>nginx</code> is not designed to be able to run as an <code>init</code> process and reap zombies. That means we could potentially have lots of them and they will last for the life of that container</strong>.</p>
+<p>In Kubernetes pods, containers are run in much the same way as above, but there is <strong>a special <code>pause</code> container that is created for each pod</strong>. This <code>pause</code> container runs a very simple process that performs no function but essentially sleeps forever (calling <code>pause()</code>). It also performs one other important function. It <strong>assumes the role of PID 1 and will reap any zombies by calling <code>wait</code> on them when they are orphaned by their parent process</strong>.</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>The article was updated on 2020-02-10</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><span></span></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section><span class="tag">
+                        <a href="https://murray-liang.github.io/forgetful/tags/kubernetes/"><i class="fas fa-tag fa-fw"></i>&nbsp;kubernetes</a>&nbsp;
+                    </span><span class="tag">
+                        <a href="https://murray-liang.github.io/forgetful/tags/k8s/"><i class="fas fa-tag fa-fw"></i>&nbsp;k8s</a>&nbsp;
+                    </span><span class="tag">
+                        <a href="https://murray-liang.github.io/forgetful/tags/pause-container/"><i class="fas fa-tag fa-fw"></i>&nbsp;pause container</a>&nbsp;
+                    </span></section>
+        <section>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://murray-liang.github.io/forgetful">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="https://murray-liang.github.io/forgetful/2020/02/ml-basic-knowledge/" class="prev" rel="prev" title="Learning Notes of Machine Learning in Action(机器学习实战)"><i class="fas fa-angle-left fa-fw"></i>Learning Notes of Machine Learning in Action(机器学习实战)</a>
+            <a href="https://murray-liang.github.io/forgetful/2020/02/kubernetes-overlay-network/" class="next" rel="next" title="Kubernetes Overlay Network">Kubernetes Overlay Network<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div class="post-comment"></div>
+    </article></div>
+            </main><footer class="footer">
+    <div class="copyright"><div class="copyright-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
+        </div>
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/Murray-LIANG" target="_blank">Murray-LIANG</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+    </div>
+</footer>
+</div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>
+            <span>&nbsp;</span>
+        </a><script src="/forgetful/js/lib/jquery/jquery.slim.min.js"></script><script src="/forgetful/js/lib/lazysizes/lazysizes.min.js"></script><script src="/forgetful/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script><link rel="stylesheet" href="/forgetful/css/lib/katex/katex.min.css"><script src="/forgetful/js/lib/katex/katex.min.js"></script><script defer src="/forgetful/js/lib/katex/auto-render.min.js"></script><link rel="stylesheet" href="/forgetful/css/lib/katex/copy-tex.min.css"><script defer src="/forgetful/js/lib/katex/copy-tex.min.js"></script><script defer src="/forgetful/js/lib/katex/mhchem.min.js"></script><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },{ left: "$", right: "$", display: false },]
+            });
+        });
+    </script><script src="/forgetful/js/blog.min.js"></script>
+</body>
+</html>

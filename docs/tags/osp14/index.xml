@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>osp14 on Forgetful :/</title>
+    <link>https://murray-liang.github.io/forgetful/tags/osp14/</link>
+    <description>Recent content in osp14 on Forgetful :/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
+    
+	<atom:link href="https://murray-liang.github.io/forgetful/tags/osp14/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>OSP14 Configure Network for Manila</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/osp14-configure-network-for-manila/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/osp14-configure-network-for-manila/</guid>
+      <description>OSP Network Topology  Environment The undercloud is 192.168.1.202.
+The overcloud is deployed on ubuntu-server2 (compute node) and ubuntu-server10 (control node).
+Ethernet interfaces on ubuntu-server10 are:
+ enp8s0f0: enp8s0f1: eth1, used for overcloud tenant network. enp8s0f2: eth0, used for OSP Provision/Ctrl Plane network. eno1: eth2, not used. enp8s0f3: ens2f1: eth3, connected to br-ex, used to External network.  Ethernet interfaces on ubuntu-server2 are:
+ TBD  Undercloud uses 192.168.139.* subnet to dhcp overcloud nodes.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>openrc on Forgetful :/</title>
+    <link>https://murray-liang.github.io/forgetful/tags/openrc/</link>
+    <description>Recent content in openrc on Forgetful :/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
+    
+	<atom:link href="https://murray-liang.github.io/forgetful/tags/openrc/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>How to Source Openrc with Zsh</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/openstack-source-openrc-with-zsh/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/openstack-source-openrc-with-zsh/</guid>
+      <description> Create file openrc_zsh with content:  1 2 3 4 5 6 7  #!/bin/env bash function sourceopenrc { pushd ~/devstack &amp;gt;/dev/null eval $(bash -c &amp;#34;. openrc $1$2;env|sed -n &amp;#39;/OS_/ { s/^/export /;p}&amp;#39;&amp;#34;) popd &amp;gt;/dev/null } sourceopenrc admin admin   Run source openrc_zsh.  </description>
+    </item>
+    
+  </channel>
+</rss>

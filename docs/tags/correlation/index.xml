@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>correlation on Forgetful :/</title>
+    <link>https://murray-liang.github.io/forgetful/tags/correlation/</link>
+    <description>Recent content in correlation on Forgetful :/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
+    
+	<atom:link href="https://murray-liang.github.io/forgetful/tags/correlation/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Spearman&#39;s Rank Correlation</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/statistics-spearmans-rank-order-correlation/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/statistics-spearmans-rank-order-correlation/</guid>
+      <description>https://statistics.laerd.com/statistical-guides/spearmans-rank-order-correlation-statistical-guide-2.php Definition The Spearman correlation coefficient, rs, can take values from +1 to -1. A rs of +1 indicates a perfect association of ranks, a rs of zero indicates no association between ranks and a rs of -1 indicates a perfect negative association of ranks. The closer rs is to zero, the weaker the association between the ranks.</description>
+    </item>
+    
+  </channel>
+</rss>

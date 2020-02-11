@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>xrdp on Forgetful :/</title>
+    <link>https://murray-liang.github.io/forgetful/tags/xrdp/</link>
+    <description>Recent content in xrdp on Forgetful :/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
+    
+	<atom:link href="https://murray-liang.github.io/forgetful/tags/xrdp/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Remote Desktop to Linux</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/dev-xrdp/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/dev-xrdp/</guid>
+      <description> Install xrdp. Install tigervnc-server. Use gnome session instead of classic one:  1 2 3  echo &amp;#34;gnome-session&amp;#34; &amp;gt; ~/.Xclients chmod +x ~/.Xclients sudo systemctl restart xrdp.service   Start xrdp service and make it start as system boots.  1 2  systemctl start xrdp.service systemctl enable xrdp.service   If the connection fails, it could be caused by firewall settings. Just add a new rule to firewall.  1 2  firewall-cmd --permanent --zone=public --add-port=3389/tcp firewall-cmd --reload   </description>
+    </item>
+    
+  </channel>
+</rss>

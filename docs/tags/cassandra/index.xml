@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>cassandra on Forgetful :/</title>
+    <link>https://murray-liang.github.io/forgetful/tags/cassandra/</link>
+    <description>Recent content in cassandra on Forgetful :/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
+    
+	<atom:link href="https://murray-liang.github.io/forgetful/tags/cassandra/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Design Learning: Cassandra Best Practices at eBay</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/design-cassandra-best-practices-ebay/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/design-cassandra-best-practices-ebay/</guid>
+      <description>https://www.ebayinc.com/stories/blogs/tech/cassandra-data-modeling-best-practices-part-1/</description>
+    </item>
+    
+  </channel>
+</rss>

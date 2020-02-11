@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>demo on Forgetful :/</title>
+    <link>https://murray-liang.github.io/forgetful/tags/demo/</link>
+    <description>Recent content in demo on Forgetful :/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
+    
+	<atom:link href="https://murray-liang.github.io/forgetful/tags/demo/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Kubernetes Demo</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/kubernetes-demo/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/kubernetes-demo/</guid>
+      <description>Pre-requisites   Pre-configurations on Unity.
+  Create a Pool and a NasServer.
+NOTE: the NFSv4 needs to be enabled on the NasServer.
+  Create hosts for the K8S nodes, k8s-node1 and k8s-node2 and manually register the initiators. Use below command to view the initiator name:
+  1 2  $ cat /etc/iscsi/initiatorname.iscsi InitiatorName=iqn.&amp;lt;rest of host iscsi initiator&amp;gt;     The docker daemon on all Nodes in K8S should be configured with DNS.</description>
+    </item>
+    
+  </channel>
+</rss>

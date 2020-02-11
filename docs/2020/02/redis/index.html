@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Redis | Forgetful :/</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="Notes about everything"><link rel="prev" href="https://murray-liang.github.io/forgetful/2020/02/redis-vs-zookeeper/" /><link rel="next" href="https://murray-liang.github.io/forgetful/2020/02/reactive-programming-rxjava-vertx/" /><link rel="canonical" href="https://murray-liang.github.io/forgetful/2020/02/redis/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff"><meta property="og:title" content="Redis" />
+<meta property="og:description" content="Data structures  Binary-safe strings Lists Sets Sorted sets Hashes Bit arrays (bitmaps) HyperLogLogs  LRU cache Used as a caching system.
+Master slave replication  async replication is used.  Persistence Several options:
+ RDB: Redis Database Backup, hot snapshot that is taken periodically and is meant for point-in-time recovery. An RDB file is literally a dump of all user data stored in an internal, compressed serialization format. AOF: Append Only File, persist the dataset by taking a snapshot and appending it with changes as they arrive." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://murray-liang.github.io/forgetful/2020/02/redis/" />
+<meta property="article:published_time" content="2020-02-10T16:37:31+08:00" />
+<meta property="article:modified_time" content="2020-02-10T16:37:31+08:00" />
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Redis",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/murray-liang.github.io\/forgetful\/2020\/02\/redis\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "https:\/\/murray-liang.github.io\/forgetful\/cover.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "posts","keywords": "redis","wordcount":  191 ,
+        "url": "https:\/\/murray-liang.github.io\/forgetful\/2020\/02\/redis\/","datePublished": "2020-02-10T16:37:31\x2b08:00","dateModified": "2020-02-10T16:37:31\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "murray",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "https:\/\/murray-liang.github.io\/forgetful\/logo.png",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": ""
+    }
+    </script><link rel="stylesheet" href="/forgetful/css/style.min.css"><link rel="stylesheet" href="/forgetful/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/forgetful/css/lib/forkawesome/forkawesome.min.css"><link rel="stylesheet" href="/forgetful/css/lib/animate/animate.min.css"></head>
+    <body><script>
+            if (!window.localStorage || !window.localStorage.getItem('theme')) {
+                window.isDark = 'dark' === 'dark';
+            } else {
+                window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            }
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header animated bounceIn">
+            <a href="https://murray-liang.github.io/forgetful">Forgetful :/</a>
+        </div>
+        <div class="navbar-menu"><a class="menu-item" href="https://murray-liang.github.io/forgetful/posts" title="">Posts</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/tags" title="">Tags</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/categories" title="">Categories</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"><i class="fas fa-language fa-fw"></i></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav><nav class="navbar-mobile">
+    <div class="navbar-container">
+        <div class="navbar-header">
+            <div class="navbar-header-title animated bounceIn">
+                <a href="https://murray-liang.github.io/forgetful">Forgetful :/</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://murray-liang.github.io/forgetful/posts" title="">Posts</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/tags" title="">Tags</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/categories" title="">Categories</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav>
+<main class="main">
+                <div class="container"><article class="page"><h1 class="post-title animated flipInX">Redis</h1><div class="post-meta">
+            <div class="post-meta-main"><a class="author" href="https://github.com/Murray-LIANG" rel="author" target="_blank">
+                    <i class="fas fa-user-circle fa-fw"></i>Murray-LIANG
+                </a>&nbsp;</div>
+            <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-02-10>2020-02-10</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 191 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>1 min&nbsp;</div>
+        </div><div class="post-toc" id="post-toc">
+                <h2 class="post-toc-title">Contents</h2>
+                <div class="post-toc-content"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#data-structures">Data structures</a></li>
+    <li><a href="#lru-cache">LRU cache</a></li>
+    <li><a href="#master-slave-replication">Master slave replication</a></li>
+    <li><a href="#persistence">Persistence</a></li>
+    <li><a href="#high-availability">High availability</a></li>
+    <li><a href="#redis-cluster">Redis cluster</a></li>
+  </ul>
+</nav></div>
+            </div>
+            <div class="post-toc-mobile" id="post-toc-mobile">
+                <details>
+                    <summary>
+                        <div class="post-toc-title">
+                            <span>Contents</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="post-toc-content"><nav id="TableOfContentsMobile">
+  <ul>
+    <li><a href="#data-structures">Data structures</a></li>
+    <li><a href="#lru-cache">LRU cache</a></li>
+    <li><a href="#master-slave-replication">Master slave replication</a></li>
+    <li><a href="#persistence">Persistence</a></li>
+    <li><a href="#high-availability">High availability</a></li>
+    <li><a href="#redis-cluster">Redis cluster</a></li>
+  </ul>
+</nav></div>
+                </details>
+            </div><div class="post-content"><a class="post-dummy-target" id="data-structures"></a><h2>Data structures</h2>
+<ul>
+<li>Binary-safe strings</li>
+<li>Lists</li>
+<li>Sets</li>
+<li>Sorted sets</li>
+<li>Hashes</li>
+<li>Bit arrays (bitmaps)</li>
+<li>HyperLogLogs</li>
+</ul>
+<a class="post-dummy-target" id="lru-cache"></a><h2>LRU cache</h2>
+<p>Used as a caching system.</p>
+<a class="post-dummy-target" id="master-slave-replication"></a><h2>Master slave replication</h2>
+<ul>
+<li>async replication is used.</li>
+</ul>
+<a class="post-dummy-target" id="persistence"></a><h2>Persistence</h2>
+<p>Several options:</p>
+<ul>
+<li>RDB: Redis Database Backup, hot snapshot that is taken periodically and is meant for point-in-time recovery. An RDB file is literally a dump of all user data stored in an internal, compressed serialization format.</li>
+<li>AOF: Append Only File, persist the dataset by taking a snapshot and appending it with changes as they arrive. Redis can be set up to rewrite the AOF file based on configurable thresholds or perform this operation on demand.</li>
+</ul>
+<a class="post-dummy-target" id="high-availability"></a><h2>High availability</h2>
+<p>Provided by Redis Sentinel:</p>
+<ul>
+<li>monitoring</li>
+<li>notification</li>
+<li>automatic failover</li>
+<li>configuration provider: clients can use Sentinel for service discovery in order to get the current Redis <strong>master</strong> server. Refer to: <a href="https://redis.io/topics/sentinel-clients">https://redis.io/topics/sentinel-clients</a></li>
+</ul>
+<a class="post-dummy-target" id="redis-cluster"></a><h2>Redis cluster</h2>
+<p>Provides the abilities to:</p>
+<ul>
+<li>automatically split your dateset among multiple nodes.</li>
+<li>continue operations when a subset of the nodes are experiencing failures or are unable to communicate with the rest of the cluster.</li>
+</ul>
+<p>The topology could be like the one below. The cluster uses three nodes running two redis instances per each.
+<figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/images/redis-cluster-3-nodes.png" alt="" class="lazyload"></figure>
+</p>
+<p>Refer to <a href="https://www.linode.com/docs/applications/big-data/how-to-install-and-configure-a-redis-cluster-on-ubuntu-1604/">https://www.linode.com/docs/applications/big-data/how-to-install-and-configure-a-redis-cluster-on-ubuntu-1604/</a></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>The article was updated on 2020-02-10</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><span></span></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section><span class="tag">
+                        <a href="https://murray-liang.github.io/forgetful/tags/redis/"><i class="fas fa-tag fa-fw"></i>&nbsp;redis</a>&nbsp;
+                    </span></section>
+        <section>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://murray-liang.github.io/forgetful">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="https://murray-liang.github.io/forgetful/2020/02/redis-vs-zookeeper/" class="prev" rel="prev" title="Redis vs Zookeeper"><i class="fas fa-angle-left fa-fw"></i>Redis vs Zookeeper</a>
+            <a href="https://murray-liang.github.io/forgetful/2020/02/reactive-programming-rxjava-vertx/" class="next" rel="next" title="Reactive Programming, Rxjava and Vert.x">Reactive Programming, Rxjava and Vert.x<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div class="post-comment"></div>
+    </article></div>
+            </main><footer class="footer">
+    <div class="copyright"><div class="copyright-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
+        </div>
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/Murray-LIANG" target="_blank">Murray-LIANG</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+    </div>
+</footer>
+</div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>
+            <span>&nbsp;</span>
+        </a><script src="/forgetful/js/lib/jquery/jquery.slim.min.js"></script><script src="/forgetful/js/lib/lazysizes/lazysizes.min.js"></script><script src="/forgetful/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script><link rel="stylesheet" href="/forgetful/css/lib/katex/katex.min.css"><script src="/forgetful/js/lib/katex/katex.min.js"></script><script defer src="/forgetful/js/lib/katex/auto-render.min.js"></script><link rel="stylesheet" href="/forgetful/css/lib/katex/copy-tex.min.css"><script defer src="/forgetful/js/lib/katex/copy-tex.min.js"></script><script defer src="/forgetful/js/lib/katex/mhchem.min.js"></script><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },{ left: "$", right: "$", display: false },]
+            });
+        });
+    </script><script src="/forgetful/js/blog.min.js"></script>
+</body>
+</html>

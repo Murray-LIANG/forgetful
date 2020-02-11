@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Kubernetes Overlay Network | Forgetful :/</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="Notes about everything"><link rel="prev" href="https://murray-liang.github.io/forgetful/2020/02/kubernetes-what-is-pause-container/" /><link rel="next" href="https://murray-liang.github.io/forgetful/2020/02/kubernetes-networking/" /><link rel="canonical" href="https://murray-liang.github.io/forgetful/2020/02/kubernetes-overlay-network/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff"><meta property="og:title" content="Kubernetes Overlay Network" />
+<meta property="og:description" content="Overlay networks such as vxlan or ipsec encapsulate the packet into another packet. This makes entities addressable that are outside of the scope of another machine.
+Any solution on L2 or L3 makes a pod addressable on the network. This means a pod is reachable not just within the Docker network, but is directly addressable from outside the Docker network. These could be public or private IP addresses.
+The way of route and iptables described here is a L3 solution (not a overlay networking) making a pod addressable on the network." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://murray-liang.github.io/forgetful/2020/02/kubernetes-overlay-network/" />
+<meta property="article:published_time" content="2020-02-10T16:37:31+08:00" />
+<meta property="article:modified_time" content="2020-02-10T16:37:31+08:00" />
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Kubernetes Overlay Network",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/murray-liang.github.io\/forgetful\/2020\/02\/kubernetes-overlay-network\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "https:\/\/murray-liang.github.io\/forgetful\/cover.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "posts","keywords": "kubernetes, k8s, network, overlay network","wordcount":  2583 ,
+        "url": "https:\/\/murray-liang.github.io\/forgetful\/2020\/02\/kubernetes-overlay-network\/","datePublished": "2020-02-10T16:37:31\x2b08:00","dateModified": "2020-02-10T16:37:31\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "murray",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "https:\/\/murray-liang.github.io\/forgetful\/logo.png",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": ""
+    }
+    </script><link rel="stylesheet" href="/forgetful/css/style.min.css"><link rel="stylesheet" href="/forgetful/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/forgetful/css/lib/forkawesome/forkawesome.min.css"><link rel="stylesheet" href="/forgetful/css/lib/animate/animate.min.css"></head>
+    <body><script>
+            if (!window.localStorage || !window.localStorage.getItem('theme')) {
+                window.isDark = 'dark' === 'dark';
+            } else {
+                window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            }
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header animated bounceIn">
+            <a href="https://murray-liang.github.io/forgetful">Forgetful :/</a>
+        </div>
+        <div class="navbar-menu"><a class="menu-item" href="https://murray-liang.github.io/forgetful/posts" title="">Posts</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/tags" title="">Tags</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/categories" title="">Categories</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"><i class="fas fa-language fa-fw"></i></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav><nav class="navbar-mobile">
+    <div class="navbar-container">
+        <div class="navbar-header">
+            <div class="navbar-header-title animated bounceIn">
+                <a href="https://murray-liang.github.io/forgetful">Forgetful :/</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://murray-liang.github.io/forgetful/posts" title="">Posts</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/tags" title="">Tags</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/categories" title="">Categories</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav>
+<main class="main">
+                <div class="container"><article class="page"><h1 class="post-title animated flipInX">Kubernetes Overlay Network</h1><div class="post-meta">
+            <div class="post-meta-main"><a class="author" href="https://github.com/Murray-LIANG" rel="author" target="_blank">
+                    <i class="fas fa-user-circle fa-fw"></i>Murray-LIANG
+                </a>&nbsp;</div>
+            <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-02-10>2020-02-10</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 2583 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>13 min&nbsp;</div>
+        </div><div class="post-toc" id="post-toc">
+                <h2 class="post-toc-title">Contents</h2>
+                <div class="post-toc-content"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#encapsulation">Encapsulation</a>
+      <ul>
+        <li><a href="#vxlan">vxlan</a></li>
+        <li><a href="#ip-in-ip">ip-in-ip</a></li>
+      </ul>
+    </li>
+    <li><a href="#flannel-networking">Flannel Networking</a>
+      <ul>
+        <li><a href="#flannel-backends">Flannel Backends</a></li>
+        <li><a href="#packet-traverse-of-vxlan-backend">Packet Traverse of vxlan Backend</a>
+          <ul>
+            <li><a href="#0-kubernetes-deployment-where-pod-ubuntu-1-with-ip-10244196-pod-ubuntu-2-with-ip-10244266">0. Kubernetes deployment where pod ubuntu-1 with IP 10.244.1.96, pod ubuntu-2 with IP 10.244.2.66.</a></li>
+            <li><a href="#1-pod-ubuntu-1-pings-ubuntu-2-successfully">1. Pod ubuntu-1 pings ubuntu-2 successfully.</a></li>
+            <li><a href="#2-now-the-packet-leaves-from-the-pod-and-enters-bridge-cni0s-veth-interface">2. Now the packet leaves from the pod and enters bridge cni0's veth interface.</a></li>
+            <li><a href="#3-determine-the-next-hop-on-the-root-netns">3. Determine the next hop on the root netns.</a></li>
+            <li><a href="#4-now-the-packet-gets-encapsulated-and-sent-out-to-remote-vtep-17216113">4. Now the packet gets encapsulated and sent out to remote VTEP 172.16.1.13.</a></li>
+            <li><a href="#5-the-packet-is-routed-to-k8s-node2-in-nodes-network-on-k8s-node2-it-gets-decapsulated-then-sent-to-cni0-bridge-and-its-veth-interface-in-root-netns-finally-sent-to-pod-ubuntu-2">5. The packet is routed to k8s-node2 in nodes&rsquo; network. On k8s-node2 it gets decapsulated, then sent to cni0 bridge and its veth interface in root netns, finally sent to pod ubuntu-2.</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#udp-encapsulation-vs-vxlan-encapsulation">UDP Encapsulation vs vxlan Encapsulation</a></li>
+    <li><a href="#flannel-ipam-ip-address-management">Flannel IPAM (IP Address Management)</a></li>
+  </ul>
+</nav></div>
+            </div>
+            <div class="post-toc-mobile" id="post-toc-mobile">
+                <details>
+                    <summary>
+                        <div class="post-toc-title">
+                            <span>Contents</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="post-toc-content"><nav id="TableOfContentsMobile">
+  <ul>
+    <li><a href="#encapsulation">Encapsulation</a>
+      <ul>
+        <li><a href="#vxlan">vxlan</a></li>
+        <li><a href="#ip-in-ip">ip-in-ip</a></li>
+      </ul>
+    </li>
+    <li><a href="#flannel-networking">Flannel Networking</a>
+      <ul>
+        <li><a href="#flannel-backends">Flannel Backends</a></li>
+        <li><a href="#packet-traverse-of-vxlan-backend">Packet Traverse of vxlan Backend</a>
+          <ul>
+            <li><a href="#0-kubernetes-deployment-where-pod-ubuntu-1-with-ip-10244196-pod-ubuntu-2-with-ip-10244266">0. Kubernetes deployment where pod ubuntu-1 with IP 10.244.1.96, pod ubuntu-2 with IP 10.244.2.66.</a></li>
+            <li><a href="#1-pod-ubuntu-1-pings-ubuntu-2-successfully">1. Pod ubuntu-1 pings ubuntu-2 successfully.</a></li>
+            <li><a href="#2-now-the-packet-leaves-from-the-pod-and-enters-bridge-cni0s-veth-interface">2. Now the packet leaves from the pod and enters bridge cni0's veth interface.</a></li>
+            <li><a href="#3-determine-the-next-hop-on-the-root-netns">3. Determine the next hop on the root netns.</a></li>
+            <li><a href="#4-now-the-packet-gets-encapsulated-and-sent-out-to-remote-vtep-17216113">4. Now the packet gets encapsulated and sent out to remote VTEP 172.16.1.13.</a></li>
+            <li><a href="#5-the-packet-is-routed-to-k8s-node2-in-nodes-network-on-k8s-node2-it-gets-decapsulated-then-sent-to-cni0-bridge-and-its-veth-interface-in-root-netns-finally-sent-to-pod-ubuntu-2">5. The packet is routed to k8s-node2 in nodes&rsquo; network. On k8s-node2 it gets decapsulated, then sent to cni0 bridge and its veth interface in root netns, finally sent to pod ubuntu-2.</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#udp-encapsulation-vs-vxlan-encapsulation">UDP Encapsulation vs vxlan Encapsulation</a></li>
+    <li><a href="#flannel-ipam-ip-address-management">Flannel IPAM (IP Address Management)</a></li>
+  </ul>
+</nav></div>
+                </details>
+            </div><div class="post-content"><p>Overlay networks such as <code>vxlan</code> or <code>ipsec</code> <strong>encapsulate the packet into another packet</strong>. This makes entities addressable that are outside of the scope of another machine.</p>
+<p>Any solution on L2 or L3 makes a pod addressable on the network. This means a pod is reachable not just within the Docker network, but is <strong>directly addressable from outside the Docker network</strong>. These could be public or private IP addresses.</p>
+<p>The way of <code>route</code> and <code>iptables</code> described <a href="kubernetes-networking.md">here</a>
+ is a L3 solution (not a <code>overlay</code> networking) making a pod addressable on the network.</p>
+<p><code>Flannel</code> is a simple network and is the easiest setup option for an <code>overlay</code> network.</p>
+<a class="post-dummy-target" id="encapsulation"></a><h2>Encapsulation</h2>
+<p>Say you need to send a packet from the computer <code>172.9.9.8</code> to the container/pod <code>10.4.4.4</code> and it&rsquo;s on another computer <code>172.9.9.9</code>. These two computers are far away from each other, we have to address the packet to the IP address <code>172.9.9.9</code> first, then where are we going to put the IP address <code>10.4.4.4</code>?</p>
+<p>Here we need <strong>encapsulation</strong> where you take a network packet and put it inside another network packet.</p>
+<p>For example, instead of sending:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">IP: 10.4.4.4
+TCP stuff
+HTTP stuff
+</code></pre></td></tr></table>
+</div>
+</div><p>we will send:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">IP: 172.9.9.9
+(extra wrapper stuff)
+IP: 10.4.4.4
+TCP stuff
+HTTP stuff
+</code></pre></td></tr></table>
+</div>
+</div><p>There are at least 2 different ways of doing encapsulation: there&rsquo;s <code>ip-in-ip</code> and <code>vxlan</code> encapsulation.</p>
+<a class="post-dummy-target" id="vxlan"></a><h3>vxlan</h3>
+<p>Takes your <strong>whole packet</strong> (including the MAC address) and wraps it inside a UDP packet, which looks like:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">MAC address: 11:11:11:11:11:11
+IP: 172.9.9.9
+UDP port: 8472 (the `vxlan port`)
+MAC address: ab💿ef:12:34:56
+IP: 10.4.4.4
+TCP port: 80
+HTTP stuff
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="ip-in-ip"></a><h3>ip-in-ip</h3>
+<p>Slaps on an extra IP header on top of your old IP header. This means you <strong>don&rsquo;t get to keep the MAC address</strong> you wanted to send it to.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">MAC address: 11:11:11:11:11:11
+IP: 172.9.9.9
+IP: 10.4.4.4
+TCP port: 80
+HTTP stuff
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="flannel-networking"></a><h2>Flannel Networking</h2>
+<p>Flannel creates another flat network which runs above the host network, this is the so-called <code>overlay</code> network. All containers/pod will be assigned one IP address in this overlay network, they communicate with each other by call each other&rsquo;s IP address directly.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"> Cluster CIDR: 10.244.0.0/16
+
+ Pod CIDR: 10.244.1.0/24
+           10.244.2.0/24
+           ... ...
+
+ 256 Nodes or flannel
+ 256 Pods per node
+
+ 10.244.0.0/16 is called overlay network, while 172.16.1.0/24 is underlay network.
+
++----------------------+   +---------------------------+   +---------------------------+
+| Master               |   | Node-1                    |   | Node-2                    |
+|                      |   |                           |   |                           |
+|                      |   | +-----------------------+ |   | +-----------------------+ |
+|                      |   | | Pod ubuntu-1          | |   | | Pod ubuntu-2          | |
+|                      |   | |                       | |   | |                       | |
+|                      |   | | +-------------------+ | |   | | +-------------------+ | |
+|                      |   | | | eth0: 10.244.1.96 | | |   | | | eth0: 10.244.2.66 | | |
+|                      |   | +-+-+-----------------+-+ |   | +-+-+-----------------+-+ |
+|                      |   |     |                     |   |     |                     |
+|                      |   |     |                     |   |     |                     |
+|                      |   | +---+--+                  |   | +---+--+                  |
+|                      |   | | veth |                  |   | | veth |                  |
+| +----------------+   |   | +------+------+           |   | +------+------+           |
+| | Bridge cni0    |   |   | | Bridge cni0 |           |   | | Bridge cni0 |           |
+| | 10.244.0.1     |   |   | | 10.244.1.1  |           |   | | 10.244.2.1  |           |
+| +-------+--------+   |   | +------+------+           |   | +------+------+           |
+|         |            |   |        |                  |   |        |                  |
+|         |            |   |        |                  |   |        |                  |
+| +-------+--------+   |   | +------+---------+        |   | +------+---------+        |
+| | flannel.1      |   |   | | flannel.1      |        |   | | flannel.1      |        |
+| | 10.244.0.0     |   |   | | 10.244.1.0     |        |   | | 10.244.2.0     |        |
+| +-------+--------+   |   | +------+---------+        |   | +------+---------+        |
+|         |            |   |        |                  |   |        |                  |
+|         |            |   |        |                  |   |        |                  |
+| +-------+----------+ |   | +------+------------+     |   | +------+------------+     |
+| | ens3: 172.16.1.8 | |   | | ens3: 172.16.1.14 |     |   | | ens3: 172.16.1.13 |     |
++-+-------+----------+-+   +-+------+------------+-----+   +-+----------+--------+-----+
+          |                         |                                   |
+          |                         |                                   |
+          +-------------------------+-----------------------------------+
+
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="flannel-backends"></a><h3>Flannel Backends</h3>
+<ul>
+<li>vxlan</li>
+<li>host-gw</li>
+<li>UDP</li>
+</ul>
+<p>The topology diagram above is using <code>vxlan</code> as backend. The one using <code>UDP</code> is almost the same.</p>
+<a class="post-dummy-target" id="packet-traverse-of-vxlan-backend"></a><h3>Packet Traverse of <code>vxlan</code> Backend</h3>
+<a class="post-dummy-target" id="0-kubernetes-deployment-where-pod-ubuntu-1-with-ip-10244196-pod-ubuntu-2-with-ip-10244266"></a><h4>0. Kubernetes deployment where pod <code>ubuntu-1</code> with IP <code>10.244.1.96</code>, pod <code>ubuntu-2</code> with IP <code>10.244.2.66</code>.</h4>
+<p>The deployment yaml files for <code>ubuntu-1</code> and <code>ubuntu-2</code>.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml">---<span class="w">
+</span><span class="w"></span><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>apps/v1<span class="w">
+</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>Deployment<span class="w">
+</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>ubuntu<span class="m">-1</span><span class="w">
+</span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="w">  </span><span class="k">replicas</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span><span class="w">  </span><span class="k">selector</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="w">    </span><span class="k">matchLabels</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="w">      </span><span class="k">app</span><span class="p">:</span><span class="w"> </span>ubuntu<span class="m">-1</span><span class="w">
+</span><span class="w">  </span><span class="k">template</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="w">    </span><span class="k">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="w">      </span><span class="k">labels</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="w">        </span><span class="k">app</span><span class="p">:</span><span class="w"> </span>ubuntu<span class="m">-1</span><span class="w">
+</span><span class="w">    </span><span class="k">spec</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="w">      </span><span class="k">containers</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="w">        </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>ubuntu<span class="m">-1</span><span class="w">
+</span><span class="w">          </span><span class="k">image</span><span class="p">:</span><span class="w"> </span>anilkreddyr/ubuntu_ping<span class="w">
+</span><span class="w">      </span><span class="k">nodeSelector</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="w">          </span><span class="k">kubernetes.io/hostname</span><span class="p">:</span><span class="w"> </span>k8s-node1<span class="w">
+</span><span class="w"></span>---<span class="w">
+</span><span class="w"></span><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>apps/v1<span class="w">
+</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>Deployment<span class="w">
+</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>ubuntu<span class="m">-2</span><span class="w">
+</span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="w">  </span><span class="k">replicas</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span><span class="w">  </span><span class="k">selector</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="w">    </span><span class="k">matchLabels</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="w">      </span><span class="k">app</span><span class="p">:</span><span class="w"> </span>ubuntu<span class="m">-2</span><span class="w">
+</span><span class="w">  </span><span class="k">template</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="w">    </span><span class="k">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="w">      </span><span class="k">labels</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="w">        </span><span class="k">app</span><span class="p">:</span><span class="w"> </span>ubuntu<span class="m">-2</span><span class="w">
+</span><span class="w">    </span><span class="k">spec</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="w">      </span><span class="k">containers</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="w">        </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>ubuntu<span class="m">-2</span><span class="w">
+</span><span class="w">          </span><span class="k">image</span><span class="p">:</span><span class="w"> </span>anilkreddyr/ubuntu_ping<span class="w">
+</span><span class="w">      </span><span class="k">nodeSelector</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="w">          </span><span class="k">kubernetes.io/hostname</span><span class="p">:</span><span class="w"> </span>k8s-node2<span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ kubectl get pods -o wide
+NAME                         READY   STATUS    RESTARTS   AGE     IP            NODE        NOMINATED NODE   READINESS GATES
+ubuntu-1-f949f858-trrn9      1/1     Running   0          19h     10.244.1.96   k8s-node1   &lt;none&gt;           &lt;none&gt;
+ubuntu-2-648cdb99dc-dv898    1/1     Running   0          19h     10.244.2.66   k8s-node2   &lt;none&gt;           &lt;none&gt;
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="1-pod-ubuntu-1-pings-ubuntu-2-successfully"></a><h4>1. Pod <code>ubuntu-1</code> pings <code>ubuntu-2</code> successfully.</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ kubectl exec ubuntu-1-f949f858-trrn9 -it bash
+
+$ # ubuntu-1 has IP 10.244.1.96
+root@ubuntu-1-f949f858-trrn9:/# ip addr show eth0
+3: eth0@if7: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1400 qdisc noqueue state UP group default
+    link/ether 2a:77:20:40:d1:bf brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 10.244.1.96/24 scope global eth0
+       valid_lft forever preferred_lft forever
+
+root@ubuntu-1-f949f858-trrn9:/# ping 10.244.2.66
+PING 10.244.2.66 (10.244.2.66) 56(84) bytes of data.
+64 bytes from 10.244.2.66: icmp_seq=1 ttl=62 time=2.51 ms
+64 bytes from 10.244.2.66: icmp_seq=2 ttl=62 time=1.15 ms
+
+$ # ubuntu-1 routes to ubuntu-2 via the 2nd routing rule,
+$ # because ubuntu-2&#39;s IP 10.244.2.66 is in the huge subnet of 10.244.0.0/16.
+$ # So, the next hop is `eth0`.
+root@ubuntu-1-f949f858-trrn9:/# ip route get 10.244.2.66
+10.244.2.66 via 10.244.1.1 dev eth0  src 10.244.1.96
+    cache
+
+root@ubuntu-1-f949f858-trrn9:/# ip route
+default via 10.244.1.1 dev eth0
+10.244.0.0/16 via 10.244.1.1 dev eth0
+10.244.1.0/24 dev eth0  proto kernel  scope link  src 10.244.1.96
+</code></pre></td></tr></table>
+</div>
+</div><p>As we know, a <code>veth</code> pair is created, one end of the veth pair is <code>eth0</code> of pod, and the other end <code>vethxxx</code> is an interface on the bridge and created in root ns. You could follow below steps to view the veth pair.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ # 1. Check the sandbox of ubuntu-1&#39;s parent container,
+$ # because ubuntu-1 pod is using the parent&#39;s network.
+root@k8s-node1:~# docker inspect k8s_POD_ubuntu-1-f949f858-trrn9_default_5ecd1edb-a93d-11e9-9842-fa163ece4076_0 | grep Sandbox
+            &#34;SandboxID&#34;: &#34;6d0f066e5e19076683b9ddd53ca25fc088b42ec5dacee8ad1a33b51cda196203&#34;,
+            &#34;SandboxKey&#34;: &#34;/var/run/docker/netns/6d0f066e5e19&#34;,
+
+$ # 2. View the pod&#39;s network information by entering the network namespace.
+root@k8s-node1:~# nsenter --net=&#34;/var/run/docker/netns/6d0f066e5e19&#34; ip addr
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+3: eth0@if7: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1400 qdisc noqueue state UP group default
+    link/ether 2a:77:20:40:d1:bf brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 10.244.1.96/24 scope global eth0
+       valid_lft forever preferred_lft forever
+
+$ # 3. Identify the `peer_ifindex`
+root@k8s-node1:~# nsenter --net=&#34;/var/run/docker/netns/6d0f066e5e19&#34; ethtool -S eth0
+NIC statistics:
+     peer_ifindex: 7
+
+$ # 4. Get the peer in root ns
+root@k8s-node1:~# ip -d link | grep &#39;7: &#39;
+7: vethae159e77@if3: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1400 qdisc noqueue master cni0 state UP mode DEFAULT group default
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>NOTE: Why does the network namespace need <code>nsenter</code> and cannot work with <code>ip netns</code>?</strong>
+Because <code>ip netns</code> only works with namespace symlinks in <code>/var/run/netns</code> but the namespaces in docker are under <code>/var/run/docker/netns</code>. If you create a symlinks under <code>/var/run/netns</code> for docker network namespace, you can use <code>ip netns</code> command.</p>
+<a class="post-dummy-target" id="2-now-the-packet-leaves-from-the-pod-and-enters-bridge-cni0s-veth-interface"></a><h4>2. Now the packet leaves from the pod and enters bridge <code>cni0</code>'s <code>veth</code> interface.</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ # vethae159e77 interface is on bridge cni0
+root@k8s-node1:~# brctl show
+bridge name     bridge id               STP enabled     interfaces
+cni0            8000.da54dcf2f3fe       no              veth8b9bf99b
+                                                        vethae159e77
+docker0         8000.0242a9fee8af       no
+
+$ # cni0 has IP 10.244.1.1 which is the next hop of above routing
+root@k8s-node1:~# ip -d -4 addr show cni0
+5: cni0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1400 qdisc noqueue state UP group default qlen 1000
+    link/ether da:54:dc:f2:f3:fe brd ff:ff:ff:ff:ff:ff promiscuity 0
+    bridge forward_delay 1500 hello_time 200 max_age 2000 ageing_time 30000 stp_state 0 priority 32768 vlan_filtering 0 vlan_protocol 802.1Q
+    inet 10.244.1.1/24 scope global cni0
+       valid_lft forever preferred_lft forever
+
+$ # Capture packets on interface vethae159e77
+root@k8s-node1:~# tcpdump -vv -ni vethae159e77 icmp
+tcpdump: listening on vethae159e77, link-type EN10MB (Ethernet), capture size 262144 bytes
+
+06:15:13.046136 IP (tos 0x0, ttl 64, id 52778, offset 0, flags [DF], proto ICMP (1), length 84)
+    10.244.1.96 &gt; 10.244.2.66: ICMP echo request, id 39, seq 1, length 64
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="3-determine-the-next-hop-on-the-root-netns"></a><h4>3. Determine the next hop on the root netns.</h4>
+<p>Bridge <code>cni0</code> is in the root netns.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">root@k8s-node1:~# ip route
+default via 172.16.1.1 dev ens3
+10.244.0.0/24 via 10.244.0.0 dev flannel.1 onlink
+10.244.1.0/24 dev cni0  proto kernel  scope link  src 10.244.1.1
+10.244.2.0/24 via 10.244.2.0 dev flannel.1 onlink
+
+root@k8s-node1:~# ip route get 10.244.2.66
+10.244.2.66 via 10.244.2.0 dev flannel.1  src 10.244.1.0
+    cache
+
+$ # Check the ARP cache for the next hop `10.244.2.0`
+$ # A Layer 3 device looks into the ARP table to figure out what MAC address
+$ # to put into the packet header. Here it needs to find the MAC address of
+$ # IP 10.244.2.0.
+root@k8s-node1:~# ip neighbor show 10.244.2.0
+10.244.2.0 dev flannel.1 lladdr 52:17:43:ba:2e:56 PERMANENT
+
+$ # A Layer 2 device inspects the destination MAC address of the frame and
+$ # look to its FDB table for information on where to send that specific
+$ # Ethernet frame. If the FDB table doesn&#39;t have any information on that
+$ # specific MAC address it will flood the Ethernet frame out to all ports in
+$ # the broadcast domain.
+root@k8s-node1:~# bridge fdb show dev flannel.1 | grep 52:17:43:ba:2e:56
+52:17:43:ba:2e:56 dst 172.16.1.13 self permanent
+
+root@k8s-node1:~# ip neighbor show 172.16.1.13
+172.16.1.13 dev ens3 lladdr fa:16:3e:cc:78:67 STALE
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>NOTE: Who writes bridge FDB table entries?</strong> Because <code>flannel</code> pod is deployed as a <code>daemon set</code>. When a new node joins the cluster, <code>kube-flannel</code> will be launched on it, and it&rsquo;ll publish the new node&rsquo;s <code>public-ip</code> and <code>VtepMAC</code> as annotations. And, each node can read this information and the FDB entry is programmed.</p>
+<a class="post-dummy-target" id="4-now-the-packet-gets-encapsulated-and-sent-out-to-remote-vtep-17216113"></a><h4>4. Now the packet gets encapsulated and sent out to remote VTEP 172.16.1.13.</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ # Pay attention to the `dstport` 8472 which is the destination port of the
+$ # encapsulated packet.
+root@k8s-node1:~# ip -d link show flannel.1
+4: flannel.1: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1400 qdisc noqueue state UNKNOWN mode DEFAULT group default
+    link/ether 26:62:24:f0:61:01 brd ff:ff:ff:ff:ff:ff promiscuity 0
+    vxlan id 1 local 172.16.1.14 dev ens3 srcport 0 0 dstport 8472 nolearning ageing 300 addrgenmode eui64
+
+$ # The packet is encapsulated indeed. You can see the packet is a ICMP
+$ # wrapped by a UDP. 
+root@k8s-node1:~# tcpdump -vv -ni ens3 udp
+tcpdump: listening on ens3, link-type EN10MB (Ethernet), capture size 262144 bytes
+
+07:26:48.356032 IP (tos 0x0, ttl 64, id 1164, offset 0, flags [none], proto UDP (17), length 134)
+    172.16.1.14.53811 &gt; 172.16.1.13.8472: [no cksum] OTV, flags [I] (0x08), overlay 0, instance 1
+IP (tos 0x0, ttl 63, id 50392, offset 0, flags [DF], proto ICMP (1), length 84)
+    10.244.1.96 &gt; 10.244.2.66: ICMP echo request, id 40, seq 1, length 64
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="5-the-packet-is-routed-to-k8s-node2-in-nodes-network-on-k8s-node2-it-gets-decapsulated-then-sent-to-cni0-bridge-and-its-veth-interface-in-root-netns-finally-sent-to-pod-ubuntu-2"></a><h4>5. The packet is routed to <code>k8s-node2</code> in nodes&rsquo; network. On <code>k8s-node2</code> it gets decapsulated, then sent to <code>cni0</code> bridge and its <code>veth</code> interface in root netns, finally sent to pod <code>ubuntu-2</code>.</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ # 10.244.2.66 is in the subnet of 10.244.2.0/24 (the 4th one)
+k8s@k8s-node2:~$ ip route
+default via 172.16.1.1 dev ens3
+10.244.0.0/24 via 10.244.0.0 dev flannel.1 onlink
+10.244.1.0/24 via 10.244.1.0 dev flannel.1 onlink
+10.244.2.0/24 dev cni0  proto kernel  scope link  src 10.244.2.1
+169.254.169.254 via 172.16.1.2 dev ens3
+172.16.1.0/24 dev ens3  proto kernel  scope link  src 172.16.1.13
+172.17.0.0/16 dev docker0  proto kernel  scope link  src 172.17.0.1 linkdown
+
+k8s@k8s-node2:~$ ip route get 10.244.2.66
+10.244.2.66 dev cni0  src 10.244.2.1
+    cache
+
+$ # 10.244.2.1 is the IP of cni0
+k8s@k8s-node2:~$ ip addr show cni0
+5: cni0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1400 qdisc noqueue state UP group default qlen 1000
+    link/ether 96:d3:bf:4f:14:2d brd ff:ff:ff:ff:ff:ff
+    inet 10.244.2.1/24 scope global cni0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::94d3:bfff:fe4f:142d/64 scope link
+       valid_lft forever preferred_lft forever
+
+k8s@k8s-node2:~$ brctl show cni0
+bridge name     bridge id               STP enabled     interfaces
+cni0            8000.96d3bf4f142d       no              veth69924cbc
+                                                        veth75afbddc
+                                                        veth93c66b54
+
+root@k8s-node2:~# docker inspect k8s_POD_ubuntu-2-648cdb99dc-dv898_default_5ecbede9-a93d-11e9-9842-fa163ece4076_0 | grep Sandbox
+            &#34;SandboxID&#34;: &#34;bfc09105b49d438278cc677d67afdaa05466cb326563203ffc5e3deb2591ef75&#34;,
+            &#34;SandboxKey&#34;: &#34;/var/run/docker/netns/bfc09105b49d&#34;,
+
+root@k8s-node2:~# nsenter --net=&#34;/var/run/docker/netns/bfc09105b49d&#34; ip addr
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+3: eth0@if8: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1400 qdisc noqueue state UP group default
+    link/ether be:33:b3:56:88:41 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 10.244.2.66/24 scope global eth0
+       valid_lft forever preferred_lft forever
+
+root@k8s-node2:~# ip addr
+... ...
+8: veth69924cbc@if3: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1400 qdisc noqueue master cni0 state UP group default
+    link/ether 32:db:75:2f:0e:3e brd ff:ff:ff:ff:ff:ff link-netnsid 2
+    inet6 fe80::30db:75ff:fe2f:e3e/64 scope link
+       valid_lft forever preferred_lft forever
+
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="udp-encapsulation-vs-vxlan-encapsulation"></a><h2>UDP Encapsulation vs vxlan Encapsulation</h2>
+<p><code>vxlan</code> is the default backend of <code>flannel</code>, because its performance is better than <code>UDP</code>. You can think <code>vxlan</code> as an additional layer above the <code>TCP/UDP</code> layer and <code>vxlan</code> knows how to route vxlan packets (having <code>vxlan</code> header) with its own protocol.</p>
+<p>While the <code>UDP</code> backend copies the packet back and forth from the user space to kernel space, so it isn&rsquo;t recommended to use in production as performance concern. But we can still use <code>UDP</code> for debugging and testing purpose.</p>
+<p><figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/images/kubernetes-overlay-network-flannel-udp.png" alt="" class="lazyload"></figure>
+</p>
+<p>Like in <code>vxlan</code>, the packet is sent to <code>flannel0</code> according to the routing table.
+The difference is <code>flannel0</code> here is a <strong>TUN</strong> device which is created by <code>flanneld</code> daemon process. <code>TUN</code> is a software interface implemented in linux kernel, it can pass raw ip packet between user program and the kernel. It works in two directions:</p>
+<ul>
+<li>when it writes IP packet to the <code>flannel0</code> device, the packet will be send to kernel directly, and kernel will route the packet according to its route table.</li>
+<li>when an IP packet arrives to the kernel, and the route tables says it should be routed to <code>flannel0</code> device, kernel will send the packet directly to the process which created this device, which is the <code>flanneld</code> daemon process.</li>
+</ul>
+<p>So, it has to copy the packet 3 times between the user space and the kernel space, which will increase the network overhead in a significant way.</p>
+<p><figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/images/kubernetes-overlay-network-flannel-udp-packet-copy.png" alt="" class="lazyload"></figure>
+</p>
+<a class="post-dummy-target" id="flannel-ipam-ip-address-management"></a><h2>Flannel IPAM (IP Address Management)</h2>
+<p>Flannel doesn&rsquo;t allocate and maintain the IP addresses to pods, <code>host-local</code> CNI plugin is responsible for this.</p>
+<p>We can check the <code>ubuntu-1</code>'s network.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ # Get the id of parent container
+root@k8s-node1:~# docker ps | grep k8s_POD_ubuntu-1
+0dc487cc6e4f        k8s.gcr.io/pause:3.1             &#34;/pause&#34;                 23 hours ago        Up 23 hours                             k8s_POD_ubuntu-1-f949f858-trrn9_default_5ecd1edb-a93d-11e9-9842-fa163ece4076_0
+
+$ # It is using `cbr0` and 10.244.1.0/24 IPAM.
+root@k8s-node1:~# cat /var/lib/cni/flannel/0dc487cc6e4faf25ddd504d0e59339f2edf94f10ea664f9765be514bb3219cff
+{&#34;hairpinMode&#34;:true,&#34;ipMasq&#34;:false,&#34;ipam&#34;:{&#34;routes&#34;:[{&#34;dst&#34;:&#34;10.244.0.0/16&#34;}],&#34;subnet&#34;:&#34;10.244.1.0/24&#34;,&#34;type&#34;:&#34;host-local&#34;},&#34;isDefaultGateway&#34;:true,&#34;isGateway&#34;:true,&#34;mtu&#34;:1400,&#34;name&#34;:&#34;cbr0&#34;,&#34;type&#34;:&#34;bridge&#34;}
+
+root@k8s-node1:~# cat /var/lib/cni/networks/cbr0/10.244.1.96
+0dc487cc6e4faf25ddd504d0e59339f2edf94f10ea664f9765be514bb3219cff
+</code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>The article was updated on 2020-02-10</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><span></span></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section><span class="tag">
+                        <a href="https://murray-liang.github.io/forgetful/tags/kubernetes/"><i class="fas fa-tag fa-fw"></i>&nbsp;kubernetes</a>&nbsp;
+                    </span><span class="tag">
+                        <a href="https://murray-liang.github.io/forgetful/tags/k8s/"><i class="fas fa-tag fa-fw"></i>&nbsp;k8s</a>&nbsp;
+                    </span><span class="tag">
+                        <a href="https://murray-liang.github.io/forgetful/tags/network/"><i class="fas fa-tag fa-fw"></i>&nbsp;network</a>&nbsp;
+                    </span><span class="tag">
+                        <a href="https://murray-liang.github.io/forgetful/tags/overlay-network/"><i class="fas fa-tag fa-fw"></i>&nbsp;overlay network</a>&nbsp;
+                    </span></section>
+        <section>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://murray-liang.github.io/forgetful">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="https://murray-liang.github.io/forgetful/2020/02/kubernetes-what-is-pause-container/" class="prev" rel="prev" title="Kubernetes What is Pause Container"><i class="fas fa-angle-left fa-fw"></i>Kubernetes What is Pause Container</a>
+            <a href="https://murray-liang.github.io/forgetful/2020/02/kubernetes-networking/" class="next" rel="next" title="Kubernetes Networking">Kubernetes Networking<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div class="post-comment"></div>
+    </article></div>
+            </main><footer class="footer">
+    <div class="copyright"><div class="copyright-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
+        </div>
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/Murray-LIANG" target="_blank">Murray-LIANG</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+    </div>
+</footer>
+</div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>
+            <span>&nbsp;</span>
+        </a><script src="/forgetful/js/lib/jquery/jquery.slim.min.js"></script><script src="/forgetful/js/lib/lazysizes/lazysizes.min.js"></script><script src="/forgetful/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script><link rel="stylesheet" href="/forgetful/css/lib/katex/katex.min.css"><script src="/forgetful/js/lib/katex/katex.min.js"></script><script defer src="/forgetful/js/lib/katex/auto-render.min.js"></script><link rel="stylesheet" href="/forgetful/css/lib/katex/copy-tex.min.css"><script defer src="/forgetful/js/lib/katex/copy-tex.min.js"></script><script defer src="/forgetful/js/lib/katex/mhchem.min.js"></script><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },{ left: "$", right: "$", display: false },]
+            });
+        });
+    </script><script src="/forgetful/js/blog.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>summer of code on Forgetful :/</title>
+    <link>https://murray-liang.github.io/forgetful/tags/summer-of-code/</link>
+    <description>Recent content in summer of code on Forgetful :/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
+    
+	<atom:link href="https://murray-liang.github.io/forgetful/tags/summer-of-code/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Golang Summer of Code</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/golang-soc/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/golang-soc/</guid>
+      <description>Week 1 1. N-Way Merge Sort Given a int64 array with 16M unsorted numbers, use multiple goroutine to sort this array. Your implementation should be faster that the Quick Sort in single thread.
+Check list:
+ Pass unit tests. Pass test cases. Analysis the bottle-neck via Go Profile.  Week 2 1. Read MIT MapReduce Course and Complete Excercise. 2. Report 10 Most Frequent URLs from A Huge Set of URLs Given a file containing a huge set of URLs, use MapReduce and Shuffle to get the 10 most frequent URLs and their frequency.</description>
+    </item>
+    
+  </channel>
+</rss>

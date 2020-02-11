@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>overlay network on Forgetful :/</title>
+    <link>https://murray-liang.github.io/forgetful/tags/overlay-network/</link>
+    <description>Recent content in overlay network on Forgetful :/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
+    
+	<atom:link href="https://murray-liang.github.io/forgetful/tags/overlay-network/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Kubernetes Overlay Network</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/kubernetes-overlay-network/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/kubernetes-overlay-network/</guid>
+      <description>Overlay networks such as vxlan or ipsec encapsulate the packet into another packet. This makes entities addressable that are outside of the scope of another machine.
+Any solution on L2 or L3 makes a pod addressable on the network. This means a pod is reachable not just within the Docker network, but is directly addressable from outside the Docker network. These could be public or private IP addresses.
+The way of route and iptables described here is a L3 solution (not a overlay networking) making a pod addressable on the network.</description>
+    </item>
+    
+  </channel>
+</rss>

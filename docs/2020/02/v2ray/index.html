@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>V2Ray and Related | Forgetful :/</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="Notes about everything"><link rel="prev" href="https://murray-liang.github.io/forgetful/2020/02/vast/" /><link rel="next" href="https://murray-liang.github.io/forgetful/2020/02/uds/" /><link rel="canonical" href="https://murray-liang.github.io/forgetful/2020/02/v2ray/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff"><meta property="og:title" content="V2Ray and Related" />
+<meta property="og:description" content="V2Ray and Others  FQ V2Ray 加速 BBR 伪装  免费域名 websocket&#43;tls&#43;web CDN    FQ V2Ray 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24  # # Run as root on VPS # bash &lt;(curl -L -s https://install.direct/go.sh) # vim /etc/v2ray/config.json { &#34;inbounds&#34;: [{ &#34;port&#34;: 23581, &gt;&gt;&gt; will be used in client &#34;protocol&#34;: &#34;vmess&#34;, &#34;settings&#34;: { &#34;clients&#34;: [ { &#34;id&#34;: &#34;ceb793e6-49cf-25d8-e4de-ae542e62748e&#34;, &gt;&gt;&gt; will be used in client &#34;level&#34;: 1, &#34;alterId&#34;: 64 &gt;&gt;&gt; change to 32, will be used in client } ] } }], ." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://murray-liang.github.io/forgetful/2020/02/v2ray/" />
+<meta property="article:published_time" content="2020-02-10T16:37:31+08:00" />
+<meta property="article:modified_time" content="2020-02-10T16:37:31+08:00" />
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "V2Ray and Related",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/murray-liang.github.io\/forgetful\/2020\/02\/v2ray\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "https:\/\/murray-liang.github.io\/forgetful\/cover.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "posts","keywords": "v2ray, bbr, cdn","wordcount":  510 ,
+        "url": "https:\/\/murray-liang.github.io\/forgetful\/2020\/02\/v2ray\/","datePublished": "2020-02-10T16:37:31\x2b08:00","dateModified": "2020-02-10T16:37:31\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "murray",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "https:\/\/murray-liang.github.io\/forgetful\/logo.png",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": ""
+    }
+    </script><link rel="stylesheet" href="/forgetful/css/style.min.css"><link rel="stylesheet" href="/forgetful/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/forgetful/css/lib/forkawesome/forkawesome.min.css"><link rel="stylesheet" href="/forgetful/css/lib/animate/animate.min.css"></head>
+    <body><script>
+            if (!window.localStorage || !window.localStorage.getItem('theme')) {
+                window.isDark = 'dark' === 'dark';
+            } else {
+                window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            }
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header animated bounceIn">
+            <a href="https://murray-liang.github.io/forgetful">Forgetful :/</a>
+        </div>
+        <div class="navbar-menu"><a class="menu-item" href="https://murray-liang.github.io/forgetful/posts" title="">Posts</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/tags" title="">Tags</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/categories" title="">Categories</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"><i class="fas fa-language fa-fw"></i></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav><nav class="navbar-mobile">
+    <div class="navbar-container">
+        <div class="navbar-header">
+            <div class="navbar-header-title animated bounceIn">
+                <a href="https://murray-liang.github.io/forgetful">Forgetful :/</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://murray-liang.github.io/forgetful/posts" title="">Posts</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/tags" title="">Tags</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/categories" title="">Categories</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav>
+<main class="main">
+                <div class="container"><article class="page"><h1 class="post-title animated flipInX">V2Ray and Related</h1><div class="post-meta">
+            <div class="post-meta-main"><a class="author" href="https://github.com/Murray-LIANG" rel="author" target="_blank">
+                    <i class="fas fa-user-circle fa-fw"></i>Murray-LIANG
+                </a>&nbsp;</div>
+            <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-02-10>2020-02-10</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 510 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>3 min&nbsp;</div>
+        </div><div class="post-toc" id="post-toc">
+                <h2 class="post-toc-title">Contents</h2>
+                <div class="post-toc-content"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#fq-v2ray">FQ V2Ray</a></li>
+    <li><a href="#加速-bbr">加速 BBR</a></li>
+    <li><a href="#免费域名">免费域名</a></li>
+    <li><a href="#websockettlsweb">websocket+tls+web</a>
+      <ul>
+        <li><a href="#1-生成证书">1. 生成证书</a></li>
+        <li><a href="#2-安装nginx">2. 安装nginx</a></li>
+        <li><a href="#3-更新v2ray的配置">3. 更新v2ray的配置</a></li>
+        <li><a href="#4-在路由器上面配置v2ray客户端">4. 在路由器上面配置V2ray客户端</a></li>
+      </ul>
+    </li>
+    <li><a href="#cdn">CDN</a></li>
+  </ul>
+</nav></div>
+            </div>
+            <div class="post-toc-mobile" id="post-toc-mobile">
+                <details>
+                    <summary>
+                        <div class="post-toc-title">
+                            <span>Contents</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="post-toc-content"><nav id="TableOfContentsMobile">
+  <ul>
+    <li><a href="#fq-v2ray">FQ V2Ray</a></li>
+    <li><a href="#加速-bbr">加速 BBR</a></li>
+    <li><a href="#免费域名">免费域名</a></li>
+    <li><a href="#websockettlsweb">websocket+tls+web</a>
+      <ul>
+        <li><a href="#1-生成证书">1. 生成证书</a></li>
+        <li><a href="#2-安装nginx">2. 安装nginx</a></li>
+        <li><a href="#3-更新v2ray的配置">3. 更新v2ray的配置</a></li>
+        <li><a href="#4-在路由器上面配置v2ray客户端">4. 在路由器上面配置V2ray客户端</a></li>
+      </ul>
+    </li>
+    <li><a href="#cdn">CDN</a></li>
+  </ul>
+</nav></div>
+                </details>
+            </div><div class="post-content"><h1 id="v2ray-and-others">V2Ray and Others</h1>
+<ul>
+<li><i class="far fa-check-square fa-fw"></i>FQ V2Ray</li>
+<li><i class="far fa-check-square fa-fw"></i>加速 BBR</li>
+<li><i class="far fa-check-square fa-fw"></i>伪装
+<ul>
+<li><i class="far fa-check-square fa-fw"></i>免费域名</li>
+<li><i class="far fa-check-square fa-fw"></i>websocket+tls+web</li>
+<li><i class="far fa-check-square fa-fw"></i>CDN</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="fq-v2ray"></a><h2>FQ V2Ray</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"># # Run as root on VPS
+
+# bash &lt;(curl -L -s https://install.direct/go.sh)
+
+# vim /etc/v2ray/config.json
+
+{
+  &#34;inbounds&#34;: [{
+    &#34;port&#34;: 23581,  &gt;&gt;&gt; will be used in client
+    &#34;protocol&#34;: &#34;vmess&#34;,
+    &#34;settings&#34;: {
+      &#34;clients&#34;: [
+        {
+          &#34;id&#34;: &#34;ceb793e6-49cf-25d8-e4de-ae542e62748e&#34;,  &gt;&gt;&gt; will be used in client
+          &#34;level&#34;: 1, 
+          &#34;alterId&#34;: 64  &gt;&gt;&gt; change to 32, will be used in client
+        }
+      ]
+    }
+  }],
+... ...
+
+# systemctl enable v2ray
+# systemctl start v2ray
+</code></pre></td></tr></table>
+</div>
+</div><p>References:</p>
+<ul>
+<li><a href="https://github.com/hijkpw/scripts/blob/master/centos_install_v2ray.sh">https://github.com/hijkpw/scripts/blob/master/centos_install_v2ray.sh</a></li>
+<li><a href="https://tlanyan.me/v2ray-tutorial/">https://tlanyan.me/v2ray-tutorial/</a></li>
+</ul>
+<a class="post-dummy-target" id="加速-bbr"></a><h2>加速 BBR</h2>
+<p><a href="https://umrhe.com/a-key-to-install-the-latest-kernel-and-open-the-bbr-acceleration-script.html">https://umrhe.com/a-key-to-install-the-latest-kernel-and-open-the-bbr-acceleration-script.html</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"># wget --no-check-certificate https://github.com/teddysun/across/raw/master/bbr.sh
+# chmod +x bbr.sh
+# 此脚本会升级Kernel，如果Kernel版本低于4.9.0。如果是Ubuntu 18.04，不会做升级。
+# ./bbr.sh
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="免费域名"></a><h2>免费域名</h2>
+<p>域名申请 <a href="http://www.freenom.com">www.freenom.com</a>。</p>
+<ol>
+<li>找一个能用的VPN登录freenom，申请<code>lifeisfun.ml</code>。</li>
+<li>注意下单的时候会显示你当前的IP，可以通过 dp-ip.com 查询到当前IP属于那个地区。貌似如果区域是中国的话，会不成功。</li>
+<li>把<code>Account Details</code>把地址改成第二步中相应的地区。</li>
+<li>下单，成功了之后在<code>Services &gt;&gt;&gt; My Domains</code>可以看到自己的域名。</li>
+<li>在<code>Manage Freenom DNS</code>的列表中加入解析<code>lifeisfun.ml</code>和<code>www.lifeisfun.ml</code>到VPS IP的Records。这一步主要是为了后面，a)生成SSL certificate和b)v2ray客户端伪装域名。</li>
+</ol>
+<a class="post-dummy-target" id="websockettlsweb"></a><h2>websocket+tls+web</h2>
+<p>此方法可以使得通过 lifeisfun.ml 来访问时就是正常的网络访问，而使用 lifeisfun.ml/great-place-to-live 来访问就是科学上网（通过v2ray客户端来配置）。</p>
+<p>而且所有流量都包裹在SSL/TLS的包中，不容易被解析。一个看似对一个nginx server的https包，里面包裹着http ws（vmess）的包，再里面便是真实的数据包。</p>
+<a class="post-dummy-target" id="1-生成证书"></a><h3>1. 生成证书</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"># apt install certbot
+
+# # 依赖于上面设置的域名解析，如果 lifeisfun.ml 不能被解析会报错
+# # --standalone 意思是将来使用生成的证书来配置nginx
+# certbot certonly --standalone -d lifeisfun.ml -d www.lifeisfun.ml
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="2-安装nginx"></a><h3>2. 安装nginx</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"># apt install nginx
+
+# # 如果文件不存在，则添加以下内容
+# cat /etc/nginx/conf.d/default.conf
+
+server {
+    listen 80;
+    server_name www.lifeisfun.ml lifeisfun.ml;  # &gt;&gt;&gt; customize this line 
+    rewrite ^(.*) https://$server_name$1 permanent;
+}
+
+server {
+    listen       443 ssl http2;
+    server_name www.lifeisfun.ml lifeisfun.ml;  # &gt;&gt;&gt; customize this line
+    charset utf-8;
+
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers ECDHE-RSA-AES256-GCM-SHA512:DHE-RSA-AES256-GCM-SHA512:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-SHA384;
+    ssl_ecdh_curve secp384r1;
+    ssl_prefer_server_ciphers on;
+    ssl_session_cache shared:SSL:10m;
+    ssl_session_timeout 10m;
+    ssl_session_tickets off;
+    # &gt;&gt;&gt; Customize below two lines using `certbot certificates` to
+    # list your cert. 
+    ssl_certificate /etc/letsencrypt/live/lifeisfun.ml/fullchain.pem;  
+    ssl_certificate_key /etc/letsencrypt/live/lifeisfun.ml/privkey.pem;
+
+    access_log  /var/log/nginx/xxxx.access.log;
+    error_log /var/log/nginx/xxx.error.log;
+
+    root /usr/share/nginx/html;
+    location / {
+        proxy_pass https://github.com/;
+    }
+
+    # &gt;&gt;&gt; Access to this url will be redirected to v2ray.
+    location /great-place-to-live {
+        proxy_redirect off;
+        proxy_pass http://127.0.0.1:24817;  # &gt;&gt;&gt; 24817 is v2ray&#39;s port
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection &#34;upgrade&#34;;
+        proxy_set_header Host $host;
+        # Show real IP in v2ray access.log
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+}
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="3-更新v2ray的配置"></a><h3>3. 更新v2ray的配置</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"># # streamSettings and listen sections are newly added.
+# cat /etc/v2ray/config.json
+{
+  &#34;inbounds&#34;: [{
+    &#34;port&#34;: 24817,
+    &#34;protocol&#34;: &#34;vmess&#34;,
+    &#34;settings&#34;: {
+      &#34;clients&#34;: [
+        {
+          &#34;id&#34;: &#34;776bc45d-a118-4913-b3ae-5fd426258c8e&#34;,
+          &#34;level&#34;: 1,
+          &#34;alterId&#34;: 32
+        }
+      ]
+    },
+    &#34;streamSettings&#34;: {
+      &#34;network&#34;: &#34;ws&#34;,
+      &#34;wsSettings&#34;: {
+        &#34;path&#34;: &#34;/great-place-to-live&#34;
+        }
+      },
+    &#34;listen&#34;: &#34;127.0.0.1&#34;
+  }],
+  &#34;outbounds&#34;: [{
+    &#34;protocol&#34;: &#34;freedom&#34;,
+    &#34;settings&#34;: {}
+  },{
+    &#34;protocol&#34;: &#34;blackhole&#34;,
+    &#34;settings&#34;: {},
+    &#34;tag&#34;: &#34;blocked&#34;
+  }],
+  &#34;routing&#34;: {
+    &#34;rules&#34;: [
+      {
+        &#34;type&#34;: &#34;field&#34;,
+        &#34;ip&#34;: [&#34;geoip:private&#34;],
+        &#34;outboundTag&#34;: &#34;blocked&#34;
+      }
+    ]
+  }
+}
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="4-在路由器上面配置v2ray客户端"></a><h3>4. 在路由器上面配置V2ray客户端</h3>
+<p>注意<code>服务器端口</code>，<code>伪装域名</code>和<code>路径</code>的配置。</p>
+<p><figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/images/v2ray-router-client.png" alt="" class="lazyload"></figure>
+</p>
+<a class="post-dummy-target" id="cdn"></a><h2>CDN</h2>
+<ol>
+<li>注册登录 <a href="http://www.cloudflare.com">www.cloudflare.com</a>。</li>
+<li>跟着提示一步步走，选择Free的CDN。</li>
+<li>在Freenom上面<code>Management Tools</code> &raquo;&gt; <code>Nameservers</code>里面添加cloudflare上面给出的两个CDN。</li>
+<li>大概要等一会儿生效。</li>
+<li>通过<code>ping www.lifeisfun.ml</code>和<code>ping lifeisfun.ml</code>，来查看是不是使用了CDN。或者通过 <a href="http://www.lifeisfun.ml/cdn-cgi/trace">www.lifeisfun.ml/cdn-cgi/trace</a> 或者 lifeisfun.ml/cdn-cgi/trace 查看。</li>
+</ol>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>The article was updated on 2020-02-10</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><span></span></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section><span class="tag">
+                        <a href="https://murray-liang.github.io/forgetful/tags/v2ray/"><i class="fas fa-tag fa-fw"></i>&nbsp;v2ray</a>&nbsp;
+                    </span><span class="tag">
+                        <a href="https://murray-liang.github.io/forgetful/tags/bbr/"><i class="fas fa-tag fa-fw"></i>&nbsp;bbr</a>&nbsp;
+                    </span><span class="tag">
+                        <a href="https://murray-liang.github.io/forgetful/tags/cdn/"><i class="fas fa-tag fa-fw"></i>&nbsp;cdn</a>&nbsp;
+                    </span></section>
+        <section>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://murray-liang.github.io/forgetful">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="https://murray-liang.github.io/forgetful/2020/02/vast/" class="prev" rel="prev" title="VAST"><i class="fas fa-angle-left fa-fw"></i>VAST</a>
+            <a href="https://murray-liang.github.io/forgetful/2020/02/uds/" class="next" rel="next" title="Unix Domain Socket">Unix Domain Socket<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div class="post-comment"></div>
+    </article></div>
+            </main><footer class="footer">
+    <div class="copyright"><div class="copyright-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
+        </div>
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/Murray-LIANG" target="_blank">Murray-LIANG</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+    </div>
+</footer>
+</div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>
+            <span>&nbsp;</span>
+        </a><script src="/forgetful/js/lib/jquery/jquery.slim.min.js"></script><script src="/forgetful/js/lib/lazysizes/lazysizes.min.js"></script><script src="/forgetful/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script><link rel="stylesheet" href="/forgetful/css/lib/katex/katex.min.css"><script src="/forgetful/js/lib/katex/katex.min.js"></script><script defer src="/forgetful/js/lib/katex/auto-render.min.js"></script><link rel="stylesheet" href="/forgetful/css/lib/katex/copy-tex.min.css"><script defer src="/forgetful/js/lib/katex/copy-tex.min.js"></script><script defer src="/forgetful/js/lib/katex/mhchem.min.js"></script><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },{ left: "$", right: "$", display: false },]
+            });
+        });
+    </script><script src="/forgetful/js/blog.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>etcd v3 on Forgetful :/</title>
+    <link>https://murray-liang.github.io/forgetful/tags/etcd-v3/</link>
+    <description>Recent content in etcd v3 on Forgetful :/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
+    
+	<atom:link href="https://murray-liang.github.io/forgetful/tags/etcd-v3/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>From Etcd v2 to v3</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/etcd-v2-to-v3/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/etcd-v2-to-v3/</guid>
+      <description>In etcd3, the base server interface uses gRPC instead of JSON for increased efficiency. Support for JSON endpoints is maintained through a gRPC gateway. The new API revisits the design of key expiry TTLs, replacing them with lightweight streaming lease keepalive model. Watchers are redesigned as well, replacing the older event model with one that streams and multiplexes events over key intervals. The v3 data model does away with explicit key hierarchies and unreliable watch windows, replacing them with a flat binary key space with transactional, multiversion concurrency control semantics.</description>
+    </item>
+    
+  </channel>
+</rss>

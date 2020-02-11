@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>keystone on Forgetful :/</title>
+    <link>https://murray-liang.github.io/forgetful/tags/keystone/</link>
+    <description>Recent content in keystone on Forgetful :/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
+    
+	<atom:link href="https://murray-liang.github.io/forgetful/tags/keystone/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>OpenStack Keystone</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/openstack-keystone/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/openstack-keystone/</guid>
+      <description>Manage the Users and Roles. Manage the Endpoints of services. Authentication and authorization.  Key points User Credentials Authentication Token Project, Tenant OpenStack resources belong to the Project/Tenant, that is, the resouces are project based not user based. Every user including admin must be a member of the project before accessing the resources.
+Service Endpoint Each service exposes several endpoints (URL). Other service sends commands to the endpoint.
+1 2  # list endpoints $ openstack catalog list   Role Keystone stores a list of roles.</description>
+    </item>
+    
+  </channel>
+</rss>

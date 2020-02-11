@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>OpenStack Nova Attach Process Logs of Newton Version | Forgetful :/</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="Notes about everything"><link rel="prev" href="https://murray-liang.github.io/forgetful/2020/02/openstack-detach-logs/" /><link rel="next" href="https://murray-liang.github.io/forgetful/2020/02/openstack-nova/" /><link rel="canonical" href="https://murray-liang.github.io/forgetful/2020/02/openstack-attach-logs/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff"><meta property="og:title" content="OpenStack Nova Attach Process Logs of Newton Version" />
+<meta property="og:description" content="1. Reserve the VM 1.1 Get a lock on VM by nova.compute.manager.do_reserve 1.2 Update the DB via conductor 1.3 Release the lock by nova.compute.manager.do_reserve 2. Get a lock on VM by nova.compute.manager.do_attach_volume (will released in the end) 3. GET call to cinder to get information of volume 3.1 Print a log Attaching volume 5ed0cc5c-158c-4857-9bd5-3556884a23f0 to /dev/vdb 3.2 REST request to cinder 1 2 3 4  REQ: curl -g -i -X GET \  http://172." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://murray-liang.github.io/forgetful/2020/02/openstack-attach-logs/" />
+<meta property="article:published_time" content="2020-02-10T16:37:31+08:00" />
+<meta property="article:modified_time" content="2020-02-10T16:37:31+08:00" />
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "OpenStack Nova Attach Process Logs of Newton Version",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/murray-liang.github.io\/forgetful\/2020\/02\/openstack-attach-logs\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "https:\/\/murray-liang.github.io\/forgetful\/cover.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "posts","keywords": "openstack, nova, cinder, attach","wordcount":  1479 ,
+        "url": "https:\/\/murray-liang.github.io\/forgetful\/2020\/02\/openstack-attach-logs\/","datePublished": "2020-02-10T16:37:31\x2b08:00","dateModified": "2020-02-10T16:37:31\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "murray",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "https:\/\/murray-liang.github.io\/forgetful\/logo.png",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": ""
+    }
+    </script><link rel="stylesheet" href="/forgetful/css/style.min.css"><link rel="stylesheet" href="/forgetful/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/forgetful/css/lib/forkawesome/forkawesome.min.css"><link rel="stylesheet" href="/forgetful/css/lib/animate/animate.min.css"></head>
+    <body><script>
+            if (!window.localStorage || !window.localStorage.getItem('theme')) {
+                window.isDark = 'dark' === 'dark';
+            } else {
+                window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            }
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header animated bounceIn">
+            <a href="https://murray-liang.github.io/forgetful">Forgetful :/</a>
+        </div>
+        <div class="navbar-menu"><a class="menu-item" href="https://murray-liang.github.io/forgetful/posts" title="">Posts</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/tags" title="">Tags</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/categories" title="">Categories</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"><i class="fas fa-language fa-fw"></i></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav><nav class="navbar-mobile">
+    <div class="navbar-container">
+        <div class="navbar-header">
+            <div class="navbar-header-title animated bounceIn">
+                <a href="https://murray-liang.github.io/forgetful">Forgetful :/</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://murray-liang.github.io/forgetful/posts" title="">Posts</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/tags" title="">Tags</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/categories" title="">Categories</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav>
+<main class="main">
+                <div class="container"><article class="page"><h1 class="post-title animated flipInX">OpenStack Nova Attach Process Logs of Newton Version</h1><div class="post-meta">
+            <div class="post-meta-main"><a class="author" href="https://github.com/Murray-LIANG" rel="author" target="_blank">
+                    <i class="fas fa-user-circle fa-fw"></i>Murray-LIANG
+                </a>&nbsp;</div>
+            <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-02-10>2020-02-10</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 1479 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>7 min&nbsp;</div>
+        </div><div class="post-toc" id="post-toc">
+                <h2 class="post-toc-title">Contents</h2>
+                <div class="post-toc-content"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-reserve-the-vm">1. Reserve the VM</a>
+      <ul>
+        <li><a href="#11-get-a-lock-on-vm-by-novacomputemanagerdo_reserve">1.1 Get a lock on VM by nova.compute.manager.do_reserve</a></li>
+        <li><a href="#12-update-the-db-via-conductor">1.2 Update the DB via conductor</a></li>
+        <li><a href="#13-release-the-lock-by-novacomputemanagerdo_reserve">1.3 Release the lock by nova.compute.manager.do_reserve</a></li>
+      </ul>
+    </li>
+    <li><a href="#2-get-a-lock-on-vm-by-novacomputemanagerdo_attach_volume-will-released-in-the-end">2. Get a lock on VM by nova.compute.manager.do_attach_volume (will released in the end)</a></li>
+    <li><a href="#3-get-call-to-cinder-to-get-information-of-volume">3. GET call to cinder to get information of volume</a>
+      <ul>
+        <li><a href="#31-print-a-log-attaching-volume-5ed0cc5c-158c-4857-9bd5-3556884a23f0-to-devvdb">3.1 Print a log Attaching volume 5ed0cc5c-158c-4857-9bd5-3556884a23f0 to /dev/vdb</a></li>
+        <li><a href="#32-rest-request-to-cinder">3.2 REST request to cinder</a></li>
+      </ul>
+    </li>
+    <li><a href="#4-get-connector-properties">4. Get connector properties</a>
+      <ul>
+        <li><a href="#41-check-multipathd-status-if-multipath-tools-is-not-installed-or-down-exception-raises">4.1 Check multipathd status, if multipath-tools is not installed or down, exception raises.</a></li>
+        <li><a href="#42-get-the-initiator-name">4.2 Get the initiator name</a></li>
+        <li><a href="#43-get-the-fc-info">4.3 Get the fc info</a></li>
+      </ul>
+    </li>
+    <li><a href="#5-post-call-to-cinder-action-os-initialize_connection">5. POST call to cinder, action: os-initialize_connection</a>
+      <ul>
+        <li><a href="#rest-request-to-cinder">REST request to cinder</a></li>
+        <li><a href="#returned-by-initialize_connection">Returned by initialize_connection:</a></li>
+      </ul>
+    </li>
+    <li><a href="#6-calling-os-brick-to-attach-iscsi-volume-connect_volume">6. Calling os-brick to attach iSCSI Volume connect_volume</a>
+      <ul>
+        <li><a href="#61-lock-connect_volume-acquired-by-os_brickinitiatorconnectorsiscsiconnect_volume">6.1 Lock connect_volume acquired by os_brick.initiator.connectors.iscsi.connect_volume</a></li>
+        <li><a href="#62-multipath-discovery-for-iscsi-enabled">6.2 Multipath discovery for iSCSI enabled</a></li>
+        <li><a href="#63-trying-to-connect-to-iscsi-portal-1921681593260">6.3 Trying to connect to iSCSI portal 192.168.1.59:3260</a></li>
+        <li><a href="#64-trying-to-connect-to-iscsi-portal-1921681603260">6.4 Trying to connect to iSCSI portal 192.168.1.60:3260</a></li>
+        <li><a href="#65-multipath-discovery-for-iscsi-enabled">6.5 Multipath discovery for iSCSI enabled.</a></li>
+        <li><a href="#66-trying-to-connect-to-iscsi-portal-1921681593260">6.6 Trying to connect to iSCSI portal 192.168.1.59:3260.</a></li>
+        <li><a href="#67-trying-to-connect-to-iscsi-portal-1921681603260">6.7 Trying to connect to iSCSI portal 192.168.1.60:3260</a></li>
+        <li><a href="#68-getting-the-device-wwn">6.8 Getting the device WWN</a></li>
+        <li><a href="#69-trying-the-multipath-using-device-wwn">6.9 Trying the multipath using device WWN</a></li>
+        <li><a href="#610-trying-the-single-path-if-multipath-failed">6.10 Trying the single path if multipath failed</a></li>
+        <li><a href="#611-checking-the-path-read-only-or-not">6.11 Checking the path read-only or not</a></li>
+        <li><a href="#612-lock-connect_volume-released-comparing-the-time-used">6.12 Lock connect_volume released (comparing the time used)</a></li>
+      </ul>
+    </li>
+    <li><a href="#7-libvirt-attaches-device-to-vm">7. libvirt attaches device to VM</a>
+      <ul>
+        <li><a href="#71-libvert-command">7.1 libvert command</a></li>
+        <li><a href="#72-update-db-via-conductor">7.2 Update DB via conductor</a></li>
+      </ul>
+    </li>
+    <li><a href="#8-post-call-to-cinder-action-os-attach">8. POST call to cinder, action os-attach</a>
+      <ul>
+        <li><a href="#81-rest-request">8.1 REST request</a></li>
+        <li><a href="#82-dellemc-drivers-dont-implement-os-attach">8.2 DellEMC drivers don&rsquo;t implement os-attach</a></li>
+      </ul>
+    </li>
+    <li><a href="#9-release-the-lock-by-novacomputemanagerdo_attach_volume">9. Release the lock by nova.compute.manager.do_attach_volume</a></li>
+  </ul>
+</nav></div>
+            </div>
+            <div class="post-toc-mobile" id="post-toc-mobile">
+                <details>
+                    <summary>
+                        <div class="post-toc-title">
+                            <span>Contents</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="post-toc-content"><nav id="TableOfContentsMobile">
+  <ul>
+    <li><a href="#1-reserve-the-vm">1. Reserve the VM</a>
+      <ul>
+        <li><a href="#11-get-a-lock-on-vm-by-novacomputemanagerdo_reserve">1.1 Get a lock on VM by nova.compute.manager.do_reserve</a></li>
+        <li><a href="#12-update-the-db-via-conductor">1.2 Update the DB via conductor</a></li>
+        <li><a href="#13-release-the-lock-by-novacomputemanagerdo_reserve">1.3 Release the lock by nova.compute.manager.do_reserve</a></li>
+      </ul>
+    </li>
+    <li><a href="#2-get-a-lock-on-vm-by-novacomputemanagerdo_attach_volume-will-released-in-the-end">2. Get a lock on VM by nova.compute.manager.do_attach_volume (will released in the end)</a></li>
+    <li><a href="#3-get-call-to-cinder-to-get-information-of-volume">3. GET call to cinder to get information of volume</a>
+      <ul>
+        <li><a href="#31-print-a-log-attaching-volume-5ed0cc5c-158c-4857-9bd5-3556884a23f0-to-devvdb">3.1 Print a log Attaching volume 5ed0cc5c-158c-4857-9bd5-3556884a23f0 to /dev/vdb</a></li>
+        <li><a href="#32-rest-request-to-cinder">3.2 REST request to cinder</a></li>
+      </ul>
+    </li>
+    <li><a href="#4-get-connector-properties">4. Get connector properties</a>
+      <ul>
+        <li><a href="#41-check-multipathd-status-if-multipath-tools-is-not-installed-or-down-exception-raises">4.1 Check multipathd status, if multipath-tools is not installed or down, exception raises.</a></li>
+        <li><a href="#42-get-the-initiator-name">4.2 Get the initiator name</a></li>
+        <li><a href="#43-get-the-fc-info">4.3 Get the fc info</a></li>
+      </ul>
+    </li>
+    <li><a href="#5-post-call-to-cinder-action-os-initialize_connection">5. POST call to cinder, action: os-initialize_connection</a>
+      <ul>
+        <li><a href="#rest-request-to-cinder">REST request to cinder</a></li>
+        <li><a href="#returned-by-initialize_connection">Returned by initialize_connection:</a></li>
+      </ul>
+    </li>
+    <li><a href="#6-calling-os-brick-to-attach-iscsi-volume-connect_volume">6. Calling os-brick to attach iSCSI Volume connect_volume</a>
+      <ul>
+        <li><a href="#61-lock-connect_volume-acquired-by-os_brickinitiatorconnectorsiscsiconnect_volume">6.1 Lock connect_volume acquired by os_brick.initiator.connectors.iscsi.connect_volume</a></li>
+        <li><a href="#62-multipath-discovery-for-iscsi-enabled">6.2 Multipath discovery for iSCSI enabled</a></li>
+        <li><a href="#63-trying-to-connect-to-iscsi-portal-1921681593260">6.3 Trying to connect to iSCSI portal 192.168.1.59:3260</a></li>
+        <li><a href="#64-trying-to-connect-to-iscsi-portal-1921681603260">6.4 Trying to connect to iSCSI portal 192.168.1.60:3260</a></li>
+        <li><a href="#65-multipath-discovery-for-iscsi-enabled">6.5 Multipath discovery for iSCSI enabled.</a></li>
+        <li><a href="#66-trying-to-connect-to-iscsi-portal-1921681593260">6.6 Trying to connect to iSCSI portal 192.168.1.59:3260.</a></li>
+        <li><a href="#67-trying-to-connect-to-iscsi-portal-1921681603260">6.7 Trying to connect to iSCSI portal 192.168.1.60:3260</a></li>
+        <li><a href="#68-getting-the-device-wwn">6.8 Getting the device WWN</a></li>
+        <li><a href="#69-trying-the-multipath-using-device-wwn">6.9 Trying the multipath using device WWN</a></li>
+        <li><a href="#610-trying-the-single-path-if-multipath-failed">6.10 Trying the single path if multipath failed</a></li>
+        <li><a href="#611-checking-the-path-read-only-or-not">6.11 Checking the path read-only or not</a></li>
+        <li><a href="#612-lock-connect_volume-released-comparing-the-time-used">6.12 Lock connect_volume released (comparing the time used)</a></li>
+      </ul>
+    </li>
+    <li><a href="#7-libvirt-attaches-device-to-vm">7. libvirt attaches device to VM</a>
+      <ul>
+        <li><a href="#71-libvert-command">7.1 libvert command</a></li>
+        <li><a href="#72-update-db-via-conductor">7.2 Update DB via conductor</a></li>
+      </ul>
+    </li>
+    <li><a href="#8-post-call-to-cinder-action-os-attach">8. POST call to cinder, action os-attach</a>
+      <ul>
+        <li><a href="#81-rest-request">8.1 REST request</a></li>
+        <li><a href="#82-dellemc-drivers-dont-implement-os-attach">8.2 DellEMC drivers don&rsquo;t implement os-attach</a></li>
+      </ul>
+    </li>
+    <li><a href="#9-release-the-lock-by-novacomputemanagerdo_attach_volume">9. Release the lock by nova.compute.manager.do_attach_volume</a></li>
+  </ul>
+</nav></div>
+                </details>
+            </div><div class="post-content"><a class="post-dummy-target" id="1-reserve-the-vm"></a><h2>1. Reserve the VM</h2>
+<a class="post-dummy-target" id="11-get-a-lock-on-vm-by-novacomputemanagerdo_reserve"></a><h3>1.1 Get a lock on VM by <code>nova.compute.manager.do_reserve</code></h3>
+<a class="post-dummy-target" id="12-update-the-db-via-conductor"></a><h3>1.2 Update the DB via <code>conductor</code></h3>
+<a class="post-dummy-target" id="13-release-the-lock-by-novacomputemanagerdo_reserve"></a><h3>1.3 Release the lock by <code>nova.compute.manager.do_reserve</code></h3>
+<a class="post-dummy-target" id="2-get-a-lock-on-vm-by-novacomputemanagerdo_attach_volume-will-released-in-the-end"></a><h2>2. Get a lock on VM by <code>nova.compute.manager.do_attach_volume</code> (will released in the end)</h2>
+<a class="post-dummy-target" id="3-get-call-to-cinder-to-get-information-of-volume"></a><h2>3. GET call to cinder to get information of volume</h2>
+<a class="post-dummy-target" id="31-print-a-log-attaching-volume-5ed0cc5c-158c-4857-9bd5-3556884a23f0-to-devvdb"></a><h3>3.1 Print a log <code>Attaching volume 5ed0cc5c-158c-4857-9bd5-3556884a23f0 to /dev/vdb</code></h3>
+<a class="post-dummy-target" id="32-rest-request-to-cinder"></a><h3>3.2 REST request to cinder</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">REQ: curl -g -i -X GET <span class="se">\
+</span><span class="se"></span>    http://172.16.1.11:8776/v2/ca2fbd57936b45bf9abdb536dc152a6d/volumes/5ed0cc5c-158c-4857-9bd5-3556884a23f0 <span class="se">\
+</span><span class="se"></span>    -H <span class="s2">&#34;User-Agent: python-cinderclient&#34;</span> -H <span class="s2">&#34;Accept: application/json&#34;</span> <span class="se">\
+</span><span class="se"></span>    -H <span class="s2">&#34;X-Auth-Token: {SHA1}e36480f1c9d79821db2a9ad7a4245db35a3529f8&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="4-get-connector-properties"></a><h2>4. Get connector properties</h2>
+<p>Logs of <code>get_connector_properties</code>.</p>
+<a class="post-dummy-target" id="41-check-multipathd-status-if-multipath-tools-is-not-installed-or-down-exception-raises"></a><h3>4.1 Check <code>multipathd</code> status, if <code>multipath-tools</code> is not installed or down, exception raises.</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">$ multipathd show status
+
+path checker states:
+up                  <span class="m">3</span>
+
+paths: <span class="m">2</span>
+busy: False
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="42-get-the-initiator-name"></a><h3>4.2 Get the initiator name</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">$ cat /etc/iscsi/initiatorname.iscsi
+<span class="c1">## DO NOT EDIT OR REMOVE THIS FILE!</span>
+<span class="c1">## If you remove this file, the iSCSI daemon will not start.</span>
+<span class="c1">## If you change the InitiatorName, existing access control lists</span>
+<span class="c1">## may reject this initiator.  The InitiatorName must be unique</span>
+<span class="c1">## for each iSCSI initiator.  Do NOT duplicate iSCSI InitiatorNames.</span>
+<span class="nv">InitiatorName</span><span class="o">=</span>iqn.1993-08.org.debian:01:7cc8838d1c0
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="43-get-the-fc-info"></a><h3>4.3 Get the fc info</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">$ systool -c fc_host -v
+Error opening class fc_host
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="5-post-call-to-cinder-action-os-initialize_connection"></a><h2>5. POST call to cinder, action: <code>os-initialize_connection</code></h2>
+<a class="post-dummy-target" id="rest-request-to-cinder"></a><h3>REST request to cinder</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">curl -g -i -X POST <span class="se">\
+</span><span class="se"></span>    http://172.16.1.11:8776/v2/ca2fbd57936b45bf9abdb536dc152a6d/volumes/5ed0cc5c-158c-4857-9bd5-3556884a23f0/action <span class="se">\
+</span><span class="se"></span>    -H <span class="s2">&#34;User-Agent: python-cinderclient&#34;</span> -H <span class="s2">&#34;Content-Type: application/json&#34;</span> <span class="se">\
+</span><span class="se"></span>    -H <span class="s2">&#34;Accept: application/json&#34;</span> -H <span class="s2">&#34;X-Auth-Token: {SHA1}e36480f1c9d79821db2a9ad7a4245db35a3529f8&#34;</span> <span class="se">\
+</span><span class="se"></span>    -d <span class="s1">&#39;{&#34;os-initialize_connection&#34;: {&#34;connector&#34;: {&#34;platform&#34;: &#34;x86_64&#34;, &#34;host&#34;: &#34;newton&#34;, &#34;do_local_attach&#34;: false, &#34;ip&#34;: &#34;172.16.1.11&#34;, &#34;os_type&#34;: &#34;linux2&#34;, &#34;multipath&#34;: true, &#34;initiator&#34;: &#34;iqn.1993-08.org.debian:01:7cc8838d1c0&#34;}}}&#39;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>Sync</strong> wait for Cinder result, <strong>about 7 sec</strong>.</p>
+<a class="post-dummy-target" id="returned-by-initialize_connection"></a><h3>Returned by <code>initialize_connection</code>:</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="p">{</span>
+    <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">volume_id</span><span class="s1">&#39;</span><span class="p">:</span> <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">e8f58c95-3f8a-40dc-861d-163ce68fcdaf</span><span class="s1">&#39;</span><span class="p">,</span>
+
+    <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">target_luns</span><span class="s1">&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">192</span><span class="p">,</span> <span class="mi">192</span><span class="p">]</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">target_lun</span><span class="s1">&#39;</span><span class="p">:</span> <span class="mi">192</span><span class="p">,</span>
+
+    <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">target_iqns</span><span class="s1">&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">iqn.1992-04.com.emc:cx.apm00150602415.a0</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">iqn.1992-04.com.emc:cx.apm00150602415.b0</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">target_iqn</span><span class="s1">&#39;</span><span class="p">:</span> <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">iqn.1992-04.com.emc:cx.apm00150602415.b0</span><span class="s1">&#39;</span><span class="p">,</span>
+
+    <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">target_portals</span><span class="s1">&#39;</span><span class="p">:</span> <span class="p">[</span><span class="sa">u</span><span class="s1">&#39;</span><span class="s1">192.168.1.59:3260</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">192.168.1.60:3260</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">target_portal</span><span class="s1">&#39;</span><span class="p">:</span> <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">192.168.1.60:3260</span><span class="s1">&#39;</span>
+
+    <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">target_discovered</span><span class="s1">&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">encrypted</span><span class="s1">&#39;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">qos_specs</span><span class="s1">&#39;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">access_mode</span><span class="s1">&#39;</span><span class="p">:</span> <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">rw</span><span class="s1">&#39;</span><span class="p">,</span> 
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="6-calling-os-brick-to-attach-iscsi-volume-connect_volume"></a><h2>6. Calling <code>os-brick</code> to attach iSCSI Volume <code>connect_volume</code></h2>
+<a class="post-dummy-target" id="61-lock-connect_volume-acquired-by-os_brickinitiatorconnectorsiscsiconnect_volume"></a><h3>6.1 Lock <code>connect_volume</code> acquired by <code>os_brick.initiator.connectors.iscsi.connect_volume</code></h3>
+<a class="post-dummy-target" id="62-multipath-discovery-for-iscsi-enabled"></a><h3>6.2 Multipath discovery for iSCSI enabled</h3>
+<a class="post-dummy-target" id="63-trying-to-connect-to-iscsi-portal-1921681593260"></a><h3>6.3 Trying to connect to iSCSI portal 192.168.1.59:3260</h3>
+<p><strong>This is a failure case, successful case is like the one to portal 192.168.1.60:3260</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">$ iscsiadm -m node -T iqn.1992-04.com.emc:cx.apm00150602415.a0 -p 192.168.1.59:3260
+<span class="c1"># failed. Not Retrying.</span> 
+<span class="c1"># Exception during request[140621460555248]: Unexpected error while running command.</span>
+<span class="c1"># Command: iscsiadm -m node -T iqn.1992-04.com.emc:cx.apm00150602415.a0 -p 192.168.1.59:3260</span>
+<span class="c1"># Exit code: 21</span>
+<span class="c1"># Stdout: u&#39;&#39;</span>
+<span class="c1"># Stderr: u&#39;iscsiadm: No records found\n&#39;</span>
+
+$ iscsiadm -m node -T iqn.1992-04.com.emc:cx.apm00150602415.a0 -p 192.168.1.59:3260 --interface default --op new
+<span class="c1"># New iSCSI node [tcp:[hw=,ip=,net_if=,iscsi_if=default] 192.168.1.59,3260,-1 iqn.1992-04.com.emc:cx.apm00150602415.a0] added</span>
+
+$ iscsiadm -m session
+<span class="c1"># tcp: [1] 10.245.47.95:3260,2 iqn.1992-04.com.emc:cx.fnm00150600267.a0 (non-flash)</span>
+<span class="c1"># tcp: [2] 10.245.47.96:3260,1 iqn.1992-04.com.emc:cx.fnm00150600267.b0 (non-flash)</span>
+
+$ iscsiadm -m node -T iqn.1992-04.com.emc:cx.apm00150602415.a0 -p 192.168.1.59:3260 --login
+<span class="c1"># failed. Not Retrying.</span>
+<span class="c1"># Unexpected error while running command.</span>
+<span class="c1"># Command: iscsiadm -m node -T iqn.1992-04.com.emc:cx.apm00150602415.a0 -p 192.168.1.59:3260 --login</span>
+<span class="c1"># Exit code: 8</span>
+<span class="c1"># Stdout: u&#39;Logging in to [iface: default, target: iqn.1992-04.com.emc:cx.apm00150602415.a0, portal: 192.168.1.59,3260] (multiple)\n&#39;</span>
+<span class="c1"># Stderr: u&#39;iscsiadm: Could not login to [iface: default, target: iqn.1992-04.com.emc:cx.apm00150602415.a0, portal: 192.168.1.59,3260].\niscsiadm: initiator reported error (8 - connection timed out)\niscsiadm: Could not log into all portals\n&#39;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>iscsi login failed and the timeout is 2 min.</strong></p>
+<a class="post-dummy-target" id="64-trying-to-connect-to-iscsi-portal-1921681603260"></a><h3>6.4 Trying to connect to iSCSI portal 192.168.1.60:3260</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">$ iscsiadm -m node -T iqn.1992-04.com.emc:cx.apm00150602415.b0 -p 192.168.1.60:3260
+<span class="c1"># failed. Not Retrying.</span>
+<span class="c1"># Exception during request[140621460555248]: Unexpected error while running command.</span>
+<span class="c1"># Command: iscsiadm -m node -T iqn.1992-04.com.emc:cx.apm00150602415.b0 -p 192.168.1.60:3260</span>
+<span class="c1"># Exit code: 21</span>
+<span class="c1"># Stdout: u&#39;&#39;</span>
+<span class="c1"># Stderr: u&#39;iscsiadm: No records found\n&#39;</span>
+
+$ iscsiadm -m node -T iqn.1992-04.com.emc:cx.apm00150602415.b0 -p 192.168.1.60:3260 --interface default --op new
+<span class="c1"># New iSCSI node [tcp:[hw=,ip=,net_if=,iscsi_if=default] 192.168.1.60,3260,-1 iqn.1992-04.com.emc:cx.apm00150602415.b0] added\n</span>
+
+$ iscsiadm -m session
+<span class="c1"># tcp: [1] 10.245.47.95:3260,2 iqn.1992-04.com.emc:cx.fnm00150600267.a0 (non-flash)</span>
+<span class="c1"># tcp: [2] 10.245.47.96:3260,1 iqn.1992-04.com.emc:cx.fnm00150600267.b0 (non-flash)</span>
+
+$ iscsiadm -m node -T iqn.1992-04.com.emc:cx.apm00150602415.b0 -p 192.168.1.60:3260 --login
+<span class="c1"># Logging in to [iface: default, target: iqn.1992-04.com.emc:cx.apm00150602415.b0, portal: 192.168.1.60,3260] (multiple)</span>
+<span class="c1"># Login to [iface: default, target: iqn.1992-04.com.emc:cx.apm00150602415.b0, portal: 192.168.1.60,3260] successful.</span>
+
+$ iscsiadm -m node -T iqn.1992-04.com.emc:cx.apm00150602415.b0 -p 192.168.1.60:3260 --op update -n node.startup -v automatic
+
+$ iscsiadm -m node --rescan
+<span class="c1"># Rescanning session [sid: 1, target: iqn.1992-04.com.emc:cx.fnm00150600267.a0, portal: 10.245.47.95,3260]</span>
+<span class="c1"># Rescanning session [sid: 2, target: iqn.1992-04.com.emc:cx.fnm00150600267.b0, portal: 10.245.47.96,3260]</span>
+<span class="c1"># Rescanning session [sid: 3, target: iqn.1992-04.com.emc:cx.apm00150602415.b0, portal: 192.168.1.60,3260]</span>
+
+$ iscsiadm -m node --rescan
+<span class="c1"># Same result</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>ISCSI volume not yet found at: [u&rsquo;/dev/disk/by-path/ip-192.168.1.59:3260-iscsi-iqn.1992-04.com.emc:cx.apm00150602415.a0-lun-192&rsquo;, u&rsquo;/dev/disk/by-path/ip-192.168.1.60:3260-iscsi-iqn.1992-04.com.emc:cx.apm00150602415.b0-lun-192&rsquo;]. Will rescan &amp; retry.  Try number: 0.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># Two times more rescan</span>
+iscsiadm -m node --rescan
+<span class="c1"># Same result</span>
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="65-multipath-discovery-for-iscsi-enabled"></a><h3>6.5 Multipath discovery for iSCSI enabled.</h3>
+<a class="post-dummy-target" id="66-trying-to-connect-to-iscsi-portal-1921681593260"></a><h3>6.6 Trying to connect to iSCSI portal 192.168.1.59:3260.</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">$ iscsiadm -m node -T iqn.1992-04.com.emc:cx.apm00150602415.a0 -p 192.168.1.59:3260
+
+$ iscsiadm -m session
+<span class="c1"># tcp: [1] 10.245.47.95:3260,2 iqn.1992-04.com.emc:cx.fnm00150600267.a0 (non-flash)</span>
+<span class="c1"># tcp: [2] 10.245.47.96:3260,1 iqn.1992-04.com.emc:cx.fnm00150600267.b0 (non-flash)</span>
+<span class="c1"># tcp: [3] 192.168.1.60:3260,5 iqn.1992-04.com.emc:cx.apm00150602415.b0 (non-flash)</span>
+
+$ iscsiadm -m node -T iqn.1992-04.com.emc:cx.apm00150602415.a0 -p 192.168.1.59:3260 --login
+<span class="c1"># failed. Not Retrying.</span>
+<span class="c1"># Unexpected error while running command.</span>
+<span class="c1"># Command: iscsiadm -m node -T iqn.1992-04.com.emc:cx.apm00150602415.a0 -p 192.168.1.59:3260 --login</span>
+<span class="c1"># Exit code: 8</span>
+<span class="c1"># Stdout: u&#39;Logging in to [iface: default, target: iqn.1992-04.com.emc:cx.apm00150602415.a0, portal: 192.168.1.59,3260] (multiple)\n&#39;</span>
+<span class="c1"># Stderr: u&#39;iscsiadm: Could not login to [iface: default, target: iqn.1992-04.com.emc:cx.apm00150602415.a0, portal: 192.168.1.59,3260].\niscsiadm: initiator reported error (8 - connection timed out)\niscsiadm: Could not log into all portals\n&#39;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>iscsi login failed and the timeout is 2 min.</strong></p>
+<a class="post-dummy-target" id="67-trying-to-connect-to-iscsi-portal-1921681603260"></a><h3>6.7 Trying to connect to iSCSI portal 192.168.1.60:3260</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">$ iscsiadm -m node -T iqn.1992-04.com.emc:cx.apm00150602415.b0 -p 192.168.1.60:3260
+
+$ iscsiadm -m session
+<span class="c1"># tcp: [1] 10.245.47.95:3260,2 iqn.1992-04.com.emc:cx.fnm00150600267.a0 (non-flash)</span>
+<span class="c1"># tcp: [2] 10.245.47.96:3260,1 iqn.1992-04.com.emc:cx.fnm00150600267.b0 (non-flash)</span>
+<span class="c1"># tcp: [3] 192.168.1.60:3260,5 iqn.1992-04.com.emc:cx.apm00150602415.b0 (non-flash)</span>
+
+$ iscsiadm -m node --rescan
+<span class="c1"># Rescanning session [sid: 1, target: iqn.1992-04.com.emc:cx.fnm00150600267.a0, portal: 10.245.47.95,3260]</span>
+<span class="c1"># Rescanning session [sid: 2, target: iqn.1992-04.com.emc:cx.fnm00150600267.b0, portal: 10.245.47.96,3260]</span>
+<span class="c1"># Rescanning session [sid: 3, target: iqn.1992-04.com.emc:cx.apm00150602415.b0, portal: 192.168.1.60,3260]</span>
+
+$ iscsiadm -m node --rescan
+<span class="c1"># Same result</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Found iSCSI node [u&rsquo;/dev/disk/by-path/ip-192.168.1.59:3260-iscsi-iqn.1992-04.com.emc:cx.apm00150602415.a0-lun-192&rsquo;, u&rsquo;/dev/disk/by-path/ip-192.168.1.60:3260-iscsi-iqn.1992-04.com.emc:cx.apm00150602415.b0-lun-192&rsquo;] (after 1 rescans)</p>
+<a class="post-dummy-target" id="68-getting-the-device-wwn"></a><h3>6.8 Getting the device WWN</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">/lib/udev/scsi_id --page 0x83 --whitelisted /dev/disk/by-path/ip-192.168.1.60:3260-iscsi-iqn.1992-04.com.emc:cx.apm00150602415.b0-lun-192
+<span class="c1"># 36006016074e03a008d3cf25b04e2daae</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Device WWN = &lsquo;36006016074e03a008d3cf25b04e2daae&rsquo;</p>
+<a class="post-dummy-target" id="69-trying-the-multipath-using-device-wwn"></a><h3>6.9 Trying the multipath using device WWN</h3>
+<p>Find Multipath device file for volume WWN <strong>36006016074e03a008d3cf25b04e2daae</strong>.</p>
+<p>First try the path like: <code>/dev/disk/by-id/dm-uuid-mpath-&lt;wwn&gt;</code>.</p>
+<p>Then the path like: <code>/dev/mapper/&lt;wwn&gt;</code>.</p>
+<ul>
+<li>Failed multipath case</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># Checking to see if /dev/disk/by-id/dm-uuid-mpath-36006016074e03a008d3cf25b04e2daae doesn&#39;t exists yet.</span>
+<span class="c1"># Failed attempt 1</span>
+<span class="c1"># Sleeping for 2 seconds</span>
+<span class="c1"># Checking to see if /dev/disk/by-id/dm-uuid-mpath-36006016074e03a008d3cf25b04e2daae exists yet.</span>
+<span class="c1"># Failed attempt 2</span>
+<span class="c1"># Sleeping for 4 seconds</span>
+<span class="c1"># Checking to see if /dev/disk/by-id/dm-uuid-mpath-36006016074e03a008d3cf25b04e2daae exists yet.</span>
+<span class="c1"># Failed attempt 3</span>
+
+<span class="c1"># Checking to see if /dev/mapper/36006016074e03a008d3cf25b04e2daae exists yet.</span>
+<span class="c1"># Failed attempt 1</span>
+<span class="c1"># Sleeping for 2 seconds</span>
+<span class="c1"># Checking to see if /dev/mapper/36006016074e03a008d3cf25b04e2daae exists yet.</span>
+<span class="c1"># Failed attempt 2</span>
+<span class="c1"># Sleeping for 4 seconds</span>
+<span class="c1"># Checking to see if /dev/mapper/36006016074e03a008d3cf25b04e2daae exists yet.</span>
+<span class="c1"># Failed attempt 3</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>couldn&rsquo;t find a valid multipath device path for 36006016074e03a008d3cf25b04e2daae</strong>.</p>
+<ul>
+<li>Successful multipath case</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># Checking to see if /dev/disk/by-id/dm-uuid-mpath-36006016015e03a00ab2df25bb82d0ea9 exists yet.</span>
+<span class="c1"># Failed attempt 1</span>
+<span class="c1"># Sleeping for 2 seconds</span>
+<span class="c1"># Checking to see if /dev/disk/by-id/dm-uuid-mpath-36006016015e03a00ab2df25bb82d0ea9 exists yet.</span>
+<span class="c1">#/dev/disk/by-id/dm-uuid-mpath-36006016015e03a00ab2df25bb82d0ea9 has shown up.</span> 
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="610-trying-the-single-path-if-multipath-failed"></a><h3>6.10 Trying the single path if multipath failed</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">multipath -l /dev/sdf
+
+<span class="c1"># Unable to find multipath device name for volume. Using path /dev/disk/by-path/ip-192.168.1.60:3260-iscsi-iqn.1992-04.com.emc:cx.apm00150602415.b0-lun-192 for volume.</span>
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="611-checking-the-path-read-only-or-not"></a><h3>6.11 Checking the path read-only or not</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># Checking to see if /dev/disk/by-path/ip-192.168.1.60:3260-iscsi-iqn.1992-04.com.emc:cx.apm00150602415.b0-lun-192 is read-only.</span>
+
+<span class="c1"># lsblk -o NAME,RO -l -n</span>
+<span class="c1"># sdc                                0</span>
+<span class="c1"># 36006016015e03a00ab2df25bb82d0ea9  0</span>
+<span class="c1"># sdd                                0</span>
+<span class="c1"># 36006016015e03a00ab2df25bb82d0ea9  0</span>
+<span class="c1"># sdf                                0</span>
+<span class="c1"># vda                                0</span>
+<span class="c1"># vda1                               0</span>
+<span class="c1"># loop0                              0</span>
+
+<span class="c1"># Block device /dev/disk/by-path/ip-192.168.1.60:3260-iscsi-iqn.1992-04.com.emc:cx.apm00150602415.b0-lun-192 is not read-only.</span>
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="612-lock-connect_volume-released-comparing-the-time-used"></a><h3>6.12 Lock <code>connect_volume</code> released (comparing the time used)</h3>
+<ul>
+<li>Multipath case</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">connect_volume: <span class="k">return</span> <span class="o">(</span>3162ms<span class="o">)</span> <span class="o">{</span>
+    <span class="s1">&#39;path&#39;</span>: u<span class="s1">&#39;/dev/disk/by-id/dm-uuid-mpath-36006016015e03a00ab2df25bb82d0ea9&#39;</span>,
+    <span class="s1">&#39;scsi_wwn&#39;</span>: u<span class="s1">&#39;36006016015e03a00ab2df25bb82d0ea9&#39;</span>,
+    <span class="s1">&#39;type&#39;</span>: <span class="s1">&#39;block&#39;</span>,
+    <span class="s1">&#39;multipath_id&#39;</span>: u<span class="s1">&#39;36006016015e03a00ab2df25bb82d0ea9&#39;</span><span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>Single path case</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">connect_volume: <span class="k">return</span> <span class="o">(</span>254525ms<span class="o">)</span> <span class="o">{</span>
+    <span class="s1">&#39;path&#39;</span>: u<span class="s1">&#39;/dev/disk/by-path/ip-192.168.1.60:3260-iscsi-iqn.1992-04.com.emc:cx.apm00150602415.b0-lun-192&#39;</span>, 
+    <span class="s1">&#39;scsi_wwn&#39;</span>: u<span class="s1">&#39;36006016074e03a008d3cf25b04e2daae&#39;</span>,
+    <span class="s1">&#39;type&#39;</span>: u<span class="s1">&#39;block&#39;</span><span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="7-libvirt-attaches-device-to-vm"></a><h2>7. <code>libvirt</code> attaches device to VM</h2>
+<a class="post-dummy-target" id="71-libvert-command"></a><h3>7.1 <code>libvert</code> command</h3>
+<ul>
+<li>Multipath case</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">attach device xml: &lt;disk <span class="nv">type</span><span class="o">=</span><span class="s2">&#34;block&#34;</span> <span class="nv">device</span><span class="o">=</span><span class="s2">&#34;disk&#34;</span>&gt;
+  &lt;driver <span class="nv">name</span><span class="o">=</span><span class="s2">&#34;qemu&#34;</span> <span class="nv">type</span><span class="o">=</span><span class="s2">&#34;raw&#34;</span> <span class="nv">cache</span><span class="o">=</span><span class="s2">&#34;none&#34;</span> <span class="nv">io</span><span class="o">=</span><span class="s2">&#34;native&#34;</span>/&gt;
+  &lt;<span class="nb">source</span> <span class="nv">dev</span><span class="o">=</span><span class="s2">&#34;/dev/disk/by-id/dm-uuid-mpath-36006016015e03a00ab2df25bb82d0ea9&#34;</span>/&gt;
+  &lt;target <span class="nv">bus</span><span class="o">=</span><span class="s2">&#34;virtio&#34;</span> <span class="nv">dev</span><span class="o">=</span><span class="s2">&#34;vdb&#34;</span>/&gt;
+  &lt;serial&gt;5ed0cc5c-158c-4857-9bd5-3556884a23f0&lt;/serial&gt;
+&lt;/disk&gt;
+ attach_device /opt/stack/nova/nova/virt/libvirt/guest.py:304
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>Single path case</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">attach device xml: &lt;disk <span class="nv">type</span><span class="o">=</span><span class="s2">&#34;block&#34;</span> <span class="nv">device</span><span class="o">=</span><span class="s2">&#34;disk&#34;</span>&gt;
+  &lt;driver <span class="nv">name</span><span class="o">=</span><span class="s2">&#34;qemu&#34;</span> <span class="nv">type</span><span class="o">=</span><span class="s2">&#34;raw&#34;</span> <span class="nv">cache</span><span class="o">=</span><span class="s2">&#34;none&#34;</span> <span class="nv">io</span><span class="o">=</span><span class="s2">&#34;native&#34;</span>/&gt;
+  &lt;<span class="nb">source</span> <span class="nv">dev</span><span class="o">=</span><span class="s2">&#34;/dev/disk/by-path/ip-192.168.1.60:3260-iscsi-iqn.1992-04.com.emc:cx.apm00150602415.b0-lun-192&#34;</span>/&gt;
+  &lt;target <span class="nv">bus</span><span class="o">=</span><span class="s2">&#34;virtio&#34;</span> <span class="nv">dev</span><span class="o">=</span><span class="s2">&#34;vdb&#34;</span>/&gt;
+  &lt;serial&gt;e8f58c95-3f8a-40dc-861d-163ce68fcdaf&lt;/serial&gt;
+&lt;/disk&gt;
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="72-update-db-via-conductor"></a><h3>7.2 Update DB via <code>conductor</code></h3>
+<a class="post-dummy-target" id="8-post-call-to-cinder-action-os-attach"></a><h2>8. POST call to cinder, action <code>os-attach</code></h2>
+<a class="post-dummy-target" id="81-rest-request"></a><h3>8.1 REST request</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">curl -g -i -X POST <span class="se">\
+</span><span class="se"></span>    http://172.16.1.11:8776/v2/ca2fbd57936b45bf9abdb536dc152a6d/volumes/5ed0cc5c-158c-4857-9bd5-3556884a23f0/action <span class="se">\
+</span><span class="se"></span>    -H <span class="s2">&#34;User-Agent: python-cinderclient&#34;</span> -H <span class="s2">&#34;Content-Type: application/json&#34;</span> <span class="se">\
+</span><span class="se"></span>    -H <span class="s2">&#34;Accept: application/json&#34;</span> <span class="se">\
+</span><span class="se"></span>    -H <span class="s2">&#34;X-Auth-Token: {SHA1}e36480f1c9d79821db2a9ad7a4245db35a3529f8&#34;</span> <span class="se">\
+</span><span class="se"></span>    -d <span class="s1">&#39;{&#34;os-attach&#34;: {&#34;instance_uuid&#34;: &#34;62b302e5-6d95-4e61-8dd4-6aa8b1049545&#34;, &#34;mountpoint&#34;: &#34;/dev/vdb&#34;, &#34;mode&#34;: &#34;rw&#34;}}&#39;</span>
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="82-dellemc-drivers-dont-implement-os-attach"></a><h3>8.2 DellEMC drivers don&rsquo;t implement <code>os-attach</code></h3>
+<a class="post-dummy-target" id="9-release-the-lock-by-novacomputemanagerdo_attach_volume"></a><h2>9. Release the lock by <code>nova.compute.manager.do_attach_volume</code></h2>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>The article was updated on 2020-02-10</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><span></span></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section><span class="tag">
+                        <a href="https://murray-liang.github.io/forgetful/tags/openstack/"><i class="fas fa-tag fa-fw"></i>&nbsp;openstack</a>&nbsp;
+                    </span><span class="tag">
+                        <a href="https://murray-liang.github.io/forgetful/tags/nova/"><i class="fas fa-tag fa-fw"></i>&nbsp;nova</a>&nbsp;
+                    </span><span class="tag">
+                        <a href="https://murray-liang.github.io/forgetful/tags/cinder/"><i class="fas fa-tag fa-fw"></i>&nbsp;cinder</a>&nbsp;
+                    </span><span class="tag">
+                        <a href="https://murray-liang.github.io/forgetful/tags/attach/"><i class="fas fa-tag fa-fw"></i>&nbsp;attach</a>&nbsp;
+                    </span></section>
+        <section>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://murray-liang.github.io/forgetful">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="https://murray-liang.github.io/forgetful/2020/02/openstack-detach-logs/" class="prev" rel="prev" title="OpenStack Nova Detach Process Logs of Newton Version"><i class="fas fa-angle-left fa-fw"></i>OpenStack Nova Detach Process Logs of Newton Version</a>
+            <a href="https://murray-liang.github.io/forgetful/2020/02/openstack-nova/" class="next" rel="next" title="OpenStack Nova">OpenStack Nova<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div class="post-comment"></div>
+    </article></div>
+            </main><footer class="footer">
+    <div class="copyright"><div class="copyright-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
+        </div>
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/Murray-LIANG" target="_blank">Murray-LIANG</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+    </div>
+</footer>
+</div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>
+            <span>&nbsp;</span>
+        </a><script src="/forgetful/js/lib/jquery/jquery.slim.min.js"></script><script src="/forgetful/js/lib/lazysizes/lazysizes.min.js"></script><script src="/forgetful/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script><link rel="stylesheet" href="/forgetful/css/lib/katex/katex.min.css"><script src="/forgetful/js/lib/katex/katex.min.js"></script><script defer src="/forgetful/js/lib/katex/auto-render.min.js"></script><link rel="stylesheet" href="/forgetful/css/lib/katex/copy-tex.min.css"><script defer src="/forgetful/js/lib/katex/copy-tex.min.js"></script><script defer src="/forgetful/js/lib/katex/mhchem.min.js"></script><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },{ left: "$", right: "$", display: false },]
+            });
+        });
+    </script><script src="/forgetful/js/blog.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>System Design | Forgetful :/</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="Notes about everything"><link rel="prev" href="https://murray-liang.github.io/forgetful/2020/02/design-facebook-interview/" /><link rel="next" href="https://murray-liang.github.io/forgetful/2020/02/statistics-spearmans-rank-order-correlation/" /><link rel="canonical" href="https://murray-liang.github.io/forgetful/2020/02/system-design/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff"><meta property="og:title" content="System Design" />
+<meta property="og:description" content="No design is correct or wrong. There are just good designs and bad designs which heavily depend on the use case.
+Hence, it is extremely important to clarify the requirements for the problem asked.
+Basic Terminologies Replication Frequently copying the data across multiple machines.
+Consistency The data is same across the cluster with multiple machines. You can read or write to/from any node and get the same data.
+Eventual Consistency All machines will have the same data eventually." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://murray-liang.github.io/forgetful/2020/02/system-design/" />
+<meta property="article:published_time" content="2020-02-10T16:37:31+08:00" />
+<meta property="article:modified_time" content="2020-02-10T16:37:31+08:00" />
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "System Design",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/murray-liang.github.io\/forgetful\/2020\/02\/system-design\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "https:\/\/murray-liang.github.io\/forgetful\/cover.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "posts","keywords": "system design","wordcount":  425 ,
+        "url": "https:\/\/murray-liang.github.io\/forgetful\/2020\/02\/system-design\/","datePublished": "2020-02-10T16:37:31\x2b08:00","dateModified": "2020-02-10T16:37:31\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "murray",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "https:\/\/murray-liang.github.io\/forgetful\/logo.png",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": ""
+    }
+    </script><link rel="stylesheet" href="/forgetful/css/style.min.css"><link rel="stylesheet" href="/forgetful/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/forgetful/css/lib/forkawesome/forkawesome.min.css"><link rel="stylesheet" href="/forgetful/css/lib/animate/animate.min.css"></head>
+    <body><script>
+            if (!window.localStorage || !window.localStorage.getItem('theme')) {
+                window.isDark = 'dark' === 'dark';
+            } else {
+                window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            }
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header animated bounceIn">
+            <a href="https://murray-liang.github.io/forgetful">Forgetful :/</a>
+        </div>
+        <div class="navbar-menu"><a class="menu-item" href="https://murray-liang.github.io/forgetful/posts" title="">Posts</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/tags" title="">Tags</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/categories" title="">Categories</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"><i class="fas fa-language fa-fw"></i></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav><nav class="navbar-mobile">
+    <div class="navbar-container">
+        <div class="navbar-header">
+            <div class="navbar-header-title animated bounceIn">
+                <a href="https://murray-liang.github.io/forgetful">Forgetful :/</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://murray-liang.github.io/forgetful/posts" title="">Posts</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/tags" title="">Tags</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/categories" title="">Categories</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav>
+<main class="main">
+                <div class="container"><article class="page"><h1 class="post-title animated flipInX">System Design</h1><div class="post-meta">
+            <div class="post-meta-main"><a class="author" href="https://github.com/Murray-LIANG" rel="author" target="_blank">
+                    <i class="fas fa-user-circle fa-fw"></i>Murray-LIANG
+                </a>&nbsp;</div>
+            <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-02-10>2020-02-10</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 425 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>2 min&nbsp;</div>
+        </div><div class="post-toc" id="post-toc">
+                <h2 class="post-toc-title">Contents</h2>
+                <div class="post-toc-content"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#basic-terminologies">Basic Terminologies</a>
+      <ul>
+        <li><a href="#replication">Replication</a></li>
+        <li><a href="#consistency">Consistency</a></li>
+        <li><a href="#eventual-consistency">Eventual Consistency</a></li>
+        <li><a href="#availability">Availability</a></li>
+        <li><a href="#partition-tolerance">Partition Tolerance</a></li>
+        <li><a href="#vertical-scaling-and-horizontal-scaling">Vertical Scaling and Horizontal Scaling</a></li>
+        <li><a href="#sharding">Sharding</a></li>
+      </ul>
+    </li>
+    <li><a href="#cap-theorem">CAP Theorem</a></li>
+    <li><a href="#steps-to-approach-a-problem">Steps to Approach a Problem</a>
+      <ul>
+        <li><a href="#feature-expectations">Feature expectations</a></li>
+        <li><a href="#estimations">Estimations</a></li>
+        <li><a href="#design-goals">Design goals</a></li>
+        <li><a href="#skeleton-of-the-design">Skeleton of the design</a></li>
+        <li><a href="#deep-dive">Deep dive</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div>
+            <div class="post-toc-mobile" id="post-toc-mobile">
+                <details>
+                    <summary>
+                        <div class="post-toc-title">
+                            <span>Contents</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="post-toc-content"><nav id="TableOfContentsMobile">
+  <ul>
+    <li><a href="#basic-terminologies">Basic Terminologies</a>
+      <ul>
+        <li><a href="#replication">Replication</a></li>
+        <li><a href="#consistency">Consistency</a></li>
+        <li><a href="#eventual-consistency">Eventual Consistency</a></li>
+        <li><a href="#availability">Availability</a></li>
+        <li><a href="#partition-tolerance">Partition Tolerance</a></li>
+        <li><a href="#vertical-scaling-and-horizontal-scaling">Vertical Scaling and Horizontal Scaling</a></li>
+        <li><a href="#sharding">Sharding</a></li>
+      </ul>
+    </li>
+    <li><a href="#cap-theorem">CAP Theorem</a></li>
+    <li><a href="#steps-to-approach-a-problem">Steps to Approach a Problem</a>
+      <ul>
+        <li><a href="#feature-expectations">Feature expectations</a></li>
+        <li><a href="#estimations">Estimations</a></li>
+        <li><a href="#design-goals">Design goals</a></li>
+        <li><a href="#skeleton-of-the-design">Skeleton of the design</a></li>
+        <li><a href="#deep-dive">Deep dive</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+                </details>
+            </div><div class="post-content"><p>No design is correct or wrong. There are just good designs and bad designs which <strong>heavily depend on the use case</strong>.</p>
+<p>Hence, it is extremely important to <strong>clarify the requirements</strong> for the problem asked.</p>
+<a class="post-dummy-target" id="basic-terminologies"></a><h2>Basic Terminologies</h2>
+<a class="post-dummy-target" id="replication"></a><h3>Replication</h3>
+<p>Frequently copying the data across multiple machines.</p>
+<a class="post-dummy-target" id="consistency"></a><h3>Consistency</h3>
+<p>The data is same across the cluster with multiple machines. You can read or write to/from any node and get the same data.</p>
+<a class="post-dummy-target" id="eventual-consistency"></a><h3>Eventual Consistency</h3>
+<p>All machines will have the same data eventually. It&rsquo;s possible that at a given instance, those machines have different versions of the same data (temporarily inconsistent) but they will eventually reach a state where they have the same data.</p>
+<a class="post-dummy-target" id="availability"></a><h3>Availability</h3>
+<p>The ability to always respond to queries (read/write) irrespective of nodes going down.</p>
+<a class="post-dummy-target" id="partition-tolerance"></a><h3>Partition Tolerance</h3>
+<p>The cluster continues to function even if there is a &ldquo;partition&rdquo; (communication break) between two nodes (both nodes are up, but can&rsquo;t communicate).</p>
+<a class="post-dummy-target" id="vertical-scaling-and-horizontal-scaling"></a><h3>Vertical Scaling and Horizontal Scaling</h3>
+<p>To scale vertically is to increase the resources of the server (RAM, CPU, storage, etc.)</p>
+<p>To scale horizontally is adding more servers.</p>
+<a class="post-dummy-target" id="sharding"></a><h3>Sharding</h3>
+<p>When data does not fit on a single machine, sharding refers to splitting the very large database into smaller, faster and more manageable parts called data shards.</p>
+<a class="post-dummy-target" id="cap-theorem"></a><h2>CAP Theorem</h2>
+<p>In a distributed system, it is impossible to simultaneously guarantee all of the following:</p>
+<ul>
+<li>Consistency</li>
+<li>Availability</li>
+<li>Partition Tolerance</li>
+</ul>
+<p><a href="http://ksat.me/a-plain-english-introduction-to-cap-theorem/">http://ksat.me/a-plain-english-introduction-to-cap-theorem/</a></p>
+<a class="post-dummy-target" id="steps-to-approach-a-problem"></a><h2>Steps to Approach a Problem</h2>
+<a class="post-dummy-target" id="feature-expectations"></a><h3>Feature expectations</h3>
+<p>It is extremely important to get a very clear understanding of whats the <strong>requirement</strong> for the question.</p>
+<a class="post-dummy-target" id="estimations"></a><h3>Estimations</h3>
+<p>Estimate the <strong>scale</strong> required for the system.</p>
+<p>The goal of this step is to understand the level of sharding required (if any) and to zero down on the design goals for the system.</p>
+<p>For example, if the total data required for the system <strong>fits on a single machine</strong>, we might <strong>not</strong> need to go into sharding and the complications that go with a distributed system design. Or if the most <strong>frequently used data</strong> fits on a single machine, in which case <strong>caching</strong> could be done on a single machine.</p>
+<a class="post-dummy-target" id="design-goals"></a><h3>Design goals</h3>
+<p>Figure out what are the most important goals for the system.</p>
+<p>It is possible that there are systems which are latency systems in which case a solution that does not account for it, might lead to bad design.</p>
+<a class="post-dummy-target" id="skeleton-of-the-design"></a><h3>Skeleton of the design</h3>
+<p>30-40 mins is not enough time to discuss every single component in detail. As such, a good strategy is to <strong>discuss a very high level</strong> with the interviewer and go into <strong>a deep dive of components as enquired</strong> by the interviewer.</p>
+<a class="post-dummy-target" id="deep-dive"></a><h3>Deep dive</h3>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>The article was updated on 2020-02-10</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><span></span></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section><span class="tag">
+                        <a href="https://murray-liang.github.io/forgetful/tags/system-design/"><i class="fas fa-tag fa-fw"></i>&nbsp;system design</a>&nbsp;
+                    </span></section>
+        <section>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://murray-liang.github.io/forgetful">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="https://murray-liang.github.io/forgetful/2020/02/design-facebook-interview/" class="prev" rel="prev" title="System Design Facebook Interview"><i class="fas fa-angle-left fa-fw"></i>System Design Facebook Interview</a>
+            <a href="https://murray-liang.github.io/forgetful/2020/02/statistics-spearmans-rank-order-correlation/" class="next" rel="next" title="Spearman&#39;s Rank Correlation">Spearman&#39;s Rank Correlation<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div class="post-comment"></div>
+    </article></div>
+            </main><footer class="footer">
+    <div class="copyright"><div class="copyright-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
+        </div>
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/Murray-LIANG" target="_blank">Murray-LIANG</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+    </div>
+</footer>
+</div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>
+            <span>&nbsp;</span>
+        </a><script src="/forgetful/js/lib/jquery/jquery.slim.min.js"></script><script src="/forgetful/js/lib/lazysizes/lazysizes.min.js"></script><script src="/forgetful/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script><link rel="stylesheet" href="/forgetful/css/lib/katex/katex.min.css"><script src="/forgetful/js/lib/katex/katex.min.js"></script><script defer src="/forgetful/js/lib/katex/auto-render.min.js"></script><link rel="stylesheet" href="/forgetful/css/lib/katex/copy-tex.min.css"><script defer src="/forgetful/js/lib/katex/copy-tex.min.js"></script><script defer src="/forgetful/js/lib/katex/mhchem.min.js"></script><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },{ left: "$", right: "$", display: false },]
+            });
+        });
+    </script><script src="/forgetful/js/blog.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>System Design Topics | Forgetful :/</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="Notes about everything"><link rel="prev" href="https://murray-liang.github.io/forgetful/2020/02/the-rust-programming-language/" /><link rel="next" href="https://murray-liang.github.io/forgetful/2020/02/design-facebook-interview/" /><link rel="canonical" href="https://murray-liang.github.io/forgetful/2020/02/design-topics/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff"><meta property="og:title" content="System Design Topics" />
+<meta property="og:description" content="Some high-level trade-offs  Performance vs scalability Latency vs throughput Availability vs consistency  Keep in mind that everything is a trade-off.
+Performance vs scalability A service is scalable if it results in increased performance in a manner proportional to resources added. Generally, increasing performance means serving more units of work, but it can also be to handle larger units of work, such as when datasets grow.
+Many algorithms that perform reasonably well under low load and small datasets can explode in cost if either requests rates increase, the dataset grows or the number of nodes in the distributed system increases." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://murray-liang.github.io/forgetful/2020/02/design-topics/" />
+<meta property="article:published_time" content="2020-02-10T16:37:31+08:00" />
+<meta property="article:modified_time" content="2020-02-10T16:37:31+08:00" />
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "System Design Topics",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/murray-liang.github.io\/forgetful\/2020\/02\/design-topics\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "https:\/\/murray-liang.github.io\/forgetful\/cover.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "posts","keywords": "design, system design, cap, dns, cdn, sharding","wordcount":  1035 ,
+        "url": "https:\/\/murray-liang.github.io\/forgetful\/2020\/02\/design-topics\/","datePublished": "2020-02-10T16:37:31\x2b08:00","dateModified": "2020-02-10T16:37:31\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "murray",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "https:\/\/murray-liang.github.io\/forgetful\/logo.png",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": ""
+    }
+    </script><link rel="stylesheet" href="/forgetful/css/style.min.css"><link rel="stylesheet" href="/forgetful/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/forgetful/css/lib/forkawesome/forkawesome.min.css"><link rel="stylesheet" href="/forgetful/css/lib/animate/animate.min.css"></head>
+    <body><script>
+            if (!window.localStorage || !window.localStorage.getItem('theme')) {
+                window.isDark = 'dark' === 'dark';
+            } else {
+                window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            }
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header animated bounceIn">
+            <a href="https://murray-liang.github.io/forgetful">Forgetful :/</a>
+        </div>
+        <div class="navbar-menu"><a class="menu-item" href="https://murray-liang.github.io/forgetful/posts" title="">Posts</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/tags" title="">Tags</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/categories" title="">Categories</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"><i class="fas fa-language fa-fw"></i></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav><nav class="navbar-mobile">
+    <div class="navbar-container">
+        <div class="navbar-header">
+            <div class="navbar-header-title animated bounceIn">
+                <a href="https://murray-liang.github.io/forgetful">Forgetful :/</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://murray-liang.github.io/forgetful/posts" title="">Posts</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/tags" title="">Tags</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/categories" title="">Categories</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav>
+<main class="main">
+                <div class="container"><article class="page"><h1 class="post-title animated flipInX">System Design Topics</h1><div class="post-meta">
+            <div class="post-meta-main"><a class="author" href="https://github.com/Murray-LIANG" rel="author" target="_blank">
+                    <i class="fas fa-user-circle fa-fw"></i>Murray-LIANG
+                </a>&nbsp;</div>
+            <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-02-10>2020-02-10</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 1035 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>5 min&nbsp;</div>
+        </div><div class="post-toc" id="post-toc">
+                <h2 class="post-toc-title">Contents</h2>
+                <div class="post-toc-content"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#some-high-level-trade-offs">Some high-level trade-offs</a></li>
+    <li><a href="#performance-vs-scalability">Performance vs scalability</a></li>
+    <li><a href="#latency-vs-throughput">Latency vs throughput</a></li>
+    <li><a href="#availability-vs-consistency">Availability vs consistency</a></li>
+    <li><a href="#consistency-patterns">Consistency patterns</a>
+      <ul>
+        <li><a href="#weak-consistency">Weak consistency</a></li>
+        <li><a href="#eventual-consistency">Eventual consistency</a></li>
+        <li><a href="#strong-consistency">Strong consistency</a></li>
+      </ul>
+    </li>
+    <li><a href="#availability-patterns">Availability patterns</a>
+      <ul>
+        <li><a href="#fail-over">Fail-over</a></li>
+        <li><a href="#replication">Replication</a></li>
+      </ul>
+    </li>
+    <li><a href="#dns">DNS</a></li>
+    <li><a href="#cdn">CDN</a>
+      <ul>
+        <li><a href="#push-cdns">Push CDNs</a></li>
+        <li><a href="#pull-cdns">Pull CDNs</a></li>
+      </ul>
+    </li>
+    <li><a href="#load-balancer">Load balancer</a>
+      <ul>
+        <li><a href="#horizontal-scaling">Horizontal scaling</a></li>
+      </ul>
+    </li>
+    <li><a href="#application-layer">Application Layer</a></li>
+    <li><a href="#database">Database</a>
+      <ul>
+        <li><a href="#rdbms">RDBMS</a>
+          <ul>
+            <li><a href="#scale-a-relational-database-master-slave-replication-master-master-replication-federation-sharding-denormalization-and-sql-tuning">Scale a relational database: master-slave replication, master-master replication, federation, sharding, denormalization, and SQL tuning.</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div>
+            <div class="post-toc-mobile" id="post-toc-mobile">
+                <details>
+                    <summary>
+                        <div class="post-toc-title">
+                            <span>Contents</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="post-toc-content"><nav id="TableOfContentsMobile">
+  <ul>
+    <li><a href="#some-high-level-trade-offs">Some high-level trade-offs</a></li>
+    <li><a href="#performance-vs-scalability">Performance vs scalability</a></li>
+    <li><a href="#latency-vs-throughput">Latency vs throughput</a></li>
+    <li><a href="#availability-vs-consistency">Availability vs consistency</a></li>
+    <li><a href="#consistency-patterns">Consistency patterns</a>
+      <ul>
+        <li><a href="#weak-consistency">Weak consistency</a></li>
+        <li><a href="#eventual-consistency">Eventual consistency</a></li>
+        <li><a href="#strong-consistency">Strong consistency</a></li>
+      </ul>
+    </li>
+    <li><a href="#availability-patterns">Availability patterns</a>
+      <ul>
+        <li><a href="#fail-over">Fail-over</a></li>
+        <li><a href="#replication">Replication</a></li>
+      </ul>
+    </li>
+    <li><a href="#dns">DNS</a></li>
+    <li><a href="#cdn">CDN</a>
+      <ul>
+        <li><a href="#push-cdns">Push CDNs</a></li>
+        <li><a href="#pull-cdns">Pull CDNs</a></li>
+      </ul>
+    </li>
+    <li><a href="#load-balancer">Load balancer</a>
+      <ul>
+        <li><a href="#horizontal-scaling">Horizontal scaling</a></li>
+      </ul>
+    </li>
+    <li><a href="#application-layer">Application Layer</a></li>
+    <li><a href="#database">Database</a>
+      <ul>
+        <li><a href="#rdbms">RDBMS</a>
+          <ul>
+            <li><a href="#scale-a-relational-database-master-slave-replication-master-master-replication-federation-sharding-denormalization-and-sql-tuning">Scale a relational database: master-slave replication, master-master replication, federation, sharding, denormalization, and SQL tuning.</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+                </details>
+            </div><div class="post-content"><a class="post-dummy-target" id="some-high-level-trade-offs"></a><h2>Some high-level trade-offs</h2>
+<ul>
+<li>Performance vs scalability</li>
+<li>Latency vs throughput</li>
+<li>Availability vs consistency</li>
+</ul>
+<p>Keep in mind that everything is a trade-off.</p>
+<a class="post-dummy-target" id="performance-vs-scalability"></a><h2>Performance vs scalability</h2>
+<p>A service is scalable if it results in increased performance in a manner proportional to resources added. Generally, increasing performance means serving more units of work, but it can also be to handle larger units of work, such as when datasets grow.</p>
+<p>Many algorithms that perform reasonably well under low load and small datasets can explode in cost if either requests rates increase, the dataset grows or the number of nodes in the distributed system increases.</p>
+<a class="post-dummy-target" id="latency-vs-throughput"></a><h2>Latency vs throughput</h2>
+<p>Generally, you should aim for maximal throughput with acceptable latency.</p>
+<a class="post-dummy-target" id="availability-vs-consistency"></a><h2>Availability vs consistency</h2>
+<p><strong>CAP</strong> theorem</p>
+<ul>
+<li>Consistency</li>
+<li>Availability</li>
+<li>Partition Tolerance</li>
+</ul>
+<p>You can only support <strong>two</strong> of the above guarantees.</p>
+<p><strong>Networks aren&rsquo;t reliable, so you&rsquo;ll need to support partition tolerance. You&rsquo;ll need to make a software tradeoff between consistency and availability.</strong></p>
+<a class="post-dummy-target" id="consistency-patterns"></a><h2>Consistency patterns</h2>
+<a class="post-dummy-target" id="weak-consistency"></a><h3>Weak consistency</h3>
+<p>After a write, reads may or may not see it. A best effort approach is taken.</p>
+<p>This approach is seen in systems such as <strong>memcached</strong> . Other <strong>real time</strong> use cases such as <strong>VoIP</strong>, <strong>Video chat</strong>, and <strong>realtime multiplayer games</strong>.</p>
+<p>For example, if you are on a phone call and lose reception for a few seconds, when you regain connection you do not hear what was spoken during connection loss.</p>
+<a class="post-dummy-target" id="eventual-consistency"></a><h3>Eventual consistency</h3>
+<p>After a write, reads will eventually see it (typically within milliseconds). Data is replicated asynchronously. Eventual consistency works well in highly available systems.</p>
+<p><strong>DNS</strong> and <strong>email</strong> are using eventual consistency.</p>
+<a class="post-dummy-target" id="strong-consistency"></a><h3>Strong consistency</h3>
+<p>After a write, reads will see it. Data is replicated synchronously. This approach is seen in <strong>file systems</strong> and <strong>RDBMSes</strong>. Strong consistency works well in systems that need transactions.</p>
+<a class="post-dummy-target" id="availability-patterns"></a><h2>Availability patterns</h2>
+<a class="post-dummy-target" id="fail-over"></a><h3>Fail-over</h3>
+<ul>
+<li>
+<p>Active-passive or master-slave</p>
+<p>Only the active server handles traffic.
+Heartbeats are sent between the active and passive server on standby. If the heartbeat is interrupted, the passive server takes over the active&rsquo;s IP address and resumes service.
+The length of downtime is determined by whether the passive server is already running in &lsquo;hot&rsquo; standby or whether it needs to start up from &lsquo;cold&rsquo; standby.</p>
+</li>
+<li>
+<p>Active-active or master-master</p>
+<p>Both servers are managing traffic, spreading the load between them.
+If the servers are public-facing, the DNS would need to know about the public IPs of both servers. If the servers are internal-facing, application logic would need to know about both servers.</p>
+</li>
+</ul>
+<a class="post-dummy-target" id="replication"></a><h3>Replication</h3>
+<ul>
+<li>
+<p>Master-slave replication</p>
+</li>
+<li>
+<p>Master-master replication</p>
+</li>
+</ul>
+<a class="post-dummy-target" id="dns"></a><h2>DNS</h2>
+<p>Domain name to IP.</p>
+<a class="post-dummy-target" id="cdn"></a><h2>CDN</h2>
+<p>A globally distributed network of proxy servers, serving content from locations closer to the user.</p>
+<p>Amazon&rsquo;s CloudFront is one of the CDNs. It&rsquo;s DNS resolution will tell clients which server to contact.</p>
+<a class="post-dummy-target" id="push-cdns"></a><h3>Push CDNs</h3>
+<a class="post-dummy-target" id="pull-cdns"></a><h3>Pull CDNs</h3>
+<a class="post-dummy-target" id="load-balancer"></a><h2>Load balancer</h2>
+<p><figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="https://camo.githubusercontent.com/21caea3d7f67f451630012f657ae59a56709365c/687474703a2f2f692e696d6775722e636f6d2f6838316e39694b2e706e67" alt="sdf" class="lazyload"><figcaption class="image-caption">sdf</figcaption></figure>
+</p>
+<p>Load balancers are effective at:</p>
+<ul>
+<li>Preventing requests from going to unhealthy servers</li>
+<li>Preventing overloading resources</li>
+<li>Helping eliminate single points of failure</li>
+</ul>
+<a class="post-dummy-target" id="horizontal-scaling"></a><h3>Horizontal scaling</h3>
+<p>Load balancer can also help with horizontal scaling, improving performance and availability.</p>
+<a class="post-dummy-target" id="application-layer"></a><h2>Application Layer</h2>
+<p>Aka. platform layer, added between the web application and database. Adding application layer can be a way to reuse your infrastructure for multiple products or interfaces (a web application, an API, an iPhone app, etc) without writing too much redundant bolerplate code for dealing with caches, databases, etc.</p>
+<a class="post-dummy-target" id="database"></a><h2>Database</h2>
+<a class="post-dummy-target" id="rdbms"></a><h3>RDBMS</h3>
+<p>A relational database like SQL is a collection of data items orgnized in tables.
+ACID is a set of properties of relational database transactions.</p>
+<ul>
+<li>Atomicity - Each transaction is all or nothing</li>
+<li>Consistency</li>
+<li>Isolation</li>
+<li>Durability</li>
+</ul>
+<a class="post-dummy-target" id="scale-a-relational-database-master-slave-replication-master-master-replication-federation-sharding-denormalization-and-sql-tuning"></a><h4>Scale a relational database: master-slave replication, master-master replication, federation, sharding, denormalization, and SQL tuning.</h4>
+<p><strong>Master-slave replication</strong></p>
+<p>The master serves reads and writes, replicating writes to one or more slaves, which serve only reads. Slaves can also replicate to additional slaves in a tree-like fashion. If the master goes offline, the system can continue to operate in read-only mode until a slave is promoted to a master or a new master is provisioned.
+<figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="https://camo.githubusercontent.com/6a097809b9690236258747d969b1d3e0d93bb8ca/687474703a2f2f692e696d6775722e636f6d2f4339696f47746e2e706e67" alt="" class="lazyload"></figure>
+</p>
+<p>Disadvantage(s):</p>
+<ul>
+<li>Additional logic is needed to promote a slave to a master.</li>
+</ul>
+<p><strong>Master-master replication</strong>
+<figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="https://camo.githubusercontent.com/5862604b102ee97d85f86f89edda44bde85a5b7f/687474703a2f2f692e696d6775722e636f6d2f6b7241484c47672e706e67" alt="" class="lazyload"></figure>
+</p>
+<p>Disadvantage(s):</p>
+<ul>
+<li>You&rsquo;ll need a load balancer or you&rsquo;ll need to make changes to your application logic to determine where to write.</li>
+<li>Most master-master systems are either loosely consistent (violating ACID) or have increased write latency due to synchronization.</li>
+<li>Conflict resolution comes more into play as more write nodes are added and as latency increases.</li>
+</ul>
+<p><strong>Disadvantages of replication</strong></p>
+<ul>
+<li>There is a potential for loss of data if the master fails before any newly written data can be replicated to other nodes.</li>
+<li>Writes are replayed to the read replicas. If there are a lot of writes, the read replicas can get bogged down with replaying writes and can&rsquo;t do as many reads.</li>
+<li>The more read slaves, the more you have to replicate, which leads to greater replication lag.</li>
+<li>On some systems, writing to the master can spawn multiple threads to write in parallel, whereas read replicas only support writing sequentially with a single thread.</li>
+<li>Replication adds more hardware and additional complexity.</li>
+</ul>
+<p><strong>Sharding</strong></p>
+<p>Sharding distributes data across different databases such that each database can only manage a subset of the data. Taking a users database as an example, as the number of users increases, more shards are added to the cluster.</p>
+<p>Similar to the advantages of federation, sharding results in less read and write traffic, less replication, and more cache hits. Index size is also reduced, which generally improves performance with faster queries. If one shard goes down, the other shards are still operational, although you&rsquo;ll want to add some form of replication to avoid data loss. Like federation, there is no single central master serializing writes, allowing you to write in parallel with increased throughput.</p>
+<p>Common ways to shard a table of users is either through the user&rsquo;s last name initial or the user&rsquo;s geographic location.</p>
+<p><strong>Disadvantages of sharding</strong></p>
+<ul>
+<li>You&rsquo;ll need to update your application logic to work with shards, which could result in complex SQL queries.</li>
+<li>Data distribution can become lopsided in a shard. For example, a set of power users on a shard could result in increased load to that shard compared to others.
+<ul>
+<li>Rebalancing adds additional complexity. A sharding function based on consistent hashing can reduce the amount of transferred data.</li>
+</ul>
+</li>
+<li>Joining data from multiple shards is more complex.
+Sharding adds more hardware and additional complexity.</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>The article was updated on 2020-02-10</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><span></span></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section><span class="tag">
+                        <a href="https://murray-liang.github.io/forgetful/tags/design/"><i class="fas fa-tag fa-fw"></i>&nbsp;design</a>&nbsp;
+                    </span><span class="tag">
+                        <a href="https://murray-liang.github.io/forgetful/tags/system-design/"><i class="fas fa-tag fa-fw"></i>&nbsp;system design</a>&nbsp;
+                    </span><span class="tag">
+                        <a href="https://murray-liang.github.io/forgetful/tags/cap/"><i class="fas fa-tag fa-fw"></i>&nbsp;cap</a>&nbsp;
+                    </span><span class="tag">
+                        <a href="https://murray-liang.github.io/forgetful/tags/dns/"><i class="fas fa-tag fa-fw"></i>&nbsp;dns</a>&nbsp;
+                    </span><span class="tag">
+                        <a href="https://murray-liang.github.io/forgetful/tags/cdn/"><i class="fas fa-tag fa-fw"></i>&nbsp;cdn</a>&nbsp;
+                    </span><span class="tag">
+                        <a href="https://murray-liang.github.io/forgetful/tags/sharding/"><i class="fas fa-tag fa-fw"></i>&nbsp;sharding</a>&nbsp;
+                    </span></section>
+        <section>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://murray-liang.github.io/forgetful">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="https://murray-liang.github.io/forgetful/2020/02/the-rust-programming-language/" class="prev" rel="prev" title="The Rust Programming Language"><i class="fas fa-angle-left fa-fw"></i>The Rust Programming Language</a>
+            <a href="https://murray-liang.github.io/forgetful/2020/02/design-facebook-interview/" class="next" rel="next" title="System Design Facebook Interview">System Design Facebook Interview<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div class="post-comment"></div>
+    </article></div>
+            </main><footer class="footer">
+    <div class="copyright"><div class="copyright-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
+        </div>
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/Murray-LIANG" target="_blank">Murray-LIANG</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+    </div>
+</footer>
+</div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>
+            <span>&nbsp;</span>
+        </a><script src="/forgetful/js/lib/jquery/jquery.slim.min.js"></script><script src="/forgetful/js/lib/lazysizes/lazysizes.min.js"></script><script src="/forgetful/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script><link rel="stylesheet" href="/forgetful/css/lib/katex/katex.min.css"><script src="/forgetful/js/lib/katex/katex.min.js"></script><script defer src="/forgetful/js/lib/katex/auto-render.min.js"></script><link rel="stylesheet" href="/forgetful/css/lib/katex/copy-tex.min.css"><script defer src="/forgetful/js/lib/katex/copy-tex.min.js"></script><script defer src="/forgetful/js/lib/katex/mhchem.min.js"></script><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },{ left: "$", right: "$", display: false },]
+            });
+        });
+    </script><script src="/forgetful/js/blog.min.js"></script>
+</body>
+</html>

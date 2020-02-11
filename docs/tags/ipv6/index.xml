@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ipv6 on Forgetful :/</title>
+    <link>https://murray-liang.github.io/forgetful/tags/ipv6/</link>
+    <description>Recent content in ipv6 on Forgetful :/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
+    
+	<atom:link href="https://murray-liang.github.io/forgetful/tags/ipv6/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>IPv6</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/network-ipv6/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/network-ipv6/</guid>
+      <description>IPv4 addresses are 32 bits long and IPv6 addresses are 128 bits long.
+Classifying IPv6 Addresses IPv6 has three types of addresses:
+ Unicast: An IPv6 unicast address is used to identify a single interface. Packets sent to a unicast address are delivered to that specific interface. Anycast: IPv6 anycast addresses identify groups of interfaces, which typically belong to different nodes. Packets destined to an anycast address are sent to the nearest interface in the group, as determined by the active routing protocols.</description>
+    </item>
+    
+  </channel>
+</rss>

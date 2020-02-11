@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>gil on Forgetful :/</title>
+    <link>https://murray-liang.github.io/forgetful/tags/gil/</link>
+    <description>Recent content in gil on Forgetful :/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
+    
+	<atom:link href="https://murray-liang.github.io/forgetful/tags/gil/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Python GIL, Multi-Threading, Multi-Processing</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/python-gil-multithread-multiprocessing/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/python-gil-multithread-multiprocessing/</guid>
+      <description>References https://blog.csdn.net/AnyThingFromBigban/article/details/73611386
+GIL 与 Python 线程的纠葛 GIL是什么东西？它对我们的python程序会产生什么样的影响？我们先来看一个问题。 运行下面这段python程序，CPU占用率是多少？
+1 2 3 4 5 6  # 请勿在工作中模仿，危险:) def dead_loop(): while True: pass dead_loop()   答案是什么呢，占用100%CPU？那是单核！还得是没有超线程的古董CPU。 在我的双核CPU上，这个死循环只会吃掉我一个核的工作负荷，也就是只占用50%CPU。 那如何能让它在双核机器上占用100%的CPU呢？答案很容易想到，用两个线程就行了， 线程不正是并发分享CPU运算资源的吗。可惜答案虽然对了，但做起来可没那么简单。 下面的程序在主线程之外又起了一个死循环的线程。
+1 2 3 4 5 6 7 8 9 10 11 12 13 14  import threading def dead_loop(): while True: pass # 新起一个死循环线程 t = threading.Thread(target=dead_loop) t.start() # 主线程也进入死循环 dead_loop() t.join()   按道理它应该能做到占用两个核的CPU资源，可是实际运行情况却是没有什么改变，还是只占了50%CPU不到。 这又是为什么呢？难道python线程不是操作系统的原生线程？ 打开system monitor一探究竟，这个占了50%的python进程确实是有两个线程在跑。 那这两个死循环的线程为何不能占满双核CPU资源呢？其实幕后的黑手就是GIL。
+GIL 的迷思：痛并快乐着 GIL 的全称为 Global Interpreter Lock ，意即全局解释器锁。在 Python 语言的主流实现 CPython 中， GIL 是一个货真价实的全局线程锁，在解释器解释执行任何 Python 代码时，都需要先获得这把锁才行， 在遇到 I/O 操作时会释放这把锁。如果是纯计算的程序，没有 I/O 操作，解释器会每隔 100 次操作 就释放这把锁，让别的线程有机会执行（这个次数可以通过sys.</description>
+    </item>
+    
+  </channel>
+</rss>

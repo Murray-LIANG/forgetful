@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>glance on Forgetful :/</title>
+    <link>https://murray-liang.github.io/forgetful/tags/glance/</link>
+    <description>Recent content in glance on Forgetful :/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
+    
+	<atom:link href="https://murray-liang.github.io/forgetful/tags/glance/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Glance</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/openstack-glance/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/openstack-glance/</guid>
+      <description>glance-api Dispatch the REST request.
+glance-registry Process the request about the metadata of image.
+Storage backend Configed in /etc/glance/glance-api.conf.
+Misc Two processes run for Glance:
+ g-api g-reg  </description>
+    </item>
+    
+  </channel>
+</rss>

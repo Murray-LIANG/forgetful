@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>openstack on Forgetful :/</title>
+    <link>https://murray-liang.github.io/forgetful/tags/openstack/</link>
+    <description>Recent content in openstack on Forgetful :/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
+    
+	<atom:link href="https://murray-liang.github.io/forgetful/tags/openstack/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Glance</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/openstack-glance/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/openstack-glance/</guid>
+      <description>glance-api Dispatch the REST request.
+glance-registry Process the request about the metadata of image.
+Storage backend Configed in /etc/glance/glance-api.conf.
+Misc Two processes run for Glance:
+ g-api g-reg  </description>
+    </item>
+    
+    <item>
+      <title>How to Source Openrc with Zsh</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/openstack-source-openrc-with-zsh/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/openstack-source-openrc-with-zsh/</guid>
+      <description> Create file openrc_zsh with content:  1 2 3 4 5 6 7  #!/bin/env bash function sourceopenrc { pushd ~/devstack &amp;gt;/dev/null eval $(bash -c &amp;#34;. openrc $1$2;env|sed -n &amp;#39;/OS_/ { s/^/export /;p}&amp;#39;&amp;#34;) popd &amp;gt;/dev/null } sourceopenrc admin admin   Run source openrc_zsh.  </description>
+    </item>
+    
+    <item>
+      <title>Install Storops RPM on RHEL7</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/openstack-redhat-install-storops/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/openstack-redhat-install-storops/</guid>
+      <description>Install a RHEL VM.   If using qcow2 image, the default user is cloud-user. Use the OpenStack ssh key to login.
+  Create a new user stack with password welcome.
+  1 2 3  $ sudo useradd stack $ sudo passwd stack $ sudo visudo   Modify /etc/ssh/sshd_config to allow login via password  Entry name is PasswordAuthentication.
+Register subscription 1 2 3 4 5 6 7  $ sudo subscription-manager register $ sudo subscription-manager attach --auto $ sudo subscription-manager repos \  --enable=rhel-7-server-rpms --enable=rhel-7-server-extras-rpms \  --enable=rhel-7-server-rh-common-rpms \  --enable=rhel-ha-for-rhel-7-server-rpms $ sudo yum update   Download storops rpm from github 1  curl -OJL https://github.</description>
+    </item>
+    
+    <item>
+      <title>OpenStack Attach Volume</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/openstack-attach/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/openstack-attach/</guid>
+      <description>Sample of REST Request and Response 1  stack@rocky:~/cinder$ openstack --debug server add volume vm-ml-1 liangr   1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57  START with options: [u&amp;#39;--debug&amp;#39;, u&amp;#39;server&amp;#39;, u&amp;#39;add&amp;#39;, u&amp;#39;volume&amp;#39;, u&amp;#39;vm-ml-1&amp;#39;, u&amp;#39;liangr&amp;#39;] command: server add volume -&amp;gt; openstackclient.</description>
+    </item>
+    
+    <item>
+      <title>OpenStack Cinder Multiple Backends</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/openstack-cinder-unity-multi-backends-test/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/openstack-cinder-unity-multi-backends-test/</guid>
+      <description>Cinder configuration Some settings in /ect/cinder/cinder.conf
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23  [DEFAULT] ... ... enabled_backends = unity_backend_1,unity_backend_2 ... ... [unity_backend_1] storage_protocol = iSCSI san_ip = 10.245.101.39 san_login = admin san_password = Password123! volume_driver = cinder.volume.drivers.dell_emc.unity.Driver volume_backend_name = unity_backend_1 force_delete_attached_snapshots = True [unity_backend_2] storage_protocol = iSCSI san_ip = 192.168.1.58 san_login = admin san_password = Password123!</description>
+    </item>
+    
+    <item>
+      <title>OpenStack Curl Command Examples</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/openstack-curl-rest-examples/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/openstack-curl-rest-examples/</guid>
+      <description>1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27  # create volume curl -g -i \  -X POST http://192.168.77.63/volume/v2/2a97f77210a54665ba9df8a505df6624/volumes \  -H &amp;#34;User-Agent: python-cinderclient&amp;#34; \  -H &amp;#34;Content-Type: application/json&amp;#34; \  -H &amp;#34;Accept: application/json&amp;#34; \  -H &amp;#34;X-Auth-Token: {SHA1}5b729489a9259aae07eb591361c474bdad29e71d&amp;#34; \  -d &amp;#39; {&amp;#34;volume&amp;#34;: {&amp;#34;status&amp;#34;: &amp;#34;creating&amp;#34;, &amp;#34;user_id&amp;#34;: null, &amp;#34;name&amp;#34;: &amp;#34;v-m-3&amp;#34;, &amp;#34;imageRef&amp;#34;: null, &amp;#34;availability_zone&amp;#34;: null, &amp;#34;description&amp;#34;: null, &amp;#34;multiattach&amp;#34;: false, &amp;#34;attach_status&amp;#34;: &amp;#34;detached&amp;#34;, &amp;#34;volume_type&amp;#34;: null, &amp;#34;metadata&amp;#34;: {}, &amp;#34;consistencygroup_id&amp;#34;: null, &amp;#34;source_volid&amp;#34;: null, &amp;#34;snapshot_id&amp;#34;: null, &amp;#34;project_id&amp;#34;: null, &amp;#34;source_replica&amp;#34;: null, &amp;#34;size&amp;#34;: 1 } }&amp;#39;   1 2 3 4 5 6 7 8 9 10 11 12 13 14  # force detach curl -g -i \  -X POST \  http://192.</description>
+    </item>
+    
+    <item>
+      <title>OpenStack Deployment using Kolla Ansible</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/openstack-kolla-ansible/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/openstack-kolla-ansible/</guid>
+      <description>Network layout API network  eth3 of ubuntu-serverX: 192.168.4.X/24 Internal VIP: 192.168.4.254  External network   eth0 of ubuntu-serverX.
+NOTE: 172.30.X.X/16 subnet is used as the floating IP of OpenStack VMs. Do NOT use 192.168.1.X/24 subnet. Refer to Network settings
+  External VIP: 192.168.1.254, used to access Horizon from Windows Client. Because the eth0 of Neutron node (aka. ubuntu-server3) is bound to br-ex, IP 192.168.1.254 need to be set to br-ex manually after deploy, so as IP 192.</description>
+    </item>
+    
+    <item>
+      <title>OpenStack Dev Tips</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/openstack-dev/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/openstack-dev/</guid>
+      <description>Add release notes 1 2 3 4 5 6  ---fixes:- | Dell EMC Unity Driver: Fixes `bug 1798529&amp;lt;https://bugs.launchpad.net/cinder/+bug/1798529&amp;gt;`__toaddanoptionforforcedeletingthesnapshotevenifitisattachedtohosts.  </description>
+    </item>
+    
+    <item>
+      <title>OpenStack Devstack Tips</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/openstack-devstack/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/openstack-devstack/</guid>
+      <description>Clean Up   Unstack and clean up the databases, .etc.
+~/devstack/clean.sh
+  Uninstall all python packages via pip.
+1 2 3 4 5 6  sudo pip freeze | grep -v &amp;#34;git+https&amp;#34; | \  xargs sudo pip uninstall -y for i in cinder glance keystone neutron nova; do bash -c &amp;#34;cd /opt/stack/$i&amp;amp;&amp;amp; sudo python setup.py develop --uninstall&amp;#34;; done     [Optional] Remove all installed binaries and source codes.</description>
+    </item>
+    
+    <item>
+      <title>OpenStack Faulty Device</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/openstack-faulty-device/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/openstack-faulty-device/</guid>
+      <description>References  https://www.cnblogs.com/sting2me/p/8849689.html https://www.cnblogs.com/sting2me/p/8888420.html  Faulty device的产生 What are faulty devices? os-brick module is mainly used to connect/disconnect the devices.
+Interface connect_volume is used to discover the block devices of storage systems, disconnect_volume is for cleaning the block devices.
+When the multipath tool on hosts cannot access the host path, it marks the device as faulty.
+How are faulty devices generated? The faulty devices show up under the race condition occurs between connect_volume and disconnect_volume.</description>
+    </item>
+    
+    <item>
+      <title>OpenStack Generic Group and Consistent Group</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/openstack-cg/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/openstack-cg/</guid>
+      <description>References https://docs.openstack.org/cinder/latest/admin/blockstorage-groups.html https://docs.openstack.org/cinder/latest/contributor/groups.html
+Consistent Group For a group to support consistent group snapshot, the group specs in the corresponding group type should have the following entry:
+1  {&amp;#39;consistent_group_snapshot_enabled&amp;#39;: &amp;lt;is&amp;gt; True}   Similarly, for a volume to be in a group that supports consistent group snapshots, the volume type extra specs would also have the following entry:
+1  {&amp;#39;consistent_group_snapshot_enabled&amp;#39;: &amp;lt;is&amp;gt; True}   Cinder Cli Microversion  The minimum microversion to support group type and group specs is 3.</description>
+    </item>
+    
+    <item>
+      <title>OpenStack Install libpq-dev on Ubuntu18/Mint19</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/openstack-libpq-dev-install/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/openstack-libpq-dev-install/</guid>
+      <description>Meet errors when running tox -e py27,pep8 of Cinder If meet below error, need to install libpq-dev with version 9.5.14.
+Error: could not determine PostgreSQL version from &amp;lsquo;10.6&amp;rsquo;</description>
+    </item>
+    
+    <item>
+      <title>OpenStack Introduction</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/openstack-intro/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/openstack-intro/</guid>
+      <description>Main Services  Nova Neutron Glance Cinder Keystone Swift (Optional)  Nodes Control Node Used to manage the OpenStack env.
+Keystone, Glance, Horizon services run on it.
+Some Nova management module, Neutron management module, SQL database, Message Queue, and NTP services run on it.
+Network Node Provides network including L2 and L3, like route, NAT, DHCP, and etc.
+Main Neutron services run on it.
+Storage Node Provides storage, like Block storage and Object storage.</description>
+    </item>
+    
+    <item>
+      <title>OpenStack Keystone</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/openstack-keystone/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/openstack-keystone/</guid>
+      <description>Manage the Users and Roles. Manage the Endpoints of services. Authentication and authorization.  Key points User Credentials Authentication Token Project, Tenant OpenStack resources belong to the Project/Tenant, that is, the resouces are project based not user based. Every user including admin must be a member of the project before accessing the resources.
+Service Endpoint Each service exposes several endpoints (URL). Other service sends commands to the endpoint.
+1 2  # list endpoints $ openstack catalog list   Role Keystone stores a list of roles.</description>
+    </item>
+    
+    <item>
+      <title>OpenStack Multi-attach</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/openstack-multiattach/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/openstack-multiattach/</guid>
+      <description>References https://docs.openstack.org/nova/latest/admin/manage-volumes.html#volume-multi-attach https://docs.openstack.org/cinder/latest/admin/blockstorage-volume-multiattach.html http://specs.openstack.org/openstack/cinder-specs/specs/ocata/add-new-attach-apis.html
+Versions Needed  The minimum required compute API microversion for attaching a multiattach-capable volume to more than one server is 2.60. Cinder 12.0.0 (Queens) or newer is required. The nova-compute service must be running at least Queens release level code (17.0.0) and the hypervisor driver must support attaching block storage devices to more than one guest. Refer to Feature Support Matrix for details on which compute drivers support volume multiattach.</description>
+    </item>
+    
+    <item>
+      <title>OpenStack Neutron</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/openstack-neutron/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/openstack-neutron/</guid>
+      <description>Software Defined Network
+Functionality L2 switching Virtual switch: support Linux Bridge and Open vSwitch. Based on the Linux Bridge and OVS, Neutron supports VLAN. Besides, Tunneling overlay network like VxLan and GRE are supported.
+L3 routing Virtual router: leverages IP forwarding and iptables to do routing and NAT.
+Load balancing Firewall Key points Network  Local: Instance can only access to the instances on the same node. Flat: no VLAN tagging.</description>
+    </item>
+    
+    <item>
+      <title>OpenStack Nova</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/openstack-nova/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/openstack-nova/</guid>
+      <description>Services  nova-api nova-scheduler nova-compute nova-conductor Hypervisor  Where the services run Generally, the api, scheduler, conductor are running on Control Node. compute, Hypervisor are running on Compute Node.
+General flow  User (End user or other services) sends requests to nova-api to create a VM instance. nova-api sends message to Message Queue to ask nova-scheduler to schedule a Compute Node to create the VM. nova-scheduler gets the message and pick a Compute Node via a filter algorithm, then sends message to let that Compute Node (A) to create VM.</description>
+    </item>
+    
+    <item>
+      <title>OpenStack Nova Attach Process Logs of Newton Version</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/openstack-attach-logs/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/openstack-attach-logs/</guid>
+      <description>1. Reserve the VM 1.1 Get a lock on VM by nova.compute.manager.do_reserve 1.2 Update the DB via conductor 1.3 Release the lock by nova.compute.manager.do_reserve 2. Get a lock on VM by nova.compute.manager.do_attach_volume (will released in the end) 3. GET call to cinder to get information of volume 3.1 Print a log Attaching volume 5ed0cc5c-158c-4857-9bd5-3556884a23f0 to /dev/vdb 3.2 REST request to cinder 1 2 3 4  REQ: curl -g -i -X GET \  http://172.</description>
+    </item>
+    
+    <item>
+      <title>OpenStack Nova Detach Process Logs of Newton Version</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/openstack-detach-logs/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/openstack-detach-logs/</guid>
+      <description>1. Get connector properties (219ms) 1 2 3 4 5 6 7  get_connector_properties: call { &amp;#39;execute&amp;#39;: None, &amp;#39;my_ip&amp;#39;: &amp;#39;172.16.1.11&amp;#39;, &amp;#39;enforce_multipath&amp;#39;: True, &amp;#39;host&amp;#39;: &amp;#39;newton&amp;#39;, &amp;#39;root_helper&amp;#39;: &amp;#39;sudo nova-rootwrap /etc/nova/rootwrap.conf&amp;#39;, &amp;#39;multipath&amp;#39;: True}   1.1 Check multipathd status, if multipath-tools is not installed or down, exception raises 1 2 3 4 5 6  $ multipathd show status path checker states: up 3 paths: 2 busy: False   1.2 Get the initiator name 1 2 3 4 5 6 7  $ cat /etc/iscsi/initiatorname.</description>
+    </item>
+    
+    <item>
+      <title>OpenStack ospt Tips</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/openstack-ospt-tips/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/openstack-ospt-tips/</guid>
+      <description>SSH to the VM where ospt is installed 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18  $ ssh guest@10.245.48.66 # use password: welcome $ ssh stack@ubuntu-perf-test # use password: welcome $ cd ~/perf-test # Replace the &amp;lt;mgmt_ip&amp;gt; in `ospt_*.sh`. # create hosts and luns. $ ./ospt_create.sh # it outputs a `create-servers.log` and `create-volumes.log` where you can see the time used.</description>
+    </item>
+    
+    <item>
+      <title>OpenStack Setup Tenant</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/openstack-setup-tenant/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/openstack-setup-tenant/</guid>
+      <description>Prerequisites  Have the account to the OpenStack env.  Steps Login to the OpenStack GUI. Open 192.168.1.254 in Chrome or other web browser.
+[Do for the first time] Setup the Networks  Navigate Project -&amp;gt; Network -&amp;gt; Networks, click Create Network. Input the network name and create a Subnet. Suggest using private subnets like: 172.16.*.* to 172.30.*.*. Input the DNS servers.     Navigate Project -&amp;gt; Network -&amp;gt; Routers, click Create Router.</description>
+    </item>
+    
+    <item>
+      <title>OpenStack Thick Volume</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/openstack-thick-volume/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/openstack-thick-volume/</guid>
+      <description>1 2  openstack volume type create thick --property provisioning:type=&amp;#39;thick&amp;#39; \  --property thick_provisioning_support=&amp;#39;&amp;lt;is&amp;gt; True&amp;#39;   </description>
+    </item>
+    
+    <item>
+      <title>OpenStack Triage Tips</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/openstack-triage-tips/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/openstack-triage-tips/</guid>
+      <description>Get the versions of OpenStack and Drivers 1 2 3 4 5 6 7  $ find . -name &amp;#34;*&amp;#34; -type f | xargs grep -n -P -i &amp;#34;starting.*&amp;#34; | grep -v &amp;#34;eventlet&amp;#34; /var/log/cinder/scheduler.log:4490:2018-03-03 00:13:06.689 3581 INFO cinder.service [-] Starting cinder-scheduler node (version 9.1.4) /var/log/cinder/scheduler.log:8000:2018-09-06 21:04:58.062 974844 INFO cinder.service [-] Starting cinder-scheduler node (version 9.1.4) /var/log/cinder/volume.log:25398:2018-09-06 21:03:36.372 969733 INFO cinder.service [-] Starting cinder-volume node (version 9.1.4) /var/log/cinder/volume.log:25434:2018-09-06 21:03:36.406 969733 INFO cinder.</description>
+    </item>
+    
+    <item>
+      <title>OpenStack VNX Driver LUN SP Ownership Load Balance</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/openstack-vnx-sp-auto-assign/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/openstack-vnx-sp-auto-assign/</guid>
+      <description>There is an option -aa to load balance the ownership of LUNs. Some answers on EMC community https://community.emc.com/thread/114798?start=0&amp;amp;tstart=0</description>
+    </item>
+    
+    <item>
+      <title>Package Storops RPM on RHEL</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/openstack-package-storops-rpm/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/openstack-package-storops-rpm/</guid>
+      <description>Install a RHEL VM.   If using qcow2 image, the default user is cloud-user. Use the OpenStack ssh key to login.
+  Create a new user stack with password welcome.
+  1 2 3  $ sudo useradd stack $ sudo passwd stack $ sudo visudo   Register subscription 1 2  $ sudo subscription-manager register $ sudo subscription-manager attach --auto   Install the basic packages like rpm-build 1  $ sudo yum install -y rpm-build git wget python-pip   NOTE: need to upgrade the setuptools using pip.</description>
+    </item>
+    
+    <item>
+      <title>Some Auto Setup by Devstack</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/openstack-devstack-auto-create/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/openstack-devstack-auto-create/</guid>
+      <description>Neutron network part 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54  openstack --os-cloud devstack-admin --os-region RegionOne subnet pool create \  shared-default-subnetpool-v4 --default-prefix-length 26 \  --pool-prefix 10.</description>
+    </item>
+    
+  </channel>
+</rss>

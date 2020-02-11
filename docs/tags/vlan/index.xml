@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>vlan on Forgetful :/</title>
+    <link>https://murray-liang.github.io/forgetful/tags/vlan/</link>
+    <description>Recent content in vlan on Forgetful :/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
+    
+	<atom:link href="https://murray-liang.github.io/forgetful/tags/vlan/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Linux Bridge and VLAN</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/linux_bridge_and_vlan/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/linux_bridge_and_vlan/</guid>
+      <description>What is Linux Bridge? There is a VM on the Host. And only one ethernet port on the Host, named eth0.
+If bind eth0 to the VM, then the Host and other new VMs have no port to access the internet.
+So the solution is to create a bridge on the Host, name it br0. Assign a virtual card to VM, name it vnet0. br0 connects the vnet0 and eth0.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>k8s on Forgetful :/</title>
+    <link>https://murray-liang.github.io/forgetful/tags/k8s/</link>
+    <description>Recent content in k8s on Forgetful :/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
+    
+	<atom:link href="https://murray-liang.github.io/forgetful/tags/k8s/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Kubernetes and CSI</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/kubernetes-and-csi/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/kubernetes-and-csi/</guid>
+      <description>基本概念 Plugin In the CSI world, it means a service that exposes gRPC endpoints. There are two plugins:
+ Node plugin - a gRPC server that needs to run on the Node where the volume will be provisioned. Controller plugin - a gRPC server that can run anywhere (even on the master).  implementing three interfaces:
+ Node interface Controller interface Identity interface  Plugin Deployment The Node and Controller plugin could be released as one binary or in two binaries.</description>
+    </item>
+    
+    <item>
+      <title>Kubernetes API Server</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/kubernetes-api-server/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/kubernetes-api-server/</guid>
+      <description>Although kubelet could watch a directory and run pods found configured under that directory, but in a Kubernetes cluster, kubelet will get most its pods to run from the Kubernetes API server.
+Kubernetes stores all its cluster state in etcd, a distributed data store with a strong consistency model. This state includes what nodes exist in the cluster, what pods should be running, which nodes they are running on, and a whole lot more.</description>
+    </item>
+    
+    <item>
+      <title>Kubernetes CSI Unity</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/kubernetes-csi-unity/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/kubernetes-csi-unity/</guid>
+      <description>Setup K8S Nodes 1. Create three VMs. 2. Create the user k8s with password welcome, add it to sudo group. 3. Add corp CA certs on all nodes. https://eos2git.cec.lab.emc.com/liangr/corp-notes/blob/master/fix-pip-emc-cert.md
+4. Install docker.io on all nodes. NOTE: Do NOT use 18.09.2 currently (2019-04-25). It causes below errors:
+1 2 3 4 5 6  root@k8s-master:~# docker pull k8s.gcr.io/kube-apiserver:v1.14.1 v1.14.1: Pulling from kube-apiserver 346aee5ea5bc: Pulling fs layer 7f0e834d5a94: Pulling fs layer error pulling image configuration: Get https://storage.</description>
+    </item>
+    
+    <item>
+      <title>Kubernetes Demo</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/kubernetes-demo/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/kubernetes-demo/</guid>
+      <description>Pre-requisites   Pre-configurations on Unity.
+  Create a Pool and a NasServer.
+NOTE: the NFSv4 needs to be enabled on the NasServer.
+  Create hosts for the K8S nodes, k8s-node1 and k8s-node2 and manually register the initiators. Use below command to view the initiator name:
+  1 2  $ cat /etc/iscsi/initiatorname.iscsi InitiatorName=iqn.&amp;lt;rest of host iscsi initiator&amp;gt;     The docker daemon on all Nodes in K8S should be configured with DNS.</description>
+    </item>
+    
+    <item>
+      <title>Kubernetes Introduction</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/kubernetes-intro/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/kubernetes-intro/</guid>
+      <description>基本概念 Cluster 各种资源，计算、存储、网络的集合。
+Master 调度应用放在哪里运行。为了保证高可用，可以部署多个Master。
+Node 由Master管理，负责监控并汇报容器的状态。根据Master的要求，对容器进行Life Cycle Management。
+Pod K8S中最小的工作单元。每一个Pod可以包含一个或者多个容器。Pod中的容器作为一个整体被Master调度到一个Node上运行。
+为什么需要提出Pod这一层抽象呢？因为
+  存在多个容器天生需要紧密联系，一起工作，Pod比容器抽象更高，将多个容器封装在一个部署单元中，易于管理，比如以Pod为最小单位进行调度、扩展、资源共享、LCM。
+  Pod中的所有容器使用同一个网络的namespace，即相同的IP地址和Port空间。除了网络，还有共享的存储资源。
+  Controller K8S不会直接创建Pod，而是通过Controller来管理Pod的。Controller中定义了Pod的部署特性，比如有多少个副本，在什么样的Node上面运行。K8S提供了多种Controller,包括Deployment、ReplicaSet、DaemonSet、StatefulSet、Job等。
+Deployment 可以通过它来部署应用，Deployment来管理Pod的多个副本，并保证Pod安装预期的状态运行。
+ReplicaSet Pod的多副本管理，使用Deployment会间接自动创建ReplicaSet。
+DaemonSet 用于每个Node只运行一个Pod副本的情形。
+StatefulSet 能保证Pod的每个副本在整个生命周期中名称是不变的。使用其他Controll当某个Pod发生故障需要删除并重新启动，Pod的名称会变化。除此之外，StatefulSet会保证副本按照固定的顺序启动，更新或者删除。
+Job 运行结束就删除。其他方式部署的Pod会一直存在。
+Service Deployment部署多个Pod，每个Pod有自己的IP，外界不能通过Pod的IP来访问应用，因为Pod的IP会随着Pod的重启而变化。因此，用Service定义外界访问一组特定Pod的方式。Service有自己的IP和Port，而且还为Pod提供Load Balance。
+Controller和Service分别控制着Pod的运行和访问。
+Namespace 如果多个用户或者项目组共享使用一个物理的Cluster，如何隔离他们创建的Controller和Pod呢？
+使用Namespace可以将一个物理的Cluster划分成多个逻辑的Cluster，每个Cluster在单独的Namespace中，他们的资源完全隔离。
+K8S创建了两个默认的Namespace，default和kube-system，后者用于放置K8S自己创建的系统资源。
+kubelet, kubeadm, kubectl  kubelet - 运行在所有节点上，负责启动Pod和容器。 kubeadm - 用于初始化Cluster。 kubectl - K8S命令行工具，用于部署管理应用，查看管理各种资源。  Installation Create three VMs. Create the user k8s with password welcome, add it to sudo group. Add corp CA certs on all nodes.</description>
+    </item>
+    
+    <item>
+      <title>Kubernetes Kubelet</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/kubernetes-kubelet/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/kubernetes-kubelet/</guid>
+      <description>kubelet is the lowest level component in Kubernetes. It&amp;rsquo;s responsible for what&amp;rsquo;s running on an individual machine. You can think of it as a process watcher like supervisord, but focused on running containers. It has one job: given a set of containers to run, make sure they are all running.
+There are a few ways the kubelet finds pods to run:
+ a directory it polls for new pod manifests to run a URL it polls and downloads pod manifests from from the Kubernetes API server  The first one above is the simplest: to run a pod, we just put a manifest file in the watched directory.</description>
+    </item>
+    
+    <item>
+      <title>Kubernetes Networking</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/kubernetes-networking/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/kubernetes-networking/</guid>
+      <description>Different Networking Model  Container-to-container Pod-to-pod Pod-to-service Internet-to-service  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36  +-------------------------------------------------------------------+ +-------------------------------------------------------------------+ | | | | | +-----------------------------------+ | | +-----------------------------------+ | | | +-------------+ +-------------+ | | | | +-------------+ +-------------+ | | | | | Container.</description>
+    </item>
+    
+    <item>
+      <title>Kubernetes Overlay Network</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/kubernetes-overlay-network/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/kubernetes-overlay-network/</guid>
+      <description>Overlay networks such as vxlan or ipsec encapsulate the packet into another packet. This makes entities addressable that are outside of the scope of another machine.
+Any solution on L2 or L3 makes a pod addressable on the network. This means a pod is reachable not just within the Docker network, but is directly addressable from outside the Docker network. These could be public or private IP addresses.
+The way of route and iptables described here is a L3 solution (not a overlay networking) making a pod addressable on the network.</description>
+    </item>
+    
+    <item>
+      <title>Kubernetes What is Pause Container</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/kubernetes-what-is-pause-container/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/kubernetes-what-is-pause-container/</guid>
+      <description>Why We Need Pods Docker supports containers, which are great for deploying single units of software. However, this model can become a bit cumbersome when you want to run multiple pieces of software together. You often see this when developers create Docker images that use supervisord as an entrypoint to start and manage multiple processes. For production systems, many have found that it is instead more useful to deploy those applications in groups of containers that are partially isolated and partially share on environment.</description>
+    </item>
+    
+    <item>
+      <title>What Even Is A Container And A Kubernetes Pod</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/kubernetes-container-pod-what-it-is/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/kubernetes-container-pod-what-it-is/</guid>
+      <description>Container The word container doesn&amp;rsquo;t mean anything super precise. Basically there are a few new Linux kernel features (namespaces and cgroups) that let you isolate processes from each other. When you use those features, you call it containers.
+Basically these features let you pretend you have something like a virtual machine, except it&amp;rsquo;s not a virtual machine at all, it&amp;rsquo;s just processes running in the same Linux kernel.
+Namespaces namespaces is a Linux feature which could separate your processes from the other processes on the same computer.</description>
+    </item>
+    
+  </channel>
+</rss>

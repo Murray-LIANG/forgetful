@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>redhat on Forgetful :/</title>
+    <link>https://murray-liang.github.io/forgetful/tags/redhat/</link>
+    <description>Recent content in redhat on Forgetful :/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
+    
+	<atom:link href="https://murray-liang.github.io/forgetful/tags/redhat/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Install Storops RPM on RHEL7</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/openstack-redhat-install-storops/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/openstack-redhat-install-storops/</guid>
+      <description>Install a RHEL VM.   If using qcow2 image, the default user is cloud-user. Use the OpenStack ssh key to login.
+  Create a new user stack with password welcome.
+  1 2 3  $ sudo useradd stack $ sudo passwd stack $ sudo visudo   Modify /etc/ssh/sshd_config to allow login via password  Entry name is PasswordAuthentication.
+Register subscription 1 2 3 4 5 6 7  $ sudo subscription-manager register $ sudo subscription-manager attach --auto $ sudo subscription-manager repos \  --enable=rhel-7-server-rpms --enable=rhel-7-server-extras-rpms \  --enable=rhel-7-server-rh-common-rpms \  --enable=rhel-ha-for-rhel-7-server-rpms $ sudo yum update   Download storops rpm from github 1  curl -OJL https://github.</description>
+    </item>
+    
+    <item>
+      <title>Package Storops RPM on RHEL</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/openstack-package-storops-rpm/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/openstack-package-storops-rpm/</guid>
+      <description>Install a RHEL VM.   If using qcow2 image, the default user is cloud-user. Use the OpenStack ssh key to login.
+  Create a new user stack with password welcome.
+  1 2 3  $ sudo useradd stack $ sudo passwd stack $ sudo visudo   Register subscription 1 2  $ sudo subscription-manager register $ sudo subscription-manager attach --auto   Install the basic packages like rpm-build 1  $ sudo yum install -y rpm-build git wget python-pip   NOTE: need to upgrade the setuptools using pip.</description>
+    </item>
+    
+  </channel>
+</rss>

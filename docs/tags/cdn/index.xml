@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>cdn on Forgetful :/</title>
+    <link>https://murray-liang.github.io/forgetful/tags/cdn/</link>
+    <description>Recent content in cdn on Forgetful :/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
+    
+	<atom:link href="https://murray-liang.github.io/forgetful/tags/cdn/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>System Design Topics</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/design-topics/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/design-topics/</guid>
+      <description>Some high-level trade-offs  Performance vs scalability Latency vs throughput Availability vs consistency  Keep in mind that everything is a trade-off.
+Performance vs scalability A service is scalable if it results in increased performance in a manner proportional to resources added. Generally, increasing performance means serving more units of work, but it can also be to handle larger units of work, such as when datasets grow.
+Many algorithms that perform reasonably well under low load and small datasets can explode in cost if either requests rates increase, the dataset grows or the number of nodes in the distributed system increases.</description>
+    </item>
+    
+    <item>
+      <title>V2Ray and Related</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/v2ray/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/v2ray/</guid>
+      <description>V2Ray and Others  FQ V2Ray 加速 BBR 伪装  免费域名 websocket+tls+web CDN    FQ V2Ray 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24  # # Run as root on VPS # bash &amp;lt;(curl -L -s https://install.direct/go.sh) # vim /etc/v2ray/config.json { &amp;#34;inbounds&amp;#34;: [{ &amp;#34;port&amp;#34;: 23581, &amp;gt;&amp;gt;&amp;gt; will be used in client &amp;#34;protocol&amp;#34;: &amp;#34;vmess&amp;#34;, &amp;#34;settings&amp;#34;: { &amp;#34;clients&amp;#34;: [ { &amp;#34;id&amp;#34;: &amp;#34;ceb793e6-49cf-25d8-e4de-ae542e62748e&amp;#34;, &amp;gt;&amp;gt;&amp;gt; will be used in client &amp;#34;level&amp;#34;: 1, &amp;#34;alterId&amp;#34;: 64 &amp;gt;&amp;gt;&amp;gt; change to 32, will be used in client } ] } }], .</description>
+    </item>
+    
+  </channel>
+</rss>

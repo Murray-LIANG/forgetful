@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>faulty device on Forgetful :/</title>
+    <link>https://murray-liang.github.io/forgetful/tags/faulty-device/</link>
+    <description>Recent content in faulty device on Forgetful :/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
+    
+	<atom:link href="https://murray-liang.github.io/forgetful/tags/faulty-device/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>OpenStack Faulty Device</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/openstack-faulty-device/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/openstack-faulty-device/</guid>
+      <description>References  https://www.cnblogs.com/sting2me/p/8849689.html https://www.cnblogs.com/sting2me/p/8888420.html  Faulty device的产生 What are faulty devices? os-brick module is mainly used to connect/disconnect the devices.
+Interface connect_volume is used to discover the block devices of storage systems, disconnect_volume is for cleaning the block devices.
+When the multipath tool on hosts cannot access the host path, it marks the device as faulty.
+How are faulty devices generated? The faulty devices show up under the race condition occurs between connect_volume and disconnect_volume.</description>
+    </item>
+    
+  </channel>
+</rss>

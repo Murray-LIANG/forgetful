@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>pycharm on Forgetful :/</title>
+    <link>https://murray-liang.github.io/forgetful/tags/pycharm/</link>
+    <description>Recent content in pycharm on Forgetful :/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
+    
+	<atom:link href="https://murray-liang.github.io/forgetful/tags/pycharm/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Ubuntu Remove the Shortcuts of Ctrl&#43;Alt&#43;Left and Ctrl&#43;Alt&#43;Right</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/remove-shortcuts-ctrl-alt-left-right/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/remove-shortcuts-ctrl-alt-left-right/</guid>
+      <description>In Ubuntu, PyCharm conflicts with the gnome desktop shortcuts, which makes key-bindings Ctrl+Alt+Left and Ctrl+Alt+Right not work.
+Use below commands to remove the shortcuts from gnome desktop.
+1 2 3 4 5 6 7 8  # List the current shortcuts. liangr@ubuntu-dev:~$ gsettings list-recursively org.gnome.desktop.wm.keybindings | grep Left org.gnome.desktop.wm.keybindings move-to-monitor-left [&amp;#39;&amp;lt;Super&amp;gt;&amp;lt;Shift&amp;gt;Left&amp;#39;] org.gnome.desktop.wm.keybindings move-to-workspace-left [&amp;#39;&amp;lt;Control&amp;gt;&amp;lt;Shift&amp;gt;&amp;lt;Alt&amp;gt;Left&amp;#39;] org.gnome.desktop.wm.keybindings switch-to-workspace-left [&amp;#39;&amp;lt;Control&amp;gt;&amp;lt;Alt&amp;gt;Left&amp;#39;] liangr@ubuntu-dev:~$ gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left &amp;#34;[]&amp;#34; liangr@ubuntu-dev:~$ gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right &amp;#34;[]&amp;#34;   </description>
+    </item>
+    
+  </channel>
+</rss>

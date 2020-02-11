@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>kolla ansible on Forgetful :/</title>
+    <link>https://murray-liang.github.io/forgetful/tags/kolla-ansible/</link>
+    <description>Recent content in kolla ansible on Forgetful :/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
+    
+	<atom:link href="https://murray-liang.github.io/forgetful/tags/kolla-ansible/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>OpenStack Deployment using Kolla Ansible</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/openstack-kolla-ansible/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/openstack-kolla-ansible/</guid>
+      <description>Network layout API network  eth3 of ubuntu-serverX: 192.168.4.X/24 Internal VIP: 192.168.4.254  External network   eth0 of ubuntu-serverX.
+NOTE: 172.30.X.X/16 subnet is used as the floating IP of OpenStack VMs. Do NOT use 192.168.1.X/24 subnet. Refer to Network settings
+  External VIP: 192.168.1.254, used to access Horizon from Windows Client. Because the eth0 of Neutron node (aka. ubuntu-server3) is bound to br-ex, IP 192.168.1.254 need to be set to br-ex manually after deploy, so as IP 192.</description>
+    </item>
+    
+  </channel>
+</rss>

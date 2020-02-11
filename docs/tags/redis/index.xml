@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>redis on Forgetful :/</title>
+    <link>https://murray-liang.github.io/forgetful/tags/redis/</link>
+    <description>Recent content in redis on Forgetful :/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
+    
+	<atom:link href="https://murray-liang.github.io/forgetful/tags/redis/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Etcd</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/etcd/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/etcd/</guid>
+      <description>etcd is a highly available key-value store.
+redis, memcached are popular key-value stores. These are general-purpose distributed memory caching system often used to speed up dynamic database-driven websites by caching data and objects in memory.
+etcd cannot be stored in memory, they can only be persisted in disk storage, whereas redis can be cached in ram and can also be persisted in disk.
+etcd does not have various data types. But redis and other key-value stores have data-type flexibility.</description>
+    </item>
+    
+    <item>
+      <title>Redis</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/redis/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/redis/</guid>
+      <description>Data structures  Binary-safe strings Lists Sets Sorted sets Hashes Bit arrays (bitmaps) HyperLogLogs  LRU cache Used as a caching system.
+Master slave replication  async replication is used.  Persistence Several options:
+ RDB: Redis Database Backup, hot snapshot that is taken periodically and is meant for point-in-time recovery. An RDB file is literally a dump of all user data stored in an internal, compressed serialization format. AOF: Append Only File, persist the dataset by taking a snapshot and appending it with changes as they arrive.</description>
+    </item>
+    
+    <item>
+      <title>Redis vs Zookeeper</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/redis-vs-zookeeper/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/redis-vs-zookeeper/</guid>
+      <description>Compare Copied from stackoverflow
+Redis is fast; really, really fast. It is also immediately consistent, so it&amp;rsquo;s good for fast moving data sets. The downside is that, running on one server, if it fails then you lose write access until another server takes it&amp;rsquo;s place. Replacing the server is a manual operation unless you automate it yourself. (You can still get read access to your data if you configure a slave instance).</description>
+    </item>
+    
+  </channel>
+</rss>

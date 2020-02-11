@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>C&#43;&#43; Stack Overflow | Forgetful :/</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="Notes about everything"><link rel="prev" href="https://murray-liang.github.io/forgetful/2020/02/network-ip-route/" /><link rel="next" href="https://murray-liang.github.io/forgetful/2020/02/block-storage-file-storage/" /><link rel="canonical" href="https://murray-liang.github.io/forgetful/2020/02/c-stack-overflow/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff"><meta property="og:title" content="C&#43;&#43; Stack Overflow" />
+<meta property="og:description" content="在函数的递归调用中，函数中变量所占的空间要直到递归结束才能被释放，这样函数不停的递归，堆栈早晚会被用完。
+ 解决递归调用堆栈溢出问题，一种方法是在递归函数中每次动态的分配变量的内存，在使用结束的时候释放内存。以二维数组的动态分配为例：  1 2 3 4 5 6 7 8 9 10 11  p=new double*[1000]; for (int m=0;m&lt;1000;m&#43;&#43;) { p[m]=new double[5000]; } for(int n=0;n&lt;1000;n&#43;&#43;) { delete[] p[n]; } delete[] p;    解决递归调用堆栈溢出问题，另外一种方法是在定义递归函数时，输入变量地址，通过指针操作，而非变量本身参加函数的递归调用，不会不断占用堆栈空间不释放。
+  堆栈的大小只有1M，如果在函数中定义了一个占用内存比较大的变量，那么也会导致堆栈溢出。
+这种情况只需在定义的时候定义为静态变量就行了，因为静态变量是不占用堆栈内存的。如：
+1 2 3 4  void main（） { int a[10010010]； }   在函数内定义的变量默认auto类型，也就是栈变量，运行时使用的是栈空间，函数结束后自动清理返回内存。这里在函数内定义如此大的一个数组，已经超过了单个函数可使用的最大栈空间，也会提示stack overflow。解决办法是将其定义为static int型的静态变量，这样就不占用栈空间了。
+1 2 3 4  void main（） { static int a[10010010]； }     " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://murray-liang.github.io/forgetful/2020/02/c-stack-overflow/" />
+<meta property="article:published_time" content="2020-02-10T16:37:31+08:00" />
+<meta property="article:modified_time" content="2020-02-10T16:37:31+08:00" />
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "C\x2b\x2b Stack Overflow",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/murray-liang.github.io\/forgetful\/2020\/02\/c-stack-overflow\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "https:\/\/murray-liang.github.io\/forgetful\/cover.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "posts","keywords": "c\x2b\x2b, cpp","wordcount":  57 ,
+        "url": "https:\/\/murray-liang.github.io\/forgetful\/2020\/02\/c-stack-overflow\/","datePublished": "2020-02-10T16:37:31\x2b08:00","dateModified": "2020-02-10T16:37:31\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "murray",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "https:\/\/murray-liang.github.io\/forgetful\/logo.png",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": ""
+    }
+    </script><link rel="stylesheet" href="/forgetful/css/style.min.css"><link rel="stylesheet" href="/forgetful/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/forgetful/css/lib/forkawesome/forkawesome.min.css"><link rel="stylesheet" href="/forgetful/css/lib/animate/animate.min.css"></head>
+    <body><script>
+            if (!window.localStorage || !window.localStorage.getItem('theme')) {
+                window.isDark = 'dark' === 'dark';
+            } else {
+                window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            }
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header animated bounceIn">
+            <a href="https://murray-liang.github.io/forgetful">Forgetful :/</a>
+        </div>
+        <div class="navbar-menu"><a class="menu-item" href="https://murray-liang.github.io/forgetful/posts" title="">Posts</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/tags" title="">Tags</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/categories" title="">Categories</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"><i class="fas fa-language fa-fw"></i></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav><nav class="navbar-mobile">
+    <div class="navbar-container">
+        <div class="navbar-header">
+            <div class="navbar-header-title animated bounceIn">
+                <a href="https://murray-liang.github.io/forgetful">Forgetful :/</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://murray-liang.github.io/forgetful/posts" title="">Posts</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/tags" title="">Tags</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/categories" title="">Categories</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav>
+<main class="main">
+                <div class="container"><article class="page"><h1 class="post-title animated flipInX">C&#43;&#43; Stack Overflow</h1><div class="post-meta">
+            <div class="post-meta-main"><a class="author" href="https://github.com/Murray-LIANG" rel="author" target="_blank">
+                    <i class="fas fa-user-circle fa-fw"></i>Murray-LIANG
+                </a>&nbsp;</div>
+            <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-02-10>2020-02-10</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 57 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>1 min&nbsp;</div>
+        </div><div class="post-toc" id="post-toc">
+                <h2 class="post-toc-title">Contents</h2>
+                <div class="post-toc-content"><nav id="TableOfContents"></nav></div>
+            </div>
+            <div class="post-toc-mobile" id="post-toc-mobile">
+                <details>
+                    <summary>
+                        <div class="post-toc-title">
+                            <span>Contents</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="post-toc-content"><nav id="TableOfContentsMobile"></nav></div>
+                </details>
+            </div><div class="post-content"><p>在函数的递归调用中，函数中变量所占的空间要直到递归结束才能被释放，这样函数不停的递归，堆栈早晚会被用完。</p>
+<ol>
+<li>解决递归调用堆栈溢出问题，一种方法是在递归函数中每次<strong>动态</strong>的分配变量的内存，在使用结束的时候释放内存。以二维数组的动态分配为例：</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="n">p</span><span class="o">=</span><span class="k">new</span> <span class="kt">double</span><span class="o">*</span><span class="p">[</span><span class="mi">1000</span><span class="p">]</span><span class="p">;</span> 
+<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">m</span><span class="o">&lt;</span><span class="mi">1000</span><span class="p">;</span><span class="n">m</span><span class="o">+</span><span class="o">+</span><span class="p">)</span> 
+<span class="p">{</span>    
+    <span class="n">p</span><span class="p">[</span><span class="n">m</span><span class="p">]</span><span class="o">=</span><span class="k">new</span> <span class="kt">double</span><span class="p">[</span><span class="mi">5000</span><span class="p">]</span><span class="p">;</span>  
+<span class="p">}</span>      
+
+<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">n</span><span class="o">&lt;</span><span class="mi">1000</span><span class="p">;</span><span class="n">n</span><span class="o">+</span><span class="o">+</span><span class="p">)</span> 
+<span class="p">{</span>    
+    <span class="k">delete</span><span class="p">[</span><span class="p">]</span> <span class="n">p</span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="p">;</span> 
+<span class="p">}</span>      
+<span class="k">delete</span><span class="p">[</span><span class="p">]</span> <span class="n">p</span><span class="p">;</span>    
+</code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>
+<p>解决递归调用堆栈溢出问题，另外一种方法是在定义递归函数时，输入<strong>变量地址</strong>，通过<strong>指针</strong>操作，而非变量本身参加函数的递归调用，不会不断占用堆栈空间不释放。</p>
+</li>
+<li>
+<p>堆栈的大小只有1M，如果在函数中定义了一个占用内存比较大的变量，那么也会导致堆栈溢出。</p>
+<p>这种情况只需在定义的时候定义为<strong>静态变量</strong>就行了，因为静态变量是不占用堆栈内存的。如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="kt">void</span> <span class="n">main</span><span class="err">（</span><span class="err">）</span>
+<span class="p">{</span>
+   <span class="kt">int</span> <span class="n">a</span><span class="p">[</span><span class="mi">10010010</span><span class="p">]</span><span class="err">；</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>在函数内定义的变量<strong>默认auto类型</strong>，也就是栈变量，运行时使用的是栈空间，函数结束后自动清理返回内存。这里在函数内定义如此大的一个数组，已经超过了单个函数可使用的最大栈空间，也会提示stack overflow。解决办法是将其定义为static int型的静态变量，这样就不占用栈空间了。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="kt">void</span> <span class="n">main</span><span class="err">（</span><span class="err">）</span>
+<span class="p">{</span>
+   <span class="k">static</span> <span class="kt">int</span> <span class="n">a</span><span class="p">[</span><span class="mi">10010010</span><span class="p">]</span><span class="err">；</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>The article was updated on 2020-02-10</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><span></span></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section><span class="tag">
+                        <a href="https://murray-liang.github.io/forgetful/tags/c&#43;&#43;/"><i class="fas fa-tag fa-fw"></i>&nbsp;c&#43;&#43;</a>&nbsp;
+                    </span><span class="tag">
+                        <a href="https://murray-liang.github.io/forgetful/tags/cpp/"><i class="fas fa-tag fa-fw"></i>&nbsp;cpp</a>&nbsp;
+                    </span></section>
+        <section>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://murray-liang.github.io/forgetful">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="https://murray-liang.github.io/forgetful/2020/02/network-ip-route/" class="prev" rel="prev" title="Command `ip route`"><i class="fas fa-angle-left fa-fw"></i>Command `ip route`</a>
+            <a href="https://murray-liang.github.io/forgetful/2020/02/block-storage-file-storage/" class="next" rel="next" title="Block Storage and File Storage">Block Storage and File Storage<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div class="post-comment"></div>
+    </article></div>
+            </main><footer class="footer">
+    <div class="copyright"><div class="copyright-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
+        </div>
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/Murray-LIANG" target="_blank">Murray-LIANG</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+    </div>
+</footer>
+</div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>
+            <span>&nbsp;</span>
+        </a><script src="/forgetful/js/lib/jquery/jquery.slim.min.js"></script><script src="/forgetful/js/lib/lazysizes/lazysizes.min.js"></script><script src="/forgetful/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script><link rel="stylesheet" href="/forgetful/css/lib/katex/katex.min.css"><script src="/forgetful/js/lib/katex/katex.min.js"></script><script defer src="/forgetful/js/lib/katex/auto-render.min.js"></script><link rel="stylesheet" href="/forgetful/css/lib/katex/copy-tex.min.css"><script defer src="/forgetful/js/lib/katex/copy-tex.min.js"></script><script defer src="/forgetful/js/lib/katex/mhchem.min.js"></script><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },{ left: "$", right: "$", display: false },]
+            });
+        });
+    </script><script src="/forgetful/js/blog.min.js"></script>
+</body>
+</html>

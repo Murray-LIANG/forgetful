@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>zookeeper on Forgetful :/</title>
+    <link>https://murray-liang.github.io/forgetful/tags/zookeeper/</link>
+    <description>Recent content in zookeeper on Forgetful :/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
+    
+	<atom:link href="https://murray-liang.github.io/forgetful/tags/zookeeper/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Redis vs Zookeeper</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/redis-vs-zookeeper/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/redis-vs-zookeeper/</guid>
+      <description>Compare Copied from stackoverflow
+Redis is fast; really, really fast. It is also immediately consistent, so it&amp;rsquo;s good for fast moving data sets. The downside is that, running on one server, if it fails then you lose write access until another server takes it&amp;rsquo;s place. Replacing the server is a manual operation unless you automate it yourself. (You can still get read access to your data if you configure a slave instance).</description>
+    </item>
+    
+    <item>
+      <title>Zookeeper</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/zookeeper/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/zookeeper/</guid>
+      <description>https://stackoverflow.com/questions/37293928/zookeeper-vs-in-memory-data-grid-vs-redis
+By default, Zookeeper replicates all your data to every node and lets clients watch the data for changes. Changes are sent very quickly (within a bounded amount of time) to clients. You can also create &amp;ldquo;ephemeral nodes&amp;rdquo;, which are deleted within a specified time if a client disconnects. ZooKeeper is highly optimized for reads, while writes are very slow (since they generally are sent to every client as soon as the write takes place).</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>object storage on Forgetful :/</title>
+    <link>https://murray-liang.github.io/forgetful/tags/object-storage/</link>
+    <description>Recent content in object storage on Forgetful :/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
+    
+	<atom:link href="https://murray-liang.github.io/forgetful/tags/object-storage/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Object Storage</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/object-storage/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/object-storage/</guid>
+      <description>Object Storage vs Block vs File 块设备相对于操作系统来说就是block device，裸硬盘，提供最基本的IO Read、IO Write等操作，操作系统将block device映射到/dev目录，一般应用并不会直接访问块设备，一般先创建分区，然后格式化成文件系统，最后挂载到某个本地目录mount point来使用。
+而文件系统存储，一般实现了Posix接口标准，直接提供文件系统的接口，如open，read，write，close，mkdir，walk，chown，chmod等等。文件是通过树的形式组织的，具有明显的层次结构。文件的访问需要从根目录一直到文件所在的位置。
+而对象存储，通过HTTP RESTful的接口如GET，POST，PUT，DELETE来管理一些非结构化的数据，比如图片，文档。它没有目录的概念。
+对象存储设备 从存储进化方向来看：Block &amp;raquo;&amp;gt; NAS &amp;raquo;&amp;gt; Object Storage，使得客户端越来越瘦，在Block时代，每个客户端需要使用存储，需要自己实现文件管理的功能，后来把这些功能移到存储服务器上便有了NAS。现如今，把对象管理的功能移到存储服务器上便有了Object Storage。
+ 数据存储 智能分布 每个对象的元数据管理。对象元数据与filesystem中的inode类似，只不过是存放这对象的大小、数据块等信息。  元数据服务器 控制着整个对象存储的元数据，例如对象的分布情况，每个对象在那个存储设备上，等。
+对象存储读访问流程  客户端发出读请求。 元数据服务器给出对象所在的存储设备。 客户端直接向该设备读取对象。 存储设备通过对象ID计算出对象所在的file或者block，读取出数据返回给客户端。 客户端接收到存储设备返回的数据，可以将对象跟存储设备的对应关系cache下来。  对象存储写访问流程  客户端发出写请求。 元数据服务器根据当前各个存储设备的情况计算出，或者直接使用一致性hash算出对象应该存放在哪个存储设备。 客户端直接向该设备写入对象。 存储设备存放对象并将对象ID，所在的file或者block，等元数据记录下来。 客户端成功接收存储设备返回的信息，并记录在cache中。  </description>
+    </item>
+    
+    <item>
+      <title>Some Design Thoughts</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/design-thoughts/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/design-thoughts/</guid>
+      <description>SQL or NoSQL SQL Tables vs NoSQL Documents SQL databases store data records in tables.
+NoSQL databases store JSON-like field-value pair documents. Similar documents can be stored in a collection, which is analogous to an SQL table.
+SQL Schema vs NoSQL Schemaless SQL Normalization vs NoSQL Denormalization SQL databases use foreign key to relate one table to another, which minimizes data redundancy.
+We can use normalization in NoSQL, but this is not always practical.</description>
+    </item>
+    
+  </channel>
+</rss>

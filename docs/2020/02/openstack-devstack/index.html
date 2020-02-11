@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>OpenStack Devstack Tips | Forgetful :/</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="Notes about everything"><link rel="prev" href="https://murray-liang.github.io/forgetful/2020/02/openstack-faulty-device/" /><link rel="next" href="https://murray-liang.github.io/forgetful/2020/02/openstack-dev/" /><link rel="canonical" href="https://murray-liang.github.io/forgetful/2020/02/openstack-devstack/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff"><meta property="og:title" content="OpenStack Devstack Tips" />
+<meta property="og:description" content="Clean Up   Unstack and clean up the databases, .etc.
+~/devstack/clean.sh
+  Uninstall all python packages via pip.
+1 2 3 4 5 6  sudo pip freeze | grep -v &#34;git&#43;https&#34; | \  xargs sudo pip uninstall -y for i in cinder glance keystone neutron nova; do bash -c &#34;cd /opt/stack/$i&amp;&amp; sudo python setup.py develop --uninstall&#34;; done     [Optional] Remove all installed binaries and source codes." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://murray-liang.github.io/forgetful/2020/02/openstack-devstack/" />
+<meta property="article:published_time" content="2020-02-10T16:37:31+08:00" />
+<meta property="article:modified_time" content="2020-02-10T16:37:31+08:00" />
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "OpenStack Devstack Tips",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/murray-liang.github.io\/forgetful\/2020\/02\/openstack-devstack\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "https:\/\/murray-liang.github.io\/forgetful\/cover.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "posts","keywords": "openstack, devstack, tips","wordcount":  281 ,
+        "url": "https:\/\/murray-liang.github.io\/forgetful\/2020\/02\/openstack-devstack\/","datePublished": "2020-02-10T16:37:31\x2b08:00","dateModified": "2020-02-10T16:37:31\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "murray",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "https:\/\/murray-liang.github.io\/forgetful\/logo.png",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": ""
+    }
+    </script><link rel="stylesheet" href="/forgetful/css/style.min.css"><link rel="stylesheet" href="/forgetful/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/forgetful/css/lib/forkawesome/forkawesome.min.css"><link rel="stylesheet" href="/forgetful/css/lib/animate/animate.min.css"></head>
+    <body><script>
+            if (!window.localStorage || !window.localStorage.getItem('theme')) {
+                window.isDark = 'dark' === 'dark';
+            } else {
+                window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            }
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header animated bounceIn">
+            <a href="https://murray-liang.github.io/forgetful">Forgetful :/</a>
+        </div>
+        <div class="navbar-menu"><a class="menu-item" href="https://murray-liang.github.io/forgetful/posts" title="">Posts</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/tags" title="">Tags</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/categories" title="">Categories</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"><i class="fas fa-language fa-fw"></i></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav><nav class="navbar-mobile">
+    <div class="navbar-container">
+        <div class="navbar-header">
+            <div class="navbar-header-title animated bounceIn">
+                <a href="https://murray-liang.github.io/forgetful">Forgetful :/</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://murray-liang.github.io/forgetful/posts" title="">Posts</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/tags" title="">Tags</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/categories" title="">Categories</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav>
+<main class="main">
+                <div class="container"><article class="page"><h1 class="post-title animated flipInX">OpenStack Devstack Tips</h1><div class="post-meta">
+            <div class="post-meta-main"><a class="author" href="https://github.com/Murray-LIANG" rel="author" target="_blank">
+                    <i class="fas fa-user-circle fa-fw"></i>Murray-LIANG
+                </a>&nbsp;</div>
+            <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-02-10>2020-02-10</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 281 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>2 min&nbsp;</div>
+        </div><div class="post-toc" id="post-toc">
+                <h2 class="post-toc-title">Contents</h2>
+                <div class="post-toc-content"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#clean-up">Clean Up</a></li>
+    <li><a href="#set-up-devstack">Set Up Devstack</a></li>
+  </ul>
+</nav></div>
+            </div>
+            <div class="post-toc-mobile" id="post-toc-mobile">
+                <details>
+                    <summary>
+                        <div class="post-toc-title">
+                            <span>Contents</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="post-toc-content"><nav id="TableOfContentsMobile">
+  <ul>
+    <li><a href="#clean-up">Clean Up</a></li>
+    <li><a href="#set-up-devstack">Set Up Devstack</a></li>
+  </ul>
+</nav></div>
+                </details>
+            </div><div class="post-content"><a class="post-dummy-target" id="clean-up"></a><h2>Clean Up</h2>
+<ol>
+<li>
+<p>Unstack and clean up the databases, .etc.</p>
+<p><code>~/devstack/clean.sh</code></p>
+</li>
+<li>
+<p>Uninstall all python packages via <code>pip</code>.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">sudo pip freeze <span class="p">|</span> grep -v <span class="s2">&#34;git+https&#34;</span> <span class="p">|</span> <span class="se">\
+</span><span class="se"></span>    xargs sudo pip uninstall -y
+   
+<span class="k">for</span> i in cinder glance keystone neutron nova<span class="p">;</span>
+    <span class="k">do</span> bash -c <span class="s2">&#34;</span><span class="s2">cd /opt/stack/</span><span class="nv">$i</span><span class="s2"> &amp;&amp; sudo python setup.py develop --uninstall</span><span class="s2">&#34;</span><span class="p">;</span>
+<span class="k">done</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>[Optional] Remove all installed binaries and source codes.</p>
+<p><code>sudo rm -rf /opt/stack /usr/local/bin</code></p>
+</li>
+</ol>
+<a class="post-dummy-target" id="set-up-devstack"></a><h2>Set Up Devstack</h2>
+<ol>
+<li>
+<p><code>git clone https://git.openstack.org/openstack-dev/devstack</code>, then checkout to the desired release (branch).</p>
+</li>
+<li>
+<p>Modify <code>GIT_BASE</code> in <code>stackrc</code> file. Use <code>http</code> instead of <code>https</code>.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-diff" data-lang="diff"> # Base GIT Repo URL
+ # Another option is https://git.openstack.org
+<span class="gd">-GIT_BASE=${GIT_BASE:-git://git.openstack.org}
+</span><span class="gd"></span><span class="gi">+GIT_BASE=${GIT_BASE:-http://git.openstack.org}
+</span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>[Optional, try this when meet <code>git clone cannot find branch</code> error] Update the branches&rsquo; name in <code>stackrc</code> file.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-diff" data-lang="diff"># block storage service
+CINDER_REPO=${CINDER_REPO:-${GIT_BASE}/openstack/cinder.git}
+<span class="gd">-CINDER_BRANCH=${CINDER_BRANCH:-stable/newton}
+</span><span class="gd"></span><span class="gi">+CINDER_BRANCH=${CINDER_BRANCH:-newton-eol}
+</span><span class="gi"></span>   
+# image catalog service
+GLANCE_REPO=${GLANCE_REPO:-${GIT_BASE}/openstack/glance.git}
+<span class="gd">-GLANCE_BRANCH=${GLANCE_BRANCH:-stable/newton}
+</span><span class="gd"></span><span class="gi">+GLANCE_BRANCH=${GLANCE_BRANCH:-newton-eol}
+</span><span class="gi"></span>   
+# heat service
+HEAT_REPO=${HEAT_REPO:-${GIT_BASE}/openstack/heat.git}
+<span class="gd">-HEAT_BRANCH=${HEAT_BRANCH:-stable/newton}
+</span><span class="gd"></span><span class="gi">+HEAT_BRANCH=${HEAT_BRANCH:-newton-eol}
+</span><span class="gi"></span>   
+# django powered web control panel for openstack
+HORIZON_REPO=${HORIZON_REPO:-${GIT_BASE}/openstack/horizon.git}
+<span class="gd">-HORIZON_BRANCH=${HORIZON_BRANCH:-stable/newton}
+</span><span class="gd"></span><span class="gi">+HORIZON_BRANCH=${HORIZON_BRANCH:-newton-eol}
+</span><span class="gi"></span>   
+# unified auth system (manages accounts/tokens)
+KEYSTONE_REPO=${KEYSTONE_REPO:-${GIT_BASE}/openstack/keystone.git}
+<span class="gd">-KEYSTONE_BRANCH=${KEYSTONE_BRANCH:-stable/newton}
+</span><span class="gd"></span><span class="gi">+KEYSTONE_BRANCH=${KEYSTONE_BRANCH:-newton-eol}
+</span><span class="gi"></span>   
+# neutron service
+NEUTRON_REPO=${NEUTRON_REPO:-${GIT_BASE}/openstack/neutron.git}
+<span class="gd">-NEUTRON_BRANCH=${NEUTRON_BRANCH:-stable/newton}
+</span><span class="gd"></span><span class="gi">+NEUTRON_BRANCH=${NEUTRON_BRANCH:-newton-eol}
+</span><span class="gi"></span>   
+# neutron fwaas service
+NEUTRON_FWAAS_REPO=${NEUTRON_FWAAS_REPO:-${GIT_BASE}/openstack/neutron-fwaas.git}
+<span class="gd">-NEUTRON_FWAAS_BRANCH=${NEUTRON_FWAAS_BRANCH:-stable/newton}
+</span><span class="gd"></span><span class="gi">+NEUTRON_FWAAS_BRANCH=${NEUTRON_FWAAS_BRANCH:-newton-eol}
+</span><span class="gi"></span>   
+# compute service
+NOVA_REPO=${NOVA_REPO:-${GIT_BASE}/openstack/nova.git}
+<span class="gd">-NOVA_BRANCH=${NOVA_BRANCH:-stable/newton}
+</span><span class="gd"></span><span class="gi">+NOVA_BRANCH=${NOVA_BRANCH:-newton-eol}
+</span><span class="gi"></span>   
+# object storage service
+SWIFT_REPO=${SWIFT_REPO:-${GIT_BASE}/openstack/swift.git}
+<span class="gd">-SWIFT_BRANCH=${SWIFT_BRANCH:-stable/newton}
+</span><span class="gd"></span><span class="gi">+SWIFT_BRANCH=${SWIFT_BRANCH:-newton-eol}
+</span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>[Optional, try this when meet <code>pip installation</code> error] Update pip version in <code>tools/cap-pip.txt</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-diff" data-lang="diff"><span class="gd">-pip!=8
+</span><span class="gd"></span><span class="gi">+pip!=8,&lt;10
+</span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>Add <code>local.conf</code> file. Download <a href="https://eos2git.cec.lab.emc.com/liangr/corp-notes/blob/master/openstack-devstack-local.conf">https://eos2git.cec.lab.emc.com/liangr/corp-notes/blob/master/openstack-devstack-local.conf</a> and save it to <code>~/devstack/local.conf</code>, then modify the <code>HOST_IP</code> to the IP address of VM.</p>
+</li>
+<li>
+<p>Run <code>~/devstack/stack.sh</code> to start the build up of devstack.</p>
+</li>
+</ol>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>The article was updated on 2020-02-10</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><span></span></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section><span class="tag">
+                        <a href="https://murray-liang.github.io/forgetful/tags/openstack/"><i class="fas fa-tag fa-fw"></i>&nbsp;openstack</a>&nbsp;
+                    </span><span class="tag">
+                        <a href="https://murray-liang.github.io/forgetful/tags/devstack/"><i class="fas fa-tag fa-fw"></i>&nbsp;devstack</a>&nbsp;
+                    </span><span class="tag">
+                        <a href="https://murray-liang.github.io/forgetful/tags/tips/"><i class="fas fa-tag fa-fw"></i>&nbsp;tips</a>&nbsp;
+                    </span></section>
+        <section>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://murray-liang.github.io/forgetful">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="https://murray-liang.github.io/forgetful/2020/02/openstack-faulty-device/" class="prev" rel="prev" title="OpenStack Faulty Device"><i class="fas fa-angle-left fa-fw"></i>OpenStack Faulty Device</a>
+            <a href="https://murray-liang.github.io/forgetful/2020/02/openstack-dev/" class="next" rel="next" title="OpenStack Dev Tips">OpenStack Dev Tips<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div class="post-comment"></div>
+    </article></div>
+            </main><footer class="footer">
+    <div class="copyright"><div class="copyright-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
+        </div>
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/Murray-LIANG" target="_blank">Murray-LIANG</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+    </div>
+</footer>
+</div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>
+            <span>&nbsp;</span>
+        </a><script src="/forgetful/js/lib/jquery/jquery.slim.min.js"></script><script src="/forgetful/js/lib/lazysizes/lazysizes.min.js"></script><script src="/forgetful/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script><link rel="stylesheet" href="/forgetful/css/lib/katex/katex.min.css"><script src="/forgetful/js/lib/katex/katex.min.js"></script><script defer src="/forgetful/js/lib/katex/auto-render.min.js"></script><link rel="stylesheet" href="/forgetful/css/lib/katex/copy-tex.min.css"><script defer src="/forgetful/js/lib/katex/copy-tex.min.js"></script><script defer src="/forgetful/js/lib/katex/mhchem.min.js"></script><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },{ left: "$", right: "$", display: false },]
+            });
+        });
+    </script><script src="/forgetful/js/blog.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Kubernetes Introduction | Forgetful :/</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="Notes about everything"><link rel="prev" href="https://murray-liang.github.io/forgetful/2020/02/kubernetes-kubelet/" /><link rel="next" href="https://murray-liang.github.io/forgetful/2020/02/kubernetes-demo/" /><link rel="canonical" href="https://murray-liang.github.io/forgetful/2020/02/kubernetes-intro/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff"><meta property="og:title" content="Kubernetes Introduction" />
+<meta property="og:description" content="基本概念 Cluster 各种资源，计算、存储、网络的集合。
+Master 调度应用放在哪里运行。为了保证高可用，可以部署多个Master。
+Node 由Master管理，负责监控并汇报容器的状态。根据Master的要求，对容器进行Life Cycle Management。
+Pod K8S中最小的工作单元。每一个Pod可以包含一个或者多个容器。Pod中的容器作为一个整体被Master调度到一个Node上运行。
+为什么需要提出Pod这一层抽象呢？因为
+  存在多个容器天生需要紧密联系，一起工作，Pod比容器抽象更高，将多个容器封装在一个部署单元中，易于管理，比如以Pod为最小单位进行调度、扩展、资源共享、LCM。
+  Pod中的所有容器使用同一个网络的namespace，即相同的IP地址和Port空间。除了网络，还有共享的存储资源。
+  Controller K8S不会直接创建Pod，而是通过Controller来管理Pod的。Controller中定义了Pod的部署特性，比如有多少个副本，在什么样的Node上面运行。K8S提供了多种Controller,包括Deployment、ReplicaSet、DaemonSet、StatefulSet、Job等。
+Deployment 可以通过它来部署应用，Deployment来管理Pod的多个副本，并保证Pod安装预期的状态运行。
+ReplicaSet Pod的多副本管理，使用Deployment会间接自动创建ReplicaSet。
+DaemonSet 用于每个Node只运行一个Pod副本的情形。
+StatefulSet 能保证Pod的每个副本在整个生命周期中名称是不变的。使用其他Controll当某个Pod发生故障需要删除并重新启动，Pod的名称会变化。除此之外，StatefulSet会保证副本按照固定的顺序启动，更新或者删除。
+Job 运行结束就删除。其他方式部署的Pod会一直存在。
+Service Deployment部署多个Pod，每个Pod有自己的IP，外界不能通过Pod的IP来访问应用，因为Pod的IP会随着Pod的重启而变化。因此，用Service定义外界访问一组特定Pod的方式。Service有自己的IP和Port，而且还为Pod提供Load Balance。
+Controller和Service分别控制着Pod的运行和访问。
+Namespace 如果多个用户或者项目组共享使用一个物理的Cluster，如何隔离他们创建的Controller和Pod呢？
+使用Namespace可以将一个物理的Cluster划分成多个逻辑的Cluster，每个Cluster在单独的Namespace中，他们的资源完全隔离。
+K8S创建了两个默认的Namespace，default和kube-system，后者用于放置K8S自己创建的系统资源。
+kubelet, kubeadm, kubectl  kubelet - 运行在所有节点上，负责启动Pod和容器。 kubeadm - 用于初始化Cluster。 kubectl - K8S命令行工具，用于部署管理应用，查看管理各种资源。  Installation Create three VMs. Create the user k8s with password welcome, add it to sudo group. Add corp CA certs on all nodes." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://murray-liang.github.io/forgetful/2020/02/kubernetes-intro/" />
+<meta property="article:published_time" content="2020-02-10T16:37:31+08:00" />
+<meta property="article:modified_time" content="2020-02-10T16:37:31+08:00" />
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Kubernetes Introduction",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/murray-liang.github.io\/forgetful\/2020\/02\/kubernetes-intro\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "https:\/\/murray-liang.github.io\/forgetful\/cover.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "posts","keywords": "kubernetes, k8s","wordcount":  1724 ,
+        "url": "https:\/\/murray-liang.github.io\/forgetful\/2020\/02\/kubernetes-intro\/","datePublished": "2020-02-10T16:37:31\x2b08:00","dateModified": "2020-02-10T16:37:31\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "murray",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "https:\/\/murray-liang.github.io\/forgetful\/logo.png",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": ""
+    }
+    </script><link rel="stylesheet" href="/forgetful/css/style.min.css"><link rel="stylesheet" href="/forgetful/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/forgetful/css/lib/forkawesome/forkawesome.min.css"><link rel="stylesheet" href="/forgetful/css/lib/animate/animate.min.css"></head>
+    <body><script>
+            if (!window.localStorage || !window.localStorage.getItem('theme')) {
+                window.isDark = 'dark' === 'dark';
+            } else {
+                window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            }
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header animated bounceIn">
+            <a href="https://murray-liang.github.io/forgetful">Forgetful :/</a>
+        </div>
+        <div class="navbar-menu"><a class="menu-item" href="https://murray-liang.github.io/forgetful/posts" title="">Posts</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/tags" title="">Tags</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/categories" title="">Categories</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"><i class="fas fa-language fa-fw"></i></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav><nav class="navbar-mobile">
+    <div class="navbar-container">
+        <div class="navbar-header">
+            <div class="navbar-header-title animated bounceIn">
+                <a href="https://murray-liang.github.io/forgetful">Forgetful :/</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://murray-liang.github.io/forgetful/posts" title="">Posts</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/tags" title="">Tags</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/categories" title="">Categories</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav>
+<main class="main">
+                <div class="container"><article class="page"><h1 class="post-title animated flipInX">Kubernetes Introduction</h1><div class="post-meta">
+            <div class="post-meta-main"><a class="author" href="https://github.com/Murray-LIANG" rel="author" target="_blank">
+                    <i class="fas fa-user-circle fa-fw"></i>Murray-LIANG
+                </a>&nbsp;</div>
+            <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-02-10>2020-02-10</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 1724 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>9 min&nbsp;</div>
+        </div><div class="post-toc" id="post-toc">
+                <h2 class="post-toc-title">Contents</h2>
+                <div class="post-toc-content"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#基本概念">基本概念</a>
+      <ul>
+        <li><a href="#cluster">Cluster</a></li>
+        <li><a href="#master">Master</a></li>
+        <li><a href="#node">Node</a></li>
+        <li><a href="#pod">Pod</a></li>
+        <li><a href="#controller">Controller</a>
+          <ul>
+            <li><a href="#deployment">Deployment</a></li>
+            <li><a href="#replicaset">ReplicaSet</a></li>
+            <li><a href="#daemonset">DaemonSet</a></li>
+            <li><a href="#statefulset">StatefulSet</a></li>
+            <li><a href="#job">Job</a></li>
+          </ul>
+        </li>
+        <li><a href="#service">Service</a></li>
+        <li><a href="#namespace">Namespace</a></li>
+        <li><a href="#kubelet-kubeadm-kubectl">kubelet, kubeadm, kubectl</a></li>
+      </ul>
+    </li>
+    <li><a href="#installation">Installation</a>
+      <ul>
+        <li><a href="#create-three-vms">Create three VMs.</a></li>
+        <li><a href="#create-the-user-k8s-with-password-welcome-add-it-to-sudo-group">Create the user k8s with password welcome, add it to sudo group.</a></li>
+        <li><a href="#add-corp-ca-certs-on-all-nodes">Add corp CA certs on all nodes.</a></li>
+        <li><a href="#install-dockerio-on-all-nodes">Install docker.io on all nodes.</a></li>
+        <li><a href="#install-kubelet-kubeadm-kubectl-on-all-nodes-httpskubernetesiodocssetupindependentinstall-kubeadm">Install kubelet, kubeadm, kubectl on all nodes. </a></li>
+        <li><a href="#use-flannel-network">Use Flannel network.</a></li>
+        <li><a href="#set-auto-bash-completion-for-kubectl">Set auto bash completion for kubectl.</a></li>
+      </ul>
+    </li>
+    <li><a href="#架构">架构</a></li>
+    <li><a href="#master-node">Master Node</a>
+      <ul>
+        <li><a href="#api-serverkube-apiserver">API Server（kube-apiserver）</a></li>
+        <li><a href="#schedulerkube-scheduler">Scheduler（kube-scheduler）</a></li>
+        <li><a href="#controller-managerkube-controller-manager">Controller Manager（kube-controller-manager）</a></li>
+        <li><a href="#etcd">etcd</a></li>
+        <li><a href="#pod-network">Pod Network</a></li>
+      </ul>
+    </li>
+    <li><a href="#work-node-也有直接叫node节点的">Work Node （也有直接叫Node节点的）</a>
+      <ul>
+        <li><a href="#kubelet">kubelet</a></li>
+        <li><a href="#kube-proxy">kube-proxy</a></li>
+      </ul>
+    </li>
+    <li><a href="#总结">总结</a>
+      <ul>
+        <li><a href="#应用启动流程">应用启动流程</a>
+          <ul>
+            <li><a href="#举个例子">举个例子</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#node-selector">Node Selector</a></li>
+    <li><a href="#daemonset-1">DaemonSet</a></li>
+    <li><a href="#service-1">Service</a>
+      <ul>
+        <li><a href="#clusterip">ClusterIP</a>
+          <ul>
+            <li><a href="#service的cluster-ip怎样做到的">Service的Cluster IP怎样做到的</a></li>
+            <li><a href="#dns">DNS</a></li>
+          </ul>
+        </li>
+        <li><a href="#nodeport">NodePort</a></li>
+        <li><a href="#loadbalancer">LoadBalancer</a></li>
+      </ul>
+    </li>
+    <li><a href="#volume">Volume</a></li>
+  </ul>
+</nav></div>
+            </div>
+            <div class="post-toc-mobile" id="post-toc-mobile">
+                <details>
+                    <summary>
+                        <div class="post-toc-title">
+                            <span>Contents</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="post-toc-content"><nav id="TableOfContentsMobile">
+  <ul>
+    <li><a href="#基本概念">基本概念</a>
+      <ul>
+        <li><a href="#cluster">Cluster</a></li>
+        <li><a href="#master">Master</a></li>
+        <li><a href="#node">Node</a></li>
+        <li><a href="#pod">Pod</a></li>
+        <li><a href="#controller">Controller</a>
+          <ul>
+            <li><a href="#deployment">Deployment</a></li>
+            <li><a href="#replicaset">ReplicaSet</a></li>
+            <li><a href="#daemonset">DaemonSet</a></li>
+            <li><a href="#statefulset">StatefulSet</a></li>
+            <li><a href="#job">Job</a></li>
+          </ul>
+        </li>
+        <li><a href="#service">Service</a></li>
+        <li><a href="#namespace">Namespace</a></li>
+        <li><a href="#kubelet-kubeadm-kubectl">kubelet, kubeadm, kubectl</a></li>
+      </ul>
+    </li>
+    <li><a href="#installation">Installation</a>
+      <ul>
+        <li><a href="#create-three-vms">Create three VMs.</a></li>
+        <li><a href="#create-the-user-k8s-with-password-welcome-add-it-to-sudo-group">Create the user k8s with password welcome, add it to sudo group.</a></li>
+        <li><a href="#add-corp-ca-certs-on-all-nodes">Add corp CA certs on all nodes.</a></li>
+        <li><a href="#install-dockerio-on-all-nodes">Install docker.io on all nodes.</a></li>
+        <li><a href="#install-kubelet-kubeadm-kubectl-on-all-nodes-httpskubernetesiodocssetupindependentinstall-kubeadm">Install kubelet, kubeadm, kubectl on all nodes. </a></li>
+        <li><a href="#use-flannel-network">Use Flannel network.</a></li>
+        <li><a href="#set-auto-bash-completion-for-kubectl">Set auto bash completion for kubectl.</a></li>
+      </ul>
+    </li>
+    <li><a href="#架构">架构</a></li>
+    <li><a href="#master-node">Master Node</a>
+      <ul>
+        <li><a href="#api-serverkube-apiserver">API Server（kube-apiserver）</a></li>
+        <li><a href="#schedulerkube-scheduler">Scheduler（kube-scheduler）</a></li>
+        <li><a href="#controller-managerkube-controller-manager">Controller Manager（kube-controller-manager）</a></li>
+        <li><a href="#etcd">etcd</a></li>
+        <li><a href="#pod-network">Pod Network</a></li>
+      </ul>
+    </li>
+    <li><a href="#work-node-也有直接叫node节点的">Work Node （也有直接叫Node节点的）</a>
+      <ul>
+        <li><a href="#kubelet">kubelet</a></li>
+        <li><a href="#kube-proxy">kube-proxy</a></li>
+      </ul>
+    </li>
+    <li><a href="#总结">总结</a>
+      <ul>
+        <li><a href="#应用启动流程">应用启动流程</a>
+          <ul>
+            <li><a href="#举个例子">举个例子</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#node-selector">Node Selector</a></li>
+    <li><a href="#daemonset-1">DaemonSet</a></li>
+    <li><a href="#service-1">Service</a>
+      <ul>
+        <li><a href="#clusterip">ClusterIP</a>
+          <ul>
+            <li><a href="#service的cluster-ip怎样做到的">Service的Cluster IP怎样做到的</a></li>
+            <li><a href="#dns">DNS</a></li>
+          </ul>
+        </li>
+        <li><a href="#nodeport">NodePort</a></li>
+        <li><a href="#loadbalancer">LoadBalancer</a></li>
+      </ul>
+    </li>
+    <li><a href="#volume">Volume</a></li>
+  </ul>
+</nav></div>
+                </details>
+            </div><div class="post-content"><a class="post-dummy-target" id="基本概念"></a><h2>基本概念</h2>
+<a class="post-dummy-target" id="cluster"></a><h3>Cluster</h3>
+<p>各种资源，计算、存储、网络的集合。</p>
+<a class="post-dummy-target" id="master"></a><h3>Master</h3>
+<p>调度应用放在哪里运行。为了保证高可用，可以部署多个Master。</p>
+<a class="post-dummy-target" id="node"></a><h3>Node</h3>
+<p>由Master管理，负责监控并汇报容器的状态。根据Master的要求，对容器进行Life Cycle Management。</p>
+<a class="post-dummy-target" id="pod"></a><h3>Pod</h3>
+<p>K8S中最小的工作单元。每一个Pod可以包含一个或者多个容器。Pod中的容器作为一个整体被Master调度到一个Node上运行。</p>
+<p>为什么需要提出Pod这一层抽象呢？因为</p>
+<ol>
+<li>
+<p>存在多个容器天生需要紧密联系，一起工作，Pod比容器抽象更高，将多个容器封装在一个部署单元中，易于管理，比如以Pod为最小单位进行调度、扩展、资源共享、LCM。</p>
+</li>
+<li>
+<p>Pod中的所有容器使用同一个网络的namespace，即相同的IP地址和Port空间。除了网络，还有共享的存储资源。</p>
+</li>
+</ol>
+<a class="post-dummy-target" id="controller"></a><h3>Controller</h3>
+<p>K8S不会直接创建Pod，而是通过Controller来管理Pod的。Controller中定义了Pod的部署特性，比如有多少个副本，在什么样的Node上面运行。K8S提供了多种Controller,包括Deployment、ReplicaSet、DaemonSet、StatefulSet、Job等。</p>
+<a class="post-dummy-target" id="deployment"></a><h4>Deployment</h4>
+<p>可以通过它来部署应用，Deployment来管理Pod的多个副本，并保证Pod安装预期的状态运行。</p>
+<a class="post-dummy-target" id="replicaset"></a><h4>ReplicaSet</h4>
+<p>Pod的多副本管理，使用Deployment会间接自动创建ReplicaSet。</p>
+<a class="post-dummy-target" id="daemonset"></a><h4>DaemonSet</h4>
+<p>用于每个Node只运行一个Pod副本的情形。</p>
+<a class="post-dummy-target" id="statefulset"></a><h4>StatefulSet</h4>
+<p>能保证Pod的每个副本在整个生命周期中名称是不变的。使用其他Controll当某个Pod发生故障需要删除并重新启动，Pod的名称会变化。除此之外，StatefulSet会保证副本按照固定的顺序启动，更新或者删除。</p>
+<a class="post-dummy-target" id="job"></a><h4>Job</h4>
+<p>运行结束就删除。其他方式部署的Pod会一直存在。</p>
+<a class="post-dummy-target" id="service"></a><h3>Service</h3>
+<p>Deployment部署多个Pod，每个Pod有自己的IP，外界不能通过Pod的IP来访问应用，因为Pod的IP会随着Pod的重启而变化。因此，用Service定义外界访问一组特定Pod的方式。Service有自己的IP和Port，而且还为Pod提供Load Balance。</p>
+<p>Controller和Service分别控制着Pod的运行和访问。</p>
+<a class="post-dummy-target" id="namespace"></a><h3>Namespace</h3>
+<p>如果多个用户或者项目组共享使用一个物理的Cluster，如何隔离他们创建的Controller和Pod呢？</p>
+<p>使用Namespace可以将一个物理的Cluster划分成多个逻辑的Cluster，每个Cluster在单独的Namespace中，他们的资源完全隔离。</p>
+<p>K8S创建了两个默认的Namespace，default和kube-system，后者用于放置K8S自己创建的系统资源。</p>
+<a class="post-dummy-target" id="kubelet-kubeadm-kubectl"></a><h3>kubelet, kubeadm, kubectl</h3>
+<ul>
+<li>kubelet - 运行在所有节点上，负责启动Pod和容器。</li>
+<li>kubeadm - 用于初始化Cluster。</li>
+<li>kubectl - K8S命令行工具，用于部署管理应用，查看管理各种资源。</li>
+</ul>
+<a class="post-dummy-target" id="installation"></a><h2>Installation</h2>
+<a class="post-dummy-target" id="create-three-vms"></a><h3>Create three VMs.</h3>
+<a class="post-dummy-target" id="create-the-user-k8s-with-password-welcome-add-it-to-sudo-group"></a><h3>Create the user <code>k8s</code> with password <code>welcome</code>, add it to <code>sudo</code> group.</h3>
+<a class="post-dummy-target" id="add-corp-ca-certs-on-all-nodes"></a><h3>Add corp CA certs on all nodes.</h3>
+<p><a href="https://eos2git.cec.lab.emc.com/liangr/corp-notes/blob/master/fix-pip-emc-cert.md">https://eos2git.cec.lab.emc.com/liangr/corp-notes/blob/master/fix-pip-emc-cert.md</a></p>
+<a class="post-dummy-target" id="install-dockerio-on-all-nodes"></a><h3>Install <code>docker.io</code> on all nodes.</h3>
+<a class="post-dummy-target" id="install-kubelet-kubeadm-kubectl-on-all-nodes-httpskubernetesiodocssetupindependentinstall-kubeadm"></a><h3>Install <code>kubelet</code>, <code>kubeadm</code>, <code>kubectl</code> on all nodes. <a href="https://kubernetes.io/docs/setup/independent/install-kubeadm/">https://kubernetes.io/docs/setup/independent/install-kubeadm/</a></h3>
+<a class="post-dummy-target" id="use-flannel-network"></a><h3>Use Flannel network.</h3>
+<a class="post-dummy-target" id="set-auto-bash-completion-for-kubectl"></a><h3>Set auto bash completion for <code>kubectl</code>.</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ kubectl completion bash | sudo tee /etc/bash_completion.d/k8s \
+  &amp;&amp; source /etc/bash_completion.d/k8s
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="架构"></a><h2>架构</h2>
+<p>K8S Cluster由Master Node和Worker Node组成，Node上运行着若干服务。</p>
+<a class="post-dummy-target" id="master-node"></a><h2>Master Node</h2>
+<p>运行着如下Daemon：</p>
+<ul>
+<li>kube-apiserver</li>
+<li>kube-scheduler</li>
+<li>kube-controller-manager</li>
+<li>etcd</li>
+<li>Pod Network, like flannel</li>
+</ul>
+<a class="post-dummy-target" id="api-serverkube-apiserver"></a><h3>API Server（kube-apiserver）</h3>
+<p>提供HTTP/HTTPS RESTful API，即Kubernetes API。API Server是
+Kubernetes Cluster的前端接口，各种客户端工具（CLI 或 UI）以及
+Kubernetes其他组件可以通过它管理Cluster的各种资源。</p>
+<a class="post-dummy-target" id="schedulerkube-scheduler"></a><h3>Scheduler（kube-scheduler）</h3>
+<p>Scheduler负责决定将Pod放在哪个Node上运行。Scheduler在调度时会充分考
+虑Cluster的拓扑结构，当前各个节点的负载，以及应用对高可用、性能、数据亲
+和性的需求。</p>
+<a class="post-dummy-target" id="controller-managerkube-controller-manager"></a><h3>Controller Manager（kube-controller-manager）</h3>
+<p>负责管理Cluster各种资源，保证资源处于预期的状态。
+Controller Manager由多种controller组成，包括replication
+controller、endpoints controller、namespace controller、
+serviceaccounts controller等。</p>
+<p>不同的controller管理不同的资源。例如replication controller管理
+Deployment、StatefulSet、DaemonSet的生命周期，namespace
+controller管理Namespace资源。</p>
+<a class="post-dummy-target" id="etcd"></a><h3>etcd</h3>
+<p>负责保存Kubernetes Cluster的配置信息和各种资源的状态信息。当数据发生
+变化时，etcd会快速地通知Kubernetes相关组件。</p>
+<a class="post-dummy-target" id="pod-network"></a><h3>Pod Network</h3>
+<p>Pod要能够相互通信，Kubernetes Cluster必须部署Pod网络，flannel是其中
+一个可选方案。</p>
+<a class="post-dummy-target" id="work-node-也有直接叫node节点的"></a><h2>Work Node （也有直接叫Node节点的）</h2>
+<p>Pod运行的地方。K8S支持多种Container Runtime，比如Docker，rkt。
+Node一般运行：</p>
+<ul>
+<li>kubelet</li>
+<li>kube-proxy</li>
+<li>Pod Network</li>
+</ul>
+<a class="post-dummy-target" id="kubelet"></a><h3>kubelet</h3>
+<p>是Node的agent，当Scheduler确定在某个Node上运行Pod后，会将Pod的具体
+配置信息（image、volume等）发送给该节点的kubelet，kubelet根据这些信息创建和运行容器，并向Master报告运行状态。</p>
+<a class="post-dummy-target" id="kube-proxy"></a><h3>kube-proxy</h3>
+<p>service在逻辑上代表了后端的多个Pod，外界通过service访问Pod。service接收到的请求是如何转发到Pod的呢？这就是kube-proxy要完成的工作。</p>
+<p>每个Node都会运行kube-proxy服务，它负责将访问service的TCP/UPD数据流转发到后端的容器。如果有多个副本，kube-proxy会实现负载均衡。</p>
+<a class="post-dummy-target" id="总结"></a><h2>总结</h2>
+<p>几乎所有的service都是在Pod中运行。在<code>kube-system</code>这个namespace中。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">k8s@k8s-master:~$ kubectl get pod --all-namespaces -o wide
+NAMESPACE     NAME                                 READY   STATUS              RESTARTS   AGE   IP            NODE         NOMINATED NODE
+kube-system   coredns-576cbf47c7-7fhcz             0/1     ContainerCreating   0          33m   &lt;none&gt;        k8s-master   &lt;none&gt;
+kube-system   coredns-576cbf47c7-w79m6             0/1     ContainerCreating   0          33m   &lt;none&gt;        k8s-master   &lt;none&gt;
+kube-system   etcd-k8s-master                      1/1     Running             0          32m   172.16.1.8    k8s-master   &lt;none&gt;
+kube-system   kube-apiserver-k8s-master            1/1     Running             0          32m   172.16.1.8    k8s-master   &lt;none&gt;
+kube-system   kube-controller-manager-k8s-master   1/1     Running             0          32m   172.16.1.8    k8s-master   &lt;none&gt;
+kube-system   kube-proxy-9r8jm                     1/1     Running             0          32m   172.16.1.13   k8s-node2    &lt;none&gt;
+kube-system   kube-proxy-l7xcw                     1/1     Running             0          32m   172.16.1.14   k8s-node1    &lt;none&gt;
+kube-system   kube-proxy-n8k9g                     1/1     Running             0          33m   172.16.1.8    k8s-master   &lt;none&gt;
+kube-system   kube-scheduler-k8s-master            1/1     Running             0          32m   172.16.1.8    k8s-master   &lt;none&gt;
+</code></pre></td></tr></table>
+</div>
+</div><p><code>kubelet</code>除外，他是被<code>systemd</code>管理着。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">k8s@k8s-master:~$ sudo systemctl status kubelet.service
+[sudo] password for k8s:
+● kubelet.service - kubelet: The Kubernetes Node Agent
+   Loaded: loaded (/lib/systemd/system/kubelet.service; enabled; vendor preset: enabled)
+  Drop-In: /etc/systemd/system/kubelet.service.d
+           └─10-kubeadm.conf
+   Active: active (running) since Sat 2018-10-20 10:08:27 UTC; 38min ago
+     Docs: https://kubernetes.io/docs/home/
+ Main PID: 19933 (kubelet)
+    Tasks: 22
+   Memory: 47.1M
+      CPU: 1min 29.551s
+   CGroup: /system.slice/kubelet.service
+           └─19933 /usr/bin/kubelet --bootstrap-kubeconfig=/etc/kubernetes/bootstrap-kubelet.conf --kubeconfig=/etc/kubernetes/kubelet.conf --config=/var/lib/
+
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="应用启动流程"></a><h3>应用启动流程</h3>
+<ol>
+<li><code>kubectl run &lt;name&gt; --image &lt;image_name&gt; --replicas=&lt;num&gt;</code></li>
+<li>命令发送到<code>API Server</code>.</li>
+<li><code>Controller Manager</code>创建<code>Deployment</code>。</li>
+<li><code>Scheduler</code>调度把<code>num</code>份Pod副本发往不同的Node上面创建，通过<code>kubelet</code>通信。</li>
+<li>每个接收到请求的Node通过<code>kubectl</code>来创建Pod。</li>
+<li>在没有创建<code>Service</code>时，<code>kube-proxy</code>不参与。</li>
+</ol>
+<a class="post-dummy-target" id="举个例子"></a><h4>举个例子</h4>
+<ol>
+<li>创建一个Deployment</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">k8s@k8s-master:~$ kubectl run nginx-deploy --image=nginx --replicas=2
+</code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>Deployment创建成功</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">k8s@k8s-master:~$ kubectl get deployments
+NAME           DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+nginx-deploy   2         2         2            0           18s
+</code></pre></td></tr></table>
+</div>
+</div><ol start="3">
+<li>Deployment Controller还为这个deployment创建了一个Replication Set。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">k8s@k8s-master:~$ kubectl describe deploy nginx-deploy
+Name:                   nginx-deploy
+Namespace:              default
+CreationTimestamp:      Sat, 20 Oct 2018 11:39:22 +0000
+Labels:                 run=nginx-deploy
+Annotations:            deployment.kubernetes.io/revision: 1
+Selector:               run=nginx-deploy
+Replicas:               2 desired | 2 updated | 2 total | 2 available | 0 unavailable
+StrategyType:           RollingUpdate
+MinReadySeconds:        0
+RollingUpdateStrategy:  25% max unavailable, 25% max surge
+Pod Template:
+  Labels:  run=nginx-deploy
+  Containers:
+   nginx-deploy:
+    Image:        nginx
+    Port:         &lt;none&gt;
+    Host Port:    &lt;none&gt;
+    Environment:  &lt;none&gt;
+    Mounts:       &lt;none&gt;
+  Volumes:        &lt;none&gt;
+Conditions:
+  Type           Status  Reason
+  ----           ------  ------
+  Available      True    MinimumReplicasAvailable
+  Progressing    True    NewReplicaSetAvailable
+OldReplicaSets:  &lt;none&gt;
+NewReplicaSet:   nginx-deploy-74f8cd9b44 (2/2 replicas created)
+Events:
+  Type    Reason             Age   From                   Message
+  ----    ------             ----  ----                   -------
+  Normal  ScalingReplicaSet  39s   deployment-controller  Scaled up replica set nginx-deploy-74f8cd9b44 to 2
+</code></pre></td></tr></table>
+</div>
+</div><ol start="4">
+<li>Check the replication set.</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">k8s@k8s-master:~$ kubectl get replicaset
+NAME                      DESIRED   CURRENT   READY   AGE
+nginx-deploy-74f8cd9b44   2         2         2       4m13s
+</code></pre></td></tr></table>
+</div>
+</div><ol start="5">
+<li>通过Replication Controller在这个Replication Set中创建了两个Pod。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">k8s@k8s-master:~$ kubectl describe replicaset nginx-deploy-74f8cd9b44
+Name:           nginx-deploy-74f8cd9b44
+Namespace:      default
+Selector:       pod-template-hash=74f8cd9b44,run=nginx-deploy
+Labels:         pod-template-hash=74f8cd9b44
+                run=nginx-deploy
+Annotations:    deployment.kubernetes.io/desired-replicas: 2
+                deployment.kubernetes.io/max-replicas: 3
+                deployment.kubernetes.io/revision: 1
+Controlled By:  Deployment/nginx-deploy
+Replicas:       2 current / 2 desired
+Pods Status:    2 Running / 0 Waiting / 0 Succeeded / 0 Failed
+Pod Template:
+  Labels:  pod-template-hash=74f8cd9b44
+           run=nginx-deploy
+  Containers:
+   nginx-deploy:
+    Image:        nginx
+    Port:         &lt;none&gt;
+    Host Port:    &lt;none&gt;
+    Environment:  &lt;none&gt;
+    Mounts:       &lt;none&gt;
+  Volumes:        &lt;none&gt;
+Events:
+  Type    Reason            Age    From                   Message
+  ----    ------            ----   ----                   -------
+  Normal  SuccessfulCreate  4m36s  replicaset-controller  Created pod: nginx-deploy-74f8cd9b44-c89gz
+  Normal  SuccessfulCreate  4m36s  replicaset-controller  Created pod: nginx-deploy-74f8cd9b44-59cl6
+</code></pre></td></tr></table>
+</div>
+</div><ol start="6">
+<li>两个Pod。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">k8s@k8s-master:~$ kubectl get pods
+NAME                            READY   STATUS    RESTARTS   AGE
+nginx-deploy-74f8cd9b44-59cl6   1/1     Running   0          5m1s
+nginx-deploy-74f8cd9b44-c89gz   1/1     Running   0          5m1s
+</code></pre></td></tr></table>
+</div>
+</div><ol start="7">
+<li>每个Pod记录了创建Container的过程。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">k8s@k8s-master:~$ kubectl describe pods nginx-deploy-74f8cd9b44-59cl6                                                                                 [9/9105]
+Name:               nginx-deploy-74f8cd9b44-59cl6
+Namespace:          default
+Priority:           0
+PriorityClassName:  &lt;none&gt;
+Node:               k8s-node2/172.16.1.13
+Start Time:         Sat, 20 Oct 2018 11:39:22 +0000
+Labels:             pod-template-hash=74f8cd9b44
+                    run=nginx-deploy
+Annotations:        &lt;none&gt;
+Status:             Running
+IP:                 10.244.2.2
+Controlled By:      ReplicaSet/nginx-deploy-74f8cd9b44
+Containers:
+  nginx-deploy:
+    Container ID:   docker://282e75e7b0f8237d86e92677a9272e190fc8b870924814622756b4482912e460
+    Image:          nginx
+    Image ID:       docker-pullable://nginx@sha256:b73f527d86e3461fd652f62cf47e7b375196063bbbd503e853af5be16597cb2e
+    Port:           &lt;none&gt;
+    Host Port:      &lt;none&gt;
+    State:          Running
+      Started:      Sat, 20 Oct 2018 11:39:42 +0000
+    Ready:          True
+    Restart Count:  0
+    Environment:    &lt;none&gt;
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from default-token-8c8lf (ro)
+Conditions:
+  Type              Status
+  Initialized       True
+  Ready             True
+  ContainersReady   True
+  PodScheduled      True
+Volumes:
+  default-token-8c8lf:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  default-token-8c8lf
+    Optional:    false
+QoS Class:       BestEffort
+Node-Selectors:  &lt;none&gt;
+Tolerations:     node.kubernetes.io/not-ready:NoExecute for 300s
+                 node.kubernetes.io/unreachable:NoExecute for 300s
+Events:
+  Type    Reason     Age    From                Message
+  ----    ------     ----   ----                -------
+  Normal  Scheduled  5m21s  default-scheduler   Successfully assigned default/nginx-deploy-74f8cd9b44-59cl6 to k8s-node2
+  Normal  Pulling    5m10s  kubelet, k8s-node2  pulling image &#34;nginx&#34;
+  Normal  Pulled     5m1s   kubelet, k8s-node2  Successfully pulled image &#34;nginx&#34;
+  Normal  Created    5m1s   kubelet, k8s-node2  Created container
+  Normal  Started    5m1s   kubelet, k8s-node2  Started container
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="node-selector"></a><h2>Node Selector</h2>
+<p>可以通过Label来控制Pod会被schedule到哪个Node上。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">## Add label to node
+$ kubectl label node k8s-node1 disktype=ssd
+
+## Remove label
+$ kubectl label node k8s-node1 disktype-
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">spec</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="w">  </span>...<span class="w">
+</span><span class="w">  </span><span class="k">template</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="w">    </span>...<span class="w">
+</span><span class="w">    </span><span class="k">spec</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="w">      </span><span class="k">containers</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="w">      </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>xxx<span class="w">
+</span><span class="w">        </span><span class="k">image</span><span class="p">:</span><span class="w"> </span>xxx<span class="w">
+</span><span class="w">      </span><span class="k">nodeSelector</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="w">        </span><span class="k">disktype</span><span class="p">:</span><span class="w"> </span>ssd<span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="daemonset-1"></a><h2>DaemonSet</h2>
+<p>与Deployment不一样，只允许一个Node上运行一个Pod副本。yaml配置文件中<code>kind</code>为<code>DaemonSet</code>。</p>
+<a class="post-dummy-target" id="service-1"></a><h2>Service</h2>
+<p>Pod随时会死掉，而要保证应用的健壮，使用Service。Service逻辑上代表一组Pod。为了保证应用的健壮，Service的IP不变，即使下面的Pod的IP改变了。K8S维护着Service和Pod的映射。</p>
+<p>K8S提供多种类型的Service：</p>
+<ul>
+<li>ClusterIP （默认）</li>
+<li>NodePort</li>
+<li>LoadBalancer</li>
+</ul>
+<a class="post-dummy-target" id="clusterip"></a><h3>ClusterIP</h3>
+<p>默认情况下，没有指定type，会创建ClusterIP类型的Service，只有Cluster内的节点和Pod可以访问。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"># Create the deployment
+k8s@k8s-master:~$ kubectl apply -f httpd.yaml
+deployment.apps/httpd created
+k8s@k8s-master:~$ cat httpd.yaml
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: httpd
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        run: httpd  # Service uses this label to group Pods
+    spec:
+      containers:
+      - name: httpd
+        image: httpd
+        ports:
+        - containerPort: 80  # Container uses port 80
+
+# Check the created Pods.
+k8s@k8s-master:~$ kubectl get pod -o wide
+NAME                     READY   STATUS    RESTARTS   AGE     IP           NOD
+E        NOMINATED NODE
+httpd-79c4f99955-6zswp   1/1     Running   0          2m11s   10.244.2.3   k8s
+-node2   &lt;none&gt;
+httpd-79c4f99955-7bl5h   1/1     Running   0          2m11s   10.244.1.4   k8s
+-node1   &lt;none&gt;
+httpd-79c4f99955-wvfcd   1/1     Running   0          2m11s   10.244.1.3   k8s
+-node1   &lt;none&gt;
+
+# Check the containers in Pod.
+k8s@k8s-master:~$ kubectl describe pod httpd-79c4f99955-6zswp
+Name:               httpd-79c4f99955-6zswp
+...
+Node:               k8s-node2/172.16.1.13
+Labels:             pod-template-hash=79c4f99955
+                    run=httpd
+...
+IP:                 10.244.2.3  # The Pod IP
+...
+Containers:
+  httpd:
+    Container ID:   docker://a97c4b1fba73326f83457fc2ba4a7b11e751d31f22a9a3624
+6ac20c6700cc703
+    ...
+    Port:           80/TCP  # Port 80 is set
+    Host Port:      0/TCP
+    ...
+...
+
+
+# Check the httpd service is up, visit using Pod IP
+k8s@k8s-master:~$ curl 10.244.2.3
+&lt;html&gt;&lt;body&gt;&lt;h1&gt;It works!&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;
+
+# Create Service
+k8s@k8s-master:~$ kubectl apply -f httpd-svc.yaml
+service/httpd-svc created
+k8s@k8s-master:~$ cat httpd-svc.yaml
+apiVersion: v1
+kind: Service  # Note this line
+metadata:
+  name: httpd-svc
+spec:
+  selector:
+    run: httpd
+  ports:
+  - protocol: TCP
+    port: 8080  # Use this port to expose service
+    targetPort: 80  # The port of pods use
+
+# A cluster IP is created for the service, which is stable and
+# will not change even when the Pods IP change.
+k8s@k8s-master:~$ kubectl get service
+NAME         TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
+httpd-svc    ClusterIP   10.110.229.127   &lt;none&gt;        8080/TCP   8s
+kubernetes   ClusterIP   10.96.0.1        &lt;none&gt;        443/TCP    153m
+
+# Pay attention to the `Endpoints` which includes all three 
+# Pods IP.
+k8s@k8s-master:~$ kubectl describe service httpd-svc
+Name:              httpd-svc
+Namespace:         default
+Labels:            &lt;none&gt;
+Annotations:       kubectl.kubernetes.io/last-applied-configuration:
+                     {&#34;apiVersion&#34;:&#34;v1&#34;,&#34;kind&#34;:&#34;Service&#34;,&#34;metadata&#34;:{&#34;annotations&#34;:{},&#34;name&#34;:&#34;httpd-svc&#34;,&#34;namespace&#34;:&#34;default&#34;},&#34;spec&#34;:{&#34;ports&#34;:[{&#34;port&#34;:8080,&#34;...&#34;
+Selector:          run=httpd
+Type:              ClusterIP
+IP:                10.110.229.127
+Port:              &lt;unset&gt;  8080/TCP
+TargetPort:        80/TCP
+Endpoints:         10.244.1.3:80,10.244.1.4:80,10.244.2.3:80
+Session Affinity:  None
+Events:            &lt;none&gt;
+
+# Works on cluster IP
+k8s@k8s-master:~$ curl 10.110.229.127:8080
+&lt;html&gt;&lt;body&gt;&lt;h1&gt;It works!&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;
+
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="service的cluster-ip怎样做到的"></a><h4>Service的Cluster IP怎样做到的</h4>
+<p>通过<code>iptables</code>。而且所有的iptable的rule在所有同一个Cluster的节点都一样。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">
+k8s@k8s-master:~$ sudo iptables-save | grep 10.110.229.127
+
+# 不是源地址来自10.244.0.0/16，要访问httpd-svc（IP和port），则跳至
+# MARK（貌似仅仅是MARK了一下）。换句话说，只有符合上述条件才允许走到下一
+# 条rule
+-A KUBE-SERVICES ! -s 10.244.0.0/16 -d 10.110.229.127/32 -p tcp -m comment --comment &#34;default/httpd-svc: cluster IP&#34; -m tcp --dport 8080 -j KUBE-MARK-MASQ
+
+# 允许转发的，跳到对应的rule
+-A KUBE-SERVICES -d 10.110.229.127/32 -p tcp -m comment --comment &#34;default/httpd-svc: cluster IP&#34; -m tcp --dport 8080 -j KUBE-SVC-RL3JAE4GN7VOGDGP
+
+k8s@k8s-master:~$ sudo iptables-save | grep KUBE-SVC-RL3JAE4GN7VOGDGP
+
+# 这样就做到了负载均衡？`probability`.以不同的概率跳至对应Pod的rule
+-A KUBE-SVC-RL3JAE4GN7VOGDGP -m statistic --mode random --probability 0.33332999982 -j KUBE-SEP-FLNU5BTIQMZ5GJ3J
+-A KUBE-SVC-RL3JAE4GN7VOGDGP -m statistic --mode random --probability 0.50000000000 -j KUBE-SEP-5PWFTV3INZUJOOJD
+-A KUBE-SVC-RL3JAE4GN7VOGDGP -j KUBE-SEP-ATZOK6UEJOCBNV4B
+
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="dns"></a><h4>DNS</h4>
+<p>每当有新的Service被创建，DNS服务会为新的Service添加一条DNS记录。Cluster内的Pod能通过<code>&lt;service_name&gt;.&lt;namespace_name&gt;</code>来访问。同一个namespace的话，可以省略。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">k8s@k8s-master:~$ kubectl run busybox --rm -ti --image=busybox /bin/sh
+/ # wget httpd-svc:8080
+Connecting to httpd-svc:8080 (10.110.229.127:8080)
+index.html           100% |******************************|    45  0:00:00 ETA
+
+/ # cat index.html
+&lt;html&gt;&lt;body&gt;&lt;h1&gt;It works!&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;
+
+/ # nslookup httpd-svc.default.svc.cluster.local
+Server:         10.96.0.10
+Address:        10.96.0.10:53
+
+Name:   httpd-svc.default.svc.cluster.local
+Address: 10.110.229.127
+
+*** Can&#39;t find httpd-svc.default.svc.cluster.local: No answer
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="nodeport"></a><h3>NodePort</h3>
+<p>对Cluster节点的静态端口对外暴露服务。Cluster外面可以通过<code>&lt;node_ip&gt;:&lt;node_port&gt;</code>来访问。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">k8s@k8s-master:~$ cat httpd-svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: httpd-svc
+spec:
+  type: NodePort  # Notice this type changed
+  selector:
+    run: httpd
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 80
+
+# Redeploy the service
+k8s@k8s-master:~$ kubectl apply -f httpd-svc.yaml
+service/httpd-svc configured
+
+# Pay attention to the `PORT(S)`
+# `8080` is the port ClusterIP is licsening.
+# while`32309` is the Node is licsening.
+k8s@k8s-master:~$ kubectl get service httpd-svc
+NAME        TYPE       CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+httpd-svc   NodePort   10.110.229.127   &lt;none&gt;        8080:32309/TCP   71m
+
+k8s@k8s-master:~$ curl k8s-node1:32309
+&lt;html&gt;&lt;body&gt;&lt;h1&gt;It works!&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;
+k8s@k8s-master:~$ curl k8s-node2:32309
+&lt;html&gt;&lt;body&gt;&lt;h1&gt;It works!&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;
+k8s@k8s-master:~$ curl k8s-master:32309
+&lt;html&gt;&lt;body&gt;&lt;h1&gt;It works!&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;
+
+</code></pre></td></tr></table>
+</div>
+</div><p>同样是通过iptables做到的。</p>
+<p>端口号是K8S自动分配的，从30000 - 32767，可以通过在yaml中指定端口，来给定端口号。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">k8s@k8s-master:~$ cat httpd-svc.yaml
+...
+spec:
+  ...
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 80
+    nodePort: 34140  # Specified port
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="loadbalancer"></a><h3>LoadBalancer</h3>
+<p>可以配置GCP，AWS等云服务提供商，来做到load balance将流量导向Service。</p>
+<a class="post-dummy-target" id="volume"></a><h2>Volume</h2>
+<p>TO BE CONTINUED</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>The article was updated on 2020-02-10</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><span></span></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section><span class="tag">
+                        <a href="https://murray-liang.github.io/forgetful/tags/kubernetes/"><i class="fas fa-tag fa-fw"></i>&nbsp;kubernetes</a>&nbsp;
+                    </span><span class="tag">
+                        <a href="https://murray-liang.github.io/forgetful/tags/k8s/"><i class="fas fa-tag fa-fw"></i>&nbsp;k8s</a>&nbsp;
+                    </span></section>
+        <section>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://murray-liang.github.io/forgetful">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="https://murray-liang.github.io/forgetful/2020/02/kubernetes-kubelet/" class="prev" rel="prev" title="Kubernetes Kubelet"><i class="fas fa-angle-left fa-fw"></i>Kubernetes Kubelet</a>
+            <a href="https://murray-liang.github.io/forgetful/2020/02/kubernetes-demo/" class="next" rel="next" title="Kubernetes Demo">Kubernetes Demo<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div class="post-comment"></div>
+    </article></div>
+            </main><footer class="footer">
+    <div class="copyright"><div class="copyright-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
+        </div>
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/Murray-LIANG" target="_blank">Murray-LIANG</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+    </div>
+</footer>
+</div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>
+            <span>&nbsp;</span>
+        </a><script src="/forgetful/js/lib/jquery/jquery.slim.min.js"></script><script src="/forgetful/js/lib/lazysizes/lazysizes.min.js"></script><script src="/forgetful/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script><link rel="stylesheet" href="/forgetful/css/lib/katex/katex.min.css"><script src="/forgetful/js/lib/katex/katex.min.js"></script><script defer src="/forgetful/js/lib/katex/auto-render.min.js"></script><link rel="stylesheet" href="/forgetful/css/lib/katex/copy-tex.min.css"><script defer src="/forgetful/js/lib/katex/copy-tex.min.js"></script><script defer src="/forgetful/js/lib/katex/mhchem.min.js"></script><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },{ left: "$", right: "$", display: false },]
+            });
+        });
+    </script><script src="/forgetful/js/blog.min.js"></script>
+</body>
+</html>

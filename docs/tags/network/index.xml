@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>network on Forgetful :/</title>
+    <link>https://murray-liang.github.io/forgetful/tags/network/</link>
+    <description>Recent content in network on Forgetful :/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
+    
+	<atom:link href="https://murray-liang.github.io/forgetful/tags/network/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Command `ip route`</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/network-ip-route/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/network-ip-route/</guid>
+      <description>Display a routing table with ip route show http://linux-ip.net/html/tools-ip-route.html
+1 2 3 4 5 6 7 8 9 10  [root@tristan]# route -n Kernel IP routing table Destination Gateway Genmask Flags Metric Ref Use Iface 192.168.99.0 0.0.0.0 255.255.255.0 U 0 0 0 eth0 127.0.0.0 0.0.0.0 255.0.0.0 U 0 0 0 lo 0.0.0.0 192.168.99.254 0.0.0.0 UG 0 0 0 eth0 [root@tristan]# ip route show 192.168.99.0/24 dev eth0 scope link 127.0.0.0/8 dev lo scope link default via 192.</description>
+    </item>
+    
+    <item>
+      <title>Forward Proxy vs Reverse Proxy</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/network-forward-and-reverse-proxy/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/network-forward-and-reverse-proxy/</guid>
+      <description>Forward Proxy: Acting on behalf of a requestor (or service consumer) Reverse Proxy: Acting on behalf of service/content producer.  </description>
+    </item>
+    
+    <item>
+      <title>IPv6</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/network-ipv6/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/network-ipv6/</guid>
+      <description>IPv4 addresses are 32 bits long and IPv6 addresses are 128 bits long.
+Classifying IPv6 Addresses IPv6 has three types of addresses:
+ Unicast: An IPv6 unicast address is used to identify a single interface. Packets sent to a unicast address are delivered to that specific interface. Anycast: IPv6 anycast addresses identify groups of interfaces, which typically belong to different nodes. Packets destined to an anycast address are sent to the nearest interface in the group, as determined by the active routing protocols.</description>
+    </item>
+    
+    <item>
+      <title>Kubernetes Networking</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/kubernetes-networking/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/kubernetes-networking/</guid>
+      <description>Different Networking Model  Container-to-container Pod-to-pod Pod-to-service Internet-to-service  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36  +-------------------------------------------------------------------+ +-------------------------------------------------------------------+ | | | | | +-----------------------------------+ | | +-----------------------------------+ | | | +-------------+ +-------------+ | | | | +-------------+ +-------------+ | | | | | Container.</description>
+    </item>
+    
+    <item>
+      <title>Kubernetes Overlay Network</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/kubernetes-overlay-network/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/kubernetes-overlay-network/</guid>
+      <description>Overlay networks such as vxlan or ipsec encapsulate the packet into another packet. This makes entities addressable that are outside of the scope of another machine.
+Any solution on L2 or L3 makes a pod addressable on the network. This means a pod is reachable not just within the Docker network, but is directly addressable from outside the Docker network. These could be public or private IP addresses.
+The way of route and iptables described here is a L3 solution (not a overlay networking) making a pod addressable on the network.</description>
+    </item>
+    
+    <item>
+      <title>Linux Bridge and VLAN</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/linux_bridge_and_vlan/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/linux_bridge_and_vlan/</guid>
+      <description>What is Linux Bridge? There is a VM on the Host. And only one ethernet port on the Host, named eth0.
+If bind eth0 to the VM, then the Host and other new VMs have no port to access the internet.
+So the solution is to create a bridge on the Host, name it br0. Assign a virtual card to VM, name it vnet0. br0 connects the vnet0 and eth0.</description>
+    </item>
+    
+    <item>
+      <title>Network Packages Forwarding</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/network-package-forwarding/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/network-package-forwarding/</guid>
+      <description>NAT Network Address Translation: 在一个网络内部，自定义合法的ip地址。内网各主机通过内网通讯；与外网通过NAT转换，变成外网合法ip。这样，将内网与外网隔离，各个网络有自己的ip，既可以重叠，又可以通过少数几个ip与外网通讯，在ip大量缺乏的现代，节省了很多。
+Packages Forwarding   PC1要访问 www.google.com，需要先知道对应IP地址。域名只起助记作用，互联网访问通过IP进行。
+  于是，PC1需要像DNS请求，查找 www.google.com 对应的ip，即发送dns请求：PC1查找dns，发现不在同一个网络，不同网段需要网关转发。但是，PC1需要先发送给网关，就需要先知道网关ip。网关用于连接不同网络，并且有自己的IP，PC1需要知道网关ip。于是，通过ARP请求，像内网广播网关ip，网关回复mac地址。PC1得到了网关的mac地址，将ip包封装到以太网帧，发送给网关。
+  网关收到该以太网帧，需要转交给dns服务器。同样，网关可能需要发送ARP请求，得到dns的mac地址。
+  dns服务器收到请求，将 www.google.com 的ip发送给网关，网关再根据NAT会话表项，将目的ip转换成PC1的，再发送给PC1（此过程可能同样需要ARP请求）。
+  PC1收到了目的ip，再可以通过类似上面的方式发送请求（目的ip再可以直接填上获取的ip）。
+  Example of Sending a Request to a Remote Server for a Web Page The example is using 5 layered TCP/IP network model.
+  On the application layer (layer #5), the browser initiates an HTTP connection request message to the remote host, www.</description>
+    </item>
+    
+    <item>
+      <title>Openvswitch Bridge Auto Boot with Ubuntu 16.04</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/openvswitch-auto-start/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/openvswitch-auto-start/</guid>
+      <description>The bridges of ovs are down after reboot the host. We need to run the commands manually to bring the bridges up and set IP to it.
+This page gives out the workaround.
+Here lists the summary of the workaround.
+It writes Ubuntu16.10 fixes this issue. So this is for 16.04.
+ Install openvswitch-switch tool. NOTE: it will remove all the bridges which were created by kolla-ansible. Edit the config file: /lib/systemd/system/openvswitch-nonetwork.</description>
+    </item>
+    
+    <item>
+      <title>OSP14 Configure Network for Manila</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/osp14-configure-network-for-manila/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/osp14-configure-network-for-manila/</guid>
+      <description>OSP Network Topology  Environment The undercloud is 192.168.1.202.
+The overcloud is deployed on ubuntu-server2 (compute node) and ubuntu-server10 (control node).
+Ethernet interfaces on ubuntu-server10 are:
+ enp8s0f0: enp8s0f1: eth1, used for overcloud tenant network. enp8s0f2: eth0, used for OSP Provision/Ctrl Plane network. eno1: eth2, not used. enp8s0f3: ens2f1: eth3, connected to br-ex, used to External network.  Ethernet interfaces on ubuntu-server2 are:
+ TBD  Undercloud uses 192.168.139.* subnet to dhcp overcloud nodes.</description>
+    </item>
+    
+  </channel>
+</rss>

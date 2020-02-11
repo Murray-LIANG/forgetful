@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>heartbeat on Forgetful :/</title>
+    <link>https://murray-liang.github.io/forgetful/tags/heartbeat/</link>
+    <description>Recent content in heartbeat on Forgetful :/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
+    
+	<atom:link href="https://murray-liang.github.io/forgetful/tags/heartbeat/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Distributed</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/distributed/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/distributed/</guid>
+      <description>Partitioning / Sharding github.com/Murray-LIANG/nodering
+Distributed Lock  Could use etcd as backend. Some implementation: https://github.com/etcd-io/etcd/blob/master/clientv3/concurrency/mutex.go If two clients request to lock at the same time, the later client would change the value of same key in etcd3 but with new revision. The lock logic needs to wait for old revision deletion which means the older lock is released. To make sure locks released even when clients crash, use expiration on the key.</description>
+    </item>
+    
+  </channel>
+</rss>

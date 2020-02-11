@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>goroutines on Forgetful :/</title>
+    <link>https://murray-liang.github.io/forgetful/tags/goroutines/</link>
+    <description>Recent content in goroutines on Forgetful :/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
+    
+	<atom:link href="https://murray-liang.github.io/forgetful/tags/goroutines/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Goroutines</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/golang-goroutine/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/golang-goroutine/</guid>
+      <description>Goroutines are a way of doing tasks concurrently in golang. They allow us to create and run multiple methods or functions concurrently in the same address space inexpensively.
+Goroutines are lightweight abstractions over threads because their creation and destruction are very cheap as compared to threads, and they are scheduled over OS threads.
+Goroutines vs. Threads Goroutines are NOT any faster than threads.
+Memory consumption The creation of Goroutines require much less memory as compared to threads.</description>
+    </item>
+    
+  </channel>
+</rss>

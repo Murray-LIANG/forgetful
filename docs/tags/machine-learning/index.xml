@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>machine learning on Forgetful :/</title>
+    <link>https://murray-liang.github.io/forgetful/tags/machine-learning/</link>
+    <description>Recent content in machine learning on Forgetful :/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
+    
+	<atom:link href="https://murray-liang.github.io/forgetful/tags/machine-learning/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Basic Math Knowledge</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/ml-math-basic/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/ml-math-basic/</guid>
+      <description>平均数是一个统计学概念，期望是一个概率论概念。
+平均数是实验后根据实际结果统计得到的样本的平均值，期望是实验前根据概率分布预测的样本的平均值。
+之所以说预测是因为在实验前能得到的期望与实际实验得到的样本的平均数总会不可避免地存在偏差，毕竟随机实验的结果永远充满着不确定性。如果我们能进行无穷次随机实验并计算出其样本的平均数的话，那么这个平均数其实就是期望。当然实际上根本不可能进行无穷次实验，但是实验样本的平均数会随着实验样本的增多越来越接近期望，就像频率随着实验样本的增多会越来越接近概率一样如果说概率是频率随样本趋于无穷的极限那么期望就是平均数随样本趋于无穷的极限。
+作者：奇诺城堡 链接：https://www.zhihu.com/question/25391960/answer/39780528 来源：知乎 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。  </description>
+    </item>
+    
+    <item>
+      <title>Learning Notes of Machine Learning in Action(机器学习实战)</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/ml-basic-knowledge/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/ml-basic-knowledge/</guid>
+      <description>机器学习基础 机器学习就是把无序的数据转换成有用的信息。
+统计学 机器学习用到了统计学知识。现实世界中存在很多例子（人类行为），我们无法为之建立精确的数学模型，而为了解决这类问题，我们就需要统计学工具。
+术语  监督学习算法 必须知道预测什么，例如目标变量的分类信息。分类和回归都属于监督学习。回归：主要用于预测数值型数据。一个例子是数据拟合曲线：通过给定数据点的最优拟合曲线。 无监督学习算法 不给定目标值。聚类和密度估计属于此类。聚类：将数据集合分成由类似的对象组成的多个类的过程。将寻找描述数据统计值的过程称为密度估计，即估计数据与每个分组的相似程度。  算法的选择 一般并不存在最好的算法或者可以给出最好结果的算法。发现最好算法的关键环节是反复试错的迭代过程。
+开发机器学习应用程序的步骤  收集数据 准备输入数据：完成基本数据转换 分析输入数据：需人工干预，确保数据集中没有垃圾数据，一般采用二维或者三维展示数据，例如使用matplotlib。 训练算法：无监督学习，一般不需要训练算法，主要步骤在测试算法中。 测试算法：使用测试数据集测试算法。对于监督学习，必须预先知道用于评估算法的目标变量值，便可以计算出算法的成功或者错误率。对于无监督学习，可以采用其他评测手段来检测算法成功率。 使用算法  K-邻近算法  常用的分类算法之一 并不需要训练算法 适用于数值型和标称型数据  优点  精度高 对异常值不敏感 无数据输入假定  缺点  计算复杂度高 空间复杂度高  信息增益 Information Gain 在划分数据集之前之后信息发生的变化称为信息增益。通过计算每个特征值划分数据集获得的信息增益，获得信息增益最高的特征就是最好的选择。
+熵 Entropy 集合信息的度量方式称为香农熵或者简称为熵。熵定义为信息的期望值：
+1  H = - SUM(p(Xi) * log2 p(Xi)), p(Xi)为选择某一分类的概率   熵越高，则混合的数据也越多。
+决策树  适用于数值型和标称型  优点  计算复杂度不高 输出结果易于理解 对中间值缺失不敏感 可以处理不相关特征数据  缺点  可能产生过度匹配问题  步骤  收集数据 准备数据：决策树的构造算法只支持标称型数据，因此数值型数据必须离散化。 分析数据：可以通过matplotlib绘出决策树，检查图形是否符合预期。 训练算法：构造决策树的数据结构，经过选取最优特征（熵），划分数据集，构造决策树等具体步骤，输出决策树，类似： {&#39;no surfacing&#39;: {0: &#39;no&#39;, 1: {&#39;flippers&#39;: {0: &#39;no&#39;, 1: &#39;yes&#39;}}}} 测试算法 使用算法  NOTE  每次挑选获取信息增益最大的特征，来划分分类。 每次使用特征划分数据集之后，得到的若干个子数据集中会把该特征去掉，这样保证了递归算法终将结束。 如果划分得到的子数据集中仍然有多个分类，取类别出现频率最高的作为该子集的类别。 过度匹配（Overfitting）：决策树一般能非常好的匹配数据，然而树过于深，分支多造成匹配选项可能太多了。为了解决过度匹配的问题，可以裁剪决策树，如果叶子节点只能增加少许信息，则可以删除该节点，将其并入其他叶子节点中。 为了节约每次都重新构造决策树的时间，一般会把树的信息pickle到文件系统中。  </description>
+    </item>
+    
+    <item>
+      <title>Notes of fastai ml1 lesson 1</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/ml-fastai-ml1-lesson1/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/ml-fastai-ml1-lesson1/</guid>
+      <description>Links  https://github.com/fastai/fastai/blob/master/courses/ml1/lesson1-rf.ipynb https://www.youtube.com/watch?v=CzdWqFTmn0Y&amp;amp;feature=youtu.be https://medium.com/@hiromi_suenaga/machine-learning-1-lesson-1-84a1dc2b5236   </description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>python on Forgetful :/</title>
+    <link>https://murray-liang.github.io/forgetful/tags/python/</link>
+    <description>Recent content in python on Forgetful :/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
+    
+	<atom:link href="https://murray-liang.github.io/forgetful/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Python Concurrent Module</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/python-concurrent/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/python-concurrent/</guid>
+      <description>GIL会使得Python程序无法通过多线程实现并行计算，IO密集型稍微好一些，因为IO blocking会释放GIL，但是计算密集型无法通过多线程充分利用多核CPU的优势，因此可以利用concurrent.futures模块的ProcessPoolExecutor来利用多核CPU来提升执行速度。
+ProcessPoolExecutor 利用multiprocessing模块提供的底层机制，在主解释器之外生成多个子解释器，然后在主解释器和子解释器之间使用socket传输参数和结果等数据，具体如下：
+ 把列表中或者iteration传给map，其中每一项都会传给map指定的执行函数。 用pickle对数据进行序列化，将其转成二进制。 通过本地socket，将序列化的数据从主解释器所在的进程，发送到子解释器所在的进程。 在子进程中，用pickle对二进制数据进行反序列化，将其还原成Python对象。 引入包含执行函数的Python模块。 在每个子进程中并行地对各自的输入数据进行计算。 对计算结果进行序列化操作，将其转变成字节。 将这些字节通过socket复制到主进程中。 主进程对这些字节执行反序列化操作，还原成Python对象。 最后，把每个子进程所算出的计算结果合并到一个列表中，返回给调用者。  multiprocessing开销大，因为在主进程子进程之间通信，会进行序列化和反序列化的操作。
+ProcessPoolExecutor::map的实现 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38  def map(self, fn, *iterables, **kwargs): &amp;#34;&amp;#34;&amp;#34;Returns a iterator equivalent to map(fn, iter).Args:fn: A callable that will take as many arguments as there arepassed iterables.</description>
+    </item>
+    
+    <item>
+      <title>Python GIL, Multi-Threading, Multi-Processing</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/python-gil-multithread-multiprocessing/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/python-gil-multithread-multiprocessing/</guid>
+      <description>References https://blog.csdn.net/AnyThingFromBigban/article/details/73611386
+GIL 与 Python 线程的纠葛 GIL是什么东西？它对我们的python程序会产生什么样的影响？我们先来看一个问题。 运行下面这段python程序，CPU占用率是多少？
+1 2 3 4 5 6  # 请勿在工作中模仿，危险:) def dead_loop(): while True: pass dead_loop()   答案是什么呢，占用100%CPU？那是单核！还得是没有超线程的古董CPU。 在我的双核CPU上，这个死循环只会吃掉我一个核的工作负荷，也就是只占用50%CPU。 那如何能让它在双核机器上占用100%的CPU呢？答案很容易想到，用两个线程就行了， 线程不正是并发分享CPU运算资源的吗。可惜答案虽然对了，但做起来可没那么简单。 下面的程序在主线程之外又起了一个死循环的线程。
+1 2 3 4 5 6 7 8 9 10 11 12 13 14  import threading def dead_loop(): while True: pass # 新起一个死循环线程 t = threading.Thread(target=dead_loop) t.start() # 主线程也进入死循环 dead_loop() t.join()   按道理它应该能做到占用两个核的CPU资源，可是实际运行情况却是没有什么改变，还是只占了50%CPU不到。 这又是为什么呢？难道python线程不是操作系统的原生线程？ 打开system monitor一探究竟，这个占了50%的python进程确实是有两个线程在跑。 那这两个死循环的线程为何不能占满双核CPU资源呢？其实幕后的黑手就是GIL。
+GIL 的迷思：痛并快乐着 GIL 的全称为 Global Interpreter Lock ，意即全局解释器锁。在 Python 语言的主流实现 CPython 中， GIL 是一个货真价实的全局线程锁，在解释器解释执行任何 Python 代码时，都需要先获得这把锁才行， 在遇到 I/O 操作时会释放这把锁。如果是纯计算的程序，没有 I/O 操作，解释器会每隔 100 次操作 就释放这把锁，让别的线程有机会执行（这个次数可以通过sys.</description>
+    </item>
+    
+    <item>
+      <title>Python Interview Questions</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/python-interview-questions/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/python-interview-questions/</guid>
+      <description>Python是怎么样一种语言，它有什么特点？Golang与Python相比，有什么特点？ 如果让你用Python写一个并行执行的程序，你会怎样写？Python的多线程有什么优缺点？ 以下程序的运行结果？Why？做什么样改动可以避免类似错误？ 1 2 3 4 5 6 7 8  def f(x,l=[]): for i in range(x): l.append(i*i) print l f(2) f(3,[3,2,1]) f(3)   什么是Python装饰器？写个装饰器的例子？如果装饰器需要参数化，该如何改？ The difference between @classmethod, @staticmethod? And what is @property? 性能分析，如何证明？如何做代码分析？ 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16  lst = [random.random() for _ in range(10000)] def f1(lst): l1 = sorted(lst) l2 = [i for i in l1 if i&amp;lt;0.</description>
+    </item>
+    
+    <item>
+      <title>Python String Encoding</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/python-strings-encoding/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/python-strings-encoding/</guid>
+      <description>1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74  # coding: utf-8 # If the editor saves the source code as `utf-8` encoding, then the python interpreter # uses `coding: utf-8` to decode the source code.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>concurrent on Forgetful :/</title>
+    <link>https://murray-liang.github.io/forgetful/tags/concurrent/</link>
+    <description>Recent content in concurrent on Forgetful :/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
+    
+	<atom:link href="https://murray-liang.github.io/forgetful/tags/concurrent/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Python Concurrent Module</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/python-concurrent/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/python-concurrent/</guid>
+      <description>GIL会使得Python程序无法通过多线程实现并行计算，IO密集型稍微好一些，因为IO blocking会释放GIL，但是计算密集型无法通过多线程充分利用多核CPU的优势，因此可以利用concurrent.futures模块的ProcessPoolExecutor来利用多核CPU来提升执行速度。
+ProcessPoolExecutor 利用multiprocessing模块提供的底层机制，在主解释器之外生成多个子解释器，然后在主解释器和子解释器之间使用socket传输参数和结果等数据，具体如下：
+ 把列表中或者iteration传给map，其中每一项都会传给map指定的执行函数。 用pickle对数据进行序列化，将其转成二进制。 通过本地socket，将序列化的数据从主解释器所在的进程，发送到子解释器所在的进程。 在子进程中，用pickle对二进制数据进行反序列化，将其还原成Python对象。 引入包含执行函数的Python模块。 在每个子进程中并行地对各自的输入数据进行计算。 对计算结果进行序列化操作，将其转变成字节。 将这些字节通过socket复制到主进程中。 主进程对这些字节执行反序列化操作，还原成Python对象。 最后，把每个子进程所算出的计算结果合并到一个列表中，返回给调用者。  multiprocessing开销大，因为在主进程子进程之间通信，会进行序列化和反序列化的操作。
+ProcessPoolExecutor::map的实现 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38  def map(self, fn, *iterables, **kwargs): &amp;#34;&amp;#34;&amp;#34;Returns a iterator equivalent to map(fn, iter).Args:fn: A callable that will take as many arguments as there arepassed iterables.</description>
+    </item>
+    
+  </channel>
+</rss>

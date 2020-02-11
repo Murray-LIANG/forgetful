@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>IPv6 | Forgetful :/</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="Notes about everything"><link rel="prev" href="https://murray-liang.github.io/forgetful/2020/02/kubernetes-and-csi/" /><link rel="next" href="https://murray-liang.github.io/forgetful/2020/02/openstack-redhat-install-storops/" /><link rel="canonical" href="https://murray-liang.github.io/forgetful/2020/02/network-ipv6/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff"><meta property="og:title" content="IPv6" />
+<meta property="og:description" content="IPv4 addresses are 32 bits long and IPv6 addresses are 128 bits long.
+Classifying IPv6 Addresses IPv6 has three types of addresses:
+ Unicast: An IPv6 unicast address is used to identify a single interface. Packets sent to a unicast address are delivered to that specific interface. Anycast: IPv6 anycast addresses identify groups of interfaces, which typically belong to different nodes. Packets destined to an anycast address are sent to the nearest interface in the group, as determined by the active routing protocols." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://murray-liang.github.io/forgetful/2020/02/network-ipv6/" />
+<meta property="article:published_time" content="2020-02-10T16:37:31+08:00" />
+<meta property="article:modified_time" content="2020-02-10T16:37:31+08:00" />
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "IPv6",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/murray-liang.github.io\/forgetful\/2020\/02\/network-ipv6\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "https:\/\/murray-liang.github.io\/forgetful\/cover.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "posts","keywords": "network, ipv6","wordcount":  1078 ,
+        "url": "https:\/\/murray-liang.github.io\/forgetful\/2020\/02\/network-ipv6\/","datePublished": "2020-02-10T16:37:31\x2b08:00","dateModified": "2020-02-10T16:37:31\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "murray",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "https:\/\/murray-liang.github.io\/forgetful\/logo.png",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": ""
+    }
+    </script><link rel="stylesheet" href="/forgetful/css/style.min.css"><link rel="stylesheet" href="/forgetful/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/forgetful/css/lib/forkawesome/forkawesome.min.css"><link rel="stylesheet" href="/forgetful/css/lib/animate/animate.min.css"></head>
+    <body><script>
+            if (!window.localStorage || !window.localStorage.getItem('theme')) {
+                window.isDark = 'dark' === 'dark';
+            } else {
+                window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            }
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header animated bounceIn">
+            <a href="https://murray-liang.github.io/forgetful">Forgetful :/</a>
+        </div>
+        <div class="navbar-menu"><a class="menu-item" href="https://murray-liang.github.io/forgetful/posts" title="">Posts</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/tags" title="">Tags</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/categories" title="">Categories</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"><i class="fas fa-language fa-fw"></i></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav><nav class="navbar-mobile">
+    <div class="navbar-container">
+        <div class="navbar-header">
+            <div class="navbar-header-title animated bounceIn">
+                <a href="https://murray-liang.github.io/forgetful">Forgetful :/</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://murray-liang.github.io/forgetful/posts" title="">Posts</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/tags" title="">Tags</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/categories" title="">Categories</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav>
+<main class="main">
+                <div class="container"><article class="page"><h1 class="post-title animated flipInX">IPv6</h1><div class="post-meta">
+            <div class="post-meta-main"><a class="author" href="https://github.com/Murray-LIANG" rel="author" target="_blank">
+                    <i class="fas fa-user-circle fa-fw"></i>Murray-LIANG
+                </a>&nbsp;</div>
+            <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-02-10>2020-02-10</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 1078 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>6 min&nbsp;</div>
+        </div><div class="post-toc" id="post-toc">
+                <h2 class="post-toc-title">Contents</h2>
+                <div class="post-toc-content"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#classifying-ipv6-addresses">Classifying IPv6 Addresses</a>
+      <ul>
+        <li><a href="#multicast-addresses">Multicast Addresses</a></li>
+        <li><a href="#global-unicast-addresses">Global Unicast Addresses</a></li>
+      </ul>
+    </li>
+    <li><a href="#special-ipv6-addresses">Special IPv6 Addresses</a></li>
+    <li><a href="#practice">Practice</a></li>
+  </ul>
+</nav></div>
+            </div>
+            <div class="post-toc-mobile" id="post-toc-mobile">
+                <details>
+                    <summary>
+                        <div class="post-toc-title">
+                            <span>Contents</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="post-toc-content"><nav id="TableOfContentsMobile">
+  <ul>
+    <li><a href="#classifying-ipv6-addresses">Classifying IPv6 Addresses</a>
+      <ul>
+        <li><a href="#multicast-addresses">Multicast Addresses</a></li>
+        <li><a href="#global-unicast-addresses">Global Unicast Addresses</a></li>
+      </ul>
+    </li>
+    <li><a href="#special-ipv6-addresses">Special IPv6 Addresses</a></li>
+    <li><a href="#practice">Practice</a></li>
+  </ul>
+</nav></div>
+                </details>
+            </div><div class="post-content"><p>IPv4 addresses are 32 bits long and IPv6 addresses are 128 bits long.</p>
+<a class="post-dummy-target" id="classifying-ipv6-addresses"></a><h2>Classifying IPv6 Addresses</h2>
+<p>IPv6 has three types of addresses:</p>
+<ul>
+<li>Unicast: An IPv6 unicast address is used to identify <strong>a single interface</strong>. Packets sent to a unicast address are delivered to that specific interface.</li>
+<li>Anycast: IPv6 anycast addresses identify groups of interfaces, which typically belong to different nodes. Packets destined to an anycast address are sent to the <strong>nearest interface in the group</strong>, as determined by the active routing protocols.</li>
+<li>Multicast: An IPv6 multicast address also identifies a group of interfaces, again typically belonging to different nodes. Packets sent to a multicast address are delivered to <strong>all interfaces in the group</strong>.</li>
+</ul>
+<p>NOTE: there is <strong>NO</strong> broadcast addresses in IPv6. The functions served by broadcast addresses in IPv4 are provided by multicast addresses in IPv6.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">Address Type                  Binary Prefix                       Hex Prefix
+Unspecified                   0000...0 (128 bits)                 ::/128
+Loopback                      000...01 (128 bits)                 ::1/128
+IPv4 Mapped                   00...01111111111111111 (96 bits)    ::FFFF/96
+Multicast                     11111111                            FF00::/8
+Link-Local Unicast            1111111010                          FE80::/10
+Unique Local Unicast (ULA)    1111110                             FC00::/7
+Global Unicast	(everything else)
+Anycast addresses are taken from the global unicast pool. Anycast and unicast addresses cannot be distinguished based on format.
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="multicast-addresses"></a><h3>Multicast Addresses</h3>
+<p><a href="https://chrisgrundemann.com/index.php/2012/introducing-ipv6-classifying-ipv6-addresses/">https://chrisgrundemann.com/index.php/2012/introducing-ipv6-classifying-ipv6-addresses/</a></p>
+<a class="post-dummy-target" id="global-unicast-addresses"></a><h3>Global Unicast Addresses</h3>
+<p><a href="https://chrisgrundemann.com/index.php/2012/introducing-ipv6-classifying-ipv6-addresses/">https://chrisgrundemann.com/index.php/2012/introducing-ipv6-classifying-ipv6-addresses/</a></p>
+<p><figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/images/ipv6-global-unicast-ipv6-address-format.png" alt="" class="lazyload"></figure>
+</p>
+<ul>
+<li>Global Routing Prefix: The prefix assigned to a site. Typically this is hierarchically structured as it passes from IANA (Internet Assigned Numbers Authority) to the RIR (Regional Internet Registry) to an ISP (Internet Service Provider) or LIR (Local Internet Registry) and then to a customer or a specific customer location. In each of these transactions, a smaller prefix is assigned downstream - creating the hierarchy.</li>
+<li>Subnet ID: The prefix assigned to a particular link or LAN within the site. In the case of a <strong>/48 being assigned to a site</strong>, there are <strong>16 bits available for Subnet IDs</strong>: this allows a maximum of <strong>65536 /64 subnet</strong> prefixes a that location!</li>
+<li>Interface ID: must be unique within a subnet prefix and are used to identify interfaces on a link. Because of this, /64 prefixes are the smallest common subnet you will use in IPv6.</li>
+</ul>
+<a class="post-dummy-target" id="special-ipv6-addresses"></a><h2>Special IPv6 Addresses</h2>
+<ul>
+<li>Unspecified address (::/128): This all-zeros address refers to the host itself when the host does not know it&rsquo;s own address. Tha unspecified address is typically used in the source field by a device seeking to have its IPv6 address assigned.</li>
+<li>Loopback address (::1/128): IPv6 has a single address for the loopback function, instead of a whole block as is the case in IPv4 (127.0.0.1).</li>
+<li>IPv4-mapped addresses (::FFFF/96): A /96 prefix leaves 32 bits, exactly enough to hold an embedded IPv4 address. IPv4-mapped IPv6 addresses are used to represent an IPv4 node&rsquo;s address as an IPv6 address. This address type was defined to help with the transition from IPv4 to IPv6.</li>
+<li>Link-local unicast addresses (FE80::/10): As the name implies, Link-local addresses are unicast addresses to be used on a single link. Packets with a Link-local source or destination address will not be forwarded to other links. These addresses are used for neighbor discovery, automatic address configuration and in circumstances when no routers are present.</li>
+<li>Unique local unicast addresses (FC00::/7): Commonly known as <a href="http://en.wikipedia.org/wiki/Unique_local_address" target="_blank">ULA</a>
+, this group of addresses is for use locally, within a site or group of sites. Although globally unique, these addresses are not routable on the global Internet. This author looks at ULA as a kind of upgraded rfc1918 (private) address space for IPv6. It is equivalent of private networks in IPv4, 10.0.0.0/8, 172.16.0.0/12 and 192.168.0.0/16.</li>
+</ul>
+<a class="post-dummy-target" id="practice"></a><h2>Practice</h2>
+<ol>
+<li>
+<p>You could generate a ULA (like private addresses 192.168 in IPv4) on the website: <a href="https://simpledns.com/private-ipv6">https://simpledns.com/private-ipv6</a></p>
+</li>
+<li>
+<p><code>fd52:04f1:7987:08a1::/64</code> (<code>fd52:04f1:7987:08a1:xxxx:xxxx:xxxx:xxxx</code>) is generated in step #1.</p>
+</li>
+<li>
+<p>Convert the MAC address <code>00:1e:67:6d:ee:d0</code> of <code>ubuntu-server1 eth1</code>to EUI-64 on the website: <a href="https://www.vultr.com/tools/mac-converter">https://www.vultr.com/tools/mac-converter</a> (<code>ubuntu-server1</code> is the ubuntu gateway of OpenStack env)</p>
+</li>
+<li>
+<p>Copy the <code>Contained EUI-48 (U/L)</code> box output: <code>02:1e:67:ff:fe:6d:ee:d0</code>. Convert it to the interface id for IPv6 <code>021e:67ff:fe6d:eed0</code>.</p>
+</li>
+<li>
+<p>Combining with the prefix, we get the IPv6 address: <code>fd52:04f1:7987:08a1:021e:67ff:fe6d:eed0</code>.</p>
+</li>
+<li>
+<p>Configure the IPv6 address to <code>ubuntu-server1 eth1</code>: <code>ip -f inet6 addr add fd52:04f1:7987:08a1:021e:67ff:fe6d:eed0/64 dev eth1</code>.</p>
+</li>
+<li>
+<p>Now you have two IPv6 addresses configured, including the one configured on <code>eth0</code> by IT:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc mq state UP qlen 1000
+link/ether 00:1e:67:6d:ee:cf brd ff:ff:ff:ff:ff:ff
+......
+inet6 2620:0:170:1d30:21e:67ff:fe6d:eecf/64 scope global dynamic
+   valid_lft 2591719sec preferred_lft 604519sec
+inet6 fe80::21e:67ff:fe6d:eecf/64 scope link
+   valid_lft forever preferred_lft forever
+
+4: eth1: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc mq state UP qlen 1000
+link/ether 00:1e:67:6d:ee:d0 brd ff:ff:ff:ff:ff:ff
+......
+inet6 fd52:4f1:7987:8a1:21e:67ff:fe6d:eed0/64 scope global
+   valid_lft forever preferred_lft forever
+inet6 fe80::21e:67ff:fe6d:eed0/64 scope link
+   valid_lft forever preferred_lft forever
+</code></pre></td></tr></table>
+</div>
+</div><p>And routes of IPv6 are configured automatically:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">root@ubuntu-server1:~# ip -f inet6 route show
+2620:0:170:1d30::/64 dev eth0  proto kernel  metric 256  expires 2591859sec
+fd52:4f1:7987:8a1::/64 dev eth1  proto kernel  metric 256
+fe80::/64 dev eth2  proto kernel  metric 256
+fe80::/64 dev eth0  proto kernel  metric 256
+fe80::/64 dev eth1  proto kernel  metric 256
+fe80::/64 dev eth4  proto kernel  metric 256
+default via fe80::226:98ff:fe04:b042 dev eth0  proto ra  metric 1024  expires 1659sec
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>To test the connectivity, switch to another server like <code>ubuntu-client1</code>, configure an IPv6 address: <code>sudo ip -f inet6 addr add fd52:04f1:7987:08a1:021e:67ff:fe0c:328d/64 dev enp1s0f1</code></p>
+<p>NOTE: <code>enp1s0f1</code> is in the same network with <code>ubuntu-server1 eth1</code>, and <code>fd52:04f1:7987:08a1:021e:67ff:fe0c:328d</code> is generated the same way as above.</p>
+</li>
+<li>
+<p>We can ping <code>ubuntu-server1</code> and <code>ob-h1132</code>'s IPv6 mgmt interface via IPv6.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ ping6 fd52:04f1:7987:08a1:021e:67ff:fe6d:eed0
+PING fd52:04f1:7987:08a1:021e:67ff:fe6d:eed0(fd52:4f1:7987:8a1:21e:67ff:fe6d:eed0) 56 data bytes
+64 bytes from fd52:4f1:7987:8a1:21e:67ff:fe6d:eed0: icmp_seq=1 ttl=64 time=0.403 ms
+--- fd52:04f1:7987:08a1:021e:67ff:fe6d:eed0 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 999ms
+rtt min/avg/max/mdev = 0.203/0.303/0.403/0.100 ms
+    
+$ ping6 2620:0:170:1d30::1
+PING 2620:0:170:1d30::1(2620:0:170:1d30::1) 56 data bytes
+64 bytes from 2620:0:170:1d30::1: icmp_seq=3 ttl=64 time=0.783 ms
+--- 2620:0:170:1d30::1 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 1998ms
+rtt min/avg/max/mdev = 0.776/0.811/0.874/0.044 ms
+
+$ ping6 2620:0:170:1d65:260:1600:47e0:1da
+PING 2620:0:170:1d65:260:1600:47e0:1da(2620:0:170:1d65:260:1600:47e0:1da) 56 data bytes
+64 bytes from 2620:0:170:1d65:260:1600:47e0:1da: icmp_seq=2 ttl=63 time=0.249 ms
+--- 2620:0:170:1d65:260:1600:47e0:1da ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 999ms
+rtt min/avg/max/mdev = 0.249/0.513/0.777/0.264 ms
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>To persist after reboot, modify the file <code>/etc/network/interfaces</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># example of ubuntu-server1</span>
+auto eth1
+iface eth1 inet6 static
+        pre-up modprobe ipv6  <span class="c1"># just to make sure the ipv6 module is loaded</span>
+        address fd52:04f1:7987:08a1:021e:67ff:fe6d:eed0
+        <span class="c1"># the next line turns off ipv6 autoconfig</span>
+        up <span class="nb">echo</span> <span class="m">0</span> &gt; /proc/sys/net/ipv6/conf/all/autoconf
+        netmask <span class="m">64</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>The article was updated on 2020-02-10</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><span></span></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section><span class="tag">
+                        <a href="https://murray-liang.github.io/forgetful/tags/network/"><i class="fas fa-tag fa-fw"></i>&nbsp;network</a>&nbsp;
+                    </span><span class="tag">
+                        <a href="https://murray-liang.github.io/forgetful/tags/ipv6/"><i class="fas fa-tag fa-fw"></i>&nbsp;ipv6</a>&nbsp;
+                    </span></section>
+        <section>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://murray-liang.github.io/forgetful">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="https://murray-liang.github.io/forgetful/2020/02/kubernetes-and-csi/" class="prev" rel="prev" title="Kubernetes and CSI"><i class="fas fa-angle-left fa-fw"></i>Kubernetes and CSI</a>
+            <a href="https://murray-liang.github.io/forgetful/2020/02/openstack-redhat-install-storops/" class="next" rel="next" title="Install Storops RPM on RHEL7">Install Storops RPM on RHEL7<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div class="post-comment"></div>
+    </article></div>
+            </main><footer class="footer">
+    <div class="copyright"><div class="copyright-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
+        </div>
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/Murray-LIANG" target="_blank">Murray-LIANG</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+    </div>
+</footer>
+</div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>
+            <span>&nbsp;</span>
+        </a><script src="/forgetful/js/lib/jquery/jquery.slim.min.js"></script><script src="/forgetful/js/lib/lazysizes/lazysizes.min.js"></script><script src="/forgetful/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script><link rel="stylesheet" href="/forgetful/css/lib/katex/katex.min.css"><script src="/forgetful/js/lib/katex/katex.min.js"></script><script defer src="/forgetful/js/lib/katex/auto-render.min.js"></script><link rel="stylesheet" href="/forgetful/css/lib/katex/copy-tex.min.css"><script defer src="/forgetful/js/lib/katex/copy-tex.min.js"></script><script defer src="/forgetful/js/lib/katex/mhchem.min.js"></script><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },{ left: "$", right: "$", display: false },]
+            });
+        });
+    </script><script src="/forgetful/js/blog.min.js"></script>
+</body>
+</html>

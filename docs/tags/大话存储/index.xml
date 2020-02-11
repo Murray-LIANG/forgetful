@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>大话存储 on Forgetful :/</title>
+    <link>https://murray-liang.github.io/forgetful/tags/%E5%A4%A7%E8%AF%9D%E5%AD%98%E5%82%A8/</link>
+    <description>Recent content in 大话存储 on Forgetful :/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
+    
+	<atom:link href="https://murray-liang.github.io/forgetful/tags/%E5%A4%A7%E8%AF%9D%E5%AD%98%E5%82%A8/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>大话存储</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/%E5%A4%A7%E8%AF%9D%E5%AD%98%E5%82%A8/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/%E5%A4%A7%E8%AF%9D%E5%AD%98%E5%82%A8/</guid>
+      <description>2. IO大法 主板上每个部件都是通过总线连接起来。
+网络通信：
+ 连-物理层 找-数据链路和网络层。设备区分，编址如IP 发-上三层。发什么数据，数据格式是什么  CPU向磁盘要数据：
+  连：系统总线，北桥，南桥（IDE控制器，USB控制器），PCI总线
+  找：每个IO设备在启动时都要向内存中映射一个或多个地址。针对这个地址的数据，统统被北桥芯片重定向到总线上实际的设备上。例如IDE磁盘控制器地址被映射到地址0xA0。
+  发：CPU把这个IO地址放到系统总线上，北桥接收到之后，会等待CPU发送第一个针对这个外设的指令。CPU发送如下3条指令：
+ 当前操作是读还是写，其他选项 指明应该读取的硬盘逻辑块号（LBA） 给出了读取出来的内容应该存放到内存中的哪个地址中。有了这个地址，数据读出后直接通过DMA技术，磁盘控制器可以直接对内存寻址并执行写操作，而不必先转到CPU，然后再从CPU存到内存中。  这三条指令被北桥依次发送给IO总线上的磁盘控制器来执行。这些控制器一般是集成在南桥上或者通过PCI接入IO总线，比如ATA控制器，SCSI控制器。CPU只需要通过运行控制器驱动程序，拿到逻辑块地址，并将读或写信号发给磁盘控制器，磁盘控制器再向磁盘发出一系列指令，让磁盘进行某个磁道或者扇区的读写。
+磁盘控制器指令主要有ATA指令集和SCSI指令集。指令集也称为协议，这样通信双方知道对方传过来的比特流里面到底包含了什么。
+  3. 磁盘大挪移  用于ATA指令系统的IDE接口 用于ATA指令系统的SATA接口 用于SCSI指令系统的并行SCSI接口 用于SCSI指令系统的串行SCSI(SAS)接口 用于SCSI指令系统的IBM专用串行SCSI接口（SSA） 用于SCSI指令系统的并且承载于FabreChannel协议的串行FC接口（FCP）  SCSI硬盘接口 必须有专门的SCSI控制器，也就是一块SCSI控制卡，控制器上有一个相当于CPU的芯片，它对SCSI设备进行控制，能处理大部分的工作，减少CPU的负担。
+SCSI协议的链路层 保证数据帧成功地传送到这条线路的对端。SCSI协议利用CRC校验码来校验每个指令或者数据的帧，对方发来的校验码与本地计算的不同，则丢弃。发送方便会重传这个帧。
+SCSI协议的网络层 SCSI总线的寻址方式：控制器-通道-SCSI ID-LUN ID。
+一个控制器可以控制多个通道，每个通道上可以连接多个SCSI设备，每个SCSI设备在逻辑上可以划分出若干个LUN。
+SCSI协议的传输层 保障此端的数据成功地传送到彼端。与链路层不同的是，链路层只是保障线路两端数据的传送，而且一旦某个帧出错，链路层程序本身不会重新传送这个帧。
+磁盘控制器驱动程序 磁盘控制器将底层机制隐藏，向驱动程序提供一种简洁的接口。驱动程序只要将要读写的设备号，起始地址等信息，也就是指令描述块（CDB）传递给控制器即可。
+IOPS 磁盘的IOPS，每秒能进行多少次IO，每次IO根据写入数据的大小，这个值也不是固定的。
+ 如果在不频繁换道的情况下，每次IO都写入很大的一块连续数据，则此时每秒所做的IO次数是比较低的 如果磁头频繁换道，每次写入的数据还比较大的话，此时的IOPS应该是这块磁盘的最低数值 如果在不频繁换道的情况下，每次写入最小的数据块，则此时IOPS将是最高值。如果IO的payload长度为0,不包含开销，此时的IOPS则为理论最大极限值  例如，写入10000个大小为1KB的文件到硬盘上，耗费的时间比写入一个10MB大小的文件多得多，虽然数据总量都是10MB。因为写入10000个文件时，根据文件分布情况和大小情况，可能需要做好几万甚至十几万次IO才能完成。而写入一个10MB的大文件，如果这个文件在磁盘上是连续存放的，那么只需要几十个IO就可以完成。
+对于写入10000个小文件的情况，因为每秒所需的IO非常高，所以如果用具有较高IOPS的磁盘，会提速不少。
+然而写入一个10MB的文件，就算使用了较高IOPS的磁盘来做，也不会有提升，因为只需很少的IO就完成了，只有换用较大传输带宽（吞吐量）的硬盘，才能体现出优势。
+传输带宽/吞吐量 如果写入10000个1KB的文件花了10s，那么此时的传输带宽只能达到1MB/s，而写入一个10MB的文件只花了0.1s，那么此时的传输带宽就是100MB/s。所以，即使同一块硬盘在写入不同大小的数据时，表现出来的带宽也是不同的。
+具有高带宽的硬盘在传输大块连续数据时具有优势，而具有高IOPS的硬盘在传输小块不连续的数据时具有优势。
+Flash芯片的通病   Erase Before Overwrite</description>
+    </item>
+    
+  </channel>
+</rss>

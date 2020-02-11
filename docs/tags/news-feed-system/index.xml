@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>news feed system on Forgetful :/</title>
+    <link>https://murray-liang.github.io/forgetful/tags/news-feed-system/</link>
+    <description>Recent content in news feed system on Forgetful :/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
+    
+	<atom:link href="https://murray-liang.github.io/forgetful/tags/news-feed-system/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Design News Feed System</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/design-news-feed/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/design-news-feed/</guid>
+      <description>http://blog.gainlo.co/index.php/2016/03/29/design-news-feed-system-part-1-system-design-interview-questions/
+Requirements Features  CRUD posts Comment on posts Share posts  What is in a news feed post?  Author Content Media (photos, videos, .etc) Comments and replies Operations:  CRUD Comment and reply on posts Share posts    What is on news feed page?  Sequence of posts Query or filter posts Operations:  Load more posts Delete posts I don&amp;rsquo;t want to see    Estimations (scale requirements)  How many users?</description>
+    </item>
+    
+  </channel>
+</rss>

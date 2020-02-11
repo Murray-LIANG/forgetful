@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>大话存储 | Forgetful :/</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="Notes about everything"><link rel="next" href="https://murray-liang.github.io/forgetful/2020/02/zookeeper/" /><link rel="canonical" href="https://murray-liang.github.io/forgetful/2020/02/%E5%A4%A7%E8%AF%9D%E5%AD%98%E5%82%A8/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff"><meta property="og:title" content="大话存储" />
+<meta property="og:description" content="2. IO大法 主板上每个部件都是通过总线连接起来。
+网络通信：
+ 连-物理层 找-数据链路和网络层。设备区分，编址如IP 发-上三层。发什么数据，数据格式是什么  CPU向磁盘要数据：
+  连：系统总线，北桥，南桥（IDE控制器，USB控制器），PCI总线
+  找：每个IO设备在启动时都要向内存中映射一个或多个地址。针对这个地址的数据，统统被北桥芯片重定向到总线上实际的设备上。例如IDE磁盘控制器地址被映射到地址0xA0。
+  发：CPU把这个IO地址放到系统总线上，北桥接收到之后，会等待CPU发送第一个针对这个外设的指令。CPU发送如下3条指令：
+ 当前操作是读还是写，其他选项 指明应该读取的硬盘逻辑块号（LBA） 给出了读取出来的内容应该存放到内存中的哪个地址中。有了这个地址，数据读出后直接通过DMA技术，磁盘控制器可以直接对内存寻址并执行写操作，而不必先转到CPU，然后再从CPU存到内存中。  这三条指令被北桥依次发送给IO总线上的磁盘控制器来执行。这些控制器一般是集成在南桥上或者通过PCI接入IO总线，比如ATA控制器，SCSI控制器。CPU只需要通过运行控制器驱动程序，拿到逻辑块地址，并将读或写信号发给磁盘控制器，磁盘控制器再向磁盘发出一系列指令，让磁盘进行某个磁道或者扇区的读写。
+磁盘控制器指令主要有ATA指令集和SCSI指令集。指令集也称为协议，这样通信双方知道对方传过来的比特流里面到底包含了什么。
+  3. 磁盘大挪移  用于ATA指令系统的IDE接口 用于ATA指令系统的SATA接口 用于SCSI指令系统的并行SCSI接口 用于SCSI指令系统的串行SCSI(SAS)接口 用于SCSI指令系统的IBM专用串行SCSI接口（SSA） 用于SCSI指令系统的并且承载于FabreChannel协议的串行FC接口（FCP）  SCSI硬盘接口 必须有专门的SCSI控制器，也就是一块SCSI控制卡，控制器上有一个相当于CPU的芯片，它对SCSI设备进行控制，能处理大部分的工作，减少CPU的负担。
+SCSI协议的链路层 保证数据帧成功地传送到这条线路的对端。SCSI协议利用CRC校验码来校验每个指令或者数据的帧，对方发来的校验码与本地计算的不同，则丢弃。发送方便会重传这个帧。
+SCSI协议的网络层 SCSI总线的寻址方式：控制器-通道-SCSI ID-LUN ID。
+一个控制器可以控制多个通道，每个通道上可以连接多个SCSI设备，每个SCSI设备在逻辑上可以划分出若干个LUN。
+SCSI协议的传输层 保障此端的数据成功地传送到彼端。与链路层不同的是，链路层只是保障线路两端数据的传送，而且一旦某个帧出错，链路层程序本身不会重新传送这个帧。
+磁盘控制器驱动程序 磁盘控制器将底层机制隐藏，向驱动程序提供一种简洁的接口。驱动程序只要将要读写的设备号，起始地址等信息，也就是指令描述块（CDB）传递给控制器即可。
+IOPS 磁盘的IOPS，每秒能进行多少次IO，每次IO根据写入数据的大小，这个值也不是固定的。
+ 如果在不频繁换道的情况下，每次IO都写入很大的一块连续数据，则此时每秒所做的IO次数是比较低的 如果磁头频繁换道，每次写入的数据还比较大的话，此时的IOPS应该是这块磁盘的最低数值 如果在不频繁换道的情况下，每次写入最小的数据块，则此时IOPS将是最高值。如果IO的payload长度为0,不包含开销，此时的IOPS则为理论最大极限值  例如，写入10000个大小为1KB的文件到硬盘上，耗费的时间比写入一个10MB大小的文件多得多，虽然数据总量都是10MB。因为写入10000个文件时，根据文件分布情况和大小情况，可能需要做好几万甚至十几万次IO才能完成。而写入一个10MB的大文件，如果这个文件在磁盘上是连续存放的，那么只需要几十个IO就可以完成。
+对于写入10000个小文件的情况，因为每秒所需的IO非常高，所以如果用具有较高IOPS的磁盘，会提速不少。
+然而写入一个10MB的文件，就算使用了较高IOPS的磁盘来做，也不会有提升，因为只需很少的IO就完成了，只有换用较大传输带宽（吞吐量）的硬盘，才能体现出优势。
+传输带宽/吞吐量 如果写入10000个1KB的文件花了10s，那么此时的传输带宽只能达到1MB/s，而写入一个10MB的文件只花了0.1s，那么此时的传输带宽就是100MB/s。所以，即使同一块硬盘在写入不同大小的数据时，表现出来的带宽也是不同的。
+具有高带宽的硬盘在传输大块连续数据时具有优势，而具有高IOPS的硬盘在传输小块不连续的数据时具有优势。
+Flash芯片的通病   Erase Before Overwrite" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://murray-liang.github.io/forgetful/2020/02/%E5%A4%A7%E8%AF%9D%E5%AD%98%E5%82%A8/" />
+<meta property="article:published_time" content="2020-02-10T16:37:31+08:00" />
+<meta property="article:modified_time" content="2020-02-10T16:37:31+08:00" />
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "大话存储",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/murray-liang.github.io\/forgetful\/2020\/02\/%E5%A4%A7%E8%AF%9D%E5%AD%98%E5%82%A8\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "https:\/\/murray-liang.github.io\/forgetful\/cover.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "posts","keywords": "storage, 大话存储","wordcount":  490 ,
+        "url": "https:\/\/murray-liang.github.io\/forgetful\/2020\/02\/%E5%A4%A7%E8%AF%9D%E5%AD%98%E5%82%A8\/","datePublished": "2020-02-10T16:37:31\x2b08:00","dateModified": "2020-02-10T16:37:31\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "murray",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "https:\/\/murray-liang.github.io\/forgetful\/logo.png",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": ""
+    }
+    </script><link rel="stylesheet" href="/forgetful/css/style.min.css"><link rel="stylesheet" href="/forgetful/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/forgetful/css/lib/forkawesome/forkawesome.min.css"><link rel="stylesheet" href="/forgetful/css/lib/animate/animate.min.css"></head>
+    <body><script>
+            if (!window.localStorage || !window.localStorage.getItem('theme')) {
+                window.isDark = 'dark' === 'dark';
+            } else {
+                window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            }
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header animated bounceIn">
+            <a href="https://murray-liang.github.io/forgetful">Forgetful :/</a>
+        </div>
+        <div class="navbar-menu"><a class="menu-item" href="https://murray-liang.github.io/forgetful/posts" title="">Posts</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/tags" title="">Tags</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/categories" title="">Categories</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"><i class="fas fa-language fa-fw"></i></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav><nav class="navbar-mobile">
+    <div class="navbar-container">
+        <div class="navbar-header">
+            <div class="navbar-header-title animated bounceIn">
+                <a href="https://murray-liang.github.io/forgetful">Forgetful :/</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://murray-liang.github.io/forgetful/posts" title="">Posts</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/tags" title="">Tags</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/categories" title="">Categories</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav>
+<main class="main">
+                <div class="container"><article class="page"><h1 class="post-title animated flipInX">大话存储</h1><div class="post-meta">
+            <div class="post-meta-main"><a class="author" href="https://github.com/Murray-LIANG" rel="author" target="_blank">
+                    <i class="fas fa-user-circle fa-fw"></i>Murray-LIANG
+                </a>&nbsp;</div>
+            <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-02-10>2020-02-10</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 490 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>3 min&nbsp;</div>
+        </div><div class="post-toc" id="post-toc">
+                <h2 class="post-toc-title">Contents</h2>
+                <div class="post-toc-content"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#2-io大法">2. IO大法</a></li>
+    <li><a href="#3-磁盘大挪移">3. 磁盘大挪移</a>
+      <ul>
+        <li><a href="#scsi硬盘接口">SCSI硬盘接口</a></li>
+        <li><a href="#scsi协议的链路层">SCSI协议的链路层</a></li>
+        <li><a href="#scsi协议的网络层">SCSI协议的网络层</a></li>
+        <li><a href="#scsi协议的传输层">SCSI协议的传输层</a></li>
+        <li><a href="#磁盘控制器驱动程序">磁盘控制器驱动程序</a></li>
+        <li><a href="#iops">IOPS</a></li>
+        <li><a href="#传输带宽吞吐量">传输带宽/吞吐量</a></li>
+        <li><a href="#flash芯片的通病">Flash芯片的通病</a></li>
+      </ul>
+    </li>
+    <li><a href="#4-七种raid">4. 七种RAID</a>
+      <ul>
+        <li><a href="#stripe条带">Stripe，条带</a></li>
+      </ul>
+    </li>
+    <li><a href="#5-raid虚拟磁盘卷文件系统">5. RAID，虚拟磁盘，卷，文件系统</a>
+      <ul>
+        <li><a href="#软件raid">软件RAID</a></li>
+        <li><a href="#raid50">RAID50</a></li>
+        <li><a href="#raid10raid01">RAID10，RAID01</a></li>
+        <li><a href="#lvm">LVM</a></li>
+      </ul>
+    </li>
+    <li><a href="#6-磁盘阵列">6. 磁盘阵列</a>
+      <ul>
+        <li><a href="#jbodjust-a-bound-of-disks磁盘柜">JBOD：Just a Bound Of Disks，磁盘柜</a></li>
+        <li><a href="#磁盘阵列自带raid控制器不影响主机应用">磁盘阵列：自带RAID控制器，不影响主机应用</a></li>
+        <li><a href="#前端和后端">前端和后端</a></li>
+        <li><a href="#多外部接口">多外部接口</a></li>
+        <li><a href="#lun">LUN</a></li>
+        <li><a href="#双控制器">双控制器</a></li>
+        <li><a href="#split-brain">Split Brain</a></li>
+        <li><a href="#控制器连接多通道或者扩展柜">控制器连接多通道或者扩展柜</a></li>
+      </ul>
+    </li>
+    <li><a href="#7-osl">7. OSL</a></li>
+    <li><a href="#8-fibre-channel">8. Fibre Channel</a>
+      <ul>
+        <li><a href="#物理层">物理层</a></li>
+        <li><a href="#链路层">链路层</a></li>
+        <li><a href="#网络层">网络层</a>
+          <ul>
+            <li><a href="#拓扑">拓扑</a></li>
+            <li><a href="#寻址">寻址</a></li>
+          </ul>
+        </li>
+        <li><a href="#传输层">传输层</a></li>
+        <li><a href="#总结">总结</a></li>
+        <li><a href="#scsi--fc">SCSI + FC</a></li>
+        <li><a href="#多台主机都能访问同一个盘阵如果区分某台主机只能访问某个lun">多台主机都能访问同一个盘阵，如果区分某台主机只能访问某个LUN？</a></li>
+        <li><a href="#多路径访问目标-multipath">多路径访问目标 Multipath</a></li>
+      </ul>
+    </li>
+    <li><a href="#9-fc协议的巨大力量">9. FC协议的巨大力量</a></li>
+    <li><a href="#10-das-san-nas">10. DAS, SAN, NAS</a></li>
+    <li><a href="#12-ip-san">12. IP SAN</a></li>
+    <li><a href="#14-虚拟化">14. 虚拟化</a>
+      <ul>
+        <li><a href="#早期计算机单任务模式">早期计算机单任务模式</a></li>
+        <li><a href="#操作系统的单任务模式">操作系统的单任务模式</a></li>
+        <li><a href="#操作系统的批处理">操作系统的批处理</a></li>
+        <li><a href="#操作系统的多任务模式">操作系统的多任务模式</a></li>
+        <li><a href="#虚拟化">虚拟化</a></li>
+        <li><a href="#存储系统的虚拟化">存储系统的虚拟化</a>
+          <ul>
+            <li><a href="#磁盘控制器">磁盘控制器</a></li>
+            <li><a href="#存储网络">存储网络</a></li>
+            <li><a href="#磁盘阵列">磁盘阵列</a></li>
+            <li><a href="#卷管理层">卷管理层</a></li>
+            <li><a href="#文件系统">文件系统</a></li>
+            <li><a href="#目录虚拟层">目录虚拟层</a></li>
+            <li><a href="#带内虚拟化-vs-带外虚拟化">带内虚拟化 vs 带外虚拟化</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#15-存储集群">15. 存储集群</a>
+      <ul>
+        <li><a href="#ibm-xiv">IBM XIV</a></li>
+        <li><a href="#emc-symmetrix-v-max">EMC Symmetrix V-Max</a></li>
+        <li><a href="#smpnumampp">SMP，NUMA，MPP</a></li>
+        <li><a href="#集群nas系统和集群文件系统">集群NAS系统和集群文件系统</a>
+          <ul>
+            <li><a href="#single-name-space统一命名空间">Single Name Space，统一命名空间</a></li>
+            <li><a href="#集群中的分布式锁机制">集群中的分布式锁机制</a></li>
+            <li><a href="#集群文件系统的缓存一致性">集群文件系统的缓存一致性</a></li>
+          </ul>
+        </li>
+        <li><a href="#对象存储系统">对象存储系统</a>
+          <ul>
+            <li><a href="#这个讲的跟aws提供的s3等对象存储不是同一个东西">这个讲的跟AWS提供的S3等对象存储不是同一个东西</a></li>
+          </ul>
+        </li>
+        <li><a href="#共享与非共享存储型集群">共享与非共享存储型集群</a></li>
+        <li><a href="#对称式与非对称式集群">对称式与非对称式集群</a></li>
+        <li><a href="#串行与并行集群">串行与并行集群</a></li>
+        <li><a href="#集群nas系统的三层架构">集群NAS系统的三层架构</a></li>
+        <li><a href="#互联网特殊集群">互联网特殊集群</a></li>
+      </ul>
+    </li>
+    <li><a href="#16-数据保护和备份技术">16. 数据保护和备份技术</a>
+      <ul>
+        <li><a href="#远程本地磁盘镜像">远程/本地磁盘镜像</a></li>
+        <li><a href="#快照数据保护">快照数据保护</a></li>
+        <li><a href="#cofw-vs-rofw">CoFW vs RoFW</a></li>
+        <li><a href="#快照会造成数据不一致">快照会造成数据不一致</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div>
+            <div class="post-toc-mobile" id="post-toc-mobile">
+                <details>
+                    <summary>
+                        <div class="post-toc-title">
+                            <span>Contents</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="post-toc-content"><nav id="TableOfContentsMobile">
+  <ul>
+    <li><a href="#2-io大法">2. IO大法</a></li>
+    <li><a href="#3-磁盘大挪移">3. 磁盘大挪移</a>
+      <ul>
+        <li><a href="#scsi硬盘接口">SCSI硬盘接口</a></li>
+        <li><a href="#scsi协议的链路层">SCSI协议的链路层</a></li>
+        <li><a href="#scsi协议的网络层">SCSI协议的网络层</a></li>
+        <li><a href="#scsi协议的传输层">SCSI协议的传输层</a></li>
+        <li><a href="#磁盘控制器驱动程序">磁盘控制器驱动程序</a></li>
+        <li><a href="#iops">IOPS</a></li>
+        <li><a href="#传输带宽吞吐量">传输带宽/吞吐量</a></li>
+        <li><a href="#flash芯片的通病">Flash芯片的通病</a></li>
+      </ul>
+    </li>
+    <li><a href="#4-七种raid">4. 七种RAID</a>
+      <ul>
+        <li><a href="#stripe条带">Stripe，条带</a></li>
+      </ul>
+    </li>
+    <li><a href="#5-raid虚拟磁盘卷文件系统">5. RAID，虚拟磁盘，卷，文件系统</a>
+      <ul>
+        <li><a href="#软件raid">软件RAID</a></li>
+        <li><a href="#raid50">RAID50</a></li>
+        <li><a href="#raid10raid01">RAID10，RAID01</a></li>
+        <li><a href="#lvm">LVM</a></li>
+      </ul>
+    </li>
+    <li><a href="#6-磁盘阵列">6. 磁盘阵列</a>
+      <ul>
+        <li><a href="#jbodjust-a-bound-of-disks磁盘柜">JBOD：Just a Bound Of Disks，磁盘柜</a></li>
+        <li><a href="#磁盘阵列自带raid控制器不影响主机应用">磁盘阵列：自带RAID控制器，不影响主机应用</a></li>
+        <li><a href="#前端和后端">前端和后端</a></li>
+        <li><a href="#多外部接口">多外部接口</a></li>
+        <li><a href="#lun">LUN</a></li>
+        <li><a href="#双控制器">双控制器</a></li>
+        <li><a href="#split-brain">Split Brain</a></li>
+        <li><a href="#控制器连接多通道或者扩展柜">控制器连接多通道或者扩展柜</a></li>
+      </ul>
+    </li>
+    <li><a href="#7-osl">7. OSL</a></li>
+    <li><a href="#8-fibre-channel">8. Fibre Channel</a>
+      <ul>
+        <li><a href="#物理层">物理层</a></li>
+        <li><a href="#链路层">链路层</a></li>
+        <li><a href="#网络层">网络层</a>
+          <ul>
+            <li><a href="#拓扑">拓扑</a></li>
+            <li><a href="#寻址">寻址</a></li>
+          </ul>
+        </li>
+        <li><a href="#传输层">传输层</a></li>
+        <li><a href="#总结">总结</a></li>
+        <li><a href="#scsi--fc">SCSI + FC</a></li>
+        <li><a href="#多台主机都能访问同一个盘阵如果区分某台主机只能访问某个lun">多台主机都能访问同一个盘阵，如果区分某台主机只能访问某个LUN？</a></li>
+        <li><a href="#多路径访问目标-multipath">多路径访问目标 Multipath</a></li>
+      </ul>
+    </li>
+    <li><a href="#9-fc协议的巨大力量">9. FC协议的巨大力量</a></li>
+    <li><a href="#10-das-san-nas">10. DAS, SAN, NAS</a></li>
+    <li><a href="#12-ip-san">12. IP SAN</a></li>
+    <li><a href="#14-虚拟化">14. 虚拟化</a>
+      <ul>
+        <li><a href="#早期计算机单任务模式">早期计算机单任务模式</a></li>
+        <li><a href="#操作系统的单任务模式">操作系统的单任务模式</a></li>
+        <li><a href="#操作系统的批处理">操作系统的批处理</a></li>
+        <li><a href="#操作系统的多任务模式">操作系统的多任务模式</a></li>
+        <li><a href="#虚拟化">虚拟化</a></li>
+        <li><a href="#存储系统的虚拟化">存储系统的虚拟化</a>
+          <ul>
+            <li><a href="#磁盘控制器">磁盘控制器</a></li>
+            <li><a href="#存储网络">存储网络</a></li>
+            <li><a href="#磁盘阵列">磁盘阵列</a></li>
+            <li><a href="#卷管理层">卷管理层</a></li>
+            <li><a href="#文件系统">文件系统</a></li>
+            <li><a href="#目录虚拟层">目录虚拟层</a></li>
+            <li><a href="#带内虚拟化-vs-带外虚拟化">带内虚拟化 vs 带外虚拟化</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#15-存储集群">15. 存储集群</a>
+      <ul>
+        <li><a href="#ibm-xiv">IBM XIV</a></li>
+        <li><a href="#emc-symmetrix-v-max">EMC Symmetrix V-Max</a></li>
+        <li><a href="#smpnumampp">SMP，NUMA，MPP</a></li>
+        <li><a href="#集群nas系统和集群文件系统">集群NAS系统和集群文件系统</a>
+          <ul>
+            <li><a href="#single-name-space统一命名空间">Single Name Space，统一命名空间</a></li>
+            <li><a href="#集群中的分布式锁机制">集群中的分布式锁机制</a></li>
+            <li><a href="#集群文件系统的缓存一致性">集群文件系统的缓存一致性</a></li>
+          </ul>
+        </li>
+        <li><a href="#对象存储系统">对象存储系统</a>
+          <ul>
+            <li><a href="#这个讲的跟aws提供的s3等对象存储不是同一个东西">这个讲的跟AWS提供的S3等对象存储不是同一个东西</a></li>
+          </ul>
+        </li>
+        <li><a href="#共享与非共享存储型集群">共享与非共享存储型集群</a></li>
+        <li><a href="#对称式与非对称式集群">对称式与非对称式集群</a></li>
+        <li><a href="#串行与并行集群">串行与并行集群</a></li>
+        <li><a href="#集群nas系统的三层架构">集群NAS系统的三层架构</a></li>
+        <li><a href="#互联网特殊集群">互联网特殊集群</a></li>
+      </ul>
+    </li>
+    <li><a href="#16-数据保护和备份技术">16. 数据保护和备份技术</a>
+      <ul>
+        <li><a href="#远程本地磁盘镜像">远程/本地磁盘镜像</a></li>
+        <li><a href="#快照数据保护">快照数据保护</a></li>
+        <li><a href="#cofw-vs-rofw">CoFW vs RoFW</a></li>
+        <li><a href="#快照会造成数据不一致">快照会造成数据不一致</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+                </details>
+            </div><div class="post-content"><a class="post-dummy-target" id="2-io大法"></a><h2>2. IO大法</h2>
+<p>主板上每个部件都是通过总线连接起来。</p>
+<p>网络通信：</p>
+<ul>
+<li>连-物理层</li>
+<li>找-数据链路和网络层。设备区分，编址如IP</li>
+<li>发-上三层。发什么数据，数据格式是什么</li>
+</ul>
+<p>CPU向磁盘要数据：</p>
+<ul>
+<li>
+<p>连：系统总线，北桥，南桥（IDE控制器，USB控制器），PCI总线</p>
+</li>
+<li>
+<p>找：每个IO设备在启动时都要向内存中映射一个或多个地址。针对这个地址的数据，统统被北桥芯片重定向到总线上实际的设备上。例如IDE磁盘控制器地址被映射到地址0xA0。</p>
+</li>
+<li>
+<p>发：CPU把这个IO地址放到系统总线上，北桥接收到之后，会等待CPU发送第一个针对这个外设的指令。CPU发送如下3条指令：</p>
+<ol>
+<li>当前操作是读还是写，其他选项</li>
+<li>指明应该读取的硬盘逻辑块号（LBA）</li>
+<li>给出了读取出来的内容应该存放到内存中的哪个地址中。有了这个地址，数据读出后直接通过DMA技术，磁盘控制器可以直接对内存寻址并执行写操作，而不必先转到CPU，然后再从CPU存到内存中。</li>
+</ol>
+<p>这三条指令被北桥依次发送给IO总线上的磁盘控制器来执行。这些控制器一般是集成在南桥上或者通过PCI接入IO总线，比如ATA控制器，SCSI控制器。CPU只需要通过运行控制器驱动程序，拿到逻辑块地址，并将读或写信号发给磁盘控制器，磁盘控制器再向磁盘发出一系列指令，让磁盘进行某个磁道或者扇区的读写。</p>
+<p>磁盘控制器指令主要有ATA指令集和SCSI指令集。指令集也称为协议，这样通信双方知道对方传过来的比特流里面到底包含了什么。</p>
+</li>
+</ul>
+<a class="post-dummy-target" id="3-磁盘大挪移"></a><h2>3. 磁盘大挪移</h2>
+<ul>
+<li>用于ATA指令系统的IDE接口</li>
+<li>用于ATA指令系统的SATA接口</li>
+<li>用于SCSI指令系统的并行SCSI接口</li>
+<li>用于SCSI指令系统的串行SCSI(SAS)接口</li>
+<li>用于SCSI指令系统的IBM专用串行SCSI接口（SSA）</li>
+<li>用于SCSI指令系统的并且承载于FabreChannel协议的串行FC接口（FCP）</li>
+</ul>
+<a class="post-dummy-target" id="scsi硬盘接口"></a><h3>SCSI硬盘接口</h3>
+<p>必须有专门的SCSI控制器，也就是一块SCSI控制卡，控制器上有一个相当于CPU的芯片，它对SCSI设备进行控制，能处理大部分的工作，减少CPU的负担。</p>
+<a class="post-dummy-target" id="scsi协议的链路层"></a><h3>SCSI协议的链路层</h3>
+<p>保证数据帧成功地传送到这条线路的对端。SCSI协议利用CRC校验码来校验每个指令或者数据的帧，对方发来的校验码与本地计算的不同，则丢弃。发送方便会重传这个帧。</p>
+<a class="post-dummy-target" id="scsi协议的网络层"></a><h3>SCSI协议的网络层</h3>
+<p>SCSI总线的寻址方式：控制器-通道-SCSI ID-LUN ID。</p>
+<p>一个控制器可以控制多个通道，每个通道上可以连接多个SCSI设备，每个SCSI设备在逻辑上可以划分出若干个LUN。</p>
+<a class="post-dummy-target" id="scsi协议的传输层"></a><h3>SCSI协议的传输层</h3>
+<p>保障此端的数据成功地传送到彼端。与链路层不同的是，链路层只是保障线路两端数据的传送，而且一旦某个帧出错，链路层程序本身不会重新传送这个帧。</p>
+<a class="post-dummy-target" id="磁盘控制器驱动程序"></a><h3>磁盘控制器驱动程序</h3>
+<p>磁盘控制器将底层机制隐藏，向驱动程序提供一种简洁的接口。驱动程序只要将要读写的设备号，起始地址等信息，也就是指令描述块（CDB）传递给控制器即可。</p>
+<a class="post-dummy-target" id="iops"></a><h3>IOPS</h3>
+<p>磁盘的IOPS，每秒能进行多少次IO，每次IO根据写入数据的大小，这个值也不是固定的。</p>
+<ul>
+<li>如果在不频繁换道的情况下，每次IO都写入很大的一块连续数据，则此时每秒所做的IO次数是比较低的</li>
+<li>如果磁头频繁换道，每次写入的数据还比较大的话，此时的IOPS应该是这块磁盘的最低数值</li>
+<li>如果在不频繁换道的情况下，每次写入最小的数据块，则此时IOPS将是最高值。如果IO的payload长度为0,不包含开销，此时的IOPS则为理论最大极限值</li>
+</ul>
+<p>例如，写入10000个大小为1KB的文件到硬盘上，耗费的时间比写入一个10MB大小的文件多得多，虽然数据总量都是10MB。因为写入10000个文件时，根据文件分布情况和大小情况，可能需要做好几万甚至十几万次IO才能完成。而写入一个10MB的大文件，如果这个文件在磁盘上是连续存放的，那么只需要几十个IO就可以完成。</p>
+<p>对于写入10000个小文件的情况，因为每秒所需的IO非常高，所以如果用具有较高IOPS的磁盘，会提速不少。</p>
+<p>然而写入一个10MB的文件，就算使用了较高IOPS的磁盘来做，也不会有提升，因为只需很少的IO就完成了，只有换用较大传输带宽（吞吐量）的硬盘，才能体现出优势。</p>
+<a class="post-dummy-target" id="传输带宽吞吐量"></a><h3>传输带宽/吞吐量</h3>
+<p>如果写入10000个1KB的文件花了10s，那么此时的传输带宽只能达到1MB/s，而写入一个10MB的文件只花了0.1s，那么此时的传输带宽就是100MB/s。所以，即使同一块硬盘在写入不同大小的数据时，表现出来的带宽也是不同的。</p>
+<p>具有高带宽的硬盘在传输大块连续数据时具有优势，而具有高IOPS的硬盘在传输小块不连续的数据时具有优势。</p>
+<a class="post-dummy-target" id="flash芯片的通病"></a><h3>Flash芯片的通病</h3>
+<ol>
+<li>
+<p>Erase Before Overwrite</p>
+<p>向某个Block写入数据，不管之前的数据是1还是0,新写入的数据是1还是0,必须先Erase整个Block为全1,然后才能写入新数据。</p>
+<p>而且，如果仅仅需要更改某个Block中的某个Page，那么需要Erase整个Block，然后写入某个Page。为保存其他未更改的Page里面的数据，在Erase之前需要把全部Block中的数据读入SSD的RAM Buffer，然后Erase，再将待写入的新Page中的数据在RAM中覆盖到Blcok中对应的Page，然后将整个更新后的Block写入Flash中。这就叫写惩罚，也叫写扩大。</p>
+</li>
+<li>
+<p>Wear Off
+某个Cell无法保证保有足够的电荷，即损坏。</p>
+<p>写惩罚会大大加速Wear Off。</p>
+</li>
+</ol>
+<a class="post-dummy-target" id="4-七种raid"></a><h2>4. 七种RAID</h2>
+<a class="post-dummy-target" id="stripe条带"></a><h3>Stripe，条带</h3>
+<ul>
+<li>多个扇区组成块。块被文件系统和卷管理软件看成基础存储单元</li>
+<li>一个磁盘纵向被划分为段，段由若干个块组成，段的大小为条带的深度</li>
+<li>多个磁盘横向组成条带，磁盘的个数和段的大小决定了条带的宽度</li>
+<li>块的编号是以横向条带方向开始一条一条的向下</li>
+</ul>
+<a class="post-dummy-target" id="5-raid虚拟磁盘卷文件系统"></a><h2>5. RAID，虚拟磁盘，卷，文件系统</h2>
+<a class="post-dummy-target" id="软件raid"></a><h3>软件RAID</h3>
+<p>占用内存空间，占用CPU资源，无法RAID系统盘。运行在操作系统之上，如果操作系统损坏，RAID程序无法运行，磁盘上的数据便会无用。当然，目前大多数RAID程序会在磁盘上存储自己的算法信息，一旦操作系统出现问题，可以将这些磁盘连接到其他机器上，再安装相同的RAID软件。RAID软件便可恢复磁盘上的数据。</p>
+<a class="post-dummy-target" id="raid50"></a><h3>RAID50</h3>
+<p>因为RAID0是所有RAID中最快的，将RAID5与RAID0结合，成为RAID50。若干个磁盘组成两个RAID5系统，然后再将这两个RAID5组成RAID0。</p>
+<a class="post-dummy-target" id="raid10raid01"></a><h3>RAID10，RAID01</h3>
+<p>RAID10：两块磁盘先组RAID1,然后再组RAID0。如果左边的RAID1系统中的两个磁盘坏了一个，那么整个系统还能允许右边的两个磁盘中的任何一个磁盘坏。</p>
+<p>RAID01：两块磁盘先组RAID0,然后再组RAID1。如果左边的RAID0系统中的两个磁盘坏了一个，那么左边的RAID0已经无效了，整个系统只能允许左边的剩下的那个磁盘坏了。</p>
+<p>RAID10比RAID01安全性高。</p>
+<a class="post-dummy-target" id="lvm"></a><h3>LVM</h3>
+<p>RAID出来的逻辑磁盘和物理磁盘对于OS来说都是一整块磁盘，用完后无法简单地进行扩容。LVM是OS层运行的软件，可以对RAID提供的逻辑磁盘或者真正的物理磁盘进行组织，再分配，形成LV，OS将此LV当成普通硬盘来使用。</p>
+<p>RAID逻辑磁盘/物理磁盘 &raquo;&gt; 创建成PV &raquo;&gt; 组成VG &raquo;&gt; 创建LV</p>
+<a class="post-dummy-target" id="6-磁盘阵列"></a><h2>6. 磁盘阵列</h2>
+<a class="post-dummy-target" id="jbodjust-a-bound-of-disks磁盘柜"></a><h3>JBOD：Just a Bound Of Disks，磁盘柜</h3>
+<a class="post-dummy-target" id="磁盘阵列自带raid控制器不影响主机应用"></a><h3>磁盘阵列：自带RAID控制器，不影响主机应用</h3>
+<p>一般有两个SCSI控制器，一个作为Target供主机使用，对于主机来说，这个盘阵就是主机SCSI总线上的一个或者多个设备。另一个作为Initiator连接了一条SCSI，管理着上面的若干磁盘。这两个SCSI控制器不一定是物理的两个，可能是一块芯片上面逻辑地分成两个部分。</p>
+<a class="post-dummy-target" id="前端和后端"></a><h3>前端和后端</h3>
+<p>对于盘阵来说，给主机提供服务的是前端，而管理内部磁盘的，不暴露给外界知道的叫后端。</p>
+<a class="post-dummy-target" id="多外部接口"></a><h3>多外部接口</h3>
+<p>多个接口连接多个主机。那么盘阵中每个LUN，可以通过设置被分配给一个或者多个口，Masking and Mapping。如果多台主机通过不同的口使用同一个LUN，需要主机中软件来控制数据的一致性。</p>
+<a class="post-dummy-target" id="lun"></a><h3>LUN</h3>
+<p>LUN是SCSI ID的更细一级的地址号，每个SCSI ID（Target ID）下面还可以有更多的LUN ID。对于大型磁盘阵列来说，可以生成几百甚至几千个虚拟磁盘，为每个虚拟磁盘分配一个SCSI ID是远远不够用的。因为每个SCSI总线最多允许16个设备接入。要在一条总线上放置多于16个物理设备也是不可能的，LUN就是这样一个次级寻址ID。磁盘阵列可以在一个SCSI ID下虚拟多个LUN地址，每个LUN地址对应一个虚拟磁盘。</p>
+<a class="post-dummy-target" id="双控制器"></a><h3>双控制器</h3>
+<p>如果盘阵内部只有一个控制器模块，那么会SPOF，单点故障。所以一些高端的盘阵内部有两个控制器。</p>
+<ul>
+<li>Active-Standby
+两个控制器只有一个在工作，另一个处于等待，同步和监控状态。一旦主控制器发生故障，则备控制器立即接管其工作。</li>
+<li>Dual-Active，Active-Active
+一半的数量的总线交由一个控制器管理，另一半给另一个控制器。</li>
+</ul>
+<a class="post-dummy-target" id="split-brain"></a><h3>Split Brain</h3>
+<p>当控制器还工作，但是之间的连接出了问题。导致两个控制器都尝试接管所有总线，同时有两个控制器来操控所有的后端设备。</p>
+<p>通常利用一个仲裁者来决定哪个控制器接管所有总线。比如利用一个两个控制器都能访问的磁盘来存放仲裁信息。一旦发生split brain，两个控制器参考这个磁盘，谁最后写入了信息就把控制权给谁。</p>
+<a class="post-dummy-target" id="控制器连接多通道或者扩展柜"></a><h3>控制器连接多通道或者扩展柜</h3>
+<p>一条SCSI总线最多可以连接15块磁盘，为了极大地利用RAID控制器的性能，可以在控制器上连接多个SCSI总线，即多通道。如果受限于盘阵机器的空间，可以外部扩展JBOD用作扩展柜。</p>
+<a class="post-dummy-target" id="7-osl"></a><h2>7. OSL</h2>
+<ul>
+<li>
+<p>应用层</p>
+</li>
+<li>
+<p>表示层</p>
+</li>
+<li>
+<p>会话层</p>
+</li>
+<li>
+<p>传输层：保障数据能传输到目的地。</p>
+<p>端到端的保障机制。如果只是发送到了对方的网卡缓冲区，此时发生故障，这不叫端到端的保障。因为数据在网卡缓冲区内，还没有被提交到TCP协议的处理逻辑中进行处理，所以不会返回成功信号给发送方，那么这个数据包就没有被发送成功，发送方会通过超时来感知到这个结果。</p>
+</li>
+<li>
+<p>网络层：编址（如：IP），路由。</p>
+</li>
+<li>
+<p>数据链路层：保障数据从链路一端到另一端。在帧上会有检验值，如果接收方发现校验值不符，则证明链路受到干扰，数据发生畸变，那么就将这一帧视为无效帧直接丢弃。而接收方的传输层协议会保证端到端的传输，即发现某个包没有到达或者不完整，会要求发送方重新传送这个不完整或者没有接收到的包。</p>
+</li>
+<li>
+<p>物理层</p>
+</li>
+</ul>
+<a class="post-dummy-target" id="8-fibre-channel"></a><h2>8. Fibre Channel</h2>
+<p>Fibre Channel：FC协议，与光纤没有必然联系。</p>
+<a class="post-dummy-target" id="物理层"></a><h3>物理层</h3>
+<p>使用了同步串行传输方式，介质可以是光纤，铜线也行。</p>
+<a class="post-dummy-target" id="链路层"></a><h3>链路层</h3>
+<p>FC帧头24Byte，不仅仅包含寻址功能，还包含传输保障的功能，即网络层和传输层的逻辑都使用这24B的信息来传递。而TCP/IP的帧头=14B（以太网帧头）+20B（IP头）+20B（TCP头）=54B。</p>
+<p>流控策略：</p>
+<ul>
+<li>缓存到缓存：如果发现缓存被填满，则通知发送方减缓发送。</li>
+<li>端到端：如果数据流在另一FC终端上发生拥堵，则通知发送端降低发送频率。</li>
+</ul>
+<p>MTU：2112B。以太网=1500B。</p>
+<a class="post-dummy-target" id="网络层"></a><h3>网络层</h3>
+<a class="post-dummy-target" id="拓扑"></a><h4>拓扑</h4>
+<ul>
+<li>仲裁环拓扑</li>
+<li>网状拓扑</li>
+</ul>
+<a class="post-dummy-target" id="寻址"></a><h4>寻址</h4>
+<ul>
+<li>WWNN</li>
+<li>WWPN</li>
+<li>ZONE</li>
+</ul>
+<a class="post-dummy-target" id="传输层"></a><h3>传输层</h3>
+<p>除了将数据包分割成Information Unit来进行传输，还具备适配上层协议的功能，比如IP可以通过FC进行传输：IP over FC，SCSI可以通过FC进行传输：SCSI over FC。FC只是给IP和SCSI提供一个通路。</p>
+<a class="post-dummy-target" id="总结"></a><h3>总结</h3>
+<p>FC协议的大部分逻辑都被直接做到了一块独立的硬件卡中，而不是运行在操作系统中，这样节约了主机CPU内存资源。TCP/IP就是运行于主机操作系统上的网络协议，其IP和TCP或者UDP模块是运行在操作系统上的，只有以太网逻辑是运行在以太网芯片中的。</p>
+<a class="post-dummy-target" id="scsi--fc"></a><h3>SCSI + FC</h3>
+<p>FC协议只是定义了一套完整的网络传输体系，并没有定义诸如SCSI指令集这样可用于向磁盘存取数据的通用语言。</p>
+<p>SCSI协议集是一套完整而不可分的协议体系，同样有OSI中的各个层次。物理层使用并行传输。SCSI协议集的应用层其实就是SCSI协议指令，这些指令带有强烈应用层语义。SCSI-3协议规范中，将SCSI指令语义部分（OSI上三层）和SCSI底层传输部分（OSI下四层）分隔开了，使得SCSI指令可以使用其他网络传输方式进行传输，而不仅仅限于并行SCSI总线。</p>
+<p>FC协议的底层模块担当传输通道和手段，将SCSI协议集的上层内容传送到对方。</p>
+<p>FC协议定义了在FC4层上针对SCSI指令集的特定接口，称为FCP，也就是SCSI over FC。只是将连接主机和磁盘阵列的通路，从并行SCSI总线替换为串行传输的FC通路。</p>
+<p>主机方面，仍然具备SCSI指令处理模块，而将连接盘阵的接口替换成了FC卡。盘阵方面，连接主机的SCSI适配器也变成了FC适配器。SCSI指令集并未被抛弃，被抛弃的只是低效，低速，短距离的SCSI并行总线传输模块。</p>
+<p>虽然SCSI总线网络可以接入16个节点，且总线的带宽可达到320MB/s，但是如果接入15台主机到一个盘阵上，理论上每个主机带宽才能达到20MB/s。而且SCSI线缆最长不能超过25米，却要连接15台主机，比较局促。</p>
+<p>而FC使得存储网络真正的可扩展，多台主机通过FC交换机，连接到一台盘阵。</p>
+<a class="post-dummy-target" id="多台主机都能访问同一个盘阵如果区分某台主机只能访问某个lun"></a><h3>多台主机都能访问同一个盘阵，如果区分某台主机只能访问某个LUN？</h3>
+<ul>
+<li>
+<p>在盘阵上面的LUN Masking</p>
+<p>SCSI指令集中有一条指令叫做Report LUN，也就是在SCSI发起端和目标端通信的时候，有发起端发出这条指令，目标端在接收到这条指令之后，就要向发起端报告自己的LUN信息。LUN Masking就是在发起端请求Report LUN时，盘阵控制器根据发起端的ID（如WWPN）提供相应的LUN报告给它。而这些Mapping关系需要手动配置并保存在盘阵上。</p>
+</li>
+<li>
+<p>FC交换设备上的Zoning</p>
+<p>可以在FC交换设备上阻断两个节点间的通路。包括软Zone和硬Zone。</p>
+</li>
+</ul>
+<a class="post-dummy-target" id="多路径访问目标-multipath"></a><h3>多路径访问目标 Multipath</h3>
+<p>如果同一台主机可以通过多条路径访问同一个LUN，对于操作系统来说，主机能看到多个独立的硬盘，但是实际上这些硬盘对应的都是盘阵上面同一个LUN。</p>
+<p>所以必须在操作系统上安装multipath软件，它可以识别并分析FC卡提交上来的LUN。如果两个物理上相同的LUN，此软件便向操作系统卷管理程序提交单份LUN。</p>
+<a class="post-dummy-target" id="9-fc协议的巨大力量"></a><h2>9. FC协议的巨大力量</h2>
+<p>之前FC只是替换了盘阵前端的SCSI，后来连后端的SCSI都替换了，跟前端不一样，后端的FC使用仲裁环方式，每个磁盘连接的背板也是使用铜线来连接，而不是光纤。</p>
+<a class="post-dummy-target" id="10-das-san-nas"></a><h2>10. DAS, SAN, NAS</h2>
+<p>NAS将文件系统从主机端后移到存储设备端，并通过NFS，CIFS等协议提供文件系统操作接口，一般来说NFS，CIFS这些协议跑在TCP/IP上。</p>
+<a class="post-dummy-target" id="12-ip-san"></a><h2>12. IP SAN</h2>
+<ul>
+<li>FC：OSI底下四层都有定义。TCP/IP：只有网络层和传输层，下面租用以太网或者其他传输协议。</li>
+<li>FC：MTU可以设置2000B以上。TCP/IP：一般为1500B。FC传输效率高。</li>
+<li>FC：头只有24B。TCP/IP：加起来40B。FC开销小。</li>
+<li>FC：4Gb/s已经普及。TCP/IP：1Gb/s。</li>
+</ul>
+<p>以太网并不是端到端可靠的协议。</p>
+<a class="post-dummy-target" id="14-虚拟化"></a><h2>14. 虚拟化</h2>
+<a class="post-dummy-target" id="早期计算机单任务模式"></a><h3>早期计算机单任务模式</h3>
+<p>整个计算机只能被一个程序独占。执行完后拿出介质，再插入另一张介质，重新载入执行另一个新的程序。如果有10个人要用一台计算机来执行程序，第一个人拿着他的软盘，上面有一个数学题计算程序，他插入软盘，然后重启机器，机器从软盘指定的扇区载入程序代码执行，2小时后运行完成，结果显示在显示器上，第一个人拿到结果，离开。后面9个人类似的依次使用计算机。</p>
+<ul>
+<li>需要重启机器来运行下一段程序</li>
+<li>某个程序空闲时候，其他程序仍然需要等待，CPU空转</li>
+</ul>
+<a class="post-dummy-target" id="操作系统的单任务模式"></a><h3>操作系统的单任务模式</h3>
+<p>操作系统的出现解决了上面两个问题。操作系统本身也是一段程序，计算机加电后，首先运行操作系统，随时可以载入其他程序执行，也就是说，它可以随时从软盘上读取其他程序的代码，并切换到这段代码上让CPU执行，执行完之后立即切换回操作系统本身。</p>
+<p>但是每次也必须等待当前程序执行完毕，才能载入下一个程序执行。当被载入的程序执行的时候，不能做任何其他的事情，包括操作系统本身，任何中断的产生，都会中断正在运行的程序。</p>
+<p>典型代表：DOS。</p>
+<p>带来的好处：程序的切换不需要重启机器。</p>
+<a class="post-dummy-target" id="操作系统的批处理"></a><h3>操作系统的批处理</h3>
+<p>操作系统将多个程序一个接一个地排列起来，成批地执行，中途无需人为载入程序。</p>
+<a class="post-dummy-target" id="操作系统的多任务模式"></a><h3>操作系统的多任务模式</h3>
+<p>操作系统针对系统时钟中断，开发了专门的中断服务程序。时钟中断到来的时候，CPU根据中断向量表，指向调度程序所在的内存地址入口，执行调度程序的代码，调度程序所做的就是将CPU的执行跳转到各个应用程序所在的内存地址入口。</p>
+<a class="post-dummy-target" id="虚拟化"></a><h3>虚拟化</h3>
+<p>硬件逻辑 被虚拟化成（&raquo;&gt;） 汇编语言，汇编语言 &raquo;&gt; 高级语言 &raquo;&gt; 函数 &raquo;&gt; 应用程序 &raquo;&gt; 操作系统可运行的可执行文件。</p>
+<p>也就是说，硬件电路逻辑，一层层地被虚拟化，最终虚拟化成一个程序。程序就是对底层电路上下文逻辑的另一种表达形式。</p>
+<a class="post-dummy-target" id="存储系统的虚拟化"></a><h3>存储系统的虚拟化</h3>
+<a class="post-dummy-target" id="磁盘控制器"></a><h4>磁盘控制器</h4>
+<p>根据驱动程序发来的磁盘读写信息，向磁盘发送SCSI指令和数据。RAID是磁盘控制器虚拟化的一个典型代表。控制器将物理磁盘组成RAID Group，然后在RG的基础上，虚拟出多个LUN，通告给主机驱动。</p>
+<a class="post-dummy-target" id="存储网络"></a><h4>存储网络</h4>
+<p>智能的FC交换机或者以太网交换机：对于其转发的帧，可以感知其SCSI协议。例如，在帧到达交换机的时候，将帧同时复制到多个终端设备的LUN里面。</p>
+<a class="post-dummy-target" id="磁盘阵列"></a><h4>磁盘阵列</h4>
+<p>磁盘阵列除了可以实现RAID的功能，还能实现一些高级功能，如LUN镜像，快照，远程复制等。它将后端磁盘进行虚拟化抽象之后通过前端接口汇报给主机使用。</p>
+<a class="post-dummy-target" id="卷管理层"></a><h4>卷管理层</h4>
+<p>运行在应用主机上的功能模块，将底层物理磁盘或者LUN进行再抽象和虚拟。例如：LVM。</p>
+<a class="post-dummy-target" id="文件系统"></a><h4>文件系统</h4>
+<p>将对数据的磁盘扇区的访问进一步虚拟化/抽象成文件的访问。文件系统考虑了如何组织，管理磁盘上的数据。</p>
+<p>FAT（File Allocate Table）文件系统将每个完整的数据称为文件，并且用单独的数据结构（File Allocate Table）来描述这个文件在磁盘上的分布。每次只需要参考这个表，就能找出这个文件在磁盘上的完整分布情况。</p>
+<p>文件系统将磁盘抽象成了文件柜，同一份文件可能存放在一个柜子的不同抽屉里面，利用一个特别的文件来记录“文件-对应抽屉”的分布情况。这个描述其他文件分布情况及其属性的文件称为元文件（Metadata）。</p>
+<a class="post-dummy-target" id="目录虚拟层"></a><h4>目录虚拟层</h4>
+<p>不同的操作系统内部都有一个虚拟的目录结构，比如Linux中的VFS。</p>
+<p>虚拟文件系统，这个文件系统的目录并不是真是存在的，而是虚拟的。任何实际的文件系统都可以挂载到这个目录下。例如，操作系统一般将外部设备虚拟成一个虚拟文件，挂载在如<code>/dev/hda</code>这个文件下。对这个文件的读写，就等于直接对设备进行了读写。</p>
+<a class="post-dummy-target" id="带内虚拟化-vs-带外虚拟化"></a><h4>带内虚拟化 vs 带外虚拟化</h4>
+<ul>
+<li>带内，In Band，控制信令和数据走的是同一条路线。</li>
+<li>带外，Out Band，控制信令和数据走不同的线路，控制信令走单独的通路。</li>
+</ul>
+<p>NAS（带内） vs SanFS（带外）</p>
+<ul>
+<li>作为NAS的客户端，只能看到NAS上面的目录</li>
+<li>作为SanFS的客户端，不仅能看到上面的目录，还能看到这个目录所在的卷，这样在访问时，客户端通过SanFS控制器拿到文件所在的卷的LBA，直接读取和写入</li>
+</ul>
+<a class="post-dummy-target" id="15-存储集群"></a><h2>15. 存储集群</h2>
+<a class="post-dummy-target" id="ibm-xiv"></a><h3>IBM XIV</h3>
+<p>XIV对LUN采用分布式存放。LUN被设计为平均分布在多个或者全部节点上，有一个映射图来记录每个LUN的分布情况。而且每个LUN对应的每个数据块都会被镜像一份，存储在与源数据块不同的任何一个节点上。</p>
+<p>在任何一块磁盘或者整个节点故障之后，系统会根据LUN映射图来判断并将丢失的部分通过尚完好的源数据块再次镜像一份到其他任何一个节点上的剩余存储空间。</p>
+<p>XIV使用映射图来记录整个LUN在所有节点磁盘上的存储地址，并可以将LUN某个块移动到其他节点并重新更新映射图。这种思想与文件系统类似：文件系统可以将任何文件分布到磁盘的各个空间，并使用Inode Tree来遍历真个文件的分布情况。</p>
+<p>XIV将数据写入Primary节点和Secondary节点的Cache，形成Cache Mirror，便返回成功。</p>
+<p>XIV的Snapshot采用Write Redirct机制，快照时间点的这个LUN的映射图和实体数据将被冻结，然后系统复制一份映射图，新复制的映射图就是当前活动的映射图。随后对这个LUN的写IO，系统将写到任何一个节点的任何一个空闲数据块，并在新复制的映射图对应的位置做指针更新，指向这个新数据块。</p>
+<p>XIV实现了一套上层分布式RAID10。想对于传统的底层的RAID10,它解决了以下问题：</p>
+<ol>
+<li>
+<p>传统RAID层无法判断哪些数据块是有效数据，哪些不是，它会将所有数据块做镜像，而且在做rebuild的时候需要将所有数据块传输过来，这样浪费资源。</p>
+<p>而上层的XIV卷管理系统，使用了映射图便能感知哪些块的数据有效（真实用户数据或者元数据），由它来做有效数据块的镜像和rebuild。</p>
+</li>
+<li>
+<p>传统RAID10中，源和镜像必须要有相同的磁盘数量和容量（镜像容量可以比源大，但是会被浪费），而且如果一块磁盘坏掉，必须手动替换掉坏的磁盘，如果替换之前另一块跟坏磁盘组RAID1的磁盘也坏掉的话，数据就丢失了。</p>
+<p>而XIV统一管理着所有节点的所有磁盘，相当于在所有磁盘上面做了RAID10,即数据块可以被XIV的卷管理系统条带化并镜像地存储在所有磁盘上。而且在磁盘坏掉或者节点down的情况下，自动选择不同于源节点的另一节点的空闲空间做新的数据镜像。</p>
+</li>
+</ol>
+<a class="post-dummy-target" id="emc-symmetrix-v-max"></a><h3>EMC Symmetrix V-Max</h3>
+<p>每两个Director组成一对形成一个Engine，并共同挂载了后端一串磁盘扩展柜。满配8个Engine，16个Director。</p>
+<p>所有Engine之间通过Virtual Matrix Interface连接在一起，上面跑着RapidIO协议，此协议是一种高速网络，定义了自己的传输协议层次。</p>
+<p>RapidIO提供对所有节点共享内存的支持，即在一个RapidIO网络之内的所有节点上的内存共同组成一个逻辑的大内存空间，每个节点都可以寻址这个全局内存。当寻址的内存空间在另一个节点时，通过RapidIO网络将数据取回，会增加响应时间。</p>
+<a class="post-dummy-target" id="smpnumampp"></a><h3>SMP，NUMA，MPP</h3>
+<ul>
+<li>
+<p>SMP，Symmetric Multi-Processing，processors share resources - single instance of Operating System, memory, IO devices and connected using a common bus.</p>
+<p>如果将存储系统的控制器看成CPU，磁盘柜看成内存，那么单控，到后来的双控存储系统就类似与SMP。</p>
+</li>
+<li>
+<p>NUMA，多个SMP可以通过CrossBar Switch来访问其他SMP的内存。</p>
+<p>EMC的V-Max类似于NUMA。</p>
+</li>
+<li>
+<p>MPP，Massive Parallel Processing，将操作系统，内存等强制分开。MPP为Share Nothing架构。</p>
+<p>IBM的XIV类似于MPP，各个节点彻底松耦合，使用外部以太网交换机，TCP/IP协议通信。</p>
+<p>也不是谁都适用于MPP。MPP对于上层应用架构的要求不一样。MPP对于多流大块连续地址IO性能不佳。而对于小块的高随机IO效率高。MPP架构广泛使用于互联网的底层Key-Value分布式数据库中。</p>
+</li>
+</ul>
+<p>其实SMP，NUMA，MPP都属于Scale Out，只是形式和程度不一样罢了。</p>
+<a class="post-dummy-target" id="集群nas系统和集群文件系统"></a><h3>集群NAS系统和集群文件系统</h3>
+<p>在底层文件管理系统（Ext3,NTFS等）之上，增加一层集群分布式文件映射管理系统，外围再包裹上一层NFS/CIFS网络文件访问系统，便成了一个分布式集群并行文件系统了。</p>
+<a class="post-dummy-target" id="single-name-space统一命名空间"></a><h4>Single Name Space，统一命名空间</h4>
+<p>在一个多节点集群环境中，每个节点都有各自的虚拟目录，或者路径。然而，集群之所以称之为集群，是因为这个集群对外应当表现为一个整体。</p>
+<p>如果这个集群对外Export了一个路径<code>/cluster/data1</code>，那么所有节点都应该能感知这个路径或者叫Mount Point，上面挂载的数据要么在本节点管理的存储，要么在其他节点管理的存储上。</p>
+<a class="post-dummy-target" id="集群中的分布式锁机制"></a><h4>集群中的分布式锁机制</h4>
+<p>MS Word对Word文档有Share Read锁，即其他Word程序只能读已经被打开的文档。这是一种简单的粗粒度的锁。</p>
+<p>要实现更低粒度的锁，需要考虑：</p>
+<ol>
+<li>字节锁，Byte Range Lock，锁文件中某段或者某几段字节，粒度比锁文件低多了。</li>
+<li>并行冲突访问锁仲裁，同一段字节被多个程序写入，需要加锁-更改-释放锁。其他只读程序可以并行。</li>
+<li>集群中的分布式锁，集中式锁管理（用于非对称式集群，某个节点管理着锁）或者分布式锁管理（用于对称式集群，所有节点同步锁信息）。</li>
+<li>元数据锁与实际数据锁分清，对于共享存储型对称式集群，元数据在所有节点中是完全同步的，元数据的锁是内部用于保证自身一致性的，用户见不到的。而实际数据锁是应用程序自己来申请使用的。</li>
+</ol>
+<a class="post-dummy-target" id="集群文件系统的缓存一致性"></a><h4>集群文件系统的缓存一致性</h4>
+<p>集群一般分为：</p>
+<ul>
+<li>共享存储型，所有底层卷是所有节点共享的。</li>
+<li>非共享存储型，其他节点需要访问本节点的数据必须通过本节点提供的接口。</li>
+</ul>
+<p>集群一般有读缓存，每个节点维护一个读缓存，一旦某个客户端应用程序更改了某个节点上存储的内容，而这段内容又与其他节点缓存中的数据冲突，那么所有节点中有冲突的缓存将被标记为作废（或者重新读入最新数据继续缓存），这种机制叫Invalidate On Write（写即作废）。</p>
+<p>对于共享存储型的集群，写入数据的时候最好刷盘，这样其他节点可以通过读磁盘来看到这些最新的数据。某些复杂系统也使用写缓存，对于缓存的脏数据会通知其他节点作废相应的缓存，同时其他节点针对这段数据的操作都与缓存脏数据的节点来获取。</p>
+<p>对于非共享型的集群，不存在不一致性的问题。</p>
+<p>所以，共享型的集群一般关掉写缓存（如果开，需要额外的开销来保证一致性），开着读缓存。非共享型集群的读写缓存都开着。</p>
+<a class="post-dummy-target" id="对象存储系统"></a><h3>对象存储系统</h3>
+<a class="post-dummy-target" id="这个讲的跟aws提供的s3等对象存储不是同一个东西"></a><h4>这个讲的跟AWS提供的S3等对象存储不是同一个东西</h4>
+<p>Object Storage System，OSS，或者Object Storage Device，OSD。</p>
+<p>OSD可以让客户端主机直接并行访问所有Disk，系统中有一个独立的Metadata Server（MDS），这台Server上维护着这个系统内的<code>文件-所在Disk及块</code>的映射关系。当客户端访问任何文件，通过网络先向MDS进行查询目标文件所在的Disk和块列表。同理当客户端新建文件时，也是先咨询MDS获取哪个Disk和块用来存储新的文件。</p>
+<p>而传统NAS系统中，所有IO必须经过唯一的那个文件系统和其上的NFS/CIFS server。</p>
+<p>在OSD中，存储的都是Object，由OID，Data，Metadata，和一些Attribute组成。OSD系统中有一个Root Object，里面包含多个Partition Object（相当于目录），Partition Object里面可以有若干个User Object，多个User Object可以组成Collection Object。</p>
+<p>需要访问OSD系统，需要在客户端主机上安装OSD Initiator（类似NFS/CIFS客户端），这样用户可以挂载一个由MDS虚拟出来的路径，当在这个路径下创建或者访问一个文件时，OSD Initiator会与操作系统内核的目录虚拟层（比如Linux的VFS）进行对接，将用户程序中对VFS路径下被Mount的OSD路径下某文件的访问，通过查询MDS来查询文件所在的OSD设备及块列表，翻译封装成相应的OSD SCSI CDB并发向OSD设备以执行这个IO请求。</p>
+<p>由此可见，OSD结合了块级访问（后端直接通过SCIS指令访问块）的高效和文件访问（前端暴露类似文件系统接口）的灵活和便捷。</p>
+<a class="post-dummy-target" id="共享与非共享存储型集群"></a><h3>共享与非共享存储型集群</h3>
+<ul>
+<li>
+<p>共享即Share Everything，所有节点共享使用后端存储，共享访问同一个或者多个LUN。</p>
+</li>
+<li>
+<p>非共享即Share Nothing，并不一定每个节点都必须是自己本地磁盘，可以是连接到同一个磁盘阵列来获取各自的存储空间，但是节点只能访问自己的存储，其他节点不能访问。</p>
+</li>
+<li>
+<p>共享型：每个节点可以直接对后端存储设备对应的LUN进行读写，在前端传输的只有集群间的元数据沟通流量。</p>
+</li>
+<li>
+<p>非共享型：当某个节点需要访问其他节点上的数据时，这些数据需要在前端交换机中传输，速度偏慢。</p>
+</li>
+<li>
+<p>共享型：需要考虑缓存一致性。</p>
+</li>
+<li>
+<p>非共享型：无需考虑。</p>
+</li>
+<li>
+<p>共享型：一个节点故障，其他节点可以同时接管前端和后端。</p>
+</li>
+<li>
+<p>非共享型：为了防止单点故障，需要将每个节点上的数据镜像一份存在其他节点上。</p>
+</li>
+</ul>
+<a class="post-dummy-target" id="对称式与非对称式集群"></a><h3>对称式与非对称式集群</h3>
+<ul>
+<li>对称式：每个节点的角色和任务都相同，完全等价。每个节点都同步更新元数据。</li>
+<li>非对称式：只有若干个节点保存着元数据，如Metadata Server，MDS。</li>
+</ul>
+<a class="post-dummy-target" id="串行与并行集群"></a><h3>串行与并行集群</h3>
+<ul>
+<li>
+<p>串行：客户端挂载集群中的某个节点Export出来的目录，之后的所有通信都通过这个节点执行。</p>
+</li>
+<li>
+<p>并行：客户端初始也是挂载某个节点Export出来的目录，但是挂载之后客户端可以通过这个节点来获取待访问文件的元数据信息，得到文件对应的块地址等信息后，客户端可以直接利用所获得的信息访问集群中的其他节点来访问对应的数据。</p>
+</li>
+<li>
+<p>传统的NFS，CIFS都只能串行访问。所有的Metadata数据流和Data数据流都必须经过NFS/CIFS Server。</p>
+</li>
+<li>
+<p>pNFS和一些私有的客户端，可以做到并行访问。通过独立的（也可以是和数据节点是同一节点）Metadata Server来获取数据存储的节点信息和块信息，然后pNFS直接与数据节点传输数据。</p>
+</li>
+</ul>
+<a class="post-dummy-target" id="集群nas系统的三层架构"></a><h3>集群NAS系统的三层架构</h3>
+<ul>
+<li>最上层，NAS协议输出层，提供串行或者并行访问接口，NFS/CIFS/pNFS等。</li>
+<li>中间层，文件系统层，整个集群范围的文件系统，可以是Single Path Image或者Single Filesystem Image。</li>
+<li>最底层，底层存储空间，可以是Share Everything或者是Share Nothing。</li>
+</ul>
+<a class="post-dummy-target" id="互联网特殊集群"></a><h3>互联网特殊集群</h3>
+<p>互联网海量数据存储和访问，使用传统存储，成本太高，而且后期扩展性不佳。所以使用分布式系统来构建其底层文件系统和数据库。</p>
+<ol>
+<li>
+<p>硬件弱环境 + 软件强环境</p>
+<p>使用廉价的PC机构建集群，Share Nothing。硬件不太可靠，靠软件来保证。每份数据保存三份在三台机器上。</p>
+</li>
+<li>
+<p>CAP</p>
+<ul>
+<li>Consistency：一致性。包括强一致性和最终一致性。</li>
+<li>Availability：请求总是可以被执行和返回，不超时。</li>
+<li>Partition Tolerance：遇到网络或者其他故障导致整个集群被裂成多个孤岛时，仍能正常提供服务。</li>
+</ul>
+<p>三者不能同时兼顾，只能任选两个。对于大部分互联网运营商来说，A和P必须保证，所以就牺牲了一致性，而只能保证最终一致性。</p>
+</li>
+<li>
+<p>NWR</p>
+<p>NWR模型能有效地保证最终一致性。</p>
+<ul>
+<li>N：对应数据块保存的副本数</li>
+<li>W：成功写入几份就返回客户端成功</li>
+<li>R：读出几份才算成功</li>
+</ul>
+<p>一般<code>W + R &gt; N</code>才能保证一致性。</p>
+<p>比如<code>N=3</code>, <code>W=1</code>时，<code>R&lt;=2</code>都不能保证读出数据的节点就是写入的那个节点，如果<code>R&gt;=3</code>，就可以保证，读出了三分数据，最起码有一份是最新的，可以根据时间戳来判断哪份数据最新，然后更新剩下的副本。</p>
+<p>对于不一样的应用需要调优W和R的值，比如对于写密集型的就把W适当降低，而对于读密集型的就把R适当降低。</p>
+</li>
+<li>
+<p>水平切分和垂直切分，Sharding</p>
+</li>
+<li>
+<p>NoSQL</p>
+<p>一般分布式的数据库集群不支持事务和关联查询，因为会涉及到所有节点上面的数据IO，很不经济。</p>
+</li>
+</ol>
+<a class="post-dummy-target" id="16-数据保护和备份技术"></a><h2>16. 数据保护和备份技术</h2>
+<a class="post-dummy-target" id="远程本地磁盘镜像"></a><h3>远程/本地磁盘镜像</h3>
+<p>做IO时，通过网络将备份的数据块传输到异地站点：</p>
+<ul>
+<li>同步：主站点接收上层IO后，必须等待这份数据成功地复制传输到异地站点并成功写入后，才通知上层IO成功。</li>
+<li>异步：主站点接收并成功写入上层IO后，便返回上层IO成功。</li>
+</ul>
+<a class="post-dummy-target" id="快照数据保护"></a><h3>快照数据保护</h3>
+<ul>
+<li>
+<p>远程/本地镜像的备份步骤：</p>
+<ol>
+<li>需要停掉主机IO</li>
+<li>拆分主，备镜像</li>
+<li>恢复主镜像IO</li>
+<li>备份备镜像的数据</li>
+<li>对主镜像在拆分之后写入的IO，使用类似bitmap的方式记录下来，该bitmap可以存在一个文件中，它的每一位对应卷上的每一个块。如果块有新的写入，则bitmap上面标成1。</li>
+<li>备份完成，将主，备镜像的关系恢复。根据bitmap中1的那些块重新同步到备镜像中。</li>
+</ol>
+</li>
+<li>
+<p>快照，snapshot</p>
+<p>备份镜像需要停主机IO，而快照不需要，完成速度非常快。</p>
+<ul>
+<li>
+<p>基于文件系统的快照</p>
+<p>文件系统中保存着一些metadata，例如Super Block，inode等，这些metadata记录着<code>文件-数据块</code>的映射关系，所以对元数据进行复制，便能快速地进行快照。</p>
+<p>但是如何保证元数据指向的数据块在之后的IO中不被覆盖，有两种方式：</p>
+<ul>
+<li>CoFW，Copy on First Write，即活动元数据和快照出来的元数据一开始都指向同一份数据块，然后对有IO的块写入之前，拷贝到新的空闲地方，然后更新快照元数据更新指向新的数据块。所以对活动数据块的写入，就可以放心地的写入了，因为快照的数据块已经拷贝出来了。</li>
+<li>RoFW，Redirect on First Write，与CoFW不一样的是，不是在写入之前做拷贝，而是把活动数据块的写入重定向到新的空闲地方。</li>
+</ul>
+<p>对于庞大的文件系统，其元数据可能会达到上GB甚至上百GB，对这个文件系统做快照，首次的元数据复制所耗费的时间也是不能接受的。所以有些文件系统将元数据如inode也放在文件中，相当于有个指针指向inode，而不是固定的，因此只需要复制指向inode的指针便可以了，而不需要复制inode的全部的内容。</p>
+</li>
+<li>
+<p>基于物理卷的快照</p>
+<p>块数据的元数据就是其在底层磁盘上的起始地址和结束地址。所以元数据的复制就是起始地址和结束地址的复制。</p>
+<p>关键在于如何做CoFW或者RoFW，所以必须在物理卷上面加上一个类似卷扇区映射管理系统，这个映射保存着活动数据块和快照数据块各自的起始地址和结束地址。</p>
+<p>每次的块IO都会参考卷层的卷扇区映射写到相应的活动数据块，要不先做了复制（CoFW），要不就是直接重定向到新的空闲扇区（RoFW）。</p>
+</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="cofw-vs-rofw"></a><h3>CoFW vs RoFW</h3>
+<ul>
+<li>
+<p>RoFW在首次写时比CoFW有优势</p>
+<ul>
+<li>CoFW更新一个从来没有被更新的块，需要1.将源块读出，2.将源块写到新的地方，3.将更新的块写道原来的地方，总的一次读两次写。</li>
+<li>RoFW只需要一次写入，就需要将更新的块直接写到新的地方。</li>
+</ul>
+</li>
+<li>
+<p>CoFW在读上面比RoFW性能好</p>
+<ul>
+<li>RoFW每次读的时候，都必须读映射表，然后去新的地址读取数据。</li>
+<li>CoFW每次都读原地址。</li>
+<li>两者在写时都得先通过映射表判断，判断完之后CoFW复制，而RoFW重定向。</li>
+</ul>
+</li>
+<li>
+<p>RoFW比较吃计算资源，而CoFW吃IO资源</p>
+<ul>
+<li>RoFW不管读还是写，都要判断映射表，都有IO惩罚，费计算资源。而且原本连续的地址读取，变成了随机的，这种影响是永久的，即使把快照删除。</li>
+<li>CoFW每次写时会判断映射表，费计算资源，而读没有惩罚。</li>
+</ul>
+</li>
+</ul>
+<a class="post-dummy-target" id="快照会造成数据不一致"></a><h3>快照会造成数据不一致</h3>
+<p>造成不一致的原因：</p>
+<ul>
+<li>文件系统有自己的缓存，缓存了文件系统元数据和真实数据。而并不是每次数据的交互，都同步保存在磁盘上，它们可以暂时保存在内存中，然后每隔一段时间（比如30秒），批量Flush到磁盘上，（除非编程时候指定Flush）。如果在Flush之前，做了快照，就会造成数据不一致。</li>
+<li>磁盘IO是原子的，但是上一层的事务性操作，对应到底层可能是多个原子操作，如果在多个原子操作做了快照，会造成数据不一致。</li>
+</ul>
+<p>为什么造成数据不一致，用户还选择快照呢？</p>
+<p>因为备份不需要停机，快照也快（就几秒），应用只需静默几秒钟的时间。文件系统或者卷擅自将IO先存放到队列中，等待快照完成后，再继续执行。之后备份快照就行。</p>
+<p>怎样解决数据不一致的问题？</p>
+<ol>
+<li>文件系统可以进行一致性检查来纠正错误。数据库管理系统也同样会利用其日志来使得数据文件最终处于一致状态。</li>
+<li>在主机上安装一个代理程序，当在存储设备上执行快照之前，代理程序会通知应用或者文件系统将缓存中的数据全部Flush到磁盘中，然后立即生成快照。</li>
+</ol>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>The article was updated on 2020-02-10</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><span></span></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section><span class="tag">
+                        <a href="https://murray-liang.github.io/forgetful/tags/storage/"><i class="fas fa-tag fa-fw"></i>&nbsp;storage</a>&nbsp;
+                    </span><span class="tag">
+                        <a href="https://murray-liang.github.io/forgetful/tags/%E5%A4%A7%E8%AF%9D%E5%AD%98%E5%82%A8/"><i class="fas fa-tag fa-fw"></i>&nbsp;大话存储</a>&nbsp;
+                    </span></section>
+        <section>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://murray-liang.github.io/forgetful">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+            <a href="https://murray-liang.github.io/forgetful/2020/02/zookeeper/" class="next" rel="next" title="Zookeeper">Zookeeper<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div class="post-comment"></div>
+    </article></div>
+            </main><footer class="footer">
+    <div class="copyright"><div class="copyright-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
+        </div>
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/Murray-LIANG" target="_blank">Murray-LIANG</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+    </div>
+</footer>
+</div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>
+            <span>&nbsp;</span>
+        </a><script src="/forgetful/js/lib/jquery/jquery.slim.min.js"></script><script src="/forgetful/js/lib/lazysizes/lazysizes.min.js"></script><script src="/forgetful/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script><link rel="stylesheet" href="/forgetful/css/lib/katex/katex.min.css"><script src="/forgetful/js/lib/katex/katex.min.js"></script><script defer src="/forgetful/js/lib/katex/auto-render.min.js"></script><link rel="stylesheet" href="/forgetful/css/lib/katex/copy-tex.min.css"><script defer src="/forgetful/js/lib/katex/copy-tex.min.js"></script><script defer src="/forgetful/js/lib/katex/mhchem.min.js"></script><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },{ left: "$", right: "$", display: false },]
+            });
+        });
+    </script><script src="/forgetful/js/blog.min.js"></script>
+</body>
+</html>

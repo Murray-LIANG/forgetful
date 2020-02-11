@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>rate limiting on Forgetful :/</title>
+    <link>https://murray-liang.github.io/forgetful/tags/rate-limiting/</link>
+    <description>Recent content in rate limiting on Forgetful :/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
+    
+	<atom:link href="https://murray-liang.github.io/forgetful/tags/rate-limiting/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Rate Limiting</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/rate-limiting/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/rate-limiting/</guid>
+      <description>Simple Implementation  git/playground/rate-limit git/playground/rate-limiting-service  Open Source Projects There are some open source libraries which could help do the rate limiting.
+Doorman https://github.com/youtube/doorman/tree/master/doc/loadtest
+It is used in this scenario: there is a service (RPC, REST, HTTP, .etc) having limited capacity. And you have lots of clients sending requests to the service.
+It starts a doorman server. And all the clients ask for limits before sending requests to the target.</description>
+    </item>
+    
+  </channel>
+</rss>

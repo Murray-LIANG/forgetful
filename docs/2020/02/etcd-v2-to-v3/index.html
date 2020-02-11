@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>From Etcd v2 to v3 | Forgetful :/</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="Notes about everything"><link rel="prev" href="https://murray-liang.github.io/forgetful/2020/02/openstack-glance/" /><link rel="next" href="https://murray-liang.github.io/forgetful/2020/02/network-forward-and-reverse-proxy/" /><link rel="canonical" href="https://murray-liang.github.io/forgetful/2020/02/etcd-v2-to-v3/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff"><meta property="og:title" content="From Etcd v2 to v3" />
+<meta property="og:description" content="In etcd3, the base server interface uses gRPC instead of JSON for increased efficiency. Support for JSON endpoints is maintained through a gRPC gateway. The new API revisits the design of key expiry TTLs, replacing them with lightweight streaming lease keepalive model. Watchers are redesigned as well, replacing the older event model with one that streams and multiplexes events over key intervals. The v3 data model does away with explicit key hierarchies and unreliable watch windows, replacing them with a flat binary key space with transactional, multiversion concurrency control semantics." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://murray-liang.github.io/forgetful/2020/02/etcd-v2-to-v3/" />
+<meta property="article:published_time" content="2020-02-10T16:37:31+08:00" />
+<meta property="article:modified_time" content="2020-02-10T16:37:31+08:00" />
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "From Etcd v2 to v3",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/murray-liang.github.io\/forgetful\/2020\/02\/etcd-v2-to-v3\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "https:\/\/murray-liang.github.io\/forgetful\/cover.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "posts","keywords": "etcd, etcd v2, etcd v3","wordcount":  682 ,
+        "url": "https:\/\/murray-liang.github.io\/forgetful\/2020\/02\/etcd-v2-to-v3\/","datePublished": "2020-02-10T16:37:31\x2b08:00","dateModified": "2020-02-10T16:37:31\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "murray",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "https:\/\/murray-liang.github.io\/forgetful\/logo.png",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": ""
+    }
+    </script><link rel="stylesheet" href="/forgetful/css/style.min.css"><link rel="stylesheet" href="/forgetful/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/forgetful/css/lib/forkawesome/forkawesome.min.css"><link rel="stylesheet" href="/forgetful/css/lib/animate/animate.min.css"></head>
+    <body><script>
+            if (!window.localStorage || !window.localStorage.getItem('theme')) {
+                window.isDark = 'dark' === 'dark';
+            } else {
+                window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            }
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header animated bounceIn">
+            <a href="https://murray-liang.github.io/forgetful">Forgetful :/</a>
+        </div>
+        <div class="navbar-menu"><a class="menu-item" href="https://murray-liang.github.io/forgetful/posts" title="">Posts</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/tags" title="">Tags</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/categories" title="">Categories</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"><i class="fas fa-language fa-fw"></i></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav><nav class="navbar-mobile">
+    <div class="navbar-container">
+        <div class="navbar-header">
+            <div class="navbar-header-title animated bounceIn">
+                <a href="https://murray-liang.github.io/forgetful">Forgetful :/</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://murray-liang.github.io/forgetful/posts" title="">Posts</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/tags" title="">Tags</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/categories" title="">Categories</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav>
+<main class="main">
+                <div class="container"><article class="page"><h1 class="post-title animated flipInX">From Etcd v2 to v3</h1><div class="post-meta">
+            <div class="post-meta-main"><a class="author" href="https://github.com/Murray-LIANG" rel="author" target="_blank">
+                    <i class="fas fa-user-circle fa-fw"></i>Murray-LIANG
+                </a>&nbsp;</div>
+            <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-02-10>2020-02-10</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 682 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>4 min&nbsp;</div>
+        </div><div class="post-toc" id="post-toc">
+                <h2 class="post-toc-title">Contents</h2>
+                <div class="post-toc-content"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#efficiency-and-scaling">Efficiency and scaling</a>
+      <ul>
+        <li><a href="#rpcs">RPCs</a></li>
+        <li><a href="#leases">Leases</a></li>
+        <li><a href="#watchers">Watchers</a></li>
+      </ul>
+    </li>
+    <li><a href="#concurrency-control">Concurrency control</a></li>
+  </ul>
+</nav></div>
+            </div>
+            <div class="post-toc-mobile" id="post-toc-mobile">
+                <details>
+                    <summary>
+                        <div class="post-toc-title">
+                            <span>Contents</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="post-toc-content"><nav id="TableOfContentsMobile">
+  <ul>
+    <li><a href="#efficiency-and-scaling">Efficiency and scaling</a>
+      <ul>
+        <li><a href="#rpcs">RPCs</a></li>
+        <li><a href="#leases">Leases</a></li>
+        <li><a href="#watchers">Watchers</a></li>
+      </ul>
+    </li>
+    <li><a href="#concurrency-control">Concurrency control</a></li>
+  </ul>
+</nav></div>
+                </details>
+            </div><div class="post-content"><p>In etcd3, the base server interface uses <strong>gRPC</strong> instead of <strong>JSON</strong> for increased efficiency. Support for JSON endpoints is maintained through a gRPC gateway. The new API revisits the design of key expiry <strong>TTLs</strong>, replacing them with lightweight streaming <strong>lease</strong> keepalive model. <strong>Watchers</strong> are redesigned as well, replacing the older event model with one that <strong>streams and multiplexes events over key intervals</strong>. The v3 data model does away with explicit key hierarchies and unreliable watch windows, replacing them with <strong>a flat binary key space  with transactional, multiversion concurrency control semantics</strong>.</p>
+<a class="post-dummy-target" id="efficiency-and-scaling"></a><h2>Efficiency and scaling</h2>
+<a class="post-dummy-target" id="rpcs"></a><h3>RPCs</h3>
+<p>Native etcd3 clients communicate over a <strong>gRPC</strong> protocol. The protocol messages are defined using <strong>protobuf</strong>, which simplifies the <strong>generation of efficient RPC stub code</strong> and makes protocol extensions <strong>easier to manage</strong>. For comparison, even after optimizing etcd2’s client-side JSON parsing, etcd3 gRPC still holds a 2x message processing performance edge over etcd2. Likewise, gRPC is better at handling connections. Where <strong>gRPC uses HTTP2 to multiplex multiple streams of RPCs over a single TCP connection</strong>, a JSON client must establish a new connection for every request.</p>
+<a class="post-dummy-target" id="leases"></a><h3>Leases</h3>
+<p>Keys expire in etcd2 through a <strong>time-to-live (TTL)</strong> mechanism. For every key with a TTL, a <strong>client</strong> must <strong>periodically refresh the key</strong> to keep it from being automatically deleted when the TTL expires. Each refresh establishes a new connection and issues a consensus proposal to etcd to update the key. To keep all TTL keys alive, an <strong>idling</strong> cluster must have a <strong>minimum request throughput</strong> of the number of TTL keys divided by the average TTL.</p>
+<p>Leases in etcd3 replace the earlier notion of key TTLs. Leases reduce keep-alive traffic and eliminate steady-state consensus updates. Instead of a key having a TTL, <strong>a lease with a TTL is attached to a key</strong>. When the lease’s TTL expires, it deletes <strong>all attached keys</strong>. This model reduces keep-alive traffic when multiple keys are attached to the same lease. The keep-alive connection thrashing in etcd2 is avoided by <strong>multiplexing keep-alives on a lease’s single gRPC stream</strong>. Likewise, keep-alives are processed by the <strong>leader</strong>, avoiding any consensus overhead when idling.</p>
+<a class="post-dummy-target" id="watchers"></a><h3>Watchers</h3>
+<p>A watch in etcd waits for changes to keys. Unlike systems such as ZooKeeper or Consul that return one event per watch request, etcd can <strong>continuously watch</strong> from the current revision. In etcd2, these streaming watches use <strong>long polling over HTTP</strong>, forcing the etcd2 server to wastefully <strong>hold open a TCP connection per watch</strong>. When an application with thousands of clients watches thousands of keys, it can quickly exhaust etcd2 server socket and memory resources.</p>
+<p>The etcd3 API <strong>multiplexes watches on a single connection</strong>. Instead of opening a new connection, a client <strong>registers a watcher on a bidirectional gRPC stream</strong>. The stream delivers events tagged with a watcher’s registered ID. Multiple watch streams can even <strong>share the same TCP connection</strong>. Multiplexing and stream connection sharing reduce etcd3’s memory footprint by at least an order of magnitude.</p>
+<a class="post-dummy-target" id="concurrency-control"></a><h2>Concurrency control</h2>
+<p>When <strong>multiple clients concurrently</strong> read and modify a key or a set of keys, it is important to have <strong>synchronization primitives</strong> to prevent data races from corrupting application state. For this purpose, etcd2 offers both load-link/store-conditional and compare-and-swap operations; a client specifies a previous revision index or previous value to match before updating a key. Although these operations suffice for simple semaphores and limited atomic updates, they are inadequate for describing more sophisticated approaches to serializing data access, such as distributed locks and transactional memory.</p>
+<p>etcd3 can <strong>serialize multiple operations into a single conditional mini-transaction</strong>. Each transaction includes a conjunction of <strong>conditional guards</strong> (e.g., checks on key version, value, modified revision, and creation revision), a list of the <strong>operations</strong> to apply when all conditions evaluate to <strong>true</strong> (i.e., Get, Put, Delete), and a list of operations to apply if any of the conditions evaluate to <strong>false</strong>. Transactions make distributed locks safe in etcd3 because accesses can be conditional based on whether the client still holds its lock. This means that even if a client loses its claim on a lock, whether due to clock skew or missing expiration events, etcd3 will refuse to honor the stale request.</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>The article was updated on 2020-02-10</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><span></span></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section><span class="tag">
+                        <a href="https://murray-liang.github.io/forgetful/tags/etcd/"><i class="fas fa-tag fa-fw"></i>&nbsp;etcd</a>&nbsp;
+                    </span><span class="tag">
+                        <a href="https://murray-liang.github.io/forgetful/tags/etcd-v2/"><i class="fas fa-tag fa-fw"></i>&nbsp;etcd v2</a>&nbsp;
+                    </span><span class="tag">
+                        <a href="https://murray-liang.github.io/forgetful/tags/etcd-v3/"><i class="fas fa-tag fa-fw"></i>&nbsp;etcd v3</a>&nbsp;
+                    </span></section>
+        <section>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://murray-liang.github.io/forgetful">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="https://murray-liang.github.io/forgetful/2020/02/openstack-glance/" class="prev" rel="prev" title="Glance"><i class="fas fa-angle-left fa-fw"></i>Glance</a>
+            <a href="https://murray-liang.github.io/forgetful/2020/02/network-forward-and-reverse-proxy/" class="next" rel="next" title="Forward Proxy vs Reverse Proxy">Forward Proxy vs Reverse Proxy<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div class="post-comment"></div>
+    </article></div>
+            </main><footer class="footer">
+    <div class="copyright"><div class="copyright-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
+        </div>
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/Murray-LIANG" target="_blank">Murray-LIANG</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+    </div>
+</footer>
+</div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>
+            <span>&nbsp;</span>
+        </a><script src="/forgetful/js/lib/jquery/jquery.slim.min.js"></script><script src="/forgetful/js/lib/lazysizes/lazysizes.min.js"></script><script src="/forgetful/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script><link rel="stylesheet" href="/forgetful/css/lib/katex/katex.min.css"><script src="/forgetful/js/lib/katex/katex.min.js"></script><script defer src="/forgetful/js/lib/katex/auto-render.min.js"></script><link rel="stylesheet" href="/forgetful/css/lib/katex/copy-tex.min.css"><script defer src="/forgetful/js/lib/katex/copy-tex.min.js"></script><script defer src="/forgetful/js/lib/katex/mhchem.min.js"></script><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },{ left: "$", right: "$", display: false },]
+            });
+        });
+    </script><script src="/forgetful/js/blog.min.js"></script>
+</body>
+</html>

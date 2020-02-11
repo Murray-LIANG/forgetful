@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>cloud image on Forgetful :/</title>
+    <link>https://murray-liang.github.io/forgetful/tags/cloud-image/</link>
+    <description>Recent content in cloud image on Forgetful :/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
+    
+	<atom:link href="https://murray-liang.github.io/forgetful/tags/cloud-image/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Ubuntu Cloud Image Installation</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/ubuntu-clould-image/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/ubuntu-clould-image/</guid>
+      <description>Download https://cloud-images.ubuntu.com/
+Upload image to Glance Boot an instance from image NOTE: don&amp;rsquo;t forget to use the ssh key.
+Initial configuration SSH to the instance 1  $ ssh -i ~/.ssh/id_rsa.kolla-ansible.liangr ubuntu@172.30.1.18   Create the user stack 1 2 3  $ sudo useradd -m -s /bin/bash -G sudo stack $ sudo passwd stack   Modify /etc/ssh/sshd_config to allow login via password Entry name is PasswordAuthentication.</description>
+    </item>
+    
+  </channel>
+</rss>

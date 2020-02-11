@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>multi-attach on Forgetful :/</title>
+    <link>https://murray-liang.github.io/forgetful/tags/multi-attach/</link>
+    <description>Recent content in multi-attach on Forgetful :/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
+    
+	<atom:link href="https://murray-liang.github.io/forgetful/tags/multi-attach/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>OpenStack Multi-attach</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/openstack-multiattach/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/openstack-multiattach/</guid>
+      <description>References https://docs.openstack.org/nova/latest/admin/manage-volumes.html#volume-multi-attach https://docs.openstack.org/cinder/latest/admin/blockstorage-volume-multiattach.html http://specs.openstack.org/openstack/cinder-specs/specs/ocata/add-new-attach-apis.html
+Versions Needed  The minimum required compute API microversion for attaching a multiattach-capable volume to more than one server is 2.60. Cinder 12.0.0 (Queens) or newer is required. The nova-compute service must be running at least Queens release level code (17.0.0) and the hypervisor driver must support attaching block storage devices to more than one guest. Refer to Feature Support Matrix for details on which compute drivers support volume multiattach.</description>
+    </item>
+    
+  </channel>
+</rss>

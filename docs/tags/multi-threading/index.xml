@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>multi-threading on Forgetful :/</title>
+    <link>https://murray-liang.github.io/forgetful/tags/multi-threading/</link>
+    <description>Recent content in multi-threading on Forgetful :/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
+    
+	<atom:link href="https://murray-liang.github.io/forgetful/tags/multi-threading/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Multi-Threading and Multi-Processing</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/operating-system-multithreading-multiprocessing/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/operating-system-multithreading-multiprocessing/</guid>
+      <description>Multithreading refers to the general task of running more that one thread of execution within an operating system. Multithreading is more generically called multiprocessing, which can include multiple system processes (a simple example on Windows would be, e.g., running Internet Explorer and Microsoft Word at the same time), or it can consist of one process that has multiple threads within it.
+Multithreading (or should I say, multiprocessing) is a software concept.</description>
+    </item>
+    
+    <item>
+      <title>Processes and Threads</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/operating-system-processes-threads/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/operating-system-processes-threads/</guid>
+      <description>Processes and Threads 进程是某个程序的一次运行活动，是资源分配和调度的一个独立单位。线程是进程中的一个控制线 程，最小的独立运行的基本单位。进程中所有线程共享进程的资源，如虚拟地址空间，文件描述符 。每个线程有自己的程序计数器，寄存器和栈等。
+Multiprocessing and Multithreading  单进程，单线程，MS-DOS大致是这种 多进程，单线程，多数Unix及Linux是这种 多进程，多线程，Windows，Solaris 2.x和OS/2是这种 单进程，多线程，VxWorks是这种  Thread的种类 User Level Threads 仅存于用户空间中。对于他们的创建，撤销，之间的同步和通信等功能无需系统调用来实现。在同一个进程中 的用户级线程切换不需要内核支持，而内核完全不知道用户线程的存在，而是视作一个进程，所以调 度是以进程为单位进行的。
+ 优点   线程切换不需要转到内核空间，节省了宝贵的内核空间 调度算法进程专用，由用户程序制定   缺点   系统调用阻塞，同一个进程一个线程阻塞，整个进程都会阻塞 一个进程只能在一个CPU上获得执行   就线程的同时执行而言，任意给定时刻每个进程只能有一个线程在运行，而且只有一个处理器内核会被分配给该进 程。对于一个进程，可能有成千上万个用户级进程，但是他们对系统资源没有影响。运行时库调度并分派这些 线程。库调度器从进程中的多个线程中选择一个线程，然后该线程和该进程允许的一个内核线程关联起来。
+Kernel Supported Threads 内核空间为每个内核支持的线程设置了一个线程控制块，内核则根据该控制块来感知线程的存在并控制。
+所以，
+ 优点   在多核处理器上，内核可以调用同一个进程中的多个线程同时工作 如果一个进程中哦某个线程阻塞了，其他线程仍然可以得到工作   缺点   相对于用户线程来说，切换开销大，需要从用户态，进入内核态并且由内核进行切换，因为线程调度和管 理都在内核实现。   内核级线程是内核对象，常驻内核空间。用户线程与之一一对应。运行时 库会为每个用户线程分配一个内核级线 程。
+混合方式  结合了以上两种线程。库和操作系统都可以管理线程。进程有着自己的内核线程池。可运行的用户线程由运行 时库分派并标记为准备好执行的可用线程。操作系统选择用户线程并将它映射到线程池中的可用内核线程。
+内核线程不会被销毁或者重建，只是在必要时被分配给不同的用户级线程，而不是每当创建新的用户级线程都会创 建新的内核线程。</description>
+    </item>
+    
+    <item>
+      <title>Python GIL, Multi-Threading, Multi-Processing</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/python-gil-multithread-multiprocessing/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/python-gil-multithread-multiprocessing/</guid>
+      <description>References https://blog.csdn.net/AnyThingFromBigban/article/details/73611386
+GIL 与 Python 线程的纠葛 GIL是什么东西？它对我们的python程序会产生什么样的影响？我们先来看一个问题。 运行下面这段python程序，CPU占用率是多少？
+1 2 3 4 5 6  # 请勿在工作中模仿，危险:) def dead_loop(): while True: pass dead_loop()   答案是什么呢，占用100%CPU？那是单核！还得是没有超线程的古董CPU。 在我的双核CPU上，这个死循环只会吃掉我一个核的工作负荷，也就是只占用50%CPU。 那如何能让它在双核机器上占用100%的CPU呢？答案很容易想到，用两个线程就行了， 线程不正是并发分享CPU运算资源的吗。可惜答案虽然对了，但做起来可没那么简单。 下面的程序在主线程之外又起了一个死循环的线程。
+1 2 3 4 5 6 7 8 9 10 11 12 13 14  import threading def dead_loop(): while True: pass # 新起一个死循环线程 t = threading.Thread(target=dead_loop) t.start() # 主线程也进入死循环 dead_loop() t.join()   按道理它应该能做到占用两个核的CPU资源，可是实际运行情况却是没有什么改变，还是只占了50%CPU不到。 这又是为什么呢？难道python线程不是操作系统的原生线程？ 打开system monitor一探究竟，这个占了50%的python进程确实是有两个线程在跑。 那这两个死循环的线程为何不能占满双核CPU资源呢？其实幕后的黑手就是GIL。
+GIL 的迷思：痛并快乐着 GIL 的全称为 Global Interpreter Lock ，意即全局解释器锁。在 Python 语言的主流实现 CPython 中， GIL 是一个货真价实的全局线程锁，在解释器解释执行任何 Python 代码时，都需要先获得这把锁才行， 在遇到 I/O 操作时会释放这把锁。如果是纯计算的程序，没有 I/O 操作，解释器会每隔 100 次操作 就释放这把锁，让别的线程有机会执行（这个次数可以通过sys.</description>
+    </item>
+    
+  </channel>
+</rss>

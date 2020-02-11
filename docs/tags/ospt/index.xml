@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ospt on Forgetful :/</title>
+    <link>https://murray-liang.github.io/forgetful/tags/ospt/</link>
+    <description>Recent content in ospt on Forgetful :/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
+    
+	<atom:link href="https://murray-liang.github.io/forgetful/tags/ospt/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>OpenStack ospt Tips</title>
+      <link>https://murray-liang.github.io/forgetful/2020/02/openstack-ospt-tips/</link>
+      <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/02/openstack-ospt-tips/</guid>
+      <description>SSH to the VM where ospt is installed 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18  $ ssh guest@10.245.48.66 # use password: welcome $ ssh stack@ubuntu-perf-test # use password: welcome $ cd ~/perf-test # Replace the &amp;lt;mgmt_ip&amp;gt; in `ospt_*.sh`. # create hosts and luns. $ ./ospt_create.sh # it outputs a `create-servers.log` and `create-volumes.log` where you can see the time used.</description>
+    </item>
+    
+  </channel>
+</rss>
