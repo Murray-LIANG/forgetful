@@ -13,27 +13,28 @@
 3. Configure SCOM to discover snmp device.
    
     3.1 Create a `Discovery Rule`. 
-![](../../static/images/scom-discover-rules.png)
+![](/forgetful/images/scom-discover-rules.png)
 
     3.2 After a rule is created, a new network device could be discovered.
-![](../../static/images/scom-discover-network-devices.png)
+![](/forgetful/images/scom-discover-network-devices.png)
 
 4. Receive snmp trap.
+
     4.1 Create a event collection rule.
-![](../../static/images/scom-event-collect-rule-0.png)
-![](../../static/images/scom-event-collect-rule-1.png)
-![](../../static/images/scom-event-collect-rule-2.png)
+![](/forgetful/images/scom-event-collect-rule-0.png)
+![](/forgetful/images/scom-event-collect-rule-1.png)
+![](/forgetful/images/scom-event-collect-rule-2.png)
     
     4.2 Create a event view.
-![](../../static/images/scom-event-view-0.png)
-![](../../static/images/scom-event-view-1.png)
-![](../../static/images/scom-event-view-2.png)
+![](/forgetful/images/scom-event-view-0.png)
+![](/forgetful/images/scom-event-view-1.png)
+![](/forgetful/images/scom-event-view-2.png)
 
 5. Try to send a trap from Unity. **SCOM didn't handle it although it received the package from Unity.**
-![](../../static/images/scom-unity-send-snmp-trap.png)
+![](/forgetful/images/scom-unity-send-snmp-trap.png)
 
     Wireshark on SCOM server.
-![](../../static/images/scom-wireshark-server-receive-package-from-unity.png)
+![](/forgetful/images/scom-wireshark-server-receive-package-from-unity.png)
 
 6. Try to send a trp from snmp agent. **SCOM handled it successfully.**
 
@@ -44,7 +45,7 @@
     PS C:\usr\bin> .\snmptrap.exe -v 2c -c public 10.245.54.155 2404 1.3.6.1.4.1.1139.103.1.18.2.6 1.3.6.1.4.1.1139.103.1.18.1.1 s "spa"
     PS C:\usr\bin>
     ```
-![](../../static/images/scom-received-trap-event-from-snmp-agent.png)
+![](/forgetful/images/scom-received-trap-event-from-snmp-agent.png)
 
 ### Conclusion
 1. SCOM probably handles the trap event by the source IP address and drops all the trap event it doesn't know.
