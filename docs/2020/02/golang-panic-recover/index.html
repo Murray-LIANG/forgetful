@@ -145,17 +145,17 @@ A panic stops the normal execution of a goroutine:
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-go" data-lang="go">
-<span class="kd">func</span> <span class="nf">main</span><span class="p">(</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">n</span> <span class="o">:=</span> <span class="nf">foo</span><span class="p">(</span><span class="p">)</span>
+<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">n</span> <span class="o">:=</span> <span class="nf">foo</span><span class="p">()</span>
     <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;main received&#34;</span><span class="p">,</span> <span class="nx">n</span><span class="p">)</span>
 <span class="p">}</span>
 
-<span class="kd">func</span> <span class="nf">foo</span><span class="p">(</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
-    <span class="k">defer</span> <span class="kd">func</span><span class="p">(</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nb">recover</span><span class="p">(</span><span class="p">)</span><span class="p">;</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+<span class="kd">func</span> <span class="nf">foo</span><span class="p">()</span> <span class="kt">int</span> <span class="p">{</span>
+    <span class="k">defer</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nb">recover</span><span class="p">();</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
             <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
         <span class="p">}</span>
-    <span class="p">}</span><span class="p">(</span><span class="p">)</span>
+    <span class="p">}()</span>
     <span class="nx">m</span> <span class="o">:=</span> <span class="mi">1</span>
     <span class="nb">panic</span><span class="p">(</span><span class="s">&#34;foo: fail&#34;</span><span class="p">)</span>
     <span class="nx">m</span> <span class="p">=</span> <span class="mi">2</span>
@@ -199,18 +199,18 @@ main received 0
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-go" data-lang="go">
-<span class="kd">func</span> <span class="nf">main</span><span class="p">(</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">n</span> <span class="o">:=</span> <span class="nf">foo</span><span class="p">(</span><span class="p">)</span>
+<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">n</span> <span class="o">:=</span> <span class="nf">foo</span><span class="p">()</span>
     <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;main received&#34;</span><span class="p">,</span> <span class="nx">n</span><span class="p">)</span>
 <span class="p">}</span>
 
-<span class="kd">func</span> <span class="nf">foo</span><span class="p">(</span><span class="p">)</span> <span class="p">(</span><span class="nx">m</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">defer</span> <span class="kd">func</span><span class="p">(</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nb">recover</span><span class="p">(</span><span class="p">)</span><span class="p">;</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+<span class="kd">func</span> <span class="nf">foo</span><span class="p">()</span> <span class="p">(</span><span class="nx">m</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">defer</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nb">recover</span><span class="p">();</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
             <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
             <span class="nx">m</span> <span class="p">=</span> <span class="mi">2</span>
         <span class="p">}</span>
-    <span class="p">}</span><span class="p">(</span><span class="p">)</span>
+    <span class="p">}()</span>
     <span class="nx">m</span> <span class="o">:=</span> <span class="mi">1</span>
     <span class="nb">panic</span><span class="p">(</span><span class="s">&#34;foo: fail&#34;</span><span class="p">)</span>
     <span class="nx">m</span> <span class="p">=</span> <span class="mi">3</span>

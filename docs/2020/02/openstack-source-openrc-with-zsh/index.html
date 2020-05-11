@@ -113,7 +113,7 @@
 <pre class="chroma"><code class="language-bash" data-lang="bash"><span class="cp">#!/bin/env bash
 </span><span class="cp"></span><span class="k">function</span> sourceopenrc <span class="o">{</span>
     <span class="nb">pushd</span> ~/devstack &gt;/dev/null
-    <span class="nb">eval</span> <span class="k">$(</span>bash -c <span class="s2">&#34;</span><span class="s2">. openrc </span><span class="nv">$1</span><span class="s2"> </span><span class="nv">$2</span><span class="s2">;env|sed -n &#39;/OS_/ { s/^/export /;p}&#39;</span><span class="s2">&#34;</span><span class="k">)</span>
+    <span class="nb">eval</span> <span class="k">$(</span>bash -c <span class="s2">&#34;. openrc </span><span class="nv">$1</span><span class="s2"> </span><span class="nv">$2</span><span class="s2">;env|sed -n &#39;/OS_/ { s/^/export /;p}&#39;&#34;</span><span class="k">)</span>
     <span class="nb">popd</span> &gt;/dev/null
 <span class="o">}</span>
 sourceopenrc admin admin

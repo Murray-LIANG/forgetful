@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>tunnel on Forgetful :/</title>
+    <link>https://murray-liang.github.io/forgetful/tags/tunnel/</link>
+    <description>Recent content in tunnel on Forgetful :/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Mon, 13 Apr 2020 21:08:31 +0800</lastBuildDate>
+    
+	<atom:link href="https://murray-liang.github.io/forgetful/tags/tunnel/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>SSH Tunnel</title>
+      <link>https://murray-liang.github.io/forgetful/2020/04/ssh-tunnel/</link>
+      <pubDate>Mon, 13 Apr 2020 21:08:31 +0800</pubDate>
+      
+      <guid>https://murray-liang.github.io/forgetful/2020/04/ssh-tunnel/</guid>
+      <description>On ubuntu-client1 1 2 3  # ssh -N root@127.0.0.1 \ -L 10.245.48.66:29418:review.openstack.org:29418 \ -L 10.245.48.66:4 43:review.openstack.org:443   </description>
+    </item>
+    
+  </channel>
+</rss>

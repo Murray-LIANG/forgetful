@@ -28,7 +28,7 @@ Use the OpenStack ssh key to login.
 
 2. Create a new user `stack` with password `welcome`.
 ```console
-$ sudo useradd stack
+$ sudo  stack
 $ sudo passwd stack
 $ sudo visudo
 ```

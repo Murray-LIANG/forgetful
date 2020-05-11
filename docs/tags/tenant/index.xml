@@ -19,7 +19,7 @@
       
       <guid>https://murray-liang.github.io/forgetful/2020/02/openstack-setup-tenant/</guid>
       <description>Prerequisites  Have the account to the OpenStack env.  Steps Login to the OpenStack GUI. Open 192.168.1.254 in Chrome or other web browser.
-[Do for the first time] Setup the Networks  Navigate Project -&amp;gt; Network -&amp;gt; Networks, click Create Network. Input the network name and create a Subnet. Suggest using private subnets like: 172.16.*.* to 172.30.*.*. Input the DNS servers.     Navigate Project -&amp;gt; Network -&amp;gt; Routers, click Create Router.</description>
+[Do for the first time] Setup the Networks  Navigate Project -&amp;gt; Network -&amp;gt; Networks, click Create Network. Input the network name and create a Subnet. Suggest using private subnets like: 172.16.*.* to 172.30.*.*. Input the DNS servers.  Navigate Project -&amp;gt; Network -&amp;gt; Routers, click Create Router.</description>
     </item>
     
   </channel>

@@ -91,19 +91,19 @@
     <li><a href="#setup-k8s-nodes">Setup K8S Nodes</a>
       <ul>
         <li><a href="#1-create-three-vms">1. Create three VMs.</a></li>
-        <li><a href="#2-create-the-user-k8s-with-password-welcome-add-it-to-sudo-group">2. Create the user k8s with password welcome, add it to sudo group.</a></li>
+        <li><a href="#2-create-the-user-k8s-with-password-welcome-add-it-to-sudo-group">2. Create the user <code>k8s</code> with password <code>welcome</code>, add it to <code>sudo</code> group.</a></li>
         <li><a href="#3-add-corp-ca-certs-on-all-nodes">3. Add corp CA certs on all nodes.</a></li>
-        <li><a href="#4-install-dockerio-on-all-nodes">4. Install docker.io on all nodes.</a></li>
-        <li><a href="#5-install-kubelet-kubeadm-kubectl-on-all-nodes">5. Install kubelet, kubeadm, kubectl on all nodes.</a></li>
+        <li><a href="#4-install-dockerio-on-all-nodes">4. Install <code>docker.io</code> on all nodes.</a></li>
+        <li><a href="#5-install-kubelet-kubeadm-kubectl-on-all-nodes">5. Install <code>kubelet</code>, <code>kubeadm</code>, <code>kubectl</code> on all nodes.</a></li>
         <li><a href="#6-initialize-the-master-using-flannel-network">6. Initialize the master using Flannel network.</a></li>
         <li><a href="#7-join-the-worker-nodes-to-the-cluster">7. Join the worker nodes to the cluster.</a></li>
-        <li><a href="#8-set-auto-bash-completion-for-kubectl">8. Set auto bash completion for kubectl.</a></li>
+        <li><a href="#8-set-auto-bash-completion-for-kubectl">8. Set auto bash completion for <code>kubectl</code>.</a></li>
         <li><a href="#9-tear-down">9. Tear down</a></li>
       </ul>
     </li>
     <li><a href="#tips">Tips</a>
       <ul>
-        <li><a href="#how-to-downgrade-kubelet-kubeadm-kubectl">How to downgrade kubelet, kubeadm, kubectl.</a></li>
+        <li><a href="#how-to-downgrade-kubelet-kubeadm-kubectl">How to downgrade <code>kubelet</code>, <code>kubeadm</code>, <code>kubectl</code>.</a></li>
       </ul>
     </li>
     <li><a href="#troubleshooting">Troubleshooting</a>
@@ -129,19 +129,19 @@
     <li><a href="#setup-k8s-nodes">Setup K8S Nodes</a>
       <ul>
         <li><a href="#1-create-three-vms">1. Create three VMs.</a></li>
-        <li><a href="#2-create-the-user-k8s-with-password-welcome-add-it-to-sudo-group">2. Create the user k8s with password welcome, add it to sudo group.</a></li>
+        <li><a href="#2-create-the-user-k8s-with-password-welcome-add-it-to-sudo-group">2. Create the user <code>k8s</code> with password <code>welcome</code>, add it to <code>sudo</code> group.</a></li>
         <li><a href="#3-add-corp-ca-certs-on-all-nodes">3. Add corp CA certs on all nodes.</a></li>
-        <li><a href="#4-install-dockerio-on-all-nodes">4. Install docker.io on all nodes.</a></li>
-        <li><a href="#5-install-kubelet-kubeadm-kubectl-on-all-nodes">5. Install kubelet, kubeadm, kubectl on all nodes.</a></li>
+        <li><a href="#4-install-dockerio-on-all-nodes">4. Install <code>docker.io</code> on all nodes.</a></li>
+        <li><a href="#5-install-kubelet-kubeadm-kubectl-on-all-nodes">5. Install <code>kubelet</code>, <code>kubeadm</code>, <code>kubectl</code> on all nodes.</a></li>
         <li><a href="#6-initialize-the-master-using-flannel-network">6. Initialize the master using Flannel network.</a></li>
         <li><a href="#7-join-the-worker-nodes-to-the-cluster">7. Join the worker nodes to the cluster.</a></li>
-        <li><a href="#8-set-auto-bash-completion-for-kubectl">8. Set auto bash completion for kubectl.</a></li>
+        <li><a href="#8-set-auto-bash-completion-for-kubectl">8. Set auto bash completion for <code>kubectl</code>.</a></li>
         <li><a href="#9-tear-down">9. Tear down</a></li>
       </ul>
     </li>
     <li><a href="#tips">Tips</a>
       <ul>
-        <li><a href="#how-to-downgrade-kubelet-kubeadm-kubectl">How to downgrade kubelet, kubeadm, kubectl.</a></li>
+        <li><a href="#how-to-downgrade-kubelet-kubeadm-kubectl">How to downgrade <code>kubelet</code>, <code>kubeadm</code>, <code>kubectl</code>.</a></li>
       </ul>
     </li>
     <li><a href="#troubleshooting">Troubleshooting</a>
@@ -261,7 +261,7 @@ $ kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/a70459be0084
 </code></pre></td></tr></table>
 </div>
 </div><a class="post-dummy-target" id="7-join-the-worker-nodes-to-the-cluster"></a><h3>7. Join the worker nodes to the cluster.</h3>
-<p><code>kubeadm join 172.16.1.8:6443 --token 60xmgt.n6ki3huo6bife2qb \ --discovery-token-ca-cert-hash sha256:fd15de9d8ac029893cda34f4e356bb540477500fe243d6b65c947419c111c53b</code></p>
+<p><code>kubeadm join 172.16.1.8:6443 --token 60xmgt.n6ki3huo6bife2qb \ --discovery-token-ca-cert-hash sha256:fd15de9d8ac029893cda34f4e356bb540477500fe243d6b65c947419c111c53b</code></p>
 <a class="post-dummy-target" id="8-set-auto-bash-completion-for-kubectl"></a><h3>8. Set auto bash completion for <code>kubectl</code>.</h3>
 <ul>
 <li>For current console:</li>

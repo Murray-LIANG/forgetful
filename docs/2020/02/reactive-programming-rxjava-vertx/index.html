@@ -130,7 +130,7 @@ takes inspiration from the main ideas brought forward by the <strong>Reactive Ex
 <a class="post-dummy-target" id="vertx"></a><h2>Vert.x</h2>
 <p><strong>Vert.x</strong>, a project under Eclipse‘s umbrella, offers several components designed from
 the ground up to fully leverage the reactive paradigm.</p>
-<p>Used together with <strong>Rxjava</strong>, they could prove to be a valid foundation for any Java
+<p>Used together with <strong>Rxjava</strong>, they could prove to be a valid foundation for any Java 
 program that needs to be reactive.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -138,11 +138,11 @@ program that needs to be reactive.</p>
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="n">FileSystem</span> <span class="n">fileSystem</span> <span class="o">=</span> <span class="n">vertx</span><span class="o">.</span><span class="na">fileSystem</span><span class="o">(</span><span class="o">)</span><span class="o">;</span>
-<span class="n">HttpClient</span> <span class="n">httpClient</span> <span class="o">=</span> <span class="n">vertx</span><span class="o">.</span><span class="na">createHttpClient</span><span class="o">(</span><span class="o">)</span><span class="o">;</span>
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="n">FileSystem</span> <span class="n">fileSystem</span> <span class="o">=</span> <span class="n">vertx</span><span class="o">.</span><span class="na">fileSystem</span><span class="o">();</span>
+<span class="n">HttpClient</span> <span class="n">httpClient</span> <span class="o">=</span> <span class="n">vertx</span><span class="o">.</span><span class="na">createHttpClient</span><span class="o">();</span>
 </code></pre></td></tr></table>
 </div>
-</div><p><code>Vert.x's FileSystem</code> gives access to the file system in a reactive way, while <code>Vert.x's HttpClient</code> does the same for HTTP.</p>
+</div><p><code>Vert.x's FileSystem</code> gives access to the file system in a reactive way, while <code>Vert.x's HttpClient</code> does the same for HTTP.</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">

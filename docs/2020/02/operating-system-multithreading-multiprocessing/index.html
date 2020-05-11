@@ -100,28 +100,28 @@ Multithreading (or should I say, multiprocessing) is a software concept." />
             </div><div class="post-content"><p><strong>Multithreading</strong> refers to the general task of running more that one thread of
 execution within an operating system. <strong>Multithreading</strong> is more generically
 called <strong>multiprocessing</strong>, which can include multiple <strong>system processes</strong> (a
-simple example on Windows would be, e.g., running Internet Explorer and
-Microsoft Word at the same time), or it can consist of one process that has
+simple example on Windows would be, e.g., running Internet Explorer and 
+Microsoft Word at the same time), or it can consist of one process that has 
 multiple <strong>threads</strong> within it.</p>
 <p><strong>Multithreading</strong> (or should I say, <strong>multiprocessing</strong>) is a <strong>software</strong> concept.
 Practically any Turing-complete CPU can perform multithreading, even if the
 computer only has one CPU core and that core does not support <strong>hyperthreading</strong>.
-In order to support multiprocessing, the CPU will <strong>interleave</strong> execution of
+In order to support multiprocessing, the CPU will <strong>interleave</strong> execution of 
 different threads of execution, by executing one, then another, then another, where
-the operating system will divide up the <strong>time</strong> available into &ldquo;<strong>slices</strong>&rdquo; and
-give a roughly <strong>equal amount of time to each thread</strong> (the time doesn&rsquo;t have to be
-equal, but that&rsquo;s typically how it&rsquo;s done unless a process requests a higher
+the operating system will divide up the <strong>time</strong> available into &ldquo;<strong>slices</strong>&rdquo; and 
+give a roughly <strong>equal amount of time to each thread</strong> (the time doesn&rsquo;t have to be 
+equal, but that&rsquo;s typically how it&rsquo;s done unless a process requests a higher 
 priority).</p>
-<p>Note that, whenever there are <strong>more software threads</strong> of execution trying to
-execute at any given time <strong>than</strong> there are available <strong>hardware (simultaneous)
-threads</strong> of execution, then these <strong>software threads</strong> will be &ldquo;<strong>interleaved</strong>&rdquo;
-among the <strong>available cores</strong>. In the case of a &ldquo;uniprocessor&rdquo; (one CPU core with
-no hyperthreading), if you have more than one software thread, they will always be
+<p>Note that, whenever there are <strong>more software threads</strong> of execution trying to 
+execute at any given time <strong>than</strong> there are available <strong>hardware (simultaneous) 
+threads</strong> of execution, then these <strong>software threads</strong> will be &ldquo;<strong>interleaved</strong>&rdquo; 
+among the <strong>available cores</strong>. In the case of a &ldquo;uniprocessor&rdquo; (one CPU core with 
+no hyperthreading), if you have more than one software thread, they will always be 
 interleaved. If you have a <strong>4-core CPU with hyperthreading</strong>, that&rsquo;s <strong>8 &ldquo;hardware
-threads&rdquo;</strong>, meaning the CPU can execute 8 simultaneous threads of execution at the
-same instant, so if you had 8 software threads trying to run, they could all run at
-once; but if you had 9 software threads, one of the hardware threads would have to
-interleave a pair of threads (the exact pair of threads chosen would depend on the
+threads&rdquo;</strong>, meaning the CPU can execute 8 simultaneous threads of execution at the 
+same instant, so if you had 8 software threads trying to run, they could all run at 
+once; but if you had 9 software threads, one of the hardware threads would have to 
+interleave a pair of threads (the exact pair of threads chosen would depend on the 
 operating system&rsquo;s scheduler implementation).</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">

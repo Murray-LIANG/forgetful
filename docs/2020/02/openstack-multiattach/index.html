@@ -15,7 +15,7 @@
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff"><meta property="og:title" content="OpenStack Multi-attach" />
 <meta property="og:description" content="References https://docs.openstack.org/nova/latest/admin/manage-volumes.html#volume-multi-attach https://docs.openstack.org/cinder/latest/admin/blockstorage-volume-multiattach.html http://specs.openstack.org/openstack/cinder-specs/specs/ocata/add-new-attach-apis.html
-Versions Needed  The minimum required compute API microversion for attaching a multiattach-capable volume to more than one server is 2.60. Cinder 12.0.0 (Queens) or newer is required. The nova-compute service must be running at least Queens release level code (17.0.0) and the hypervisor driver must support attaching block storage devices to more than one guest. Refer to Feature Support Matrix for details on which compute drivers support volume multiattach." />
+Versions Needed  The minimum required compute API microversion for attaching a multiattach-capable volume to more than one server is 2.60. Cinder 12.0.0 (Queens) or newer is required. The nova-compute service must be running at least Queens release level code (17.0.0) and the hypervisor driver must support attaching block storage devices to more than one guest. Refer to Feature Support Matrixfor details on which compute drivers support volume multiattach." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://murray-liang.github.io/forgetful/2020/02/openstack-multiattach/" />
 <meta property="article:published_time" content="2020-02-10T16:37:31+08:00" />
@@ -268,7 +268,7 @@ sudo ip netns <span class="nb">exec</span> qrouter-02c168e8-ec5f-4b64-b575-7f6e7
     sudo mount /dev/vdb /mnt/volume
 
     <span class="c1"># Write some file into the volume</span>
-    sudo sh -c <span class="s2">&#34;</span><span class="s2">echo &#39;hello from </span><span class="k">$(</span>hostname<span class="k">)</span><span class="s2">&#39; &gt; /mnt/volume/hello.txt; sync</span><span class="s2">&#34;</span>
+    sudo sh -c <span class="s2">&#34;echo &#39;hello from </span><span class="k">$(</span>hostname<span class="k">)</span><span class="s2">&#39; &gt; /mnt/volume/hello.txt; sync&#34;</span>
     sudo cat /mnt/volume/hello.txt
     sudo umount /mnt/volume
 
@@ -312,7 +312,7 @@ sudo ip netns <span class="nb">exec</span> qrouter-02c168e8-ec5f-4b64-b575-7f6e7
   sudo mkdir /mnt/volume
   sudo mount /dev/vdb /mnt/volume
 
-  sudo sh -c <span class="s2">&#34;</span><span class="s2">echo &#39;hello from </span><span class="k">$(</span>hostname<span class="k">)</span><span class="s2">&#39; &gt;&gt; /mnt/volume/hello.txt; sync</span><span class="s2">&#34;</span>
+  sudo sh -c <span class="s2">&#34;echo &#39;hello from </span><span class="k">$(</span>hostname<span class="k">)</span><span class="s2">&#39; &gt;&gt; /mnt/volume/hello.txt; sync&#34;</span>
 
 </code></pre></td></tr></table>
 </div>
@@ -323,7 +323,7 @@ sudo ip netns <span class="nb">exec</span> qrouter-02c168e8-ec5f-4b64-b575-7f6e7
 <pre class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="n">mysql</span><span class="o">&gt;</span> <span class="k">update</span> <span class="n">volumes</span> <span class="k">set</span> <span class="n">attach_status</span><span class="o">=</span><span class="s1">&#39;</span><span class="s1">detached</span><span class="s1">&#39;</span><span class="p">,</span><span class="n">status</span><span class="o">=</span><span class="s1">&#39;</span><span class="s1">available</span><span class="s1">&#39;</span> <span class="k">where</span> <span class="n">id</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="s1">304d4c71-9817-4b83-8677-82f411cb5f22</span><span class="s1">&#39;</span><span class="p">;</span>
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="n">mysql</span><span class="o">&gt;</span> <span class="k">update</span> <span class="n">volumes</span> <span class="k">set</span> <span class="n">attach_status</span><span class="o">=</span><span class="s1">&#39;detached&#39;</span><span class="p">,</span><span class="n">status</span><span class="o">=</span><span class="s1">&#39;available&#39;</span> <span class="k">where</span> <span class="n">id</span> <span class="o">=</span> <span class="s1">&#39;304d4c71-9817-4b83-8677-82f411cb5f22&#39;</span><span class="p">;</span>
 </code></pre></td></tr></table>
 </div>
 </div></div><div class="post-footer" id="post-footer">

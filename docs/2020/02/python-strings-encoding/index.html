@@ -184,21 +184,21 @@
 <span class="c1"># `©` code point in latin-1 character set</span>
 <span class="c1"># Dec Hex Char</span>
 <span class="c1"># 169 A9  ©</span>
-<span class="n">a</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">©</span><span class="s1">&#39;</span>
+<span class="n">a</span> <span class="o">=</span> <span class="s1">&#39;©&#39;</span>
 
 <span class="c1"># Depends on the terminal you use to run this code.</span>
-<span class="k">print</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">a in the terminal: {}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;a in the terminal: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
 <span class="c1"># Python2, ©</span>
 <span class="c1"># Python3, ©</span>
 
-<span class="k">print</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">type(a): {}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="p">)</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;type(a): {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">a</span><span class="p">)))</span>
 <span class="c1"># Python2, &lt;type &#39;str&#39;&gt;, it is a byte string, the bytes represent of chars.</span>
 <span class="c1"># Python3, &lt;class &#39;str&#39;&gt;, it is a unicode string, the code point(numeric) represent of chars.</span>
 
-<span class="k">print</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">len(a): {}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="p">)</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;len(a): {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)))</span>
 <span class="c1"># Python2, 2</span>
 <span class="c1"># Python3, 1</span>
-<span class="k">print</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">repr(a): {}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="p">)</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;repr(a): {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">a</span><span class="p">)))</span>
 <span class="c1"># Python2, &#39;\xc2\xa9&#39;</span>
 <span class="c1"># Python3, &#39;©&#39;</span>
 <span class="c1"># Conclusion: If the editor saves the source code using `utf-8`, then Python interpreter</span>
@@ -210,43 +210,43 @@
 <span class="c1"># In Python3, `a` is a list of unicode code points with only one char in it.</span>
 
 <span class="k">try</span><span class="p">:</span>
-    <span class="n">b</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">utf-8</span><span class="s1">&#39;</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">repr(b): {}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="p">)</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;repr(b): {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">b</span><span class="p">)))</span>
     <span class="c1"># Python2, u&#39;\xa9&#39;, although the raw utf-8 bytes is `\xc2\xa9`, the utf-8 encoding</span>
     <span class="c1"># algorithm uses only part of the bits as valid bits.</span>
     <span class="c1"># (https://en.wikipedia.org/wiki/UTF-8)</span>
     <span class="c1"># Python3, AttributeError due to `a` is a unicode string, cannot be decoded.</span>
 <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">repr(b): {}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">err</span><span class="p">)</span><span class="p">)</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;repr(b): {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">err</span><span class="p">)))</span>
 
 <span class="k">try</span><span class="p">:</span>
-    <span class="n">c</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">utf-8</span><span class="s1">&#39;</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">repr(c): {}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="p">)</span><span class="p">)</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;repr(c): {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">c</span><span class="p">)))</span>
     <span class="c1"># Python2, UnicodeDecodeError(&#39;ascii&#39;, &#39;\xc2\xa9&#39;, 0, 1, &#39;ordinal not in range(128)&#39;)</span>
     <span class="c1"># Python3, b&#39;\xc2\xa9&#39;</span>
 <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">repr(c): {}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">err</span><span class="p">)</span><span class="p">)</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;repr(c): {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">err</span><span class="p">)))</span>
 
-<span class="n">d</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\xc2</span><span class="se">\xa9</span><span class="s1">&#39;</span>
-<span class="k">print</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">repr(d): {}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">d</span><span class="p">)</span><span class="p">)</span><span class="p">)</span>
+<span class="n">d</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\xc2\xa9</span><span class="s1">&#39;</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;repr(d): {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">d</span><span class="p">)))</span>
 <span class="c1"># Python2, &#39;\xc2\xa9&#39;</span>
 <span class="c1"># Python3, b&#39;\xc2\xa9&#39;</span>
 
 <span class="k">try</span><span class="p">:</span>
-    <span class="n">e</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">utf-8</span><span class="s1">&#39;</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">repr(e): {}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="p">)</span><span class="p">)</span>
+    <span class="n">e</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;repr(e): {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
     <span class="c1"># Python2, u&#39;\xa9&#39;</span>
     <span class="c1"># Python3, &#39;©&#39;</span>
 <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">repr(e): {}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">err</span><span class="p">)</span><span class="p">)</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;repr(e): {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">err</span><span class="p">)))</span>
 
 <span class="k">try</span><span class="p">:</span>
-    <span class="n">f</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">latin-1</span><span class="s1">&#39;</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">repr(f): {}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">f</span><span class="p">)</span><span class="p">)</span><span class="p">)</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;latin-1&#39;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;repr(f): {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">f</span><span class="p">)))</span>
     <span class="c1"># Python2, &#39;\xa9&#39;</span>
     <span class="c1"># Python3, b&#39;\xa9&#39;</span>
 <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">repr(f): {}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">err</span><span class="p">)</span><span class="p">)</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;repr(f): {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">err</span><span class="p">)))</span>
 
 </code></pre></td></tr></table>
 </div>

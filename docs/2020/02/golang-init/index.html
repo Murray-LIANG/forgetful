@@ -90,8 +90,8 @@ You can put init() in several files. They will be compiled in the alphabetical o
                 <div class="post-toc-content"><nav id="TableOfContents">
   <ul>
     <li><a href="#initializing-packages-on-import">Initializing Packages on Import</a></li>
-    <li><a href="#multiple-instances-of-init">Multiple Instances of init()</a></li>
-    <li><a href="#using-init-for-side-effects">Using init() for Side Effects</a></li>
+    <li><a href="#multiple-instances-of-init">Multiple Instances of <code>init()</code></a></li>
+    <li><a href="#using-init-for-side-effects">Using <code>init()</code> for Side Effects</a></li>
   </ul>
 </nav></div>
             </div>
@@ -106,8 +106,8 @@ You can put init() in several files. They will be compiled in the alphabetical o
                     <div class="post-toc-content"><nav id="TableOfContentsMobile">
   <ul>
     <li><a href="#initializing-packages-on-import">Initializing Packages on Import</a></li>
-    <li><a href="#multiple-instances-of-init">Multiple Instances of init()</a></li>
-    <li><a href="#using-init-for-side-effects">Using init() for Side Effects</a></li>
+    <li><a href="#multiple-instances-of-init">Multiple Instances of <code>init()</code></a></li>
+    <li><a href="#using-init-for-side-effects">Using <code>init()</code> for Side Effects</a></li>
   </ul>
 </nav></div>
                 </details>
@@ -119,8 +119,8 @@ You can put init() in several files. They will be compiled in the alphabetical o
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">init</span><span class="p">(</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">rand</span><span class="p">.</span><span class="nf">Seed</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nf">Now</span><span class="p">(</span><span class="p">)</span><span class="p">.</span><span class="nf">UnixNano</span><span class="p">(</span><span class="p">)</span><span class="p">)</span>
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">init</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">rand</span><span class="p">.</span><span class="nf">Seed</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nf">Now</span><span class="p">().</span><span class="nf">UnixNano</span><span class="p">())</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>

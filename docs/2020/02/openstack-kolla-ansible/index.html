@@ -121,8 +121,8 @@ NOTE: 172.30.X.X/16 subnet is used as the floating IP of OpenStack VMs. Do NOT u
     <li><a href="#deploy">Deploy</a></li>
     <li><a href="#configurations-after-deploy">Configurations after deploy</a>
       <ul>
-        <li><a href="#openvswitch_vswitchd-containter-failed-to-start-due-to-no-bridge-br-eth1">openvswitch_vswitchd containter failed to start due to no bridge br-eth1</a></li>
-        <li><a href="#set-ip-to-br-ex-of-ubuntu-server3-re-configure-manually-after-reboot">Set IP to br-ex of ubuntu-server3 (Re-configure manually after reboot)</a></li>
+        <li><a href="#openvswitch_vswitchd-containter-failed-to-start-due-to-no-bridge-br-eth1"><code>openvswitch_vswitchd</code> containter failed to start due to no bridge <code>br-eth1</code></a></li>
+        <li><a href="#set-ip-to-br-ex-of-ubuntu-server3-re-configure-manually-after-reboot">Set IP to <code>br-ex</code> of ubuntu-server3 (Re-configure manually after reboot)</a></li>
         <li><a href="#set-default-gateway-on-neutron-node-ubuntu-server3">Set default gateway on Neutron node: ubuntu-server3</a></li>
         <li><a href="#enable-nested-virtualization-on-compute-nodes">Enable nested virtualization on compute nodes</a></li>
       </ul>
@@ -181,8 +181,8 @@ NOTE: 172.30.X.X/16 subnet is used as the floating IP of OpenStack VMs. Do NOT u
     <li><a href="#deploy">Deploy</a></li>
     <li><a href="#configurations-after-deploy">Configurations after deploy</a>
       <ul>
-        <li><a href="#openvswitch_vswitchd-containter-failed-to-start-due-to-no-bridge-br-eth1">openvswitch_vswitchd containter failed to start due to no bridge br-eth1</a></li>
-        <li><a href="#set-ip-to-br-ex-of-ubuntu-server3-re-configure-manually-after-reboot">Set IP to br-ex of ubuntu-server3 (Re-configure manually after reboot)</a></li>
+        <li><a href="#openvswitch_vswitchd-containter-failed-to-start-due-to-no-bridge-br-eth1"><code>openvswitch_vswitchd</code> containter failed to start due to no bridge <code>br-eth1</code></a></li>
+        <li><a href="#set-ip-to-br-ex-of-ubuntu-server3-re-configure-manually-after-reboot">Set IP to <code>br-ex</code> of ubuntu-server3 (Re-configure manually after reboot)</a></li>
         <li><a href="#set-default-gateway-on-neutron-node-ubuntu-server3">Set default gateway on Neutron node: ubuntu-server3</a></li>
         <li><a href="#enable-nested-virtualization-on-compute-nodes">Enable nested virtualization on compute nodes</a></li>
       </ul>
@@ -498,7 +498,7 @@ $ sudo systemctl status sys-kernel-config.mount <span class="p">;</span> <span c
 <span class="c1"># qemu-system-x86_64: failed to initialize KVM: Permission denied</span>
 <span class="c1"># it may be related to the permission of /dev/kvm</span>
 stack@ubuntu-server4:~$ sudo setfacl -bn /dev/kvm
-<span class="o">(</span>nova-libvirt<span class="o">)</span><span class="o">[</span>root@ubuntu-server4 /<span class="o">]</span><span class="c1"># getfacl /dev/kvm</span>
+<span class="o">(</span>nova-libvirt<span class="o">)[</span>root@ubuntu-server4 /<span class="o">]</span><span class="c1"># getfacl /dev/kvm</span>
 getfacl: Removing leading <span class="s1">&#39;/&#39;</span> from absolute path names
 <span class="c1"># file: dev/kvm</span>
 <span class="c1"># owner: root</span>
@@ -544,7 +544,7 @@ $ sudo apt-get remove -y docker docker-engine docker-ce docker.io <span class="s
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># ssh to OpenStack VM using tenant network</span>
-<span class="o">(</span>openvswitch-vswitchd<span class="o">)</span><span class="o">[</span>root@ubuntu-server3 /<span class="o">]</span><span class="c1"># ip netns exec \</span>
+<span class="o">(</span>openvswitch-vswitchd<span class="o">)[</span>root@ubuntu-server3 /<span class="o">]</span><span class="c1"># ip netns exec \</span>
     qdhcp-fd3363af-c26e-4219-847b-968b401680e7 ssh -i key-admin.pem ubuntu@172.16.1.3
 
 <span class="c1"># select specified host to the new created VM</span>

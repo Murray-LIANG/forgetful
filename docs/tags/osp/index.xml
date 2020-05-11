@@ -18,7 +18,7 @@
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
       <guid>https://murray-liang.github.io/forgetful/2020/02/osp12-containerization/</guid>
-      <description>Install the undercloud according to official doc  NOTE: The files/folders used below are under ~/templates
+      <description>Install the undercloud according to official doc NOTE: The files/folders used below are under ~/templates
 Edit the openstack-tripleo-heat-templates/environments/docker.yaml to enable the docker image for cinder/manila 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29  git diff openstack-tripleo-heat-templates/environments/ diff --git a/openstack-tripleo-heat-templates/environments/docker.yaml b/openstack-tripleo-heat-templates/environments/docker.yaml index 223a179..faef160 100644 --- a/openstack-tripleo-heat-templates/environments/docker.yaml +++ b/openstack-tripleo-heat-templates/environments/docker.yaml @@ -51,14 +51,18 @@ resource_registry:  OS::TripleO::Services::Horizon: .</description>
     </item>
     
@@ -37,7 +37,7 @@ Edit the openstack-tripleo-heat-templates/environments/docker.yaml to enable the
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
       <guid>https://murray-liang.github.io/forgetful/2020/02/osp14-configure-network-for-manila/</guid>
-      <description>OSP Network Topology  Environment The undercloud is 192.168.1.202.
+      <description>OSP Network Topology Environment The undercloud is 192.168.1.202.
 The overcloud is deployed on ubuntu-server2 (compute node) and ubuntu-server10 (control node).
 Ethernet interfaces on ubuntu-server10 are:
  enp8s0f0: enp8s0f1: eth1, used for overcloud tenant network. enp8s0f2: eth0, used for OSP Provision/Ctrl Plane network. eno1: eth2, not used. enp8s0f3: ens2f1: eth3, connected to br-ex, used to External network.  Ethernet interfaces on ubuntu-server2 are:

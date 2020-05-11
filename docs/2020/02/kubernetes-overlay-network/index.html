@@ -16,7 +16,7 @@
 <meta name="theme-color" content="#ffffff"><meta property="og:title" content="Kubernetes Overlay Network" />
 <meta property="og:description" content="Overlay networks such as vxlan or ipsec encapsulate the packet into another packet. This makes entities addressable that are outside of the scope of another machine.
 Any solution on L2 or L3 makes a pod addressable on the network. This means a pod is reachable not just within the Docker network, but is directly addressable from outside the Docker network. These could be public or private IP addresses.
-The way of route and iptables described here is a L3 solution (not a overlay networking) making a pod addressable on the network." />
+The way of route and iptables described hereis a L3 solution (not a overlay networking) making a pod addressable on the network." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://murray-liang.github.io/forgetful/2020/02/kubernetes-overlay-network/" />
 <meta property="article:published_time" content="2020-02-10T16:37:31+08:00" />
@@ -97,14 +97,14 @@ The way of route and iptables described here is a L3 solution (not a overlay net
     <li><a href="#flannel-networking">Flannel Networking</a>
       <ul>
         <li><a href="#flannel-backends">Flannel Backends</a></li>
-        <li><a href="#packet-traverse-of-vxlan-backend">Packet Traverse of vxlan Backend</a>
+        <li><a href="#packet-traverse-of-vxlan-backend">Packet Traverse of <code>vxlan</code> Backend</a>
           <ul>
-            <li><a href="#0-kubernetes-deployment-where-pod-ubuntu-1-with-ip-10244196-pod-ubuntu-2-with-ip-10244266">0. Kubernetes deployment where pod ubuntu-1 with IP 10.244.1.96, pod ubuntu-2 with IP 10.244.2.66.</a></li>
-            <li><a href="#1-pod-ubuntu-1-pings-ubuntu-2-successfully">1. Pod ubuntu-1 pings ubuntu-2 successfully.</a></li>
-            <li><a href="#2-now-the-packet-leaves-from-the-pod-and-enters-bridge-cni0s-veth-interface">2. Now the packet leaves from the pod and enters bridge cni0's veth interface.</a></li>
+            <li><a href="#0-kubernetes-deployment-where-pod-ubuntu-1-with-ip-10244196-pod-ubuntu-2-with-ip-10244266">0. Kubernetes deployment where pod <code>ubuntu-1</code> with IP <code>10.244.1.96</code>, pod <code>ubuntu-2</code> with IP <code>10.244.2.66</code>.</a></li>
+            <li><a href="#1-pod-ubuntu-1-pings-ubuntu-2-successfully">1. Pod <code>ubuntu-1</code> pings <code>ubuntu-2</code> successfully.</a></li>
+            <li><a href="#2-now-the-packet-leaves-from-the-pod-and-enters-bridge-cni0s-veth-interface">2. Now the packet leaves from the pod and enters bridge <code>cni0</code>'s <code>veth</code> interface.</a></li>
             <li><a href="#3-determine-the-next-hop-on-the-root-netns">3. Determine the next hop on the root netns.</a></li>
             <li><a href="#4-now-the-packet-gets-encapsulated-and-sent-out-to-remote-vtep-17216113">4. Now the packet gets encapsulated and sent out to remote VTEP 172.16.1.13.</a></li>
-            <li><a href="#5-the-packet-is-routed-to-k8s-node2-in-nodes-network-on-k8s-node2-it-gets-decapsulated-then-sent-to-cni0-bridge-and-its-veth-interface-in-root-netns-finally-sent-to-pod-ubuntu-2">5. The packet is routed to k8s-node2 in nodes&rsquo; network. On k8s-node2 it gets decapsulated, then sent to cni0 bridge and its veth interface in root netns, finally sent to pod ubuntu-2.</a></li>
+            <li><a href="#5-the-packet-is-routed-to-k8s-node2-in-nodes-network-on-k8s-node2-it-gets-decapsulated-then-sent-to-cni0-bridge-and-its-veth-interface-in-root-netns-finally-sent-to-pod-ubuntu-2">5. The packet is routed to <code>k8s-node2</code> in nodes&rsquo; network. On <code>k8s-node2</code> it gets decapsulated, then sent to <code>cni0</code> bridge and its <code>veth</code> interface in root netns, finally sent to pod <code>ubuntu-2</code>.</a></li>
           </ul>
         </li>
       </ul>
@@ -133,14 +133,14 @@ The way of route and iptables described here is a L3 solution (not a overlay net
     <li><a href="#flannel-networking">Flannel Networking</a>
       <ul>
         <li><a href="#flannel-backends">Flannel Backends</a></li>
-        <li><a href="#packet-traverse-of-vxlan-backend">Packet Traverse of vxlan Backend</a>
+        <li><a href="#packet-traverse-of-vxlan-backend">Packet Traverse of <code>vxlan</code> Backend</a>
           <ul>
-            <li><a href="#0-kubernetes-deployment-where-pod-ubuntu-1-with-ip-10244196-pod-ubuntu-2-with-ip-10244266">0. Kubernetes deployment where pod ubuntu-1 with IP 10.244.1.96, pod ubuntu-2 with IP 10.244.2.66.</a></li>
-            <li><a href="#1-pod-ubuntu-1-pings-ubuntu-2-successfully">1. Pod ubuntu-1 pings ubuntu-2 successfully.</a></li>
-            <li><a href="#2-now-the-packet-leaves-from-the-pod-and-enters-bridge-cni0s-veth-interface">2. Now the packet leaves from the pod and enters bridge cni0's veth interface.</a></li>
+            <li><a href="#0-kubernetes-deployment-where-pod-ubuntu-1-with-ip-10244196-pod-ubuntu-2-with-ip-10244266">0. Kubernetes deployment where pod <code>ubuntu-1</code> with IP <code>10.244.1.96</code>, pod <code>ubuntu-2</code> with IP <code>10.244.2.66</code>.</a></li>
+            <li><a href="#1-pod-ubuntu-1-pings-ubuntu-2-successfully">1. Pod <code>ubuntu-1</code> pings <code>ubuntu-2</code> successfully.</a></li>
+            <li><a href="#2-now-the-packet-leaves-from-the-pod-and-enters-bridge-cni0s-veth-interface">2. Now the packet leaves from the pod and enters bridge <code>cni0</code>'s <code>veth</code> interface.</a></li>
             <li><a href="#3-determine-the-next-hop-on-the-root-netns">3. Determine the next hop on the root netns.</a></li>
             <li><a href="#4-now-the-packet-gets-encapsulated-and-sent-out-to-remote-vtep-17216113">4. Now the packet gets encapsulated and sent out to remote VTEP 172.16.1.13.</a></li>
-            <li><a href="#5-the-packet-is-routed-to-k8s-node2-in-nodes-network-on-k8s-node2-it-gets-decapsulated-then-sent-to-cni0-bridge-and-its-veth-interface-in-root-netns-finally-sent-to-pod-ubuntu-2">5. The packet is routed to k8s-node2 in nodes&rsquo; network. On k8s-node2 it gets decapsulated, then sent to cni0 bridge and its veth interface in root netns, finally sent to pod ubuntu-2.</a></li>
+            <li><a href="#5-the-packet-is-routed-to-k8s-node2-in-nodes-network-on-k8s-node2-it-gets-decapsulated-then-sent-to-cni0-bridge-and-its-veth-interface-in-root-netns-finally-sent-to-pod-ubuntu-2">5. The packet is routed to <code>k8s-node2</code> in nodes&rsquo; network. On <code>k8s-node2</code> it gets decapsulated, then sent to <code>cni0</code> bridge and its <code>veth</code> interface in root netns, finally sent to pod <code>ubuntu-2</code>.</a></li>
           </ul>
         </li>
       </ul>
@@ -381,42 +381,42 @@ HTTP stuff
 </span><span class="w"></span><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>apps/v1<span class="w">
 </span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>Deployment<span class="w">
 </span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>ubuntu<span class="m">-1</span><span class="w">
+</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>ubuntu<span class="m">-1</span><span class="w">
 </span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">  </span><span class="k">replicas</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span><span class="w">  </span><span class="k">replicas</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
 </span><span class="w">  </span><span class="k">selector</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">    </span><span class="k">matchLabels</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">      </span><span class="k">app</span><span class="p">:</span><span class="w"> </span>ubuntu<span class="m">-1</span><span class="w">
+</span><span class="w">    </span><span class="k">matchLabels</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="k">app</span><span class="p">:</span><span class="w"> </span>ubuntu<span class="m">-1</span><span class="w">
 </span><span class="w">  </span><span class="k">template</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">    </span><span class="k">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">      </span><span class="k">labels</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">        </span><span class="k">app</span><span class="p">:</span><span class="w"> </span>ubuntu<span class="m">-1</span><span class="w">
+</span><span class="w">    </span><span class="k">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="k">labels</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="k">app</span><span class="p">:</span><span class="w"> </span>ubuntu<span class="m">-1</span><span class="w">
 </span><span class="w">    </span><span class="k">spec</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">      </span><span class="k">containers</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">        </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>ubuntu<span class="m">-1</span><span class="w">
+</span><span class="w">      </span><span class="k">containers</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>ubuntu<span class="m">-1</span><span class="w">
 </span><span class="w">          </span><span class="k">image</span><span class="p">:</span><span class="w"> </span>anilkreddyr/ubuntu_ping<span class="w">
 </span><span class="w">      </span><span class="k">nodeSelector</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">          </span><span class="k">kubernetes.io/hostname</span><span class="p">:</span><span class="w"> </span>k8s-node1<span class="w">
+</span><span class="w">          </span><span class="k">kubernetes.io/hostname</span><span class="p">:</span><span class="w"> </span>k8s-node1<span class="w">
 </span><span class="w"></span>---<span class="w">
 </span><span class="w"></span><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>apps/v1<span class="w">
 </span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>Deployment<span class="w">
 </span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>ubuntu<span class="m">-2</span><span class="w">
+</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>ubuntu<span class="m">-2</span><span class="w">
 </span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">  </span><span class="k">replicas</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span><span class="w">  </span><span class="k">replicas</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
 </span><span class="w">  </span><span class="k">selector</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">    </span><span class="k">matchLabels</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">      </span><span class="k">app</span><span class="p">:</span><span class="w"> </span>ubuntu<span class="m">-2</span><span class="w">
+</span><span class="w">    </span><span class="k">matchLabels</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="k">app</span><span class="p">:</span><span class="w"> </span>ubuntu<span class="m">-2</span><span class="w">
 </span><span class="w">  </span><span class="k">template</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">    </span><span class="k">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">      </span><span class="k">labels</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">        </span><span class="k">app</span><span class="p">:</span><span class="w"> </span>ubuntu<span class="m">-2</span><span class="w">
+</span><span class="w">    </span><span class="k">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="k">labels</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="k">app</span><span class="p">:</span><span class="w"> </span>ubuntu<span class="m">-2</span><span class="w">
 </span><span class="w">    </span><span class="k">spec</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">      </span><span class="k">containers</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">        </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>ubuntu<span class="m">-2</span><span class="w">
+</span><span class="w">      </span><span class="k">containers</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>ubuntu<span class="m">-2</span><span class="w">
 </span><span class="w">          </span><span class="k">image</span><span class="p">:</span><span class="w"> </span>anilkreddyr/ubuntu_ping<span class="w">
 </span><span class="w">      </span><span class="k">nodeSelector</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">          </span><span class="k">kubernetes.io/hostname</span><span class="p">:</span><span class="w"> </span>k8s-node2<span class="w">
+</span><span class="w">          </span><span class="k">kubernetes.io/hostname</span><span class="p">:</span><span class="w"> </span>k8s-node2<span class="w">
 </span></code></pre></td></tr></table>
 </div>
 </div><div class="highlight"><div class="chroma">

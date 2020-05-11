@@ -19,7 +19,7 @@
       
       <guid>https://murray-liang.github.io/forgetful/2020/02/openstack-multiattach/</guid>
       <description>References https://docs.openstack.org/nova/latest/admin/manage-volumes.html#volume-multi-attach https://docs.openstack.org/cinder/latest/admin/blockstorage-volume-multiattach.html http://specs.openstack.org/openstack/cinder-specs/specs/ocata/add-new-attach-apis.html
-Versions Needed  The minimum required compute API microversion for attaching a multiattach-capable volume to more than one server is 2.60. Cinder 12.0.0 (Queens) or newer is required. The nova-compute service must be running at least Queens release level code (17.0.0) and the hypervisor driver must support attaching block storage devices to more than one guest. Refer to Feature Support Matrix for details on which compute drivers support volume multiattach.</description>
+Versions Needed  The minimum required compute API microversion for attaching a multiattach-capable volume to more than one server is 2.60. Cinder 12.0.0 (Queens) or newer is required. The nova-compute service must be running at least Queens release level code (17.0.0) and the hypervisor driver must support attaching block storage devices to more than one guest. Refer to Feature Support Matrixfor details on which compute drivers support volume multiattach.</description>
     </item>
     
   </channel>

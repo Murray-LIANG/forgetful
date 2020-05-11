@@ -88,34 +88,34 @@
   <ul>
     <li><a href="#1-reserve-the-vm">1. Reserve the VM</a>
       <ul>
-        <li><a href="#11-get-a-lock-on-vm-by-novacomputemanagerdo_reserve">1.1 Get a lock on VM by nova.compute.manager.do_reserve</a></li>
-        <li><a href="#12-update-the-db-via-conductor">1.2 Update the DB via conductor</a></li>
-        <li><a href="#13-release-the-lock-by-novacomputemanagerdo_reserve">1.3 Release the lock by nova.compute.manager.do_reserve</a></li>
+        <li><a href="#11-get-a-lock-on-vm-by-novacomputemanagerdo_reserve">1.1 Get a lock on VM by <code>nova.compute.manager.do_reserve</code></a></li>
+        <li><a href="#12-update-the-db-via-conductor">1.2 Update the DB via <code>conductor</code></a></li>
+        <li><a href="#13-release-the-lock-by-novacomputemanagerdo_reserve">1.3 Release the lock by <code>nova.compute.manager.do_reserve</code></a></li>
       </ul>
     </li>
-    <li><a href="#2-get-a-lock-on-vm-by-novacomputemanagerdo_attach_volume-will-released-in-the-end">2. Get a lock on VM by nova.compute.manager.do_attach_volume (will released in the end)</a></li>
+    <li><a href="#2-get-a-lock-on-vm-by-novacomputemanagerdo_attach_volume-will-released-in-the-end">2. Get a lock on VM by <code>nova.compute.manager.do_attach_volume</code> (will released in the end)</a></li>
     <li><a href="#3-get-call-to-cinder-to-get-information-of-volume">3. GET call to cinder to get information of volume</a>
       <ul>
-        <li><a href="#31-print-a-log-attaching-volume-5ed0cc5c-158c-4857-9bd5-3556884a23f0-to-devvdb">3.1 Print a log Attaching volume 5ed0cc5c-158c-4857-9bd5-3556884a23f0 to /dev/vdb</a></li>
+        <li><a href="#31-print-a-log-attaching-volume-5ed0cc5c-158c-4857-9bd5-3556884a23f0-to-devvdb">3.1 Print a log <code>Attaching volume 5ed0cc5c-158c-4857-9bd5-3556884a23f0 to /dev/vdb</code></a></li>
         <li><a href="#32-rest-request-to-cinder">3.2 REST request to cinder</a></li>
       </ul>
     </li>
     <li><a href="#4-get-connector-properties">4. Get connector properties</a>
       <ul>
-        <li><a href="#41-check-multipathd-status-if-multipath-tools-is-not-installed-or-down-exception-raises">4.1 Check multipathd status, if multipath-tools is not installed or down, exception raises.</a></li>
+        <li><a href="#41-check-multipathd-status-if-multipath-tools-is-not-installed-or-down-exception-raises">4.1 Check <code>multipathd</code> status, if <code>multipath-tools</code> is not installed or down, exception raises.</a></li>
         <li><a href="#42-get-the-initiator-name">4.2 Get the initiator name</a></li>
         <li><a href="#43-get-the-fc-info">4.3 Get the fc info</a></li>
       </ul>
     </li>
-    <li><a href="#5-post-call-to-cinder-action-os-initialize_connection">5. POST call to cinder, action: os-initialize_connection</a>
+    <li><a href="#5-post-call-to-cinder-action-os-initialize_connection">5. POST call to cinder, action: <code>os-initialize_connection</code></a>
       <ul>
         <li><a href="#rest-request-to-cinder">REST request to cinder</a></li>
-        <li><a href="#returned-by-initialize_connection">Returned by initialize_connection:</a></li>
+        <li><a href="#returned-by-initialize_connection">Returned by <code>initialize_connection</code>:</a></li>
       </ul>
     </li>
-    <li><a href="#6-calling-os-brick-to-attach-iscsi-volume-connect_volume">6. Calling os-brick to attach iSCSI Volume connect_volume</a>
+    <li><a href="#6-calling-os-brick-to-attach-iscsi-volume-connect_volume">6. Calling <code>os-brick</code> to attach iSCSI Volume <code>connect_volume</code></a>
       <ul>
-        <li><a href="#61-lock-connect_volume-acquired-by-os_brickinitiatorconnectorsiscsiconnect_volume">6.1 Lock connect_volume acquired by os_brick.initiator.connectors.iscsi.connect_volume</a></li>
+        <li><a href="#61-lock-connect_volume-acquired-by-os_brickinitiatorconnectorsiscsiconnect_volume">6.1 Lock <code>connect_volume</code> acquired by <code>os_brick.initiator.connectors.iscsi.connect_volume</code></a></li>
         <li><a href="#62-multipath-discovery-for-iscsi-enabled">6.2 Multipath discovery for iSCSI enabled</a></li>
         <li><a href="#63-trying-to-connect-to-iscsi-portal-1921681593260">6.3 Trying to connect to iSCSI portal 192.168.1.59:3260</a></li>
         <li><a href="#64-trying-to-connect-to-iscsi-portal-1921681603260">6.4 Trying to connect to iSCSI portal 192.168.1.60:3260</a></li>
@@ -126,22 +126,22 @@
         <li><a href="#69-trying-the-multipath-using-device-wwn">6.9 Trying the multipath using device WWN</a></li>
         <li><a href="#610-trying-the-single-path-if-multipath-failed">6.10 Trying the single path if multipath failed</a></li>
         <li><a href="#611-checking-the-path-read-only-or-not">6.11 Checking the path read-only or not</a></li>
-        <li><a href="#612-lock-connect_volume-released-comparing-the-time-used">6.12 Lock connect_volume released (comparing the time used)</a></li>
+        <li><a href="#612-lock-connect_volume-released-comparing-the-time-used">6.12 Lock <code>connect_volume</code> released (comparing the time used)</a></li>
       </ul>
     </li>
-    <li><a href="#7-libvirt-attaches-device-to-vm">7. libvirt attaches device to VM</a>
+    <li><a href="#7-libvirt-attaches-device-to-vm">7. <code>libvirt</code> attaches device to VM</a>
       <ul>
-        <li><a href="#71-libvert-command">7.1 libvert command</a></li>
-        <li><a href="#72-update-db-via-conductor">7.2 Update DB via conductor</a></li>
+        <li><a href="#71-libvert-command">7.1 <code>libvert</code> command</a></li>
+        <li><a href="#72-update-db-via-conductor">7.2 Update DB via <code>conductor</code></a></li>
       </ul>
     </li>
-    <li><a href="#8-post-call-to-cinder-action-os-attach">8. POST call to cinder, action os-attach</a>
+    <li><a href="#8-post-call-to-cinder-action-os-attach">8. POST call to cinder, action <code>os-attach</code></a>
       <ul>
         <li><a href="#81-rest-request">8.1 REST request</a></li>
-        <li><a href="#82-dellemc-drivers-dont-implement-os-attach">8.2 DellEMC drivers don&rsquo;t implement os-attach</a></li>
+        <li><a href="#82-dellemc-drivers-dont-implement-os-attach">8.2 DellEMC drivers don&rsquo;t implement <code>os-attach</code></a></li>
       </ul>
     </li>
-    <li><a href="#9-release-the-lock-by-novacomputemanagerdo_attach_volume">9. Release the lock by nova.compute.manager.do_attach_volume</a></li>
+    <li><a href="#9-release-the-lock-by-novacomputemanagerdo_attach_volume">9. Release the lock by <code>nova.compute.manager.do_attach_volume</code></a></li>
   </ul>
 </nav></div>
             </div>
@@ -157,34 +157,34 @@
   <ul>
     <li><a href="#1-reserve-the-vm">1. Reserve the VM</a>
       <ul>
-        <li><a href="#11-get-a-lock-on-vm-by-novacomputemanagerdo_reserve">1.1 Get a lock on VM by nova.compute.manager.do_reserve</a></li>
-        <li><a href="#12-update-the-db-via-conductor">1.2 Update the DB via conductor</a></li>
-        <li><a href="#13-release-the-lock-by-novacomputemanagerdo_reserve">1.3 Release the lock by nova.compute.manager.do_reserve</a></li>
+        <li><a href="#11-get-a-lock-on-vm-by-novacomputemanagerdo_reserve">1.1 Get a lock on VM by <code>nova.compute.manager.do_reserve</code></a></li>
+        <li><a href="#12-update-the-db-via-conductor">1.2 Update the DB via <code>conductor</code></a></li>
+        <li><a href="#13-release-the-lock-by-novacomputemanagerdo_reserve">1.3 Release the lock by <code>nova.compute.manager.do_reserve</code></a></li>
       </ul>
     </li>
-    <li><a href="#2-get-a-lock-on-vm-by-novacomputemanagerdo_attach_volume-will-released-in-the-end">2. Get a lock on VM by nova.compute.manager.do_attach_volume (will released in the end)</a></li>
+    <li><a href="#2-get-a-lock-on-vm-by-novacomputemanagerdo_attach_volume-will-released-in-the-end">2. Get a lock on VM by <code>nova.compute.manager.do_attach_volume</code> (will released in the end)</a></li>
     <li><a href="#3-get-call-to-cinder-to-get-information-of-volume">3. GET call to cinder to get information of volume</a>
       <ul>
-        <li><a href="#31-print-a-log-attaching-volume-5ed0cc5c-158c-4857-9bd5-3556884a23f0-to-devvdb">3.1 Print a log Attaching volume 5ed0cc5c-158c-4857-9bd5-3556884a23f0 to /dev/vdb</a></li>
+        <li><a href="#31-print-a-log-attaching-volume-5ed0cc5c-158c-4857-9bd5-3556884a23f0-to-devvdb">3.1 Print a log <code>Attaching volume 5ed0cc5c-158c-4857-9bd5-3556884a23f0 to /dev/vdb</code></a></li>
         <li><a href="#32-rest-request-to-cinder">3.2 REST request to cinder</a></li>
       </ul>
     </li>
     <li><a href="#4-get-connector-properties">4. Get connector properties</a>
       <ul>
-        <li><a href="#41-check-multipathd-status-if-multipath-tools-is-not-installed-or-down-exception-raises">4.1 Check multipathd status, if multipath-tools is not installed or down, exception raises.</a></li>
+        <li><a href="#41-check-multipathd-status-if-multipath-tools-is-not-installed-or-down-exception-raises">4.1 Check <code>multipathd</code> status, if <code>multipath-tools</code> is not installed or down, exception raises.</a></li>
         <li><a href="#42-get-the-initiator-name">4.2 Get the initiator name</a></li>
         <li><a href="#43-get-the-fc-info">4.3 Get the fc info</a></li>
       </ul>
     </li>
-    <li><a href="#5-post-call-to-cinder-action-os-initialize_connection">5. POST call to cinder, action: os-initialize_connection</a>
+    <li><a href="#5-post-call-to-cinder-action-os-initialize_connection">5. POST call to cinder, action: <code>os-initialize_connection</code></a>
       <ul>
         <li><a href="#rest-request-to-cinder">REST request to cinder</a></li>
-        <li><a href="#returned-by-initialize_connection">Returned by initialize_connection:</a></li>
+        <li><a href="#returned-by-initialize_connection">Returned by <code>initialize_connection</code>:</a></li>
       </ul>
     </li>
-    <li><a href="#6-calling-os-brick-to-attach-iscsi-volume-connect_volume">6. Calling os-brick to attach iSCSI Volume connect_volume</a>
+    <li><a href="#6-calling-os-brick-to-attach-iscsi-volume-connect_volume">6. Calling <code>os-brick</code> to attach iSCSI Volume <code>connect_volume</code></a>
       <ul>
-        <li><a href="#61-lock-connect_volume-acquired-by-os_brickinitiatorconnectorsiscsiconnect_volume">6.1 Lock connect_volume acquired by os_brick.initiator.connectors.iscsi.connect_volume</a></li>
+        <li><a href="#61-lock-connect_volume-acquired-by-os_brickinitiatorconnectorsiscsiconnect_volume">6.1 Lock <code>connect_volume</code> acquired by <code>os_brick.initiator.connectors.iscsi.connect_volume</code></a></li>
         <li><a href="#62-multipath-discovery-for-iscsi-enabled">6.2 Multipath discovery for iSCSI enabled</a></li>
         <li><a href="#63-trying-to-connect-to-iscsi-portal-1921681593260">6.3 Trying to connect to iSCSI portal 192.168.1.59:3260</a></li>
         <li><a href="#64-trying-to-connect-to-iscsi-portal-1921681603260">6.4 Trying to connect to iSCSI portal 192.168.1.60:3260</a></li>
@@ -195,22 +195,22 @@
         <li><a href="#69-trying-the-multipath-using-device-wwn">6.9 Trying the multipath using device WWN</a></li>
         <li><a href="#610-trying-the-single-path-if-multipath-failed">6.10 Trying the single path if multipath failed</a></li>
         <li><a href="#611-checking-the-path-read-only-or-not">6.11 Checking the path read-only or not</a></li>
-        <li><a href="#612-lock-connect_volume-released-comparing-the-time-used">6.12 Lock connect_volume released (comparing the time used)</a></li>
+        <li><a href="#612-lock-connect_volume-released-comparing-the-time-used">6.12 Lock <code>connect_volume</code> released (comparing the time used)</a></li>
       </ul>
     </li>
-    <li><a href="#7-libvirt-attaches-device-to-vm">7. libvirt attaches device to VM</a>
+    <li><a href="#7-libvirt-attaches-device-to-vm">7. <code>libvirt</code> attaches device to VM</a>
       <ul>
-        <li><a href="#71-libvert-command">7.1 libvert command</a></li>
-        <li><a href="#72-update-db-via-conductor">7.2 Update DB via conductor</a></li>
+        <li><a href="#71-libvert-command">7.1 <code>libvert</code> command</a></li>
+        <li><a href="#72-update-db-via-conductor">7.2 Update DB via <code>conductor</code></a></li>
       </ul>
     </li>
-    <li><a href="#8-post-call-to-cinder-action-os-attach">8. POST call to cinder, action os-attach</a>
+    <li><a href="#8-post-call-to-cinder-action-os-attach">8. POST call to cinder, action <code>os-attach</code></a>
       <ul>
         <li><a href="#81-rest-request">8.1 REST request</a></li>
-        <li><a href="#82-dellemc-drivers-dont-implement-os-attach">8.2 DellEMC drivers don&rsquo;t implement os-attach</a></li>
+        <li><a href="#82-dellemc-drivers-dont-implement-os-attach">8.2 DellEMC drivers don&rsquo;t implement <code>os-attach</code></a></li>
       </ul>
     </li>
-    <li><a href="#9-release-the-lock-by-novacomputemanagerdo_attach_volume">9. Release the lock by nova.compute.manager.do_attach_volume</a></li>
+    <li><a href="#9-release-the-lock-by-novacomputemanagerdo_attach_volume">9. Release the lock by <code>nova.compute.manager.do_attach_volume</code></a></li>
   </ul>
 </nav></div>
                 </details>
@@ -334,22 +334,22 @@ Error opening class fc_host
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-python" data-lang="python"><span class="p">{</span>
-    <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">volume_id</span><span class="s1">&#39;</span><span class="p">:</span> <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">e8f58c95-3f8a-40dc-861d-163ce68fcdaf</span><span class="s1">&#39;</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s1">&#39;volume_id&#39;</span><span class="p">:</span> <span class="sa">u</span><span class="s1">&#39;e8f58c95-3f8a-40dc-861d-163ce68fcdaf&#39;</span><span class="p">,</span>
 
-    <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">target_luns</span><span class="s1">&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">192</span><span class="p">,</span> <span class="mi">192</span><span class="p">]</span><span class="p">,</span>
-    <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">target_lun</span><span class="s1">&#39;</span><span class="p">:</span> <span class="mi">192</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s1">&#39;target_luns&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">192</span><span class="p">,</span> <span class="mi">192</span><span class="p">],</span>
+    <span class="sa">u</span><span class="s1">&#39;target_lun&#39;</span><span class="p">:</span> <span class="mi">192</span><span class="p">,</span>
 
-    <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">target_iqns</span><span class="s1">&#39;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">iqn.1992-04.com.emc:cx.apm00150602415.a0</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">iqn.1992-04.com.emc:cx.apm00150602415.b0</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">,</span>
-    <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">target_iqn</span><span class="s1">&#39;</span><span class="p">:</span> <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">iqn.1992-04.com.emc:cx.apm00150602415.b0</span><span class="s1">&#39;</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s1">&#39;target_iqns&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="sa">u</span><span class="s1">&#39;iqn.1992-04.com.emc:cx.apm00150602415.a0&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;iqn.1992-04.com.emc:cx.apm00150602415.b0&#39;</span><span class="p">],</span>
+    <span class="sa">u</span><span class="s1">&#39;target_iqn&#39;</span><span class="p">:</span> <span class="sa">u</span><span class="s1">&#39;iqn.1992-04.com.emc:cx.apm00150602415.b0&#39;</span><span class="p">,</span>
 
-    <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">target_portals</span><span class="s1">&#39;</span><span class="p">:</span> <span class="p">[</span><span class="sa">u</span><span class="s1">&#39;</span><span class="s1">192.168.1.59:3260</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">192.168.1.60:3260</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">,</span>
-    <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">target_portal</span><span class="s1">&#39;</span><span class="p">:</span> <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">192.168.1.60:3260</span><span class="s1">&#39;</span>
+    <span class="sa">u</span><span class="s1">&#39;target_portals&#39;</span><span class="p">:</span> <span class="p">[</span><span class="sa">u</span><span class="s1">&#39;192.168.1.59:3260&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;192.168.1.60:3260&#39;</span><span class="p">],</span>
+    <span class="sa">u</span><span class="s1">&#39;target_portal&#39;</span><span class="p">:</span> <span class="sa">u</span><span class="s1">&#39;192.168.1.60:3260&#39;</span>
 
-    <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">target_discovered</span><span class="s1">&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
-    <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">encrypted</span><span class="s1">&#39;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
-    <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">qos_specs</span><span class="s1">&#39;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
-    <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">access_mode</span><span class="s1">&#39;</span><span class="p">:</span> <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">rw</span><span class="s1">&#39;</span><span class="p">,</span> 
+    <span class="sa">u</span><span class="s1">&#39;target_discovered&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s1">&#39;encrypted&#39;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s1">&#39;qos_specs&#39;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s1">&#39;access_mode&#39;</span><span class="p">:</span> <span class="sa">u</span><span class="s1">&#39;rw&#39;</span><span class="p">,</span> 
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>

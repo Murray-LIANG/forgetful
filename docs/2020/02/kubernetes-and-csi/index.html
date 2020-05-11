@@ -115,11 +115,11 @@
     </li>
     <li><a href="#deploy-csi-plugin-to-kubernetes">Deploy CSI Plugin to Kubernetes</a>
       <ul>
-        <li><a href="#node-plugin-as-a-daemonset">Node Plugin as a DaemonSet</a></li>
-        <li><a href="#controller-plugin-as-a-statefulset">Controller Plugin as a StatefulSet</a></li>
+        <li><a href="#node-plugin-as-a-daemonset"><code>Node</code> Plugin as a <code>DaemonSet</code></a></li>
+        <li><a href="#controller-plugin-as-a-statefulset"><code>Controller</code> Plugin as a <code>StatefulSet</code></a></li>
         <li><a href="#release-plugins-in-two-separated-binaries">Release Plugins in Two Separated Binaries</a></li>
         <li><a href="#release-plugins-in-a-unified-binary">Release Plugins in a Unified Binary</a></li>
-        <li><a href="#how-kubernetes-or-other-co-know-which-pod-is-node-or-controller">How Kubernetes (or Other CO) Know Which Pod is Node or Controller?</a></li>
+        <li><a href="#how-kubernetes-or-other-co-know-which-pod-is-node-or-controller">How Kubernetes (or Other CO) Know Which Pod is <code>Node</code> or <code>Controller</code>?</a></li>
       </ul>
     </li>
     <li><a href="#how-csi-drivers-register-to-kubelet">How CSI Drivers Register to Kubelet</a></li>
@@ -163,11 +163,11 @@
     </li>
     <li><a href="#deploy-csi-plugin-to-kubernetes">Deploy CSI Plugin to Kubernetes</a>
       <ul>
-        <li><a href="#node-plugin-as-a-daemonset">Node Plugin as a DaemonSet</a></li>
-        <li><a href="#controller-plugin-as-a-statefulset">Controller Plugin as a StatefulSet</a></li>
+        <li><a href="#node-plugin-as-a-daemonset"><code>Node</code> Plugin as a <code>DaemonSet</code></a></li>
+        <li><a href="#controller-plugin-as-a-statefulset"><code>Controller</code> Plugin as a <code>StatefulSet</code></a></li>
         <li><a href="#release-plugins-in-two-separated-binaries">Release Plugins in Two Separated Binaries</a></li>
         <li><a href="#release-plugins-in-a-unified-binary">Release Plugins in a Unified Binary</a></li>
-        <li><a href="#how-kubernetes-or-other-co-know-which-pod-is-node-or-controller">How Kubernetes (or Other CO) Know Which Pod is Node or Controller?</a></li>
+        <li><a href="#how-kubernetes-or-other-co-know-which-pod-is-node-or-controller">How Kubernetes (or Other CO) Know Which Pod is <code>Node</code> or <code>Controller</code>?</a></li>
       </ul>
     </li>
     <li><a href="#how-csi-drivers-register-to-kubelet">How CSI Drivers Register to Kubelet</a></li>
@@ -300,16 +300,16 @@
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">errInterceptor</span> <span class="o">:=</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">req</span> <span class="kd">interface</span><span class="p">{</span><span class="p">}</span><span class="p">,</span> <span class="nx">info</span> <span class="o">*</span><span class="nx">grpc</span><span class="p">.</span><span class="nx">UnaryServerInfo</span><span class="p">,</span> <span class="nx">handler</span> <span class="nx">grpc</span><span class="p">.</span><span class="nx">UnaryHandler</span><span class="p">)</span> <span class="p">(</span><span class="kd">interface</span><span class="p">{</span><span class="p">}</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">errInterceptor</span> <span class="o">:=</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">req</span> <span class="kd">interface</span><span class="p">{},</span> <span class="nx">info</span> <span class="o">*</span><span class="nx">grpc</span><span class="p">.</span><span class="nx">UnaryServerInfo</span><span class="p">,</span> <span class="nx">handler</span> <span class="nx">grpc</span><span class="p">.</span><span class="nx">UnaryHandler</span><span class="p">)</span> <span class="p">(</span><span class="kd">interface</span><span class="p">{},</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
 	<span class="nx">resp</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nf">handler</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="nx">req</span><span class="p">)</span>
 	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-		<span class="nx">log</span><span class="p">.</span><span class="nf">WithError</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="p">.</span><span class="nf">WithField</span><span class="p">(</span><span class="s">&#34;method&#34;</span><span class="p">,</span> <span class="nx">info</span><span class="p">.</span><span class="nx">FullMethod</span><span class="p">)</span><span class="p">.</span><span class="nf">Error</span><span class="p">(</span><span class="s">&#34;method failed&#34;</span><span class="p">)</span>
+		<span class="nx">log</span><span class="p">.</span><span class="nf">WithError</span><span class="p">(</span><span class="nx">err</span><span class="p">).</span><span class="nf">WithField</span><span class="p">(</span><span class="s">&#34;method&#34;</span><span class="p">,</span> <span class="nx">info</span><span class="p">.</span><span class="nx">FullMethod</span><span class="p">).</span><span class="nf">Error</span><span class="p">(</span><span class="s">&#34;method failed&#34;</span><span class="p">)</span>
 	<span class="p">}</span>
 	<span class="k">return</span> <span class="nx">resp</span><span class="p">,</span> <span class="nx">err</span>
 <span class="p">}</span>
 
-<span class="nx">srv</span> <span class="p">=</span> <span class="nx">grpc</span><span class="p">.</span><span class="nf">NewServer</span><span class="p">(</span><span class="nx">grpc</span><span class="p">.</span><span class="nf">UnaryInterceptor</span><span class="p">(</span><span class="nx">errInterceptor</span><span class="p">)</span><span class="p">)</span>
-<span class="nx">srv</span><span class="p">.</span><span class="nf">Serve</span><span class="p">(</span><span class="p">)</span> 
+<span class="nx">srv</span> <span class="p">=</span> <span class="nx">grpc</span><span class="p">.</span><span class="nf">NewServer</span><span class="p">(</span><span class="nx">grpc</span><span class="p">.</span><span class="nf">UnaryInterceptor</span><span class="p">(</span><span class="nx">errInterceptor</span><span class="p">))</span>
+<span class="nx">srv</span><span class="p">.</span><span class="nf">Serve</span><span class="p">()</span> 
 <span class="c1">// ...
 </span></code></pre></td></tr></table>
 </div>
@@ -348,10 +348,10 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// returns a struct instance that satisfies Node, Controller and 
-</span><span class="c1"></span><span class="c1">// Identity interfaces
-</span><span class="c1"></span><span class="nx">d</span> <span class="o">:=</span> <span class="nf">NewDriver</span><span class="p">(</span><span class="p">)</span>
+</span><span class="c1">// Identity interfaces
+</span><span class="c1"></span><span class="nx">d</span> <span class="o">:=</span> <span class="nf">NewDriver</span><span class="p">()</span>
 
-<span class="nx">srv</span> <span class="p">=</span> <span class="nx">grpc</span><span class="p">.</span><span class="nf">NewServer</span><span class="p">(</span><span class="nx">grpc</span><span class="p">.</span><span class="nf">UnaryInterceptor</span><span class="p">(</span><span class="nx">errInterceptory</span><span class="p">)</span><span class="p">)</span>
+<span class="nx">srv</span> <span class="p">=</span> <span class="nx">grpc</span><span class="p">.</span><span class="nf">NewServer</span><span class="p">(</span><span class="nx">grpc</span><span class="p">.</span><span class="nf">UnaryInterceptor</span><span class="p">(</span><span class="nx">errInterceptory</span><span class="p">))</span>
 <span class="nx">csi</span><span class="p">.</span><span class="nf">RegisterIdentityServer</span><span class="p">(</span><span class="nx">srv</span><span class="p">,</span> <span class="nx">d</span><span class="p">)</span>
 <span class="nx">csi</span><span class="p">.</span><span class="nf">RegisterControllerServer</span><span class="p">(</span><span class="nx">srv</span><span class="p">,</span> <span class="nx">d</span><span class="p">)</span>
 <span class="nx">csi</span><span class="p">.</span><span class="nf">RegisterNodeServer</span><span class="p">(</span><span class="nx">srv</span><span class="p">,</span> <span class="nx">d</span><span class="p">)</span>

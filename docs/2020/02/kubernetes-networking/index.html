@@ -291,9 +291,9 @@ There are two <code>SNAT</code> rewriting happening. One happens in the root net
 <pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="c"># service.yaml</span><span class="w">
 </span><span class="w"></span>...<span class="w">
 </span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">  </span><span class="k">type</span><span class="p">:</span><span class="w"> </span>NodePort<span class="w">
+</span><span class="w">  </span><span class="k">type</span><span class="p">:</span><span class="w"> </span>NodePort<span class="w">
 </span><span class="w">  </span><span class="k">ports</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">  </span>- <span class="k">port</span><span class="p">:</span><span class="w"> </span><span class="m">80</span><span class="w">            </span><span class="c"># ClusterIP port</span><span class="w">
+</span><span class="w">  </span>- <span class="k">port</span><span class="p">:</span><span class="w"> </span><span class="m">80</span><span class="w">            </span><span class="c"># ClusterIP port</span><span class="w">
 </span><span class="w">    </span><span class="k">targetPort</span><span class="p">:</span><span class="w"> </span><span class="m">8080</span><span class="w">    </span><span class="c"># pod port</span><span class="w">
 </span><span class="w">    </span><span class="k">nodePort</span><span class="p">:</span><span class="w"> </span><span class="m">30123</span><span class="w">     </span><span class="c"># node port</span><span class="w">
 </span></code></pre></td></tr></table>

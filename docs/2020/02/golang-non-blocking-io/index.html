@@ -143,9 +143,9 @@ It&rsquo;s just something like this:
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">bug</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="p">[</span><span class="p">]</span><span class="kt">byte</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span>
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">bug</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">byte</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span>
 <span class="nx">n</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">f</span><span class="p">.</span><span class="nf">Read</span><span class="p">(</span><span class="nx">buf</span><span class="p">)</span>
-<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nb">string</span><span class="p">(</span><span class="nx">buf</span><span class="p">[</span><span class="p">:</span><span class="nx">n</span><span class="p">]</span><span class="p">)</span><span class="p">)</span>
+<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nb">string</span><span class="p">(</span><span class="nx">buf</span><span class="p">[:</span><span class="nx">n</span><span class="p">]))</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>So, the <code>fmt.Println</code> doesn&rsquo;t happen until <code>Read</code> has completed. If the file is not ready for <code>read()</code>, it pauses the goroutine and allows other goroutines to run while it waits for it to be ready, then wakes up our goroutine when it is ready so it can continue. This is really nice and simple, don&rsquo;t have to think about callbacks, or polling API&rsquo;s, or any low-level details and get all benefit of asynchronous IO.</p>

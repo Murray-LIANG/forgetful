@@ -130,11 +130,11 @@ GIL 的迷思：痛并快乐着 GIL 的全称为 Global Interpreter Lock ，意�
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># 请勿在工作中模仿，危险:)</span>
-<span class="k">def</span> <span class="nf">dead_loop</span><span class="p">(</span><span class="p">)</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">dead_loop</span><span class="p">():</span>
     <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
         <span class="k">pass</span>
 
-<span class="n">dead_loop</span><span class="p">(</span><span class="p">)</span>
+<span class="n">dead_loop</span><span class="p">()</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>答案是什么呢，占用100%CPU？那是单核！还得是没有超线程的古董CPU。
@@ -162,18 +162,18 @@ GIL 的迷思：痛并快乐着 GIL 的全称为 Global Interpreter Lock ，意�
 <td class="lntd">
 <pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">threading</span>
 
-<span class="k">def</span> <span class="nf">dead_loop</span><span class="p">(</span><span class="p">)</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">dead_loop</span><span class="p">():</span>
     <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
         <span class="k">pass</span>
 
 <span class="c1"># 新起一个死循环线程</span>
 <span class="n">t</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">dead_loop</span><span class="p">)</span>
-<span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="p">)</span>
+<span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 
 <span class="c1"># 主线程也进入死循环</span>
-<span class="n">dead_loop</span><span class="p">(</span><span class="p">)</span>
+<span class="n">dead_loop</span><span class="p">()</span>
 
-<span class="n">t</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="p">)</span>
+<span class="n">t</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>按道理它应该能做到占用两个核的CPU资源，可是实际运行情况却是没有什么改变，还是只占了50%CPU不到。
@@ -241,11 +241,11 @@ Python 来写，让 Python 的归 Python，C 的归 C。一般计算密集性的
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="k">extern</span><span class="sa"></span><span class="s">&#34;</span><span class="s">C</span><span class="s">&#34;</span>
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="k">extern</span><span class="s">&#34;C&#34;</span>
 <span class="p">{</span>
-  <span class="kt">void</span> <span class="nf">DeadLoop</span><span class="p">(</span><span class="p">)</span>
+  <span class="kt">void</span> <span class="nf">DeadLoop</span><span class="p">()</span>
   <span class="p">{</span>
-    <span class="k">while</span> <span class="p">(</span><span class="nb">true</span><span class="p">)</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="nb">true</span><span class="p">);</span>
   <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
@@ -267,11 +267,11 @@ Python 来写，让 Python 的归 Python，C 的归 C。一般计算密集性的
 <pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">ctypes</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">threading</span> <span class="kn">import</span> <span class="n">Thread</span>
 
-<span class="n">lib</span> <span class="o">=</span> <span class="n">cdll</span><span class="o">.</span><span class="n">LoadLibrary</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">libdead_loop.so</span><span class="s2">&#34;</span><span class="p">)</span>
+<span class="n">lib</span> <span class="o">=</span> <span class="n">cdll</span><span class="o">.</span><span class="n">LoadLibrary</span><span class="p">(</span><span class="s2">&#34;libdead_loop.so&#34;</span><span class="p">)</span>
 <span class="n">t</span> <span class="o">=</span> <span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">lib</span><span class="o">.</span><span class="n">DeadLoop</span><span class="p">)</span>
-<span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="p">)</span>
+<span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 
-<span class="n">lib</span><span class="o">.</span><span class="n">DeadLoop</span><span class="p">(</span><span class="p">)</span>
+<span class="n">lib</span><span class="o">.</span><span class="n">DeadLoop</span><span class="p">()</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>这回再看看 system monitor，Python 解释器进程有两个线程在跑，而且双核 CPU 全被占满了，
@@ -290,12 +290,12 @@ ctypes 确实很给力！需要提醒的是，GIL 是被 ctypes 在调用 C 函�
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="k">extern</span><span class="sa"></span><span class="s">&#34;</span><span class="s">C</span><span class="s">&#34;</span>
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="k">extern</span><span class="s">&#34;C&#34;</span>
 <span class="p">{</span>
-  <span class="k">typedef</span> <span class="kt">void</span> <span class="nf">Callback</span><span class="p">(</span><span class="p">)</span><span class="p">;</span>
+  <span class="k">typedef</span> <span class="kt">void</span> <span class="nf">Callback</span><span class="p">();</span>
   <span class="kt">void</span> <span class="nf">Call</span><span class="p">(</span><span class="n">Callback</span><span class="o">*</span> <span class="n">callback</span><span class="p">)</span>
   <span class="p">{</span>
-    <span class="n">callback</span><span class="p">(</span><span class="p">)</span><span class="p">;</span>
+    <span class="n">callback</span><span class="p">();</span>
   <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
@@ -322,16 +322,16 @@ ctypes 确实很给力！需要提醒的是，GIL 是被 ctypes 在调用 C 函�
 <pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">ctypes</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">threading</span> <span class="kn">import</span> <span class="n">Thread</span>
 
-<span class="k">def</span> <span class="nf">dead_loop</span><span class="p">(</span><span class="p">)</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">dead_loop</span><span class="p">():</span>
     <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
         <span class="k">pass</span>
 
-<span class="n">lib</span> <span class="o">=</span> <span class="n">cdll</span><span class="o">.</span><span class="n">LoadLibrary</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">libcall.so</span><span class="s2">&#34;</span><span class="p">)</span>
+<span class="n">lib</span> <span class="o">=</span> <span class="n">cdll</span><span class="o">.</span><span class="n">LoadLibrary</span><span class="p">(</span><span class="s2">&#34;libcall.so&#34;</span><span class="p">)</span>
 <span class="n">Callback</span> <span class="o">=</span> <span class="n">CFUNCTYPE</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
 <span class="n">callback</span> <span class="o">=</span> <span class="n">Callback</span><span class="p">(</span><span class="n">dead_loop</span><span class="p">)</span>
 
-<span class="n">t</span> <span class="o">=</span> <span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">lib</span><span class="o">.</span><span class="n">Call</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">callback</span><span class="p">,</span><span class="p">)</span><span class="p">)</span>
-<span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="p">)</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">lib</span><span class="o">.</span><span class="n">Call</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">callback</span><span class="p">,))</span>
+<span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 
 <span class="n">lib</span><span class="o">.</span><span class="n">Call</span><span class="p">(</span><span class="n">callback</span><span class="p">)</span>
 </code></pre></td></tr></table>
@@ -343,7 +343,7 @@ GIL 又起作用了。</p>
 通过 ctypes 直接调用 C 模块的接口来对这个模块进行黑盒测试，哪怕是有关该模块 C 接口的多线程安全方
 面的测试，ctypes 也一样能做到。</p>
 <h1 id="结语">结语</h1>
-<p>虽然 CPython 的线程库封装了操作系统的原生线程，但却因为 GIL 的存在导致多线程不能利用多个 CPU
+<p>虽然 CPython 的线程库封装了操作系统的原生线程，但却因为 GIL 的存在导致多线程不能利用多个 CPU 
 内核的计算能力。好在现在 Python 有了易经筋（multiprocessing）, 吸星大法（C 语言扩展机制）
 和独孤九剑（ctypes），足以应付多核时代的挑战，GIL 切还是不切已经不重要了，不是吗。</p>
 </div><div class="post-footer" id="post-footer">

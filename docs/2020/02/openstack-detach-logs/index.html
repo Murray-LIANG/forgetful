@@ -88,39 +88,39 @@
   <ul>
     <li><a href="#1-get-connector-properties-219ms">1. Get connector properties (219ms)</a>
       <ul>
-        <li><a href="#11-check-multipathd-status-if-multipath-tools-is-not-installed-or-down-exception-raises">1.1 Check multipathd status, if multipath-tools is not installed or down, exception raises</a></li>
+        <li><a href="#11-check-multipathd-status-if-multipath-tools-is-not-installed-or-down-exception-raises">1.1 Check <code>multipathd</code> status, if <code>multipath-tools</code> is not installed or down, exception raises</a></li>
         <li><a href="#12-get-the-initiator-name">1.2 Get the initiator name</a></li>
         <li><a href="#13-get-the-fc-info">1.3 Get the fc info</a></li>
       </ul>
     </li>
     <li><a href="#2-detach-volume-from-vm">2. Detach volume from VM</a>
       <ul>
-        <li><a href="#21-attempting-initial-detach-for-device-vdb-with-retry">2.1 Attempting initial detach for device vdb with retry</a></li>
+        <li><a href="#21-attempting-initial-detach-for-device-vdb-with-retry">2.1 Attempting initial detach for device <code>vdb</code> with retry</a></li>
       </ul>
     </li>
-    <li><a href="#3-start-retrying-detach-until-device-vdb-is-gone">3. Start retrying detach until device vdb is gone</a></li>
+    <li><a href="#3-start-retrying-detach-until-device-vdb-is-gone">3. Start retrying detach until device <code>vdb</code> is gone</a></li>
     <li><a href="#4-calling-os-brick-to-detach-iscsi-volume-790ms">4. Calling os-brick to detach iSCSI volume (790ms)</a>
       <ul>
-        <li><a href="#41-lock-connect_volume-acquired-by-os_brickinitiatorconnectorsiscsidisconnect_volume">4.1 Lock connect_volume acquired by os_brick.initiator.connectors.iscsi.disconnect_volume</a></li>
+        <li><a href="#41-lock-connect_volume-acquired-by-os_brickinitiatorconnectorsiscsidisconnect_volume">4.1 Lock <code>connect_volume</code> acquired by <code>os_brick.initiator.connectors.iscsi.disconnect_volume</code></a></li>
         <li><a href="#42-rescan-multipath">4.2 Rescan multipath</a></li>
         <li><a href="#43-get-the-multipath-wwn">4.3 Get the multipath WWN</a></li>
-        <li><a href="#44-remove-multipath-device-devsdd">4.4 Remove multipath device /dev/sdd</a></li>
+        <li><a href="#44-remove-multipath-device-devsdd">4.4 Remove multipath device <code>/dev/sdd</code></a></li>
         <li><a href="#45-flush-multipath-device-36006016015e03a00ab2df25bb82d0ea9">4.5 Flush multipath device 36006016015e03a00ab2df25bb82d0ea9</a></li>
         <li><a href="#46-get-multipath-luns-to-remove">4.6 Get multipath LUNs to remove</a></li>
-        <li><a href="#47-flushing-io-for-device-devsdd">4.7 Flushing IO for device /dev/sdd</a></li>
-        <li><a href="#48-remove-scsi-device-devsdd">4.8 Remove SCSI device /dev/sdd</a></li>
-        <li><a href="#49-flushing-io-for-device-devsdc">4.9 Flushing IO for device /dev/sdc</a></li>
-        <li><a href="#410-remove-scsi-device-devsdc">4.10 Remove SCSI device /dev/sdc</a></li>
+        <li><a href="#47-flushing-io-for-device-devsdd">4.7 Flushing IO for device <code>/dev/sdd</code></a></li>
+        <li><a href="#48-remove-scsi-device-devsdd">4.8 Remove SCSI device <code>/dev/sdd</code></a></li>
+        <li><a href="#49-flushing-io-for-device-devsdc">4.9 Flushing IO for device <code>/dev/sdc</code></a></li>
+        <li><a href="#410-remove-scsi-device-devsdc">4.10 Remove SCSI device <code>/dev/sdc</code></a></li>
         <li><a href="#411-disconnect-multipath-device-devdiskby-iddm-uuid-mpath-36006016015e03a00ab2df25bb82d0ea9">4.11 Disconnect multipath device /dev/disk/by-id/dm-uuid-mpath-36006016015e03a00ab2df25bb82d0ea9</a></li>
-        <li><a href="#412-lock-connect_volume-released-by-os_brickinitiatorconnectorsiscsidisconnect_volume">4.12 Lock connect_volume released by os_brick.initiator.connectors.iscsi.disconnect_volume</a></li>
+        <li><a href="#412-lock-connect_volume-released-by-os_brickinitiatorconnectorsiscsidisconnect_volume">4.12 Lock <code>connect_volume</code> released by <code>os_brick.initiator.connectors.iscsi.disconnect_volume</code></a></li>
       </ul>
     </li>
-    <li><a href="#5-post-call-to-cinder-action-os-terminate_connection">5. POST call to cinder, action os-terminate_connection</a>
+    <li><a href="#5-post-call-to-cinder-action-os-terminate_connection">5. POST call to cinder, action <code>os-terminate_connection</code></a>
       <ul>
         <li><a href="#rest-request">REST request</a></li>
       </ul>
     </li>
-    <li><a href="#6-post-call-to-cinder-action-os-detach">6. POST call to cinder, action os-detach</a>
+    <li><a href="#6-post-call-to-cinder-action-os-detach">6. POST call to cinder, action <code>os-detach</code></a>
       <ul>
         <li><a href="#rest-request-1">REST request</a></li>
       </ul>
@@ -140,39 +140,39 @@
   <ul>
     <li><a href="#1-get-connector-properties-219ms">1. Get connector properties (219ms)</a>
       <ul>
-        <li><a href="#11-check-multipathd-status-if-multipath-tools-is-not-installed-or-down-exception-raises">1.1 Check multipathd status, if multipath-tools is not installed or down, exception raises</a></li>
+        <li><a href="#11-check-multipathd-status-if-multipath-tools-is-not-installed-or-down-exception-raises">1.1 Check <code>multipathd</code> status, if <code>multipath-tools</code> is not installed or down, exception raises</a></li>
         <li><a href="#12-get-the-initiator-name">1.2 Get the initiator name</a></li>
         <li><a href="#13-get-the-fc-info">1.3 Get the fc info</a></li>
       </ul>
     </li>
     <li><a href="#2-detach-volume-from-vm">2. Detach volume from VM</a>
       <ul>
-        <li><a href="#21-attempting-initial-detach-for-device-vdb-with-retry">2.1 Attempting initial detach for device vdb with retry</a></li>
+        <li><a href="#21-attempting-initial-detach-for-device-vdb-with-retry">2.1 Attempting initial detach for device <code>vdb</code> with retry</a></li>
       </ul>
     </li>
-    <li><a href="#3-start-retrying-detach-until-device-vdb-is-gone">3. Start retrying detach until device vdb is gone</a></li>
+    <li><a href="#3-start-retrying-detach-until-device-vdb-is-gone">3. Start retrying detach until device <code>vdb</code> is gone</a></li>
     <li><a href="#4-calling-os-brick-to-detach-iscsi-volume-790ms">4. Calling os-brick to detach iSCSI volume (790ms)</a>
       <ul>
-        <li><a href="#41-lock-connect_volume-acquired-by-os_brickinitiatorconnectorsiscsidisconnect_volume">4.1 Lock connect_volume acquired by os_brick.initiator.connectors.iscsi.disconnect_volume</a></li>
+        <li><a href="#41-lock-connect_volume-acquired-by-os_brickinitiatorconnectorsiscsidisconnect_volume">4.1 Lock <code>connect_volume</code> acquired by <code>os_brick.initiator.connectors.iscsi.disconnect_volume</code></a></li>
         <li><a href="#42-rescan-multipath">4.2 Rescan multipath</a></li>
         <li><a href="#43-get-the-multipath-wwn">4.3 Get the multipath WWN</a></li>
-        <li><a href="#44-remove-multipath-device-devsdd">4.4 Remove multipath device /dev/sdd</a></li>
+        <li><a href="#44-remove-multipath-device-devsdd">4.4 Remove multipath device <code>/dev/sdd</code></a></li>
         <li><a href="#45-flush-multipath-device-36006016015e03a00ab2df25bb82d0ea9">4.5 Flush multipath device 36006016015e03a00ab2df25bb82d0ea9</a></li>
         <li><a href="#46-get-multipath-luns-to-remove">4.6 Get multipath LUNs to remove</a></li>
-        <li><a href="#47-flushing-io-for-device-devsdd">4.7 Flushing IO for device /dev/sdd</a></li>
-        <li><a href="#48-remove-scsi-device-devsdd">4.8 Remove SCSI device /dev/sdd</a></li>
-        <li><a href="#49-flushing-io-for-device-devsdc">4.9 Flushing IO for device /dev/sdc</a></li>
-        <li><a href="#410-remove-scsi-device-devsdc">4.10 Remove SCSI device /dev/sdc</a></li>
+        <li><a href="#47-flushing-io-for-device-devsdd">4.7 Flushing IO for device <code>/dev/sdd</code></a></li>
+        <li><a href="#48-remove-scsi-device-devsdd">4.8 Remove SCSI device <code>/dev/sdd</code></a></li>
+        <li><a href="#49-flushing-io-for-device-devsdc">4.9 Flushing IO for device <code>/dev/sdc</code></a></li>
+        <li><a href="#410-remove-scsi-device-devsdc">4.10 Remove SCSI device <code>/dev/sdc</code></a></li>
         <li><a href="#411-disconnect-multipath-device-devdiskby-iddm-uuid-mpath-36006016015e03a00ab2df25bb82d0ea9">4.11 Disconnect multipath device /dev/disk/by-id/dm-uuid-mpath-36006016015e03a00ab2df25bb82d0ea9</a></li>
-        <li><a href="#412-lock-connect_volume-released-by-os_brickinitiatorconnectorsiscsidisconnect_volume">4.12 Lock connect_volume released by os_brick.initiator.connectors.iscsi.disconnect_volume</a></li>
+        <li><a href="#412-lock-connect_volume-released-by-os_brickinitiatorconnectorsiscsidisconnect_volume">4.12 Lock <code>connect_volume</code> released by <code>os_brick.initiator.connectors.iscsi.disconnect_volume</code></a></li>
       </ul>
     </li>
-    <li><a href="#5-post-call-to-cinder-action-os-terminate_connection">5. POST call to cinder, action os-terminate_connection</a>
+    <li><a href="#5-post-call-to-cinder-action-os-terminate_connection">5. POST call to cinder, action <code>os-terminate_connection</code></a>
       <ul>
         <li><a href="#rest-request">REST request</a></li>
       </ul>
     </li>
-    <li><a href="#6-post-call-to-cinder-action-os-detach">6. POST call to cinder, action os-detach</a>
+    <li><a href="#6-post-call-to-cinder-action-os-detach">6. POST call to cinder, action <code>os-detach</code></a>
       <ul>
         <li><a href="#rest-request-1">REST request</a></li>
       </ul>
@@ -270,7 +270,7 @@ Error opening class fc_host
   <span class="nt">&lt;driver</span> <span class="na">name=</span><span class="s">&#34;qemu&#34;</span> <span class="na">type=</span><span class="s">&#34;raw&#34;</span> <span class="na">cache=</span><span class="s">&#34;none&#34;</span> <span class="na">io=</span><span class="s">&#34;native&#34;</span><span class="nt">/&gt;</span>
   <span class="nt">&lt;source</span> <span class="na">dev=</span><span class="s">&#34;/dev/disk/by-id/dm-uuid-mpath-36006016015e03a00ab2df25bb82d0ea9&#34;</span><span class="nt">/&gt;</span>
   <span class="nt">&lt;target</span> <span class="na">bus=</span><span class="s">&#34;virtio&#34;</span> <span class="na">dev=</span><span class="s">&#34;vdb&#34;</span><span class="nt">/&gt;</span>
-  <span class="nt">&lt;serial</span><span class="nt">&gt;</span>5ed0cc5c-158c-4857-9bd5-3556884a23f0<span class="nt">&lt;/serial&gt;</span>
+  <span class="nt">&lt;serial&gt;</span>5ed0cc5c-158c-4857-9bd5-3556884a23f0<span class="nt">&lt;/serial&gt;</span>
 <span class="nt">&lt;/disk&gt;</span>
 </code></pre></td></tr></table>
 </div>
@@ -303,26 +303,26 @@ Error opening class fc_host
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-python" data-lang="python"><span class="n">disconnect_volume</span><span class="p">:</span> <span class="n">call</span> <span class="p">{</span>
-    <span class="sa"></span><span class="s1">&#39;</span><span class="s1">args</span><span class="s1">&#39;</span><span class="p">:</span> <span class="p">(</span>
+    <span class="s1">&#39;args&#39;</span><span class="p">:</span> <span class="p">(</span>
         <span class="o">&lt;</span><span class="n">os_brick</span><span class="o">.</span><span class="n">initiator</span><span class="o">.</span><span class="n">connectors</span><span class="o">.</span><span class="n">iscsi</span><span class="o">.</span><span class="n">ISCSIConnector</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x7fe51cd174d0</span><span class="o">&gt;</span><span class="p">,</span>
         <span class="p">{</span>
-            <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">target_luns</span><span class="s1">&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">197</span><span class="p">,</span> <span class="mi">197</span><span class="p">]</span><span class="p">,</span>
-            <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">target_iqns</span><span class="s1">&#39;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">iqn.1992-04.com.emc:cx.fnm00150600267.a0</span><span class="s1">&#39;</span><span class="p">,</span>
-                <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">iqn.1992-04.com.emc:cx.fnm00150600267.b0</span><span class="s1">&#39;</span> <span class="p">]</span><span class="p">,</span>
-            <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">device_path</span><span class="s1">&#39;</span><span class="p">:</span> <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">/dev/disk/by-id/dm-uuid-mpath-36006016015e03a00ab2df25bb82d0ea9</span><span class="s1">&#39;</span><span class="p">,</span>
-            <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">target_discovered</span><span class="s1">&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
-            <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">encrypted</span><span class="s1">&#39;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
-            <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">qos_specs</span><span class="s1">&#39;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
-            <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">target_iqn</span><span class="s1">&#39;</span><span class="p">:</span> <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">iqn.1992-04.com.emc:cx.fnm00150600267.a0</span><span class="s1">&#39;</span><span class="p">,</span>
-            <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">target_portals</span><span class="s1">&#39;</span><span class="p">:</span> <span class="p">[</span><span class="sa">u</span><span class="s1">&#39;</span><span class="s1">10.245.47.95: 3260</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">10.245.47.96: 3260</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">,</span>
-            <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">volume_id</span><span class="s1">&#39;</span><span class="p">:</span> <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">5ed0cc5c-158c-4857-9bd5-3556884a23f0</span><span class="s1">&#39;</span><span class="p">,</span> 
-            <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">target_lun</span><span class="s1">&#39;</span><span class="p">:</span> <span class="mi">197</span><span class="p">,</span>
-            <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">access_mode</span><span class="s1">&#39;</span><span class="p">:</span> <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">rw</span><span class="s1">&#39;</span><span class="p">,</span>
-            <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">target_portal</span><span class="s1">&#39;</span><span class="p">:</span> <span class="sa">u</span><span class="s1">&#39;</span><span class="s1">10.245.47.95: 3260</span><span class="s1">&#39;</span>
-        <span class="p">}</span><span class="p">,</span>
-        <span class="bp">None</span><span class="p">)</span><span class="p">,</span>
-    <span class="sa"></span><span class="s1">&#39;</span><span class="s1">kwargs</span><span class="s1">&#39;</span><span class="p">:</span> <span class="p">{</span><span class="p">}</span>
+            <span class="sa">u</span><span class="s1">&#39;target_luns&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">197</span><span class="p">,</span> <span class="mi">197</span><span class="p">],</span>
+            <span class="sa">u</span><span class="s1">&#39;target_iqns&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="sa">u</span><span class="s1">&#39;iqn.1992-04.com.emc:cx.fnm00150600267.a0&#39;</span><span class="p">,</span>
+                <span class="sa">u</span><span class="s1">&#39;iqn.1992-04.com.emc:cx.fnm00150600267.b0&#39;</span> <span class="p">],</span>
+            <span class="sa">u</span><span class="s1">&#39;device_path&#39;</span><span class="p">:</span> <span class="sa">u</span><span class="s1">&#39;/dev/disk/by-id/dm-uuid-mpath-36006016015e03a00ab2df25bb82d0ea9&#39;</span><span class="p">,</span>
+            <span class="sa">u</span><span class="s1">&#39;target_discovered&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+            <span class="sa">u</span><span class="s1">&#39;encrypted&#39;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+            <span class="sa">u</span><span class="s1">&#39;qos_specs&#39;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="sa">u</span><span class="s1">&#39;target_iqn&#39;</span><span class="p">:</span> <span class="sa">u</span><span class="s1">&#39;iqn.1992-04.com.emc:cx.fnm00150600267.a0&#39;</span><span class="p">,</span>
+            <span class="sa">u</span><span class="s1">&#39;target_portals&#39;</span><span class="p">:</span> <span class="p">[</span><span class="sa">u</span><span class="s1">&#39;10.245.47.95: 3260&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;10.245.47.96: 3260&#39;</span><span class="p">],</span>
+            <span class="sa">u</span><span class="s1">&#39;volume_id&#39;</span><span class="p">:</span> <span class="sa">u</span><span class="s1">&#39;5ed0cc5c-158c-4857-9bd5-3556884a23f0&#39;</span><span class="p">,</span> 
+            <span class="sa">u</span><span class="s1">&#39;target_lun&#39;</span><span class="p">:</span> <span class="mi">197</span><span class="p">,</span>
+            <span class="sa">u</span><span class="s1">&#39;access_mode&#39;</span><span class="p">:</span> <span class="sa">u</span><span class="s1">&#39;rw&#39;</span><span class="p">,</span>
+            <span class="sa">u</span><span class="s1">&#39;target_portal&#39;</span><span class="p">:</span> <span class="sa">u</span><span class="s1">&#39;10.245.47.95: 3260&#39;</span>
+        <span class="p">},</span>
+        <span class="bp">None</span><span class="p">),</span>
+    <span class="s1">&#39;kwargs&#39;</span><span class="p">:</span> <span class="p">{}</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
@@ -465,7 +465,7 @@ loop0                              <span class="m">0</span>
      <span class="s1">&#39;host&#39;</span>: u<span class="s1">&#39;3&#39;</span>, 
      <span class="s1">&#39;id&#39;</span>: u<span class="s1">&#39;0&#39;</span>, 
      <span class="s1">&#39;channel&#39;</span>: u<span class="s1">&#39;0&#39;</span>, 
-     <span class="s1">&#39;lun&#39;</span>: u<span class="s1">&#39;197&#39;</span><span class="o">}</span><span class="o">]</span>
+     <span class="s1">&#39;lun&#39;</span>: u<span class="s1">&#39;197&#39;</span><span class="o">}]</span>
 </code></pre></td></tr></table>
 </div>
 </div><a class="post-dummy-target" id="47-flushing-io-for-device-devsdd"></a><h3>4.7 Flushing IO for device <code>/dev/sdd</code></h3>

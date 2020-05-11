@@ -172,7 +172,7 @@ Service Endpoint Each service exposes several endpoints (URL). Other service sen
       
       <guid>https://murray-liang.github.io/forgetful/2020/02/openstack-multiattach/</guid>
       <description>References https://docs.openstack.org/nova/latest/admin/manage-volumes.html#volume-multi-attach https://docs.openstack.org/cinder/latest/admin/blockstorage-volume-multiattach.html http://specs.openstack.org/openstack/cinder-specs/specs/ocata/add-new-attach-apis.html
-Versions Needed  The minimum required compute API microversion for attaching a multiattach-capable volume to more than one server is 2.60. Cinder 12.0.0 (Queens) or newer is required. The nova-compute service must be running at least Queens release level code (17.0.0) and the hypervisor driver must support attaching block storage devices to more than one guest. Refer to Feature Support Matrix for details on which compute drivers support volume multiattach.</description>
+Versions Needed  The minimum required compute API microversion for attaching a multiattach-capable volume to more than one server is 2.60. Cinder 12.0.0 (Queens) or newer is required. The nova-compute service must be running at least Queens release level code (17.0.0) and the hypervisor driver must support attaching block storage devices to more than one guest. Refer to Feature Support Matrixfor details on which compute drivers support volume multiattach.</description>
     </item>
     
     <item>
@@ -231,7 +231,7 @@ General flow  User (End user or other services) sends requests to nova-api to cr
       
       <guid>https://murray-liang.github.io/forgetful/2020/02/openstack-setup-tenant/</guid>
       <description>Prerequisites  Have the account to the OpenStack env.  Steps Login to the OpenStack GUI. Open 192.168.1.254 in Chrome or other web browser.
-[Do for the first time] Setup the Networks  Navigate Project -&amp;gt; Network -&amp;gt; Networks, click Create Network. Input the network name and create a Subnet. Suggest using private subnets like: 172.16.*.* to 172.30.*.*. Input the DNS servers.     Navigate Project -&amp;gt; Network -&amp;gt; Routers, click Create Router.</description>
+[Do for the first time] Setup the Networks  Navigate Project -&amp;gt; Network -&amp;gt; Networks, click Create Network. Input the network name and create a Subnet. Suggest using private subnets like: 172.16.*.* to 172.30.*.*. Input the DNS servers.  Navigate Project -&amp;gt; Network -&amp;gt; Routers, click Create Router.</description>
     </item>
     
     <item>
@@ -269,7 +269,7 @@ General flow  User (End user or other services) sends requests to nova-api to cr
       <guid>https://murray-liang.github.io/forgetful/2020/02/openstack-package-storops-rpm/</guid>
       <description>Install a RHEL VM.   If using qcow2 image, the default user is cloud-user. Use the OpenStack ssh key to login.
   Create a new user stack with password welcome.
-  1 2 3  $ sudo useradd stack $ sudo passwd stack $ sudo visudo   Register subscription 1 2  $ sudo subscription-manager register $ sudo subscription-manager attach --auto   Install the basic packages like rpm-build 1  $ sudo yum install -y rpm-build git wget python-pip   NOTE: need to upgrade the setuptools using pip.</description>
+  1 2 3  $ sudo stack $ sudo passwd stack $ sudo visudo   Register subscription 1 2  $ sudo subscription-manager register $ sudo subscription-manager attach --auto   Install the basic packages like rpm-build 1  $ sudo yum install -y rpm-build git wget python-pip   NOTE: need to upgrade the setuptools using pip.</description>
     </item>
     
     <item>

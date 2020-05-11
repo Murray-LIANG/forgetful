@@ -131,7 +131,7 @@
 </span><span class="se"></span>    xargs sudo pip uninstall -y
    
 <span class="k">for</span> i in cinder glance keystone neutron nova<span class="p">;</span>
-    <span class="k">do</span> bash -c <span class="s2">&#34;</span><span class="s2">cd /opt/stack/</span><span class="nv">$i</span><span class="s2"> &amp;&amp; sudo python setup.py develop --uninstall</span><span class="s2">&#34;</span><span class="p">;</span>
+    <span class="k">do</span> bash -c <span class="s2">&#34;cd /opt/stack/</span><span class="nv">$i</span><span class="s2"> &amp;&amp; sudo python setup.py develop --uninstall&#34;</span><span class="p">;</span>
 <span class="k">done</span>
 </code></pre></td></tr></table>
 </div>

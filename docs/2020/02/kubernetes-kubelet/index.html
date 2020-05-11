@@ -155,26 +155,26 @@ $ sudo ./kubelet --pod-manifest-path=/home/ryan/git/try/kubelet/manifests --fail
 </span><span class="w"></span><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>v1<span class="w">
 </span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>Pod<span class="w">
 </span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>nginx<span class="w">
+</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>nginx<span class="w">
 </span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">  </span><span class="k">containers</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">  </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>nginx<span class="w">
+</span><span class="w">  </span><span class="k">containers</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>nginx<span class="w">
 </span><span class="w">    </span><span class="k">image</span><span class="p">:</span><span class="w"> </span>nginx<span class="w">
 </span><span class="w">    </span><span class="k">ports</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">    </span>- <span class="k">containerPort</span><span class="p">:</span><span class="w"> </span><span class="m">80</span><span class="w">
+</span><span class="w">    </span>- <span class="k">containerPort</span><span class="p">:</span><span class="w"> </span><span class="m">80</span><span class="w">
 </span><span class="w">    </span><span class="k">volumeMounts</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">    </span>- <span class="k">mountPath</span><span class="p">:</span><span class="w"> </span>/var/log/nginx<span class="w">
+</span><span class="w">    </span>- <span class="k">mountPath</span><span class="p">:</span><span class="w"> </span>/var/log/nginx<span class="w">
 </span><span class="w">      </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>nginx-logs<span class="w">
 </span><span class="w">  </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>log-truncator<span class="w">
 </span><span class="w">    </span><span class="k">image</span><span class="p">:</span><span class="w"> </span>busybox<span class="w">
 </span><span class="w">    </span><span class="k">command</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">    </span>- /bin/sh<span class="w">
+</span><span class="w">    </span>- /bin/sh<span class="w">
 </span><span class="w">    </span><span class="k">args</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>-c<span class="p">,</span><span class="w"> </span><span class="s1">&#39;while true; do cat /dev/null &gt; /logdir/access.log; sleep 10; done&#39;</span><span class="p">]</span><span class="w">
 </span><span class="w">    </span><span class="k">volumeMounts</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">    </span>- <span class="k">mountPath</span><span class="p">:</span><span class="w"> </span>/logdir<span class="w">
+</span><span class="w">    </span>- <span class="k">mountPath</span><span class="p">:</span><span class="w"> </span>/logdir<span class="w">
 </span><span class="w">      </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>nginx-logs<span class="w">
 </span><span class="w">  </span><span class="k">volumes</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">  </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>nginx-logs<span class="w">
+</span><span class="w">  </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>nginx-logs<span class="w">
 </span><span class="w">    </span><span class="k">emptyDir</span><span class="p">:</span><span class="w"> </span>{}<span class="w">
 </span></code></pre></td></tr></table>
 </div>

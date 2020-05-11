@@ -127,12 +127,12 @@ kubelet, kubeadm, kubectl  kubelet - 运行在所有节点上，负责启动Pod�
     <li><a href="#installation">Installation</a>
       <ul>
         <li><a href="#create-three-vms">Create three VMs.</a></li>
-        <li><a href="#create-the-user-k8s-with-password-welcome-add-it-to-sudo-group">Create the user k8s with password welcome, add it to sudo group.</a></li>
+        <li><a href="#create-the-user-k8s-with-password-welcome-add-it-to-sudo-group">Create the user <code>k8s</code> with password <code>welcome</code>, add it to <code>sudo</code> group.</a></li>
         <li><a href="#add-corp-ca-certs-on-all-nodes">Add corp CA certs on all nodes.</a></li>
-        <li><a href="#install-dockerio-on-all-nodes">Install docker.io on all nodes.</a></li>
-        <li><a href="#install-kubelet-kubeadm-kubectl-on-all-nodes-httpskubernetesiodocssetupindependentinstall-kubeadm">Install kubelet, kubeadm, kubectl on all nodes. </a></li>
+        <li><a href="#install-dockerio-on-all-nodes">Install <code>docker.io</code> on all nodes.</a></li>
+        <li><a href="#install-kubelet-kubeadm-kubectl-on-all-nodes-httpskubernetesiodocssetupindependentinstall-kubeadm">Install <code>kubelet</code>, <code>kubeadm</code>, <code>kubectl</code> on all nodes. <a href="https://kubernetes.io/docs/setup/independent/install-kubeadm/">https://kubernetes.io/docs/setup/independent/install-kubeadm/</a></a></li>
         <li><a href="#use-flannel-network">Use Flannel network.</a></li>
-        <li><a href="#set-auto-bash-completion-for-kubectl">Set auto bash completion for kubectl.</a></li>
+        <li><a href="#set-auto-bash-completion-for-kubectl">Set auto bash completion for <code>kubectl</code>.</a></li>
       </ul>
     </li>
     <li><a href="#架构">架构</a></li>
@@ -211,12 +211,12 @@ kubelet, kubeadm, kubectl  kubelet - 运行在所有节点上，负责启动Pod�
     <li><a href="#installation">Installation</a>
       <ul>
         <li><a href="#create-three-vms">Create three VMs.</a></li>
-        <li><a href="#create-the-user-k8s-with-password-welcome-add-it-to-sudo-group">Create the user k8s with password welcome, add it to sudo group.</a></li>
+        <li><a href="#create-the-user-k8s-with-password-welcome-add-it-to-sudo-group">Create the user <code>k8s</code> with password <code>welcome</code>, add it to <code>sudo</code> group.</a></li>
         <li><a href="#add-corp-ca-certs-on-all-nodes">Add corp CA certs on all nodes.</a></li>
-        <li><a href="#install-dockerio-on-all-nodes">Install docker.io on all nodes.</a></li>
-        <li><a href="#install-kubelet-kubeadm-kubectl-on-all-nodes-httpskubernetesiodocssetupindependentinstall-kubeadm">Install kubelet, kubeadm, kubectl on all nodes. </a></li>
+        <li><a href="#install-dockerio-on-all-nodes">Install <code>docker.io</code> on all nodes.</a></li>
+        <li><a href="#install-kubelet-kubeadm-kubectl-on-all-nodes-httpskubernetesiodocssetupindependentinstall-kubeadm">Install <code>kubelet</code>, <code>kubeadm</code>, <code>kubectl</code> on all nodes. <a href="https://kubernetes.io/docs/setup/independent/install-kubeadm/">https://kubernetes.io/docs/setup/independent/install-kubeadm/</a></a></li>
         <li><a href="#use-flannel-network">Use Flannel network.</a></li>
-        <li><a href="#set-auto-bash-completion-for-kubectl">Set auto bash completion for kubectl.</a></li>
+        <li><a href="#set-auto-bash-completion-for-kubectl">Set auto bash completion for <code>kubectl</code>.</a></li>
       </ul>
     </li>
     <li><a href="#架构">架构</a></li>
@@ -345,11 +345,11 @@ Kubernetes其他组件可以通过它管理Cluster的各种资源。</p>
 和性的需求。</p>
 <a class="post-dummy-target" id="controller-managerkube-controller-manager"></a><h3>Controller Manager（kube-controller-manager）</h3>
 <p>负责管理Cluster各种资源，保证资源处于预期的状态。
-Controller Manager由多种controller组成，包括replication
+Controller Manager由多种controller组成，包括replication 
 controller、endpoints controller、namespace controller、
 serviceaccounts controller等。</p>
 <p>不同的controller管理不同的资源。例如replication controller管理
-Deployment、StatefulSet、DaemonSet的生命周期，namespace
+Deployment、StatefulSet、DaemonSet的生命周期，namespace 
 controller管理Namespace资源。</p>
 <a class="post-dummy-target" id="etcd"></a><h3>etcd</h3>
 <p>负责保存Kubernetes Cluster的配置信息和各种资源的状态信息。当数据发生
@@ -786,15 +786,15 @@ $ kubectl label node k8s-node1 disktype-
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">spec</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">  </span>...<span class="w">
+</span><span class="w">  </span>...<span class="w">
 </span><span class="w">  </span><span class="k">template</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">    </span>...<span class="w">
+</span><span class="w">    </span>...<span class="w">
 </span><span class="w">    </span><span class="k">spec</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">      </span><span class="k">containers</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">      </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>xxx<span class="w">
+</span><span class="w">      </span><span class="k">containers</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>xxx<span class="w">
 </span><span class="w">        </span><span class="k">image</span><span class="p">:</span><span class="w"> </span>xxx<span class="w">
 </span><span class="w">      </span><span class="k">nodeSelector</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">        </span><span class="k">disktype</span><span class="p">:</span><span class="w"> </span>ssd<span class="w">
+</span><span class="w">        </span><span class="k">disktype</span><span class="p">:</span><span class="w"> </span>ssd<span class="w">
 </span></code></pre></td></tr></table>
 </div>
 </div><a class="post-dummy-target" id="daemonset-1"></a><h2>DaemonSet</h2>

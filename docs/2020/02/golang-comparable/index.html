@@ -96,7 +96,7 @@
                 <div class="post-toc-content"><nav id="TableOfContents">
   <ul>
     <li><a href="#golang中的类型">Golang中的类型</a></li>
-    <li><a href="#操作的两个操作数类型必须相同否则编译报错">==操作的两个操作数类型必须相同，否则编译报错。</a></li>
+    <li><a href="#操作的两个操作数类型必须相同否则编译报错"><code>==</code>操作的两个操作数类型必须相同，否则编译报错。</a></li>
     <li><a href="#复合类型数组和结构体">复合类型：数组和结构体</a></li>
     <li><a href="#引用">引用</a>
       <ul>
@@ -120,7 +120,7 @@
                     <div class="post-toc-content"><nav id="TableOfContentsMobile">
   <ul>
     <li><a href="#golang中的类型">Golang中的类型</a></li>
-    <li><a href="#操作的两个操作数类型必须相同否则编译报错">==操作的两个操作数类型必须相同，否则编译报错。</a></li>
+    <li><a href="#操作的两个操作数类型必须相同否则编译报错"><code>==</code>操作的两个操作数类型必须相同，否则编译报错。</a></li>
     <li><a href="#复合类型数组和结构体">复合类型：数组和结构体</a></li>
     <li><a href="#引用">引用</a>
       <ul>
@@ -169,12 +169,12 @@
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-golang" data-lang="golang"><span class="nx">a</span> <span class="o">:=</span> <span class="p">[</span><span class="p">]</span> <span class="kd">interface</span> <span class="p">{</span><span class="p">}</span><span class="p">{</span> <span class="mi">1</span> <span class="p">,</span> <span class="mf">2.0</span> <span class="p">}</span>
+<pre class="chroma"><code class="language-golang" data-lang="golang"><span class="nx">a</span> <span class="o">:=</span> <span class="p">[]</span> <span class="kd">interface</span> <span class="p">{}{</span> <span class="mi">1</span> <span class="p">,</span> <span class="mf">2.0</span> <span class="p">}</span>
 <span class="nx">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">=</span> <span class="nx">a</span>  <span class="c1">// 切片间接指向自己
 </span><span class="c1"></span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span>
 
 <span class="c1">// runtime: goroutine stack exceeds 1000000000-byte limit
-</span><span class="c1"></span><span class="c1">// fatal error: stack overflow
+</span><span class="c1">// fatal error: stack overflow
 </span></code></pre></td></tr></table>
 </div>
 </div><p>为什么切片不能比较？</p>
@@ -193,7 +193,7 @@
 <pre class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-golang" data-lang="golang"><span class="kd">var</span> <span class="nx">a</span> <span class="kd">interface</span><span class="p">{</span><span class="p">}</span> <span class="p">=</span> <span class="mi">1</span>
+<pre class="chroma"><code class="language-golang" data-lang="golang"><span class="kd">var</span> <span class="nx">a</span> <span class="kd">interface</span><span class="p">{}</span> <span class="p">=</span> <span class="mi">1</span>
 </code></pre></td></tr></table>
 </div>
 </div><p><code>a</code>为接口类型，<code>a</code>的接口值包括：动态类型 - <code>int</code>，和动态值 - <code>1</code>。比较两个接口类型的变量，必须两个变量的动态类型和动态值都相同。</p>

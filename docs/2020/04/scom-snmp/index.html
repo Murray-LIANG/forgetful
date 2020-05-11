@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>SCOM and SNMP | Forgetful :/</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="Notes about everything"><link rel="prev" href="https://murray-liang.github.io/forgetful/2020/04/ssh-tunnel/" /><link rel="canonical" href="https://murray-liang.github.io/forgetful/2020/04/scom-snmp/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff"><meta property="og:title" content="SCOM and SNMP" />
+<meta property="og:description" content="References  SCOM 2019 installation: https://www.prajwaldesai.com/scom-1801-install-guide/  Integration with Unity SNMP Agent Steps   Install snmp agent on a Windows 10 machine: 10.245.54.154. The snmp agent is configured to manage Unity: 10.245.101.39.
+  The SCOM is deployed on a Windows Server 2019 machine: 10.245.54.155.
+  Configure SCOM to discover snmp device.
+3.1 Create a Discovery Rule. 3.2 After a rule is created, a new network device could be discovered." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://murray-liang.github.io/forgetful/2020/04/scom-snmp/" />
+<meta property="article:published_time" content="2020-04-29T10:50:52+08:00" />
+<meta property="article:modified_time" content="2020-04-29T10:51:12+08:00" />
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "SCOM and SNMP",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/murray-liang.github.io\/forgetful\/2020\/04\/scom-snmp\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "https:\/\/murray-liang.github.io\/forgetful\/cover.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "posts","keywords": "scom, snmp","wordcount":  1124 ,
+        "url": "https:\/\/murray-liang.github.io\/forgetful\/2020\/04\/scom-snmp\/","datePublished": "2020-04-29T10:50:52\x2b08:00","dateModified": "2020-04-29T10:51:12\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "murray",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "https:\/\/murray-liang.github.io\/forgetful\/logo.png",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": ""
+    }
+    </script><link rel="stylesheet" href="/forgetful/css/style.min.css"><link rel="stylesheet" href="/forgetful/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/forgetful/css/lib/forkawesome/forkawesome.min.css"><link rel="stylesheet" href="/forgetful/css/lib/animate/animate.min.css"></head>
+    <body><script>
+            if (!window.localStorage || !window.localStorage.getItem('theme')) {
+                window.isDark = 'dark' === 'dark';
+            } else {
+                window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            }
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header animated bounceIn">
+            <a href="https://murray-liang.github.io/forgetful">Forgetful :/</a>
+        </div>
+        <div class="navbar-menu"><a class="menu-item" href="https://murray-liang.github.io/forgetful/posts" title="">Posts</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/tags" title="">Tags</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/categories" title="">Categories</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"><i class="fas fa-language fa-fw"></i></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav><nav class="navbar-mobile">
+    <div class="navbar-container">
+        <div class="navbar-header">
+            <div class="navbar-header-title animated bounceIn">
+                <a href="https://murray-liang.github.io/forgetful">Forgetful :/</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://murray-liang.github.io/forgetful/posts" title="">Posts</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/tags" title="">Tags</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/categories" title="">Categories</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav>
+<main class="main">
+                <div class="container"><article class="page"><h1 class="post-title animated flipInX">SCOM and SNMP</h1><div class="post-meta">
+            <div class="post-meta-main"><a class="author" href="https://github.com/Murray-LIANG" rel="author" target="_blank">
+                    <i class="fas fa-user-circle fa-fw"></i>Murray-LIANG
+                </a>&nbsp;</div>
+            <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-04-29>2020-04-29</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 1124 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>6 min&nbsp;</div>
+        </div><div class="post-toc" id="post-toc">
+                <h2 class="post-toc-title">Contents</h2>
+                <div class="post-toc-content"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#references">References</a></li>
+    <li><a href="#integration-with-unity-snmp-agent">Integration with Unity SNMP Agent</a>
+      <ul>
+        <li><a href="#steps">Steps</a></li>
+        <li><a href="#conclusion">Conclusion</a></li>
+        <li><a href="#misc">Misc</a></li>
+        <li><a href="#troubleshooting">Troubleshooting</a>
+          <ul>
+            <li><a href="#1-now-snmp-agent-receives-the-request-from-scom-but-it-dont-know-these-oids">1. Now snmp agent receives the request from SCOM, but it don&rsquo;t know these OIDs.</a></li>
+            <li><a href="#2-scom-could-fail-to-discover-the-network-device-with-error-no-response-ping">2. SCOM could fail to discover the network device with error <code>No Response Ping</code>.</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div>
+            <div class="post-toc-mobile" id="post-toc-mobile">
+                <details>
+                    <summary>
+                        <div class="post-toc-title">
+                            <span>Contents</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="post-toc-content"><nav id="TableOfContentsMobile">
+  <ul>
+    <li><a href="#references">References</a></li>
+    <li><a href="#integration-with-unity-snmp-agent">Integration with Unity SNMP Agent</a>
+      <ul>
+        <li><a href="#steps">Steps</a></li>
+        <li><a href="#conclusion">Conclusion</a></li>
+        <li><a href="#misc">Misc</a></li>
+        <li><a href="#troubleshooting">Troubleshooting</a>
+          <ul>
+            <li><a href="#1-now-snmp-agent-receives-the-request-from-scom-but-it-dont-know-these-oids">1. Now snmp agent receives the request from SCOM, but it don&rsquo;t know these OIDs.</a></li>
+            <li><a href="#2-scom-could-fail-to-discover-the-network-device-with-error-no-response-ping">2. SCOM could fail to discover the network device with error <code>No Response Ping</code>.</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+                </details>
+            </div><div class="post-content"><a class="post-dummy-target" id="references"></a><h2>References</h2>
+<ol>
+<li>SCOM 2019 installation: <a href="https://www.prajwaldesai.com/scom-1801-install-guide/">https://www.prajwaldesai.com/scom-1801-install-guide/</a></li>
+</ol>
+<a class="post-dummy-target" id="integration-with-unity-snmp-agent"></a><h2>Integration with Unity SNMP Agent</h2>
+<a class="post-dummy-target" id="steps"></a><h3>Steps</h3>
+<ol>
+<li>
+<p>Install snmp agent on a Windows 10 machine: 10.245.54.154. The snmp agent is configured to manage Unity: 10.245.101.39.</p>
+</li>
+<li>
+<p>The SCOM is deployed on a Windows Server 2019 machine: 10.245.54.155.</p>
+</li>
+<li>
+<p>Configure SCOM to discover snmp device.</p>
+<p>3.1 Create a <code>Discovery Rule</code>. 
+<figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="../../static/images/scom-discover-rules.png" alt="" class="lazyload"></figure>
+</p>
+<p>3.2 After a rule is created, a new network device could be discovered.
+<figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="../../static/images/scom-discover-network-devices.png" alt="" class="lazyload"></figure>
+</p>
+</li>
+<li>
+<p>Receive snmp trap.
+4.1 Create a event collection rule.
+<figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="../../static/images/scom-event-collect-rule-0.png" alt="" class="lazyload"></figure>
+
+<figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="../../static/images/scom-event-collect-rule-1.png" alt="" class="lazyload"></figure>
+
+<figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="../../static/images/scom-event-collect-rule-2.png" alt="" class="lazyload"></figure>
+</p>
+<p>4.2 Create a event view.
+<figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="../../static/images/scom-event-view-0.png" alt="" class="lazyload"></figure>
+
+<figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="../../static/images/scom-event-view-1.png" alt="" class="lazyload"></figure>
+
+<figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="../../static/images/scom-event-view-2.png" alt="" class="lazyload"></figure>
+</p>
+</li>
+<li>
+<p>Try to send a trap from Unity. <strong>SCOM didn&rsquo;t handle it although it received the package from Unity.</strong>
+<figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="../../static/images/scom-unity-send-snmp-trap.png" alt="" class="lazyload"></figure>
+</p>
+<p>Wireshark on SCOM server.
+<figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="../../static/images/scom-wireshark-server-receive-package-from-unity.png" alt="" class="lazyload"></figure>
+</p>
+</li>
+<li>
+<p>Try to send a trp from snmp agent. <strong>SCOM handled it successfully.</strong></p>
+<p>6.1 Install <code>net-snmp</code> binary on Windows 10 machine <code>10.245.54.154</code>. Default installation path is <code>C:\usr\bin</code>.</p>
+<p>6.2 Run command to send trap.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-powershell" data-lang="powershell"><span class="nb">PS </span><span class="n">C:</span><span class="p">\</span><span class="n">usr</span><span class="p">\</span><span class="n">bin</span><span class="p">&gt;</span> <span class="p">.\</span><span class="n">snmptrap</span><span class="p">.</span><span class="n">exe</span> <span class="n">-v</span> <span class="n">2c</span> <span class="n">-c</span> <span class="n">public</span> <span class="n">10</span><span class="p">.</span><span class="n">245</span><span class="p">.</span><span class="n">54</span><span class="p">.</span><span class="n">155</span> <span class="n">2404</span> <span class="n">1</span><span class="p">.</span><span class="n">3</span><span class="p">.</span><span class="n">6</span><span class="p">.</span><span class="n">1</span><span class="p">.</span><span class="n">4</span><span class="p">.</span><span class="n">1</span><span class="p">.</span><span class="n">1139</span><span class="p">.</span><span class="n">103</span><span class="p">.</span><span class="n">1</span><span class="p">.</span><span class="n">18</span><span class="p">.</span><span class="n">2</span><span class="p">.</span><span class="n">6</span> <span class="n">1</span><span class="p">.</span><span class="n">3</span><span class="p">.</span><span class="n">6</span><span class="p">.</span><span class="n">1</span><span class="p">.</span><span class="n">4</span><span class="p">.</span><span class="n">1</span><span class="p">.</span><span class="n">1139</span><span class="p">.</span><span class="n">103</span><span class="p">.</span><span class="n">1</span><span class="p">.</span><span class="n">18</span><span class="p">.</span><span class="n">1</span><span class="p">.</span><span class="n">1</span> <span class="n">s</span> <span class="s2">&#34;spa&#34;</span>
+<span class="nb">PS </span><span class="n">C:</span><span class="p">\</span><span class="n">usr</span><span class="p">\</span><span class="n">bin</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<p><figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="../../static/images/scom-received-trap-event-from-snmp-agent.png" alt="" class="lazyload"></figure>
+</p>
+<a class="post-dummy-target" id="conclusion"></a><h3>Conclusion</h3>
+<ol>
+<li>SCOM probably handles the trap event by the source IP address and drops all the trap event it doesn&rsquo;t know.</li>
+<li>It has nothing to do with the engine id. Because Unity sends traps with it engine id in, but SCOM didn&rsquo;t handle it. And snmp agent didn&rsquo;t send the engine id (<code>-e</code> option of <code>snmptrap</code> command), SCOM handled it.</li>
+<li>We could run snmp-agent in a container on Unity. Then SCOM could snmpget to Unity and handle the trap from Unity perfectly.</li>
+</ol>
+<a class="post-dummy-target" id="misc"></a><h3>Misc</h3>
+<ol>
+<li>
+<p>Code change in branch <a href="https://github.com/emc-openstack/snmp-agent/tree/scom-integration">https://github.com/emc-openstack/snmp-agent/tree/scom-integration</a></p>
+</li>
+<li>
+<p><code>snmptrap</code> command reference:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"># Here is an example (To simplify, no auth protocol and encryption is used here.):
+sudo snmptrap --clientAddr=&lt;mgmt_ip&gt; -v 3 -l noAuthNoPriv -u &lt;user name&gt; -e 0x800004730508001BFF771C &lt;host&gt;:&lt;port&gt; \
+    2404 \
+    1.3.6.1.4.1.1139.103.1.18.2.6 \
+    1.3.6.1.4.1.1139.103.1.18.1.1 s &#34;spa&#34; \
+    1.3.6.1.4.1.1139.103.1.18.1.2 s &#34;AlertServicesSnmpTest&#34; \
+    1.3.6.1.4.1.1139.103.1.18.1.3 s &#34;14:100001&#34; \
+    1.3.6.1.4.1.1139.103.1.18.1.4 s &#34;This is a test message to be sent in an SNMP trap.&#34;
+
+parameters:
+    -v &lt;snmp version&gt;: 1/2c/3
+    -a &lt;auth protocol&gt;: MD5/SHA
+    -A &lt;password&gt;: if specified -a
+    -x &lt;encrypt protocol&gt;: AES/DES
+    -X &lt;password&gt;: if specified -x
+    -l &lt;security level&gt;: noAuthNoPriv|authNoPriv|authPriv
+    -u &lt;user name&gt;: The same as what configured on GUI.
+    -e &lt;engineID&gt;: 0x800004730508001BFF771C (two parts: engineID (0x8000047305) + MACAddress of mgmt port)
+    &lt;host&gt;:&lt;port&gt;: Host and port of the specified SNMP trap destination.
+    -n &lt;context name&gt;: always empty, not specified.
+    &lt;uptime&gt;: Using command “papi_get.sh uptime” to get the current up time.
+    &lt;trapOID&gt;: TrapOID, actually is the severity of the alert, refer to above definitions “Severity”. Now almost all our alerts use the following severities: critical, error, warning, notice, info.
+    &lt;payload&gt;: The data of the SNMP trap. Contains following fields: Node, Component(Alert Component), SymptomID(Alert Message ID), SymptomText(Alert Message).
+        Each field contains of 3 parts: oid, type and data.
+        OID is the defined “Data Types” above, type is always ‘s’ means string, data is specified to every fields.
+</code></pre></td></tr></table>
+</div>
+</div><p>The payload in the example:</p>
+<pre><code> Node: 1.3.6.1.4.1.1139.103.1.18.1.1 s &quot;spa&quot;
+ Component: 1.3.6.1.4.1.1139.103.1.18.1.2 s &quot;AlertServicesSnmpTest&quot;
+ SymptomID: 1.3.6.1.4.1.1139.103.1.18.1.3 s &quot;14:100001&quot;
+ SymptomText: 1.3.6.1.4.1.1139.103.1.18.1.4 s &quot;This is a test message to be sent in an SNMP trap.&quot;
+</code></pre>
+<p>Date types references:</p>
+<pre><code> Node = 1.3.6.1.4.1.1139.103.1.18.1.1
+ Component = 1.3.6.1.4.1.1139.103.1.18.1.2
+ SymptomID = 1.3.6.1.4.1.1139.103.1.18.1.3
+ SymptomText = 1.3.6.1.4.1.1139.103.1.18.1.4
+ TimeStamp = 1.3.6.1.4.1.1139.103.1.18.1.5
+</code></pre>
+<p>Severity references:</p>
+<pre><code> emergency = 1.3.6.1.4.1.1139.103.1.18.2.0
+ alert     = 1.3.6.1.4.1.1139.103.1.18.2.1
+ critical  = 1.3.6.1.4.1.1139.103.1.18.2.2
+ error     = 1.3.6.1.4.1.1139.103.1.18.2.3
+ warning   = 1.3.6.1.4.1.1139.103.1.18.2.4
+ notice    = 1.3.6.1.4.1.1139.103.1.18.2.5
+ info      = 1.3.6.1.4.1.1139.103.1.18.2.6
+ debug     = 1.3.6.1.4.1.1139.103.1.18.2.7
+</code></pre>
+</li>
+</ol>
+<a class="post-dummy-target" id="troubleshooting"></a><h3>Troubleshooting</h3>
+<a class="post-dummy-target" id="1-now-snmp-agent-receives-the-request-from-scom-but-it-dont-know-these-oids"></a><h4>1. Now snmp agent receives the request from SCOM, but it don&rsquo;t know these OIDs.</h4>
+<p><strong>It was resolved by adding OIDs: <code>1.3.6.1.2.1.1.1.0</code> to <code>snmp-agent</code>. Refer to the change of <code>scom-integration</code> branch.</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span><span class="lnt">155
+</span><span class="lnt">156
+</span><span class="lnt">157
+</span><span class="lnt">158
+</span><span class="lnt">159
+</span><span class="lnt">160
+</span><span class="lnt">161
+</span><span class="lnt">162
+</span><span class="lnt">163
+</span><span class="lnt">164
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    Execution point: rfc3412.receiveMessage:request
+2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * transportDomain: 1.3.6.1.6.1.1.0
+2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * transportAddress: 10.245.54.155@55486 (local 0.0.0.0@11161)
+2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * securityModel: 2
+2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * securityName: public
+2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * securityLevel: 1
+2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * PDU: GetRequestPDU:
+ request-id=16140311
+ error-status=noError
+ error-index=0
+ variable-bindings=VarBindList:
+  VarBind:
+   name=1.3.6.1.2.1.1.1.0
+   =_BindValue:
+    unSpecified=
+
+  VarBind:
+   name=1.3.6.1.2.1.1.2.0
+   =_BindValue:
+    unSpecified=
+
+  VarBind:
+   name=1.3.6.1.2.1.1.4.0
+   =_BindValue:
+    unSpecified=
+
+  VarBind:
+   name=1.3.6.1.2.1.1.5.0
+   =_BindValue:
+    unSpecified=
+
+  VarBind:
+   name=1.3.6.1.2.1.1.6.0
+   =_BindValue:
+    unSpecified=
+
+
+2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    Execution point: rfc3412.returnResponsePdu
+2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * transportDomain: 1.3.6.1.6.1.1.0
+2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * transportAddress: 10.245.54.155@55486 (local 0.0.0.0@11161)
+2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * securityModel: 2
+2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * securityName: public
+2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * securityLevel: 1
+2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * PDU: ResponsePDU:
+ request-id=16140311
+ error-status=noAccess
+ error-index=1
+ variable-bindings=VarBindList:
+  VarBind:
+   name=1.3.6.1.2.1.1.1.0
+   =_BindValue:
+    unSpecified=
+
+  VarBind:
+   name=1.3.6.1.2.1.1.2.0
+   =_BindValue:
+    unSpecified=
+
+  VarBind:
+   name=1.3.6.1.2.1.1.4.0
+   =_BindValue:
+    unSpecified=
+
+  VarBind:
+   name=1.3.6.1.2.1.1.5.0
+   =_BindValue:
+    unSpecified=
+
+  VarBind:
+   name=1.3.6.1.2.1.1.6.0
+   =_BindValue:
+    unSpecified=
+
+
+2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    Execution point: rfc3412.receiveMessage:request
+2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * transportDomain: 1.3.6.1.6.1.1.0
+2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * transportAddress: 10.245.54.155@55488 (local 0.0.0.0@11161)
+2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * securityModel: 1
+2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * securityName: public
+2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * securityLevel: 1
+2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * PDU: GetRequestPDU:
+ request-id=16140312
+ error-status=noError
+ error-index=0
+ variable-bindings=VarBindList:
+  VarBind:
+   name=1.3.6.1.2.1.1.1.0
+   value=ObjectSyntax:
+    simple=SimpleSyntax:
+     empty=
+
+
+  VarBind:
+   name=1.3.6.1.2.1.1.2.0
+   value=ObjectSyntax:
+    simple=SimpleSyntax:
+     empty=
+
+
+  VarBind:
+   name=1.3.6.1.2.1.1.4.0
+   value=ObjectSyntax:
+    simple=SimpleSyntax:
+     empty=
+
+
+  VarBind:
+   name=1.3.6.1.2.1.1.5.0
+   value=ObjectSyntax:
+    simple=SimpleSyntax:
+     empty=
+
+
+  VarBind:
+   name=1.3.6.1.2.1.1.6.0
+   value=ObjectSyntax:
+    simple=SimpleSyntax:
+     empty=
+
+
+2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    Execution point: rfc3412.returnResponsePdu
+2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * transportDomain: 1.3.6.1.6.1.1.0
+2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * transportAddress: 10.245.54.155@55488 (local 0.0.0.0@11161)
+2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * securityModel: 1
+2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * securityName: public
+2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * securityLevel: 1
+2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * PDU: GetResponsePDU:
+ request-id=16140312
+ error-status=noSuchName
+ error-index=1
+ variable-bindings=VarBindList:
+  VarBind:
+   name=1.3.6.1.2.1.1.1.0
+   value=ObjectSyntax:
+    simple=SimpleSyntax:
+     empty=
+
+
+  VarBind:
+   name=1.3.6.1.2.1.1.2.0
+   value=ObjectSyntax:
+    simple=SimpleSyntax:
+     empty=
+
+
+  VarBind:
+   name=1.3.6.1.2.1.1.4.0
+   value=ObjectSyntax:
+    simple=SimpleSyntax:
+     empty=
+
+
+  VarBind:
+   name=1.3.6.1.2.1.1.5.0
+   value=ObjectSyntax:
+    simple=SimpleSyntax:
+     empty=
+
+
+  VarBind:
+   name=1.3.6.1.2.1.1.6.0
+   value=ObjectSyntax:
+    simple=SimpleSyntax:
+     empty=
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="2-scom-could-fail-to-discover-the-network-device-with-error-no-response-ping"></a><h4>2. SCOM could fail to discover the network device with error <code>No Response Ping</code>.</h4>
+<p>This happens mostly after the SCOM server reboots.</p>
+<p><strong>Solution: Go to firewall. Enable all rules, including Inbound and Outbound ones, related to <code>Operation Manager</code>.</strong></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>The article was updated on 2020-04-29</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><span></span></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section><span class="tag">
+                        <a href="https://murray-liang.github.io/forgetful/tags/scom/"><i class="fas fa-tag fa-fw"></i>&nbsp;scom</a>&nbsp;
+                    </span><span class="tag">
+                        <a href="https://murray-liang.github.io/forgetful/tags/snmp/"><i class="fas fa-tag fa-fw"></i>&nbsp;snmp</a>&nbsp;
+                    </span></section>
+        <section>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://murray-liang.github.io/forgetful">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="https://murray-liang.github.io/forgetful/2020/04/ssh-tunnel/" class="prev" rel="prev" title="SSH Tunnel"><i class="fas fa-angle-left fa-fw"></i>SSH Tunnel</a></div>
+</div>
+<div class="post-comment"></div>
+    </article></div>
+            </main><footer class="footer">
+    <div class="copyright"><div class="copyright-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
+        </div>
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/Murray-LIANG" target="_blank">Murray-LIANG</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+    </div>
+</footer>
+</div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>
+            <span>&nbsp;</span>
+        </a><script src="/forgetful/js/lib/jquery/jquery.slim.min.js"></script><script src="/forgetful/js/lib/lazysizes/lazysizes.min.js"></script><script src="/forgetful/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script><link rel="stylesheet" href="/forgetful/css/lib/katex/katex.min.css"><script src="/forgetful/js/lib/katex/katex.min.js"></script><script defer src="/forgetful/js/lib/katex/auto-render.min.js"></script><link rel="stylesheet" href="/forgetful/css/lib/katex/copy-tex.min.css"><script defer src="/forgetful/js/lib/katex/copy-tex.min.js"></script><script defer src="/forgetful/js/lib/katex/mhchem.min.js"></script><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },{ left: "$", right: "$", display: false },]
+            });
+        });
+    </script><script src="/forgetful/js/blog.min.js"></script>
+</body>
+</html>

@@ -18,7 +18,7 @@
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
       <guid>https://murray-liang.github.io/forgetful/2020/02/osp14-configure-network-for-manila/</guid>
-      <description>OSP Network Topology  Environment The undercloud is 192.168.1.202.
+      <description>OSP Network Topology Environment The undercloud is 192.168.1.202.
 The overcloud is deployed on ubuntu-server2 (compute node) and ubuntu-server10 (control node).
 Ethernet interfaces on ubuntu-server10 are:
  enp8s0f0: enp8s0f1: eth1, used for overcloud tenant network. enp8s0f2: eth0, used for OSP Provision/Ctrl Plane network. eno1: eth2, not used. enp8s0f3: ens2f1: eth3, connected to br-ex, used to External network.  Ethernet interfaces on ubuntu-server2 are:

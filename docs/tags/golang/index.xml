@@ -83,7 +83,7 @@ A panic stops the normal execution of a goroutine:
       <guid>https://murray-liang.github.io/forgetful/2020/02/golang-soc/</guid>
       <description>Week 1 1. N-Way Merge Sort Given a int64 array with 16M unsorted numbers, use multiple goroutine to sort this array. Your implementation should be faster that the Quick Sort in single thread.
 Check list:
- Pass unit tests. Pass test cases. Analysis the bottle-neck via Go Profile.  Week 2 1. Read MIT MapReduce Course and Complete Excercise. 2. Report 10 Most Frequent URLs from A Huge Set of URLs Given a file containing a huge set of URLs, use MapReduce and Shuffle to get the 10 most frequent URLs and their frequency.</description>
+ Pass unit tests. Pass test cases. Analysis the bottle-neck via Go Profile.  Week 2 1. Read MIT MapReduce Courseand Complete Excercise. 2. Report 10 Most Frequent URLs from A Huge Set of URLs Given a file containing a huge set of URLs, use MapReduce and Shuffle to get the 10 most frequent URLs and their frequency.</description>
     </item>
     
     <item>

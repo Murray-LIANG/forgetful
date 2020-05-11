@@ -207,8 +207,8 @@ sh /home/stack/templates/cleanup_stack.sh
 openstack overcloud node import ~/templates/instackenv.json
 
 <span class="c1"># Tagging nodes into profiles (maybe no need)</span>
-<span class="nv">nodes</span><span class="o">=</span><span class="o">(</span><span class="o">)</span>
-<span class="k">for</span> i in <span class="k">$(</span>openstack baremetal node list -c UUID -f value<span class="k">)</span><span class="p">;</span> <span class="k">do</span> <span class="nv">nodes</span><span class="o">+=</span><span class="o">(</span><span class="nv">$i</span><span class="o">)</span><span class="p">;</span> <span class="k">done</span>
+<span class="nv">nodes</span><span class="o">=()</span>
+<span class="k">for</span> i in <span class="k">$(</span>openstack baremetal node list -c UUID -f value<span class="k">)</span><span class="p">;</span> <span class="k">do</span> <span class="nv">nodes</span><span class="o">+=(</span><span class="nv">$i</span><span class="o">)</span><span class="p">;</span> <span class="k">done</span>
 openstack baremetal node <span class="nb">set</span> <span class="se">\
 </span><span class="se"></span>    --property <span class="nv">capabilities</span><span class="o">=</span><span class="s1">&#39;profile:compute,boot_option:local&#39;</span> <span class="si">${</span><span class="nv">nodes</span><span class="p">[0]</span><span class="si">}</span>
 openstack baremetal node <span class="nb">set</span> <span class="se">\

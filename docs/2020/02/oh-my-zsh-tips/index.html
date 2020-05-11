@@ -124,7 +124,7 @@
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nv">plugins</span><span class="o">=</span><span class="o">(</span>
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nv">plugins</span><span class="o">=(</span>
   git
   zsh-autosuggestions
 <span class="o">)</span>
@@ -171,12 +171,12 @@
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">local</span> <span class="nv">ret_status</span><span class="o">=</span><span class="s2">&#34;</span><span class="s2">%(?:%{</span><span class="nv">$fg_bold</span><span class="s2">[green]%}➜ :%{</span><span class="nv">$fg_bold</span><span class="s2">[red]%}➜ )</span><span class="s2">&#34;</span>
-<span class="nv">PROMPT</span><span class="o">=</span><span class="s1">&#39;${ret_status} %{$fg[cyan]%}%~%{$reset_color%} $(git_prompt_info)&#39;</span><span class="s1">$&#39;\n&#39;</span><span class="s1">&#39;$ &#39;</span>
-<span class="nv">ZSH_THEME_GIT_PROMPT_PREFIX</span><span class="o">=</span><span class="s2">&#34;</span><span class="s2">%{</span><span class="nv">$fg_bold</span><span class="s2">[blue]%}git:(%{</span><span class="nv">$fg</span><span class="s2">[red]%}</span><span class="s2">&#34;</span>
-<span class="nv">ZSH_THEME_GIT_PROMPT_SUFFIX</span><span class="o">=</span><span class="s2">&#34;</span><span class="s2">%{</span><span class="nv">$reset_color</span><span class="s2">%} </span><span class="s2">&#34;</span>
-<span class="nv">ZSH_THEME_GIT_PROMPT_DIRTY</span><span class="o">=</span><span class="s2">&#34;</span><span class="s2">%{</span><span class="nv">$fg</span><span class="s2">[blue]%}) %{</span><span class="nv">$fg</span><span class="s2">[yellow]%}✗</span><span class="s2">&#34;</span>
-<span class="nv">ZSH_THEME_GIT_PROMPT_CLEAN</span><span class="o">=</span><span class="s2">&#34;</span><span class="s2">%{</span><span class="nv">$fg</span><span class="s2">[blue]%}) %{</span><span class="nv">$fg</span><span class="s2">[green]%}✔</span><span class="s2">&#34;</span>
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">local</span> <span class="nv">ret_status</span><span class="o">=</span><span class="s2">&#34;%(?:%{</span><span class="nv">$fg_bold</span><span class="s2">[green]%}➜ :%{</span><span class="nv">$fg_bold</span><span class="s2">[red]%}➜ )&#34;</span>
+<span class="nv">PROMPT</span><span class="o">=</span><span class="s1">&#39;${ret_status} %{$fg[cyan]%}%~%{$reset_color%} $(git_prompt_info)&#39;$&#39;\n&#39;&#39;$ &#39;</span>
+<span class="nv">ZSH_THEME_GIT_PROMPT_PREFIX</span><span class="o">=</span><span class="s2">&#34;%{</span><span class="nv">$fg_bold</span><span class="s2">[blue]%}git:(%{</span><span class="nv">$fg</span><span class="s2">[red]%}&#34;</span>
+<span class="nv">ZSH_THEME_GIT_PROMPT_SUFFIX</span><span class="o">=</span><span class="s2">&#34;%{</span><span class="nv">$reset_color</span><span class="s2">%} &#34;</span>
+<span class="nv">ZSH_THEME_GIT_PROMPT_DIRTY</span><span class="o">=</span><span class="s2">&#34;%{</span><span class="nv">$fg</span><span class="s2">[blue]%}) %{</span><span class="nv">$fg</span><span class="s2">[yellow]%}✗&#34;</span>
+<span class="nv">ZSH_THEME_GIT_PROMPT_CLEAN</span><span class="o">=</span><span class="s2">&#34;%{</span><span class="nv">$fg</span><span class="s2">[blue]%}) %{</span><span class="nv">$fg</span><span class="s2">[green]%}✔&#34;</span>
 </code></pre></td></tr></table>
 </div>
 </div></div><div class="post-footer" id="post-footer">

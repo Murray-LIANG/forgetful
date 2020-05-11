@@ -28,7 +28,7 @@
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
       <guid>https://murray-liang.github.io/forgetful/2020/02/network-forward-and-reverse-proxy/</guid>
-      <description>Forward Proxy: Acting on behalf of a requestor (or service consumer) Reverse Proxy: Acting on behalf of service/content producer.  </description>
+      <description>Forward Proxy: Acting on behalf of a requestor (or service consumer) Reverse Proxy: Acting on behalf of service/content producer. </description>
     </item>
     
     <item>
@@ -59,7 +59,7 @@ Classifying IPv6 Addresses IPv6 has three types of addresses:
       <guid>https://murray-liang.github.io/forgetful/2020/02/kubernetes-overlay-network/</guid>
       <description>Overlay networks such as vxlan or ipsec encapsulate the packet into another packet. This makes entities addressable that are outside of the scope of another machine.
 Any solution on L2 or L3 makes a pod addressable on the network. This means a pod is reachable not just within the Docker network, but is directly addressable from outside the Docker network. These could be public or private IP addresses.
-The way of route and iptables described here is a L3 solution (not a overlay networking) making a pod addressable on the network.</description>
+The way of route and iptables described hereis a L3 solution (not a overlay networking) making a pod addressable on the network.</description>
     </item>
     
     <item>
@@ -96,7 +96,7 @@ Packages Forwarding   PC1要访问 www.google.com，需要先知道对应IP地�
       
       <guid>https://murray-liang.github.io/forgetful/2020/02/openvswitch-auto-start/</guid>
       <description>The bridges of ovs are down after reboot the host. We need to run the commands manually to bring the bridges up and set IP to it.
-This page gives out the workaround.
+This pagegives out the workaround.
 Here lists the summary of the workaround.
 It writes Ubuntu16.10 fixes this issue. So this is for 16.04.
  Install openvswitch-switch tool. NOTE: it will remove all the bridges which were created by kolla-ansible. Edit the config file: /lib/systemd/system/openvswitch-nonetwork.</description>
@@ -108,7 +108,7 @@ It writes Ubuntu16.10 fixes this issue. So this is for 16.04.
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
       <guid>https://murray-liang.github.io/forgetful/2020/02/osp14-configure-network-for-manila/</guid>
-      <description>OSP Network Topology  Environment The undercloud is 192.168.1.202.
+      <description>OSP Network Topology Environment The undercloud is 192.168.1.202.
 The overcloud is deployed on ubuntu-server2 (compute node) and ubuntu-server10 (control node).
 Ethernet interfaces on ubuntu-server10 are:
  enp8s0f0: enp8s0f1: eth1, used for overcloud tenant network. enp8s0f2: eth0, used for OSP Provision/Ctrl Plane network. eno1: eth2, not used. enp8s0f3: ens2f1: eth3, connected to br-ex, used to External network.  Ethernet interfaces on ubuntu-server2 are:

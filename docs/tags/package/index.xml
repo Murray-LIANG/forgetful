@@ -20,7 +20,7 @@
       <guid>https://murray-liang.github.io/forgetful/2020/02/openstack-package-storops-rpm/</guid>
       <description>Install a RHEL VM.   If using qcow2 image, the default user is cloud-user. Use the OpenStack ssh key to login.
   Create a new user stack with password welcome.
-  1 2 3  $ sudo useradd stack $ sudo passwd stack $ sudo visudo   Register subscription 1 2  $ sudo subscription-manager register $ sudo subscription-manager attach --auto   Install the basic packages like rpm-build 1  $ sudo yum install -y rpm-build git wget python-pip   NOTE: need to upgrade the setuptools using pip.</description>
+  1 2 3  $ sudo stack $ sudo passwd stack $ sudo visudo   Register subscription 1 2  $ sudo subscription-manager register $ sudo subscription-manager attach --auto   Install the basic packages like rpm-build 1  $ sudo yum install -y rpm-build git wget python-pip   NOTE: need to upgrade the setuptools using pip.</description>
     </item>
     
   </channel>

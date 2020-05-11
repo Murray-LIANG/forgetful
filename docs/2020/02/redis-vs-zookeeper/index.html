@@ -114,11 +114,11 @@ fast moving data sets. The downside is that, running on one server, if it fails 
 lose write access until another server takes it&rsquo;s place. Replacing the server is a manual
 operation unless you automate it yourself. (You can still get read access to your data if
 you configure a slave instance).</p>
-<p>Zookeeper also features immediately consistency. It&rsquo;s not half as quick, but it will
-recover automatically (where possible) in the face of failure, so if you need continuous
+<p>Zookeeper also features immediately consistency. It&rsquo;s not half as quick, but it will 
+recover automatically (where possible) in the face of failure, so if you need continuous 
 write access, even when your servers fail on you then you&rsquo;ll want to use Zookeeper.</p>
-<p>My advice is, use zookeeper for <strong>coordination</strong>: tracking which nodes are active, leader
-election amongst a group, etc. Use redis for datasets that need fast writes but where the
+<p>My advice is, use zookeeper for <strong>coordination</strong>: tracking which nodes are active, leader 
+election amongst a group, etc. Use redis for datasets that need fast writes but where the 
 occasional outage isn&rsquo;t a disaster. Hit counters for web pages for example.</p>
 <a class="post-dummy-target" id="for-distributed-lock"></a><h2>For Distributed Lock</h2>
 <p><em>Copied from Quora</em></p>
