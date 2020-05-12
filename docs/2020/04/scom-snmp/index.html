@@ -35,7 +35,7 @@
                 "url": "https:\/\/murray-liang.github.io\/forgetful\/cover.png",
                 "width":  800 ,
                 "height":  600 
-            },"genre": "posts","keywords": "scom, snmp","wordcount":  1124 ,
+            },"genre": "posts","keywords": "scom, snmp","wordcount":  1148 ,
         "url": "https:\/\/murray-liang.github.io\/forgetful\/2020\/04\/scom-snmp\/","datePublished": "2020-04-29T10:50:52\x2b08:00","dateModified": "2020-04-29T10:51:12\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "murray",
@@ -83,7 +83,7 @@
                     <i class="fas fa-user-circle fa-fw"></i>Murray-LIANG
                 </a>&nbsp;</div>
             <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-04-29>2020-04-29</time>&nbsp;
-                <i class="fas fa-pencil-alt fa-fw"></i>about 1124 words&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 1148 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>6 min&nbsp;</div>
         </div><div class="post-toc" id="post-toc">
                 <h2 class="post-toc-title">Contents</h2>
@@ -203,6 +203,7 @@
 <li>SCOM probably handles the trap event by the source IP address and drops all the trap event it doesn&rsquo;t know.</li>
 <li>It has nothing to do with the engine id. Because Unity sends traps with it engine id in, but SCOM didn&rsquo;t handle it. And snmp agent didn&rsquo;t send the engine id (<code>-e</code> option of <code>snmptrap</code> command), SCOM handled it.</li>
 <li>We could run snmp-agent in a container on Unity. Then SCOM could snmpget to Unity and handle the trap from Unity perfectly.</li>
+<li>An alternative way is to setup a snmptrapd in snmp-agent and let snmp-agent redirect the trap to SCOM when it receives traps from Unity.</li>
 </ol>
 <a class="post-dummy-target" id="misc"></a><h3>Misc</h3>
 <ol>

@@ -51,6 +51,7 @@
 1. SCOM probably handles the trap event by the source IP address and drops all the trap event it doesn't know.
 2. It has nothing to do with the engine id. Because Unity sends traps with it engine id in, but SCOM didn't handle it. And snmp agent didn't send the engine id (`-e` option of `snmptrap` command), SCOM handled it.
 3. We could run snmp-agent in a container on Unity. Then SCOM could snmpget to Unity and handle the trap from Unity perfectly.
+4. An alternative way is to setup a snmptrapd in snmp-agent and let snmp-agent redirect the trap to SCOM when it receives traps from Unity. 
 
 
 ### Misc
