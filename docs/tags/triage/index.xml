@@ -2,22 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>triage on Forgetful :/</title>
-    <link>https://murray-liang.github.io/forgetful/tags/triage/</link>
+    <link>http://localhost:1313/forgetful/tags/triage/</link>
     <description>Recent content in triage on Forgetful :/</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
-    
-	<atom:link href="https://murray-liang.github.io/forgetful/tags/triage/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate><atom:link href="http://localhost:1313/forgetful/tags/triage/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>OpenStack Triage Tips</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/openstack-triage-tips/</link>
+      <link>http://localhost:1313/forgetful/2020/02/openstack-triage-tips/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/openstack-triage-tips/</guid>
+      <guid>http://localhost:1313/forgetful/2020/02/openstack-triage-tips/</guid>
       <description>Get the versions of OpenStack and Drivers 1 2 3 4 5 6 7  $ find . -name &amp;#34;*&amp;#34; -type f | xargs grep -n -P -i &amp;#34;starting.*&amp;#34; | grep -v &amp;#34;eventlet&amp;#34; /var/log/cinder/scheduler.log:4490:2018-03-03 00:13:06.689 3581 INFO cinder.service [-] Starting cinder-scheduler node (version 9.1.4) /var/log/cinder/scheduler.log:8000:2018-09-06 21:04:58.062 974844 INFO cinder.service [-] Starting cinder-scheduler node (version 9.1.4) /var/log/cinder/volume.log:25398:2018-09-06 21:03:36.372 969733 INFO cinder.service [-] Starting cinder-volume node (version 9.1.4) /var/log/cinder/volume.log:25434:2018-09-06 21:03:36.406 969733 INFO cinder.</description>
     </item>
     

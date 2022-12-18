@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
+    <head><script src="/forgetful/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=forgetful/livereload" data-no-instant defer></script>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>OpenStack Nova Detach Process Logs of Newton Version | Forgetful :/</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noodp" />
-<meta name="Description" content="Notes about everything"><link rel="prev" href="https://murray-liang.github.io/forgetful/2020/02/openstack-ospt-tips/" /><link rel="next" href="https://murray-liang.github.io/forgetful/2020/02/openstack-attach-logs/" /><link rel="canonical" href="https://murray-liang.github.io/forgetful/2020/02/openstack-detach-logs/" />
+<meta name="Description" content="Notes about everything"><link rel="prev" href="http://localhost:1313/forgetful/2020/02/openstack-ospt-tips/" /><link rel="next" href="http://localhost:1313/forgetful/2020/02/openstack-attach-logs/" /><link rel="canonical" href="http://localhost:1313/forgetful/2020/02/openstack-detach-logs/" />
 <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -16,9 +16,10 @@
 <meta name="theme-color" content="#ffffff"><meta property="og:title" content="OpenStack Nova Detach Process Logs of Newton Version" />
 <meta property="og:description" content="1. Get connector properties (219ms) 1 2 3 4 5 6 7  get_connector_properties: call { &#39;execute&#39;: None, &#39;my_ip&#39;: &#39;172.16.1.11&#39;, &#39;enforce_multipath&#39;: True, &#39;host&#39;: &#39;newton&#39;, &#39;root_helper&#39;: &#39;sudo nova-rootwrap /etc/nova/rootwrap.conf&#39;, &#39;multipath&#39;: True}   1.1 Check multipathd status, if multipath-tools is not installed or down, exception raises 1 2 3 4 5 6  $ multipathd show status path checker states: up 3 paths: 2 busy: False   1.2 Get the initiator name 1 2 3 4 5 6 7  $ cat /etc/iscsi/initiatorname." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://murray-liang.github.io/forgetful/2020/02/openstack-detach-logs/" />
+<meta property="og:url" content="http://localhost:1313/forgetful/2020/02/openstack-detach-logs/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2020-02-10T16:37:31+08:00" />
 <meta property="article:modified_time" content="2020-02-10T16:37:31+08:00" />
+
 <script type="application/ld+json">
     {
         "@context": "http://schema.org",
@@ -26,19 +27,19 @@
         "headline": "OpenStack Nova Detach Process Logs of Newton Version",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/murray-liang.github.io\/forgetful\/2020\/02\/openstack-detach-logs\/"
+            "@id": "http:\/\/localhost:1313\/forgetful\/2020\/02\/openstack-detach-logs\/"
         },"image": {
                 "@type": "ImageObject",
-                "url": "https:\/\/murray-liang.github.io\/forgetful\/cover.png",
+                "url": "http:\/\/localhost:1313\/forgetful\/cover.png",
                 "width":  800 ,
                 "height":  600 
             },"genre": "posts","keywords": "openstack, nova, cinder, detach","wordcount":  707 ,
-        "url": "https:\/\/murray-liang.github.io\/forgetful\/2020\/02\/openstack-detach-logs\/","datePublished": "2020-02-10T16:37:31\x2b08:00","dateModified": "2020-02-10T16:37:31\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+        "url": "http:\/\/localhost:1313\/forgetful\/2020\/02\/openstack-detach-logs\/","datePublished": "2020-02-10T16:37:31\u002b08:00","dateModified": "2020-02-10T16:37:31\u002b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "murray",
                 "logo": {
                 "@type": "ImageObject",
-                "url": "https:\/\/murray-liang.github.io\/forgetful\/logo.png",
+                "url": "http:\/\/localhost:1313\/forgetful\/logo.png",
                 "width":  127 ,
                 "height":  40 
                 }
@@ -55,22 +56,22 @@
         </script><div class="wrapper"><nav class="navbar">
     <div class="navbar-container">
         <div class="navbar-header animated bounceIn">
-            <a href="https://murray-liang.github.io/forgetful">Forgetful :/</a>
+            <a href="http://localhost:1313/forgetful/">Forgetful :/</a>
         </div>
-        <div class="navbar-menu"><a class="menu-item" href="https://murray-liang.github.io/forgetful/posts" title="">Posts</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/tags" title="">Tags</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/categories" title="">Categories</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"><i class="fas fa-language fa-fw"></i></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        <div class="navbar-menu"><a class="menu-item" href="http://localhost:1313/forgetful/posts" title="">Posts</a><a class="menu-item" href="http://localhost:1313/forgetful/tags" title="">Tags</a><a class="menu-item" href="http://localhost:1313/forgetful/categories" title="">Categories</a><a class="menu-item" href="http://localhost:1313/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"><i class="fas fa-language fa-fw"></i></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
         </div>
     </div>
 </nav><nav class="navbar-mobile">
     <div class="navbar-container">
         <div class="navbar-header">
             <div class="navbar-header-title animated bounceIn">
-                <a href="https://murray-liang.github.io/forgetful">Forgetful :/</a>
+                <a href="http://localhost:1313/forgetful/">Forgetful :/</a>
             </div>
             <div class="menu-toggle" id="menu-toggle">
                 <span></span><span></span><span></span>
             </div>
         </div>
-        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://murray-liang.github.io/forgetful/posts" title="">Posts</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/tags" title="">Tags</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/categories" title="">Categories</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="http://localhost:1313/forgetful/posts" title="">Posts</a><a class="menu-item" href="http://localhost:1313/forgetful/tags" title="">Tags</a><a class="menu-item" href="http://localhost:1313/forgetful/categories" title="">Categories</a><a class="menu-item" href="http://localhost:1313/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
         </div>
     </div>
 </nav>
@@ -183,7 +184,7 @@
             </div><div class="post-content"><a class="post-dummy-target" id="1-get-connector-properties-219ms"></a><h2>1. Get connector properties (219ms)</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -192,7 +193,7 @@
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">get_connector_properties: call <span class="o">{</span>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">get_connector_properties: call <span class="o">{</span>
     <span class="s1">&#39;execute&#39;</span>: None,
     <span class="s1">&#39;my_ip&#39;</span>: <span class="s1">&#39;172.16.1.11&#39;</span>,
     <span class="s1">&#39;enforce_multipath&#39;</span>: True,
@@ -204,7 +205,7 @@
 </div><a class="post-dummy-target" id="11-check-multipathd-status-if-multipath-tools-is-not-installed-or-down-exception-raises"></a><h3>1.1 Check <code>multipathd</code> status, if <code>multipath-tools</code> is not installed or down, exception raises</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -212,7 +213,7 @@
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">$ multipathd show status
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ multipathd show status
 path checker states:
 up                  <span class="m">3</span>
 
@@ -223,7 +224,7 @@ busy: False
 </div><a class="post-dummy-target" id="12-get-the-initiator-name"></a><h3>1.2 Get the initiator name</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -232,7 +233,7 @@ busy: False
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">$ cat /etc/iscsi/initiatorname.iscsi
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ cat /etc/iscsi/initiatorname.iscsi
 <span class="c1">## DO NOT EDIT OR REMOVE THIS FILE!</span>
 <span class="c1">## If you remove this file, the iSCSI daemon will not start.</span>
 <span class="c1">## If you change the InitiatorName, existing access control lists</span>
@@ -244,11 +245,11 @@ busy: False
 </div><a class="post-dummy-target" id="13-get-the-fc-info"></a><h3>1.3 Get the fc info</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">systool -c fc_host -v
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">systool -c fc_host -v
 Error opening class fc_host
 </code></pre></td></tr></table>
 </div>
@@ -258,7 +259,7 @@ Error opening class fc_host
 <p>The xml used by <code>libvirt</code> to detach device from VM</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -266,7 +267,7 @@ Error opening class fc_host
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;disk</span> <span class="na">type=</span><span class="s">&#34;block&#34;</span> <span class="na">device=</span><span class="s">&#34;disk&#34;</span><span class="nt">&gt;</span>
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;disk</span> <span class="na">type=</span><span class="s">&#34;block&#34;</span> <span class="na">device=</span><span class="s">&#34;disk&#34;</span><span class="nt">&gt;</span>
   <span class="nt">&lt;driver</span> <span class="na">name=</span><span class="s">&#34;qemu&#34;</span> <span class="na">type=</span><span class="s">&#34;raw&#34;</span> <span class="na">cache=</span><span class="s">&#34;none&#34;</span> <span class="na">io=</span><span class="s">&#34;native&#34;</span><span class="nt">/&gt;</span>
   <span class="nt">&lt;source</span> <span class="na">dev=</span><span class="s">&#34;/dev/disk/by-id/dm-uuid-mpath-36006016015e03a00ab2df25bb82d0ea9&#34;</span><span class="nt">/&gt;</span>
   <span class="nt">&lt;target</span> <span class="na">bus=</span><span class="s">&#34;virtio&#34;</span> <span class="na">dev=</span><span class="s">&#34;vdb&#34;</span><span class="nt">/&gt;</span>
@@ -278,7 +279,7 @@ Error opening class fc_host
 <a class="post-dummy-target" id="4-calling-os-brick-to-detach-iscsi-volume-790ms"></a><h2>4. Calling os-brick to detach iSCSI volume (790ms)</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -302,7 +303,7 @@ Error opening class fc_host
 </span><span class="lnt">22
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">disconnect_volume</span><span class="p">:</span> <span class="n">call</span> <span class="p">{</span>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="n">disconnect_volume</span><span class="p">:</span> <span class="n">call</span> <span class="p">{</span>
     <span class="s1">&#39;args&#39;</span><span class="p">:</span> <span class="p">(</span>
         <span class="o">&lt;</span><span class="n">os_brick</span><span class="o">.</span><span class="n">initiator</span><span class="o">.</span><span class="n">connectors</span><span class="o">.</span><span class="n">iscsi</span><span class="o">.</span><span class="n">ISCSIConnector</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x7fe51cd174d0</span><span class="o">&gt;</span><span class="p">,</span>
         <span class="p">{</span>
@@ -311,9 +312,9 @@ Error opening class fc_host
                 <span class="sa">u</span><span class="s1">&#39;iqn.1992-04.com.emc:cx.fnm00150600267.a0&#39;</span><span class="p">,</span>
                 <span class="sa">u</span><span class="s1">&#39;iqn.1992-04.com.emc:cx.fnm00150600267.b0&#39;</span> <span class="p">],</span>
             <span class="sa">u</span><span class="s1">&#39;device_path&#39;</span><span class="p">:</span> <span class="sa">u</span><span class="s1">&#39;/dev/disk/by-id/dm-uuid-mpath-36006016015e03a00ab2df25bb82d0ea9&#39;</span><span class="p">,</span>
-            <span class="sa">u</span><span class="s1">&#39;target_discovered&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
-            <span class="sa">u</span><span class="s1">&#39;encrypted&#39;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
-            <span class="sa">u</span><span class="s1">&#39;qos_specs&#39;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="sa">u</span><span class="s1">&#39;target_discovered&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="sa">u</span><span class="s1">&#39;encrypted&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="sa">u</span><span class="s1">&#39;qos_specs&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
             <span class="sa">u</span><span class="s1">&#39;target_iqn&#39;</span><span class="p">:</span> <span class="sa">u</span><span class="s1">&#39;iqn.1992-04.com.emc:cx.fnm00150600267.a0&#39;</span><span class="p">,</span>
             <span class="sa">u</span><span class="s1">&#39;target_portals&#39;</span><span class="p">:</span> <span class="p">[</span><span class="sa">u</span><span class="s1">&#39;10.245.47.95: 3260&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;10.245.47.96: 3260&#39;</span><span class="p">],</span>
             <span class="sa">u</span><span class="s1">&#39;volume_id&#39;</span><span class="p">:</span> <span class="sa">u</span><span class="s1">&#39;5ed0cc5c-158c-4857-9bd5-3556884a23f0&#39;</span><span class="p">,</span> 
@@ -321,7 +322,7 @@ Error opening class fc_host
             <span class="sa">u</span><span class="s1">&#39;access_mode&#39;</span><span class="p">:</span> <span class="sa">u</span><span class="s1">&#39;rw&#39;</span><span class="p">,</span>
             <span class="sa">u</span><span class="s1">&#39;target_portal&#39;</span><span class="p">:</span> <span class="sa">u</span><span class="s1">&#39;10.245.47.95: 3260&#39;</span>
         <span class="p">},</span>
-        <span class="bp">None</span><span class="p">),</span>
+        <span class="kc">None</span><span class="p">),</span>
     <span class="s1">&#39;kwargs&#39;</span><span class="p">:</span> <span class="p">{}</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
@@ -330,7 +331,7 @@ Error opening class fc_host
 <a class="post-dummy-target" id="42-rescan-multipath"></a><h3>4.2 Rescan multipath</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -339,7 +340,7 @@ Error opening class fc_host
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">$ multipath -r
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ multipath -r
 reload: 36006016015e03a00ab2df25bb82d0ea9 undef DGC,VRAID
 <span class="nv">size</span><span class="o">=</span>3.0G <span class="nv">features</span><span class="o">=</span><span class="s1">&#39;1 queue_if_no_path&#39;</span> <span class="nv">hwhandler</span><span class="o">=</span><span class="s1">&#39;1 emc&#39;</span> <span class="nv">wp</span><span class="o">=</span>undef
 <span class="p">|</span>-+- <span class="nv">policy</span><span class="o">=</span><span class="s1">&#39;round-robin 0&#39;</span> <span class="nv">prio</span><span class="o">=</span><span class="m">50</span> <span class="nv">status</span><span class="o">=</span>undef
@@ -351,7 +352,7 @@ reload: 36006016015e03a00ab2df25bb82d0ea9 undef DGC,VRAID
 </div><a class="post-dummy-target" id="43-get-the-multipath-wwn"></a><h3>4.3 Get the multipath WWN</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -376,7 +377,7 @@ reload: 36006016015e03a00ab2df25bb82d0ea9 undef DGC,VRAID
 </span><span class="lnt">23
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">$ /lib/udev/scsi_id --page 0x83 --whitelisted /dev/disk/by-path/ip-10.245.47.95:3260-iscsi-iqn.1992-04.com.emc:cx.fnm00150600267.a0-lun-197
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ /lib/udev/scsi_id --page 0x83 --whitelisted /dev/disk/by-path/ip-10.245.47.95:3260-iscsi-iqn.1992-04.com.emc:cx.fnm00150600267.a0-lun-197
 36006016015e03a00ab2df25bb82d0ea9
 
 <span class="c1"># Find Multipath device file for volume WWN 36006016015e03a00ab2df25bb82d0ea9</span>
@@ -404,7 +405,7 @@ loop0                              <span class="m">0</span>
 </div><a class="post-dummy-target" id="44-remove-multipath-device-devsdd"></a><h3>4.4 Remove multipath device <code>/dev/sdd</code></h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -415,7 +416,7 @@ loop0                              <span class="m">0</span>
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">$ multipath -l /dev/sdd
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ multipath -l /dev/sdd
 36006016015e03a00ab2df25bb82d0ea9 dm-0 DGC,VRAID
 <span class="nv">size</span><span class="o">=</span>3.0G <span class="nv">features</span><span class="o">=</span><span class="s1">&#39;2 queue_if_no_path retain_attached_hw_handler&#39;</span> <span class="nv">hwhandler</span><span class="o">=</span><span class="s1">&#39;1 emc&#39;</span> <span class="nv">wp</span><span class="o">=</span>rw
 <span class="p">|</span>-+- <span class="nv">policy</span><span class="o">=</span><span class="s1">&#39;round-robin 0&#39;</span> <span class="nv">prio</span><span class="o">=</span><span class="m">0</span> <span class="nv">status</span><span class="o">=</span>active
@@ -429,18 +430,18 @@ loop0                              <span class="m">0</span>
 </div><a class="post-dummy-target" id="45-flush-multipath-device-36006016015e03a00ab2df25bb82d0ea9"></a><h3>4.5 Flush multipath device 36006016015e03a00ab2df25bb82d0ea9</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">$ multipath -f 36006016015e03a00ab2df25bb82d0ea9
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ multipath -f 36006016015e03a00ab2df25bb82d0ea9
 
 </code></pre></td></tr></table>
 </div>
 </div><a class="post-dummy-target" id="46-get-multipath-luns-to-remove"></a><h3>4.6 Get multipath LUNs to remove</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -454,7 +455,7 @@ loop0                              <span class="m">0</span>
 </span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">multipath LUNs to remove 
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">multipath LUNs to remove 
 <span class="o">[</span>
     <span class="o">{</span><span class="s1">&#39;device&#39;</span>: u<span class="s1">&#39;/dev/sdd&#39;</span>,
      <span class="s1">&#39;host&#39;</span>: u<span class="s1">&#39;2&#39;</span>,
@@ -471,50 +472,50 @@ loop0                              <span class="m">0</span>
 </div><a class="post-dummy-target" id="47-flushing-io-for-device-devsdd"></a><h3>4.7 Flushing IO for device <code>/dev/sdd</code></h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">$ blockdev --flushbufs /dev/sdd
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ blockdev --flushbufs /dev/sdd
 </code></pre></td></tr></table>
 </div>
 </div><a class="post-dummy-target" id="48-remove-scsi-device-devsdd"></a><h3>4.8 Remove SCSI device <code>/dev/sdd</code></h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">$ tee -a /sys/block/sdd/device/delete
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ tee -a /sys/block/sdd/device/delete
 </code></pre></td></tr></table>
 </div>
 </div><a class="post-dummy-target" id="49-flushing-io-for-device-devsdc"></a><h3>4.9 Flushing IO for device <code>/dev/sdc</code></h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">$ blockdev --flushbufs /dev/sdc
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ blockdev --flushbufs /dev/sdc
 </code></pre></td></tr></table>
 </div>
 </div><a class="post-dummy-target" id="410-remove-scsi-device-devsdc"></a><h3>4.10 Remove SCSI device <code>/dev/sdc</code></h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">$ tee -a /sys/block/sdc/device/delete
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ tee -a /sys/block/sdc/device/delete
 </code></pre></td></tr></table>
 </div>
 </div><a class="post-dummy-target" id="411-disconnect-multipath-device-devdiskby-iddm-uuid-mpath-36006016015e03a00ab2df25bb82d0ea9"></a><h3>4.11 Disconnect multipath device /dev/disk/by-id/dm-uuid-mpath-36006016015e03a00ab2df25bb82d0ea9</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">$ multipath -ll
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ multipath -ll
 <span class="c1"># no output</span>
 
 $ multipath -r
@@ -527,14 +528,14 @@ $ multipath -r
 <a class="post-dummy-target" id="rest-request"></a><h3>REST request</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">$ curl -g -i -X POST <span class="se">\
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ curl -g -i -X POST <span class="se">\
 </span><span class="se"></span>    http://172.16.1.11:8776/v2/ca2fbd57936b45bf9abdb536dc152a6d/volumes/5ed0cc5c-158c-4857-9bd5-3556884a23f0/action <span class="se">\
 </span><span class="se"></span>    -H <span class="s2">&#34;User-Agent: python-cinderclient&#34;</span> -H <span class="s2">&#34;Content-Type: application/json&#34;</span> <span class="se">\
 </span><span class="se"></span>    -H <span class="s2">&#34;Accept: application/json&#34;</span> -H <span class="s2">&#34;X-Auth-Token: {SHA1}deea2e5c2c82807813e48cc3ce629c6ad98c9a7a&#34;</span> <span class="se">\
@@ -545,14 +546,14 @@ $ multipath -r
 <a class="post-dummy-target" id="rest-request-1"></a><h3>REST request</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">$ curl -g -i -X POST <span class="se">\
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ curl -g -i -X POST <span class="se">\
 </span><span class="se"></span>    http://172.16.1.11:8776/v2/ca2fbd57936b45bf9abdb536dc152a6d/volumes/5ed0cc5c-158c-4857-9bd5-3556884a23f0/action <span class="se">\
 </span><span class="se"></span>    -H <span class="s2">&#34;User-Agent: python-cinderclient&#34;</span> -H <span class="s2">&#34;Content-Type: application/json&#34;</span> <span class="se">\
 </span><span class="se"></span>    -H <span class="s2">&#34;Accept: application/json&#34;</span> -H <span class="s2">&#34;X-Auth-Token: {SHA1}deea2e5c2c82807813e48cc3ce629c6ad98c9a7a&#34;</span> <span class="se">\
@@ -575,21 +576,21 @@ $ multipath -r
 
     <div class="post-info-more">
         <section><span class="tag">
-                        <a href="https://murray-liang.github.io/forgetful/tags/openstack/"><i class="fas fa-tag fa-fw"></i>&nbsp;openstack</a>&nbsp;
+                        <a href="http://localhost:1313/forgetful/tags/openstack/"><i class="fas fa-tag fa-fw"></i>&nbsp;openstack</a>&nbsp;
                     </span><span class="tag">
-                        <a href="https://murray-liang.github.io/forgetful/tags/nova/"><i class="fas fa-tag fa-fw"></i>&nbsp;nova</a>&nbsp;
+                        <a href="http://localhost:1313/forgetful/tags/nova/"><i class="fas fa-tag fa-fw"></i>&nbsp;nova</a>&nbsp;
                     </span><span class="tag">
-                        <a href="https://murray-liang.github.io/forgetful/tags/cinder/"><i class="fas fa-tag fa-fw"></i>&nbsp;cinder</a>&nbsp;
+                        <a href="http://localhost:1313/forgetful/tags/cinder/"><i class="fas fa-tag fa-fw"></i>&nbsp;cinder</a>&nbsp;
                     </span><span class="tag">
-                        <a href="https://murray-liang.github.io/forgetful/tags/detach/"><i class="fas fa-tag fa-fw"></i>&nbsp;detach</a>&nbsp;
+                        <a href="http://localhost:1313/forgetful/tags/detach/"><i class="fas fa-tag fa-fw"></i>&nbsp;detach</a>&nbsp;
                     </span></section>
         <section>
-            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://murray-liang.github.io/forgetful">Home</a></span>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="http://localhost:1313/forgetful/">Home</a></span>
         </section>
     </div>
 
-    <div class="post-nav"><a href="https://murray-liang.github.io/forgetful/2020/02/openstack-ospt-tips/" class="prev" rel="prev" title="OpenStack ospt Tips"><i class="fas fa-angle-left fa-fw"></i>OpenStack ospt Tips</a>
-            <a href="https://murray-liang.github.io/forgetful/2020/02/openstack-attach-logs/" class="next" rel="next" title="OpenStack Nova Attach Process Logs of Newton Version">OpenStack Nova Attach Process Logs of Newton Version<i class="fas fa-angle-right fa-fw"></i></a></div>
+    <div class="post-nav"><a href="http://localhost:1313/forgetful/2020/02/openstack-ospt-tips/" class="prev" rel="prev" title="OpenStack ospt Tips"><i class="fas fa-angle-left fa-fw"></i>OpenStack ospt Tips</a>
+            <a href="http://localhost:1313/forgetful/2020/02/openstack-attach-logs/" class="next" rel="next" title="OpenStack Nova Attach Process Logs of Newton Version">OpenStack Nova Attach Process Logs of Newton Version<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 <div class="post-comment"></div>
     </article></div>
@@ -597,7 +598,7 @@ $ multipath -r
     <div class="copyright"><div class="copyright-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
         </div>
 
-        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/Murray-LIANG" target="_blank">Murray-LIANG</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/Murray-LIANG" target="_blank">Murray-LIANG</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
     </div>
 </footer>
 </div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>

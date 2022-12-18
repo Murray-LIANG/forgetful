@@ -2,22 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>erasure code on Forgetful :/</title>
-    <link>https://murray-liang.github.io/forgetful/tags/erasure-code/</link>
+    <link>http://localhost:1313/forgetful/tags/erasure-code/</link>
     <description>Recent content in erasure code on Forgetful :/</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
-    
-	<atom:link href="https://murray-liang.github.io/forgetful/tags/erasure-code/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate><atom:link href="http://localhost:1313/forgetful/tags/erasure-code/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Erasure Code</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/erasure-code/</link>
+      <link>http://localhost:1313/forgetful/2020/02/erasure-code/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/erasure-code/</guid>
+      <guid>http://localhost:1313/forgetful/2020/02/erasure-code/</guid>
       <description>通信行业中有三种编码容错技术：
  检错码：仅具备识别错码功能 而无纠正错码功能； 纠错码：不仅具备识别错码功能，同时具备纠正错码功能； 纠删码：则不仅具备识别错码和纠正错码的功能，而且当错码超过纠正范围时，还可把无法纠错的信息删除。  纠删码主要应用在网络传输中避免包的丢失，存储系统利用它来提高存储可靠性。相比多副本复制而言，纠删码能够以更小的数据冗余度获得更高数据可靠性，但编码方式较复杂，需要大量计算。 纠删码只能容忍数据丢失，无法容忍数据篡改，纠删码正是得名与此。
 目前，纠删码技术在分布式存储系统中的应用主要有三类：

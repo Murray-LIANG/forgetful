@@ -2,23 +2,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>lun on Forgetful :/</title>
-    <link>https://murray-liang.github.io/forgetful/tags/lun/</link>
+    <link>http://localhost:1313/forgetful/tags/lun/</link>
     <description>Recent content in lun on Forgetful :/</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
-    
-	<atom:link href="https://murray-liang.github.io/forgetful/tags/lun/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate><atom:link href="http://localhost:1313/forgetful/tags/lun/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>OpenStack VNX Driver LUN SP Ownership Load Balance</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/openstack-vnx-sp-auto-assign/</link>
+      <link>http://localhost:1313/forgetful/2020/02/openstack-vnx-sp-auto-assign/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/openstack-vnx-sp-auto-assign/</guid>
-      <description>There is an option -aa to load balance the ownership of LUNs. Some answers on EMC community https://community.emc.com/thread/114798?start=0&amp;amp;tstart=0</description>
+      <guid>http://localhost:1313/forgetful/2020/02/openstack-vnx-sp-auto-assign/</guid>
+      <description>There is an option -aa to load balance the ownership of LUNs. Some answers on EMC community https://community.emc.com/thread/114798?start=0&amp;tstart=0 </description>
     </item>
     
   </channel>

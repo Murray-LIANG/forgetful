@@ -2,22 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>csi on Forgetful :/</title>
-    <link>https://murray-liang.github.io/forgetful/tags/csi/</link>
+    <link>http://localhost:1313/forgetful/tags/csi/</link>
     <description>Recent content in csi on Forgetful :/</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
-    
-	<atom:link href="https://murray-liang.github.io/forgetful/tags/csi/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate><atom:link href="http://localhost:1313/forgetful/tags/csi/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Kubernetes and CSI</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/kubernetes-and-csi/</link>
+      <link>http://localhost:1313/forgetful/2020/02/kubernetes-and-csi/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/kubernetes-and-csi/</guid>
+      <guid>http://localhost:1313/forgetful/2020/02/kubernetes-and-csi/</guid>
       <description>基本概念 Plugin In the CSI world, it means a service that exposes gRPC endpoints. There are two plugins:
  Node plugin - a gRPC server that needs to run on the Node where the volume will be provisioned. Controller plugin - a gRPC server that can run anywhere (even on the master).  implementing three interfaces:
  Node interface Controller interface Identity interface  Plugin Deployment The Node and Controller plugin could be released as one binary or in two binaries.</description>
@@ -25,21 +21,20 @@
     
     <item>
       <title>Kubernetes CSI Unity</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/kubernetes-csi-unity/</link>
+      <link>http://localhost:1313/forgetful/2020/02/kubernetes-csi-unity/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/kubernetes-csi-unity/</guid>
-      <description>Setup K8S Nodes 1. Create three VMs. 2. Create the user k8s with password welcome, add it to sudo group. 3. Add corp CA certs on all nodes. https://eos2git.cec.lab.emc.com/liangr/corp-notes/blob/master/fix-pip-emc-cert.md
-4. Install docker.io on all nodes. NOTE: Do NOT use 18.09.2 currently (2019-04-25). It causes below errors:
+      <guid>http://localhost:1313/forgetful/2020/02/kubernetes-csi-unity/</guid>
+      <description>Setup K8S Nodes 1. Create three VMs. 2. Create the user k8s with password welcome, add it to sudo group. 3. Add corp CA certs on all nodes. https://eos2git.cec.lab.emc.com/liangr/corp-notes/blob/master/fix-pip-emc-cert.md 4. Install docker.io on all nodes. NOTE: Do NOT use 18.09.2 currently (2019-04-25). It causes below errors:
 1 2 3 4 5 6  root@k8s-master:~# docker pull k8s.gcr.io/kube-apiserver:v1.14.1 v1.14.1: Pulling from kube-apiserver 346aee5ea5bc: Pulling fs layer 7f0e834d5a94: Pulling fs layer error pulling image configuration: Get https://storage.</description>
     </item>
     
     <item>
       <title>Kubernetes Demo</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/kubernetes-demo/</link>
+      <link>http://localhost:1313/forgetful/2020/02/kubernetes-demo/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/kubernetes-demo/</guid>
+      <guid>http://localhost:1313/forgetful/2020/02/kubernetes-demo/</guid>
       <description>Pre-requisites   Pre-configurations on Unity.
   Create a Pool and a NasServer.
 NOTE: the NFSv4 needs to be enabled on the NasServer.

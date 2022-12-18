@@ -2,31 +2,27 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>dns on Forgetful :/</title>
-    <link>https://murray-liang.github.io/forgetful/tags/dns/</link>
+    <link>http://localhost:1313/forgetful/tags/dns/</link>
     <description>Recent content in dns on Forgetful :/</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
-    
-	<atom:link href="https://murray-liang.github.io/forgetful/tags/dns/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate><atom:link href="http://localhost:1313/forgetful/tags/dns/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Docker Tips</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/docker-tips/</link>
+      <link>http://localhost:1313/forgetful/2020/02/docker-tips/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/docker-tips/</guid>
+      <guid>http://localhost:1313/forgetful/2020/02/docker-tips/</guid>
       <description>Cannot Resolve Host Name inside Running Containers 1 2 3 4 5 6 7  sudo vim /etc/docker/daemon.json { &amp;#34;dns&amp;#34;: [&amp;#34;10.245.177.15&amp;#34;] } sudo systemctl restart docker.service   </description>
     </item>
     
     <item>
       <title>System Design Topics</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/design-topics/</link>
+      <link>http://localhost:1313/forgetful/2020/02/design-topics/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/design-topics/</guid>
+      <guid>http://localhost:1313/forgetful/2020/02/design-topics/</guid>
       <description>Some high-level trade-offs  Performance vs scalability Latency vs throughput Availability vs consistency  Keep in mind that everything is a trade-off.
 Performance vs scalability A service is scalable if it results in increased performance in a manner proportional to resources added. Generally, increasing performance means serving more units of work, but it can also be to handle larger units of work, such as when datasets grow.
 Many algorithms that perform reasonably well under low load and small datasets can explode in cost if either requests rates increase, the dataset grows or the number of nodes in the distributed system increases.</description>

@@ -2,22 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>block storage on Forgetful :/</title>
-    <link>https://murray-liang.github.io/forgetful/tags/block-storage/</link>
+    <link>http://localhost:1313/forgetful/tags/block-storage/</link>
     <description>Recent content in block storage on Forgetful :/</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
-    
-	<atom:link href="https://murray-liang.github.io/forgetful/tags/block-storage/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate><atom:link href="http://localhost:1313/forgetful/tags/block-storage/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Object Storage</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/object-storage/</link>
+      <link>http://localhost:1313/forgetful/2020/02/object-storage/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/object-storage/</guid>
+      <guid>http://localhost:1313/forgetful/2020/02/object-storage/</guid>
       <description>Object Storage vs Block vs File 块设备相对于操作系统来说就是block device，裸硬盘，提供最基本的IO Read、IO Write等操作，操作系统将block device映射到/dev目录，一般应用并不会直接访问块设备，一般先创建分区，然后格式化成文件系统，最后挂载到某个本地目录mount point来使用。
 而文件系统存储，一般实现了Posix接口标准，直接提供文件系统的接口，如open，read，write，close，mkdir，walk，chown，chmod等等。文件是通过树的形式组织的，具有明显的层次结构。文件的访问需要从根目录一直到文件所在的位置。
 而对象存储，通过HTTP RESTful的接口如GET，POST，PUT，DELETE来管理一些非结构化的数据，比如图片，文档。它没有目录的概念。

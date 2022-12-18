@@ -2,22 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>machine learning in action on Forgetful :/</title>
-    <link>https://murray-liang.github.io/forgetful/tags/machine-learning-in-action/</link>
+    <link>http://localhost:1313/forgetful/tags/machine-learning-in-action/</link>
     <description>Recent content in machine learning in action on Forgetful :/</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
-    
-	<atom:link href="https://murray-liang.github.io/forgetful/tags/machine-learning-in-action/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate><atom:link href="http://localhost:1313/forgetful/tags/machine-learning-in-action/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Learning Notes of Machine Learning in Action(机器学习实战)</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/ml-basic-knowledge/</link>
+      <link>http://localhost:1313/forgetful/2020/02/ml-basic-knowledge/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/ml-basic-knowledge/</guid>
+      <guid>http://localhost:1313/forgetful/2020/02/ml-basic-knowledge/</guid>
       <description>机器学习基础 机器学习就是把无序的数据转换成有用的信息。
 统计学 机器学习用到了统计学知识。现实世界中存在很多例子（人类行为），我们无法为之建立精确的数学模型，而为了解决这类问题，我们就需要统计学工具。
 术语  监督学习算法 必须知道预测什么，例如目标变量的分类信息。分类和回归都属于监督学习。回归：主要用于预测数值型数据。一个例子是数据拟合曲线：通过给定数据点的最优拟合曲线。 无监督学习算法 不给定目标值。聚类和密度估计属于此类。聚类：将数据集合分成由类似的对象组成的多个类的过程。将寻找描述数据统计值的过程称为密度估计，即估计数据与每个分组的相似程度。  算法的选择 一般并不存在最好的算法或者可以给出最好结果的算法。发现最好算法的关键环节是反复试错的迭代过程。

@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head><script src="/forgetful/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=forgetful/livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Designing Data Intensive Applications | Forgetful :/</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="Notes about everything"><link rel="prev" href="http://localhost:1313/forgetful/2021/11/pacemaker-tutorial/" /><link rel="canonical" href="http://localhost:1313/forgetful/2021/12/designing-data-intensive-applications/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff"><meta property="og:title" content="Designing Data Intensive Applications" />
+<meta property="og:description" content="Data intensive application Common seen functionalities:
+ Store data so that they, or another application, can find it again later (databases) Remember the result of an expensive operation, to speed up reads (caches) Allow users to search data by keyword or filter it in various ways (search indexes) Send a message to another process, to be handled asynchronously (stream processing) Periodically crunch a large amount of accumulated data (batch processing)  Reliability Continuing to work correctly, even when things go wrong." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/forgetful/2021/12/designing-data-intensive-applications/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-12-11T22:08:35+08:00" />
+<meta property="article:modified_time" content="2021-12-11T22:08:44+08:00" />
+
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Designing Data Intensive Applications",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/localhost:1313\/forgetful\/2021\/12\/designing-data-intensive-applications\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "http:\/\/localhost:1313\/forgetful\/cover.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "posts","keywords": "design, system design, book","wordcount":  2014 ,
+        "url": "http:\/\/localhost:1313\/forgetful\/2021\/12\/designing-data-intensive-applications\/","datePublished": "2021-12-11T22:08:35\u002b08:00","dateModified": "2021-12-11T22:08:44\u002b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "murray",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "http:\/\/localhost:1313\/forgetful\/logo.png",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": ""
+    }
+    </script><link rel="stylesheet" href="/forgetful/css/style.min.css"><link rel="stylesheet" href="/forgetful/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/forgetful/css/lib/forkawesome/forkawesome.min.css"><link rel="stylesheet" href="/forgetful/css/lib/animate/animate.min.css"></head>
+    <body><script>
+            if (!window.localStorage || !window.localStorage.getItem('theme')) {
+                window.isDark = 'dark' === 'dark';
+            } else {
+                window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            }
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header animated bounceIn">
+            <a href="http://localhost:1313/forgetful/">Forgetful :/</a>
+        </div>
+        <div class="navbar-menu"><a class="menu-item" href="http://localhost:1313/forgetful/posts" title="">Posts</a><a class="menu-item" href="http://localhost:1313/forgetful/tags" title="">Tags</a><a class="menu-item" href="http://localhost:1313/forgetful/categories" title="">Categories</a><a class="menu-item" href="http://localhost:1313/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"><i class="fas fa-language fa-fw"></i></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav><nav class="navbar-mobile">
+    <div class="navbar-container">
+        <div class="navbar-header">
+            <div class="navbar-header-title animated bounceIn">
+                <a href="http://localhost:1313/forgetful/">Forgetful :/</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="http://localhost:1313/forgetful/posts" title="">Posts</a><a class="menu-item" href="http://localhost:1313/forgetful/tags" title="">Tags</a><a class="menu-item" href="http://localhost:1313/forgetful/categories" title="">Categories</a><a class="menu-item" href="http://localhost:1313/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav>
+<main class="main">
+                <div class="container"><article class="page"><h1 class="post-title animated flipInX">Designing Data Intensive Applications</h1><div class="post-meta">
+            <div class="post-meta-main"><a class="author" href="https://github.com/Murray-LIANG" rel="author" target="_blank">
+                    <i class="fas fa-user-circle fa-fw"></i>Murray-LIANG
+                </a>&nbsp;</div>
+            <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2021-12-11>2021-12-11</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 2014 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>10 min&nbsp;</div>
+        </div><div class="post-toc" id="post-toc">
+                <h2 class="post-toc-title">Contents</h2>
+                <div class="post-toc-content"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#data-intensive-application">Data intensive application</a></li>
+    <li><a href="#reliability">Reliability</a></li>
+    <li><a href="#scalability">Scalability</a>
+      <ul>
+        <li><a href="#load-parameters">Load parameters</a>
+          <ul>
+            <li><a href="#twitter-example">Twitter example</a></li>
+          </ul>
+        </li>
+        <li><a href="#describing-performance">Describing performance</a>
+          <ul>
+            <li><a href="#percentiles">Percentiles</a></li>
+            <li><a href="#slo-and-sla">SLO and SLA</a></li>
+          </ul>
+        </li>
+        <li><a href="#scaling-up-vs-scaling-out">Scaling up vs. scaling out</a></li>
+      </ul>
+    </li>
+    <li><a href="#maintainability">Maintainability</a>
+      <ul>
+        <li><a href="#1-operability">1. Operability</a></li>
+        <li><a href="#2-simplicity">2. Simplicity</a></li>
+        <li><a href="#3-evolvability">3. Evolvability</a></li>
+      </ul>
+    </li>
+    <li><a href="#simplicity">Simplicity</a></li>
+    <li><a href="#data-models">Data models</a>
+      <ul>
+        <li><a href="#hierarchical-model">Hierarchical model</a></li>
+        <li><a href="#relational-model">Relational model</a>
+          <ul>
+            <li><a href="#one-to-many-relationship">One-to-many relationship</a></li>
+            <li><a href="#many-to-many-relationship">Many-to-many relationship</a></li>
+          </ul>
+        </li>
+        <li><a href="#nosql-model">NoSQL model</a>
+          <ul>
+            <li><a href="#one-to-many-relationship-1">One-to-many relationship</a></li>
+            <li><a href="#many-to-many-relationship-1">Many-to-many relationship</a></li>
+          </ul>
+        </li>
+        <li><a href="#relational-vs-document-databases">Relational vs. Document databases</a></li>
+      </ul>
+    </li>
+    <li><a href="#query-languages">Query languages</a>
+      <ul>
+        <li><a href="#imperative-vs-declarative">Imperative vs. declarative</a></li>
+      </ul>
+    </li>
+    <li><a href="#graph-like-data-models">Graph-like data models</a>
+      <ul>
+        <li><a href="#property-graph">Property graph</a></li>
+        <li><a href="#triple-store">Triple-store</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div>
+            <div class="post-toc-mobile" id="post-toc-mobile">
+                <details>
+                    <summary>
+                        <div class="post-toc-title">
+                            <span>Contents</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="post-toc-content"><nav id="TableOfContentsMobile">
+  <ul>
+    <li><a href="#data-intensive-application">Data intensive application</a></li>
+    <li><a href="#reliability">Reliability</a></li>
+    <li><a href="#scalability">Scalability</a>
+      <ul>
+        <li><a href="#load-parameters">Load parameters</a>
+          <ul>
+            <li><a href="#twitter-example">Twitter example</a></li>
+          </ul>
+        </li>
+        <li><a href="#describing-performance">Describing performance</a>
+          <ul>
+            <li><a href="#percentiles">Percentiles</a></li>
+            <li><a href="#slo-and-sla">SLO and SLA</a></li>
+          </ul>
+        </li>
+        <li><a href="#scaling-up-vs-scaling-out">Scaling up vs. scaling out</a></li>
+      </ul>
+    </li>
+    <li><a href="#maintainability">Maintainability</a>
+      <ul>
+        <li><a href="#1-operability">1. Operability</a></li>
+        <li><a href="#2-simplicity">2. Simplicity</a></li>
+        <li><a href="#3-evolvability">3. Evolvability</a></li>
+      </ul>
+    </li>
+    <li><a href="#simplicity">Simplicity</a></li>
+    <li><a href="#data-models">Data models</a>
+      <ul>
+        <li><a href="#hierarchical-model">Hierarchical model</a></li>
+        <li><a href="#relational-model">Relational model</a>
+          <ul>
+            <li><a href="#one-to-many-relationship">One-to-many relationship</a></li>
+            <li><a href="#many-to-many-relationship">Many-to-many relationship</a></li>
+          </ul>
+        </li>
+        <li><a href="#nosql-model">NoSQL model</a>
+          <ul>
+            <li><a href="#one-to-many-relationship-1">One-to-many relationship</a></li>
+            <li><a href="#many-to-many-relationship-1">Many-to-many relationship</a></li>
+          </ul>
+        </li>
+        <li><a href="#relational-vs-document-databases">Relational vs. Document databases</a></li>
+      </ul>
+    </li>
+    <li><a href="#query-languages">Query languages</a>
+      <ul>
+        <li><a href="#imperative-vs-declarative">Imperative vs. declarative</a></li>
+      </ul>
+    </li>
+    <li><a href="#graph-like-data-models">Graph-like data models</a>
+      <ul>
+        <li><a href="#property-graph">Property graph</a></li>
+        <li><a href="#triple-store">Triple-store</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+                </details>
+            </div><div class="post-content"><a class="post-dummy-target" id="data-intensive-application"></a><h2>Data intensive application</h2>
+<p>Common seen functionalities:</p>
+<ul>
+<li>Store data so that they, or another application, can find it again later (<em>databases</em>)</li>
+<li>Remember the result of an expensive operation, to speed up reads (<em>caches</em>)</li>
+<li>Allow users to search data by keyword or filter it in various ways (<em>search indexes</em>)</li>
+<li>Send a message to another process, to be handled asynchronously (<em>stream processing</em>)</li>
+<li>Periodically crunch a large amount of accumulated data (<em>batch processing</em>)</li>
+</ul>
+<a class="post-dummy-target" id="reliability"></a><h2>Reliability</h2>
+<p>Continuing to work correctly, even when things go wrong.</p>
+<p><strong>A fault is not the same as a failure.</strong> A fault is usually defined as one component of the system deviating from its spec, whereas a failure is when the system as a whole stops providing the required service to the user. It is impossible to reduce the probability of a fault to zero; therefore it is usually best to design fault-tolerance mechanisms that prevent faults from causing failures.</p>
+<a class="post-dummy-target" id="scalability"></a><h2>Scalability</h2>
+<ul>
+<li>&ldquo;If the system grows in a particular way, what are our options for coping with the growth?&rdquo;</li>
+<li>&ldquo;How can we add computing
+resources to handle the additional load?&rdquo;</li>
+</ul>
+<a class="post-dummy-target" id="load-parameters"></a><h3>Load parameters</h3>
+<p>The best choice of parameters
+depends on the architecture of your system: it may be requests per second to a web server, the ratio of reads to writes in a database, the number of simultaneously active users in a chat room, the hit rate on a cache, or something else.</p>
+<a class="post-dummy-target" id="twitter-example"></a><h4>Twitter example</h4>
+<p>Use cases:</p>
+<ol>
+<li>Post tweet: A user can publish a new message to their followers (4.6k requests/sec on average, over 12k requests/sec at peak).</li>
+<li>Home timeline: A user can view tweets posted by the people they follow (300k requests/sec).</li>
+</ol>
+<p>Two ways to implement these use cases:</p>
+<ol>
+<li>Posting a tweet simply inserts the new tweet into a global collection of tweets. When a user requests their home timeline, look up all the people they follow, find all the tweets for each of those users, and merge them (sorted by time).</li>
+</ol>
+<p><figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="../../static/images/ddia-figure-1-2.png" alt="" class="lazyload"></figure>
+</p>
+<ol start="2">
+<li>Maintain a cache for each user’s home timeline—like a mailbox of tweets for each recipient user (see Figure 1-3). When a user posts a tweet, look up all the people who follow that user, and insert the new tweet into each of their home timeline caches. The request to read the home timeline is then cheap, because its result has been computed ahead of time.</li>
+</ol>
+<p><figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="../../static/images/ddia-figure-1-3.png" alt="" class="lazyload"></figure>
+</p>
+<p>The first version of Twitter used approach 1, but the systems struggled to keep up with the load of home timeline queries, so the company switched to approach 2. This works better because the average rate of published tweets is almost two orders of magnitude lower than the rate of home timeline reads, and so in this case it’s preferable to do more work at write time and less at read time.</p>
+<p>However, the downside of approach 2 is that posting a tweet now requires a lot of extra work. On average, a tweet is delivered to about 75 followers, so 4.6k tweets per second become 345k writes per second to the home timeline caches. But this average hides the fact that the number of followers per user varies wildly, and some users have over 30 million followers. This means that a single tweet may result in over 30 million writes to home timelines! Doing this in a timely manner—Twitter tries to deliver tweets to followers within five seconds—is a significant challenge.</p>
+<p>In the example of Twitter, the distribution of followers per user (maybe weighted by how often those users tweet) is a key load parameter for discussing scalability, since it determines the fan-out load. Your application may have very different characteristics, but you can apply similar principles to reasoning about its load.</p>
+<p>The final twist of the Twitter anecdote: now that approach 2 is robustly implemented, Twitter is moving to a hybrid of both approaches. Most users’ tweets continue to be fanned out to home timelines at the time when they are posted, but a small number of users with a very large number of followers (i.e., celebrities) are excepted from this fan-out. Tweets from any celebrities that a user may follow are fetched separately and merged with that user’s home timeline when it is read, like in approach 1. This hybrid approach is able to deliver consistently good performance.</p>
+<a class="post-dummy-target" id="describing-performance"></a><h3>Describing performance</h3>
+<ul>
+<li>When you increase a load parameter and keep the system resources (CPU, memory, network bandwidth, etc.) unchanged, how is the performance of your system affected?</li>
+<li>When you increase a load parameter, how much do you need to increase the resources if you want to keep performance unchanged?</li>
+</ul>
+<a class="post-dummy-target" id="percentiles"></a><h4>Percentiles</h4>
+<p>The median is also known as the 50th percentile, and sometimes abbreviated as p50.</p>
+<a class="post-dummy-target" id="slo-and-sla"></a><h4>SLO and SLA</h4>
+<p>For example, percentiles are often used in service level objectives (SLOs) and service level agreements (SLAs), contracts that define the expected performance and availability of a service. An SLA may state that the service is considered to be up if it has a median response time of less than 200 ms and a 99th percentile under 1 s (if the response time is longer, it might as well be down), and the service may be required to be up at least 99.9% of the time. These metrics set expectations for clients of the ser‐
+vice and allow customers to demand a refund if the SLA is not met.</p>
+<a class="post-dummy-target" id="scaling-up-vs-scaling-out"></a><h3>Scaling up vs. scaling out</h3>
+<p>Distributing load across multiple machines is also known as a <strong>shared-nothing</strong> architecture.</p>
+<a class="post-dummy-target" id="maintainability"></a><h2>Maintainability</h2>
+<a class="post-dummy-target" id="1-operability"></a><h3>1. Operability</h3>
+<p>Make it easy for operations teams to keep the system running smoothly.</p>
+<a class="post-dummy-target" id="2-simplicity"></a><h3>2. Simplicity</h3>
+<p>Make it easy for new engineers to understand the system, by removing as much complexity as possible from the system. (Note this is not the same as simplicity of the user interface.)</p>
+<a class="post-dummy-target" id="3-evolvability"></a><h3>3. Evolvability</h3>
+<p>Make it easy for engineers to make changes to the system in the future, adapting it for unanticipated use cases as requirements change. Also known as <em>extensibility</em>, <em>modifiability</em>, or <em>plasticity</em>.</p>
+<a class="post-dummy-target" id="simplicity"></a><h2>Simplicity</h2>
+<p>There are various possible symptoms of complexity: <strong>explosion of the state space</strong>, <strong>tight coupling of modules</strong>, <strong>tangled dependencies</strong>, <strong>inconsistent naming and terminology</strong>, <strong>hacks aimed at solving performance problems</strong>, <strong>special-casing to work around issues elsewhere</strong>, and many more.</p>
+<a class="post-dummy-target" id="data-models"></a><h2>Data models</h2>
+<a class="post-dummy-target" id="hierarchical-model"></a><h3>Hierarchical model</h3>
+<p>All data are in one big tree. Not good for representing many-to-many relationships.</p>
+<a class="post-dummy-target" id="relational-model"></a><h3>Relational model</h3>
+<a class="post-dummy-target" id="one-to-many-relationship"></a><h4>One-to-many relationship</h4>
+<ol>
+<li>Foreign key reference.</li>
+<li>XML/JSON datatype column.</li>
+<li>Encode XML/JSON document and store it on a text column.</li>
+</ol>
+<p>#2 has better <strong>locality</strong> than #1.</p>
+<a class="post-dummy-target" id="many-to-many-relationship"></a><h4>Many-to-many relationship</h4>
+<p>Normal to refer to rows in other tables by ID, because joins are easy.</p>
+<a class="post-dummy-target" id="nosql-model"></a><h3>NoSQL model</h3>
+<a class="post-dummy-target" id="one-to-many-relationship-1"></a><h4>One-to-many relationship</h4>
+<p>Not needed for one-to-many.</p>
+<a class="post-dummy-target" id="many-to-many-relationship-1"></a><h4>Many-to-many relationship</h4>
+<p>You could store a text string directly but it will introduce duplication.</p>
+<p>And if you store ID but the database itself doesn&rsquo;t support joins, you have to emulate a join in application code by making multiple queries to the database.</p>
+<ol>
+<li>Document databases: data comes in self-contained documents and relationships between one document and another are rare.</li>
+<li>Graph databases go in the opposite direction, targeting use cases where anything is potentially related to everything.</li>
+</ol>
+<a class="post-dummy-target" id="relational-vs-document-databases"></a><h3>Relational vs. Document databases</h3>
+<ul>
+<li>
+<p>Document data model: schema flexibility, better performance due to locality, and that for some applications it is closer to the data structures used by the application.</p>
+</li>
+<li>
+<p>Relational model: provides better support for joins, and many-to-one and many-to-many relationships.</p>
+</li>
+<li>
+<p>Document data model: if your application does use many-to-many relationships, the document model becomes less appealing. It’s possible to reduce the need for joins by denormalizing, but then the application code needs to do additional work to keep the denormalized data consistent. Joins can be emulated in application code by making multiple requests to the database, but that also moves complexity into the application and is usually slower than a join performed by specialized code inside the database.  In such cases, using a document model can lead to significantly more complex application code and worse performance.</p>
+</li>
+<li>
+<p>Document data model: schema-on-read (the structure of the data is implicit, and only interpreted when the data is read)</p>
+</li>
+<li>
+<p>Relational model: schema-on-write (the schema is explicit and the database ensures all written data conforms to it)</p>
+</li>
+<li>
+<p>Document data model: the schema-on-read approach is advantageous if the items in the collection don’t all have the same structure for some reason (i.e., the data is heterogeneous) - for example, because:</p>
+<ul>
+<li>There are many different types of objects, and it is not practical to put each type of object in its own table.</li>
+<li>The structure of the data is determined by external systems over which you have no control and which may change at any time.</li>
+</ul>
+</li>
+<li>
+<p>Relational model: with &ldquo;statically typed&rdquo; database schema, you would typically perform a <strong>migration</strong>.</p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">ADD</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">first_name</span><span class="w"> </span><span class="nb">text</span><span class="p">;</span><span class="w">
+</span><span class="w"></span><span class="k">UPDATE</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">first_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">split_part</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w"> </span><span class="c1">-- PostgreSQL
+</span></code></pre></td></tr></table>
+</div>
+</div><p>Schema changes have a bad reputation of being slow and requiring downtime.</p>
+<ul>
+<li>Document data model: A document is usually stored as a single continuous string, encoded as JSON, XML, or a binary variant thereof (such as MongoDB’s BSON). If your application often needs to access the entire document (for example, to render it on a web page), there is a performance advantage to this <strong>storage locality</strong>.</li>
+<li>Relational model: If data is split across multiple tables, multiple index lookups are required to retrieve it all, which may require more disk seeks and take more time.</li>
+</ul>
+<a class="post-dummy-target" id="query-languages"></a><h2>Query languages</h2>
+<a class="post-dummy-target" id="imperative-vs-declarative"></a><h3>Imperative vs. declarative</h3>
+<p>An <em>imperative</em> language tells the computer to perform certain operations in a certain order. You can imagine stepping through the code line by line, evaluating conditions, updating variables, and deciding whether to go around the loop one more time.
+In a <em>declarative</em> query language, like SQL or relational algebra, you just specify the pattern of the data you want - what conditions the results must meet, and how you want the data to be transformed (e.g., sorted, grouped, and aggregated) - but not how to achieve that goal. It is up to the database system’s query optimizer to decide which indexes and which join methods to use, and in which order to execute various parts of the query.
+A declarative query language is attractive because it is typically more concise and easier to work with than an imperative API. But <strong>more importantly</strong>, it also hides implementation details of the database engine, which makes it possible for the database system to introduce performance improvements without requiring any changes to queries.</p>
+<a class="post-dummy-target" id="graph-like-data-models"></a><h2>Graph-like data models</h2>
+<a class="post-dummy-target" id="property-graph"></a><h3>Property graph</h3>
+<p>Each <strong>vertex</strong> consists of:</p>
+<ul>
+<li>A unique identifier</li>
+<li>A set of outgoing edges</li>
+<li>A set of incoming edges</li>
+<li>A collection of properties (key-value pairs)</li>
+</ul>
+<p>Each <strong>edge</strong> consists of:</p>
+<ul>
+<li>A unique identifier</li>
+<li>The vertex at which the edge starts (the tail vertex)</li>
+<li>The vertex at which the edge ends (the head vertex)</li>
+<li>A label to describe the kind of relationship between the two vertices</li>
+<li>A collection of properties (key-value pairs)</li>
+</ul>
+<p>You can think of a graph store as consisting of two relational tables, one for vertices and one for edges, as shown in <em>Example 2-2</em> (this schema uses the PostgreSQL json datatype to store the properties of each vertex or edge). The head and tail vertex are stored for each edge; if you want the set of incoming or outgoing edges for a vertex, you can query the edges table by <code>head_vertex</code> or <code>tail_vertex</code>, respectively.</p>
+<p><em>Example 2-2. Representing a property graph using a relational schema</em></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">vertices</span><span class="w"> </span><span class="p">(</span><span class="w">
+</span><span class="w"></span><span class="n">vertex_id</span><span class="w"> </span><span class="nb">integer</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span><span class="w">
+</span><span class="w"></span><span class="n">properties</span><span class="w"> </span><span class="n">json</span><span class="w">
+</span><span class="w"></span><span class="p">);</span><span class="w">
+</span><span class="w"></span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">edges</span><span class="w"> </span><span class="p">(</span><span class="w">
+</span><span class="w"></span><span class="n">edge_id</span><span class="w"> </span><span class="nb">integer</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span><span class="w">
+</span><span class="w"></span><span class="n">tail_vertex</span><span class="w"> </span><span class="nb">integer</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">vertices</span><span class="w"> </span><span class="p">(</span><span class="n">vertex_id</span><span class="p">),</span><span class="w">
+</span><span class="w"></span><span class="n">head_vertex</span><span class="w"> </span><span class="nb">integer</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">vertices</span><span class="w"> </span><span class="p">(</span><span class="n">vertex_id</span><span class="p">),</span><span class="w">
+</span><span class="w"></span><span class="n">label</span><span class="w"> </span><span class="nb">text</span><span class="p">,</span><span class="w">
+</span><span class="w"></span><span class="n">properties</span><span class="w"> </span><span class="n">json</span><span class="w">
+</span><span class="w"></span><span class="p">);</span><span class="w">
+</span><span class="w"></span><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">edges_tails</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">edges</span><span class="w"> </span><span class="p">(</span><span class="n">tail_vertex</span><span class="p">);</span><span class="w">
+</span><span class="w"></span><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">edges_heads</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">edges</span><span class="w"> </span><span class="p">(</span><span class="n">head_vertex</span><span class="p">);</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>Some important aspects of this model are:</p>
+<ol>
+<li>Any vertex can have an edge connecting it with any other vertex. There is no schema that restricts which kinds of things can or cannot be associated.</li>
+<li>Given any vertex, you can efficiently find both its incoming and its outgoing edges, and thus traverse the graph - i.e., follow a path through a chain of vertices - both forward and backward. (That&rsquo;s why Example 2-2 has indexes on both the <code>tail_vertex</code> and <code>head_vertex</code> columns.)</li>
+<li>By using different labels for different kinds of relationships, you can store several different kinds of information in a single graph, while still maintaining a clean data model.</li>
+</ol>
+<a class="post-dummy-target" id="triple-store"></a><h3>Triple-store</h3>
+<p>All information is stored in the form of very simple three-part statements: <code>(subject, predicate, object)</code>. For example, in the triple <code>(Jim, likes, bananas)</code>, <code>Jim</code> is the subject, <code>likes</code> is the predicate (verb), and <code>bananas</code> is the object.</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>The article was updated on 2021-12-11</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><span></span></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section><span class="tag">
+                        <a href="http://localhost:1313/forgetful/tags/design/"><i class="fas fa-tag fa-fw"></i>&nbsp;design</a>&nbsp;
+                    </span><span class="tag">
+                        <a href="http://localhost:1313/forgetful/tags/system-design/"><i class="fas fa-tag fa-fw"></i>&nbsp;system design</a>&nbsp;
+                    </span><span class="tag">
+                        <a href="http://localhost:1313/forgetful/tags/book/"><i class="fas fa-tag fa-fw"></i>&nbsp;book</a>&nbsp;
+                    </span></section>
+        <section>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="http://localhost:1313/forgetful/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="http://localhost:1313/forgetful/2021/11/pacemaker-tutorial/" class="prev" rel="prev" title="Pacemaker Tutorial"><i class="fas fa-angle-left fa-fw"></i>Pacemaker Tutorial</a></div>
+</div>
+<div class="post-comment"></div>
+    </article></div>
+            </main><footer class="footer">
+    <div class="copyright"><div class="copyright-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
+        </div>
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/Murray-LIANG" target="_blank">Murray-LIANG</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+    </div>
+</footer>
+</div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>
+            <span>&nbsp;</span>
+        </a><script src="/forgetful/js/lib/jquery/jquery.slim.min.js"></script><script src="/forgetful/js/lib/lazysizes/lazysizes.min.js"></script><script src="/forgetful/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script><link rel="stylesheet" href="/forgetful/css/lib/katex/katex.min.css"><script src="/forgetful/js/lib/katex/katex.min.js"></script><script defer src="/forgetful/js/lib/katex/auto-render.min.js"></script><link rel="stylesheet" href="/forgetful/css/lib/katex/copy-tex.min.css"><script defer src="/forgetful/js/lib/katex/copy-tex.min.js"></script><script defer src="/forgetful/js/lib/katex/mhchem.min.js"></script><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },{ left: "$", right: "$", display: false },]
+            });
+        });
+    </script><script src="/forgetful/js/blog.min.js"></script>
+</body>
+</html>

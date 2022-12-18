@@ -2,24 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>nat on Forgetful :/</title>
-    <link>https://murray-liang.github.io/forgetful/tags/nat/</link>
+    <link>http://localhost:1313/forgetful/tags/nat/</link>
     <description>Recent content in nat on Forgetful :/</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
-    
-	<atom:link href="https://murray-liang.github.io/forgetful/tags/nat/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate><atom:link href="http://localhost:1313/forgetful/tags/nat/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Network Packages Forwarding</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/network-package-forwarding/</link>
+      <link>http://localhost:1313/forgetful/2020/02/network-package-forwarding/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/network-package-forwarding/</guid>
+      <guid>http://localhost:1313/forgetful/2020/02/network-package-forwarding/</guid>
       <description>NAT Network Address Translation: 在一个网络内部，自定义合法的ip地址。内网各主机通过内网通讯；与外网通过NAT转换，变成外网合法ip。这样，将内网与外网隔离，各个网络有自己的ip，既可以重叠，又可以通过少数几个ip与外网通讯，在ip大量缺乏的现代，节省了很多。
-Packages Forwarding   PC1要访问 www.google.com，需要先知道对应IP地址。域名只起助记作用，互联网访问通过IP进行。
+Packages Forwarding   PC1要访问 www.google.com ，需要先知道对应IP地址。域名只起助记作用，互联网访问通过IP进行。
   于是，PC1需要像DNS请求，查找 www.google.com 对应的ip，即发送dns请求：PC1查找dns，发现不在同一个网络，不同网段需要网关转发。但是，PC1需要先发送给网关，就需要先知道网关ip。网关用于连接不同网络，并且有自己的IP，PC1需要知道网关ip。于是，通过ARP请求，像内网广播网关ip，网关回复mac地址。PC1得到了网关的mac地址，将ip包封装到以太网帧，发送给网关。
   网关收到该以太网帧，需要转交给dns服务器。同样，网关可能需要发送ARP请求，得到dns的mac地址。
   dns服务器收到请求，将 www.google.com 的ip发送给网关，网关再根据NAT会话表项，将目的ip转换成PC1的，再发送给PC1（此过程可能同样需要ARP请求）。

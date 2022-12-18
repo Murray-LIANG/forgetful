@@ -2,22 +2,29 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>remote desktop on Forgetful :/</title>
-    <link>https://murray-liang.github.io/forgetful/tags/remote-desktop/</link>
+    <link>http://localhost:1313/forgetful/tags/remote-desktop/</link>
     <description>Recent content in remote desktop on Forgetful :/</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
-    
-	<atom:link href="https://murray-liang.github.io/forgetful/tags/remote-desktop/index.xml" rel="self" type="application/rss+xml" />
-    
+    <lastBuildDate>Thu, 10 Dec 2020 20:13:40 +0800</lastBuildDate><atom:link href="http://localhost:1313/forgetful/tags/remote-desktop/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Nomachine Setup</title>
+      <link>http://localhost:1313/forgetful/2020/12/nomachine-setup/</link>
+      <pubDate>Thu, 10 Dec 2020 20:13:40 +0800</pubDate>
+      
+      <guid>http://localhost:1313/forgetful/2020/12/nomachine-setup/</guid>
+      <description>Setup Steps  On CentOS8 machine:  wget https://download.nomachine.com/download/6.12/Linux/nomachine_6.12.3_7_x86_64.rpm sudo dnf install nomachine_6.12.3_7_x86_64.rpm   On Windows machine:  Download nomachine exe installation file from official site: https://www.nomachine.com/download . Install it.   Enable 3440x1440 resolution on CentOS8:   gtf 3440 1440 60
+Sample output:
+1 2  # 3440x1440 @ 60.00 Hz (GTF) hsync: 89.40 kHz; pclk: 419.11 MHz Modeline &amp;#34;3440x1440_60.00&amp;#34; 419.11 3440 3688 4064 4688 1440 1441 1444 1490 -HSync +Vsync     Copy above output, then run xrandr --newmode &amp;quot;3440x1440_60.</description>
+    </item>
     
     <item>
       <title>Remote Desktop to Linux</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/dev-xrdp/</link>
+      <link>http://localhost:1313/forgetful/2020/02/dev-xrdp/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/dev-xrdp/</guid>
+      <guid>http://localhost:1313/forgetful/2020/02/dev-xrdp/</guid>
       <description> Install xrdp. Install tigervnc-server. Use gnome session instead of classic one:  1 2 3  echo &amp;#34;gnome-session&amp;#34; &amp;gt; ~/.Xclients chmod +x ~/.Xclients sudo systemctl restart xrdp.service   Start xrdp service and make it start as system boots.  1 2  systemctl start xrdp.service systemctl enable xrdp.service   If the connection fails, it could be caused by firewall settings. Just add a new rule to firewall.  1 2  firewall-cmd --permanent --zone=public --add-port=3389/tcp firewall-cmd --reload   </description>
     </item>
     

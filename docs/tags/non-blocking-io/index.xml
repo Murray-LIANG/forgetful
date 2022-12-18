@@ -2,22 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>non blocking io on Forgetful :/</title>
-    <link>https://murray-liang.github.io/forgetful/tags/non-blocking-io/</link>
+    <link>http://localhost:1313/forgetful/tags/non-blocking-io/</link>
     <description>Recent content in non blocking io on Forgetful :/</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
-    
-	<atom:link href="https://murray-liang.github.io/forgetful/tags/non-blocking-io/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate><atom:link href="http://localhost:1313/forgetful/tags/non-blocking-io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Non-Blocking IO in Go</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/golang-non-blocking-io/</link>
+      <link>http://localhost:1313/forgetful/2020/02/golang-non-blocking-io/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/golang-non-blocking-io/</guid>
+      <guid>http://localhost:1313/forgetful/2020/02/golang-non-blocking-io/</guid>
       <description>If you are using Go you are probably using non-blocking IO.
 What is non-blocking IO? A simple explanation: It allows you to read() and write() to a file descriptor (that is, any type of open file be it a socket, pipe, a file on disk, whatever) without having these calls block just because the file is not ready.
 It&amp;rsquo;s just something like this:

@@ -2,24 +2,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>ip route on Forgetful :/</title>
-    <link>https://murray-liang.github.io/forgetful/tags/ip-route/</link>
+    <link>http://localhost:1313/forgetful/tags/ip-route/</link>
     <description>Recent content in ip route on Forgetful :/</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
-    
-	<atom:link href="https://murray-liang.github.io/forgetful/tags/ip-route/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate><atom:link href="http://localhost:1313/forgetful/tags/ip-route/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Command `ip route`</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/network-ip-route/</link>
+      <link>http://localhost:1313/forgetful/2020/02/network-ip-route/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/network-ip-route/</guid>
-      <description>Display a routing table with ip route show http://linux-ip.net/html/tools-ip-route.html
-1 2 3 4 5 6 7 8 9 10  [root@tristan]# route -n Kernel IP routing table Destination Gateway Genmask Flags Metric Ref Use Iface 192.168.99.0 0.0.0.0 255.255.255.0 U 0 0 0 eth0 127.0.0.0 0.0.0.0 255.0.0.0 U 0 0 0 lo 0.0.0.0 192.168.99.254 0.0.0.0 UG 0 0 0 eth0 [root@tristan]# ip route show 192.168.99.0/24 dev eth0 scope link 127.0.0.0/8 dev lo scope link default via 192.</description>
+      <guid>http://localhost:1313/forgetful/2020/02/network-ip-route/</guid>
+      <description>Display a routing table with ip route show http://linux-ip.net/html/tools-ip-route.html 1 2 3 4 5 6 7 8 9 10  [root@tristan]# route -n Kernel IP routing table Destination Gateway Genmask Flags Metric Ref Use Iface 192.168.99.0 0.0.0.0 255.255.255.0 U 0 0 0 eth0 127.0.0.0 0.0.0.0 255.0.0.0 U 0 0 0 lo 0.0.0.0 192.168.99.254 0.0.0.0 UG 0 0 0 eth0 [root@tristan]# ip route show 192.168.99.0/24 dev eth0 scope link 127.0.0.0/8 dev lo scope link default via 192.</description>
     </item>
     
   </channel>

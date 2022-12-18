@@ -2,69 +2,66 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>dev on Forgetful :/</title>
-    <link>https://murray-liang.github.io/forgetful/tags/dev/</link>
+    <link>http://localhost:1313/forgetful/tags/dev/</link>
     <description>Recent content in dev on Forgetful :/</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
-    
-	<atom:link href="https://murray-liang.github.io/forgetful/tags/dev/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate><atom:link href="http://localhost:1313/forgetful/tags/dev/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>GVIM Settings on Windows</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/gvim-windows-settings/</link>
+      <link>http://localhost:1313/forgetful/2020/02/gvim-windows-settings/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/gvim-windows-settings/</guid>
+      <guid>http://localhost:1313/forgetful/2020/02/gvim-windows-settings/</guid>
       <description>Copy the vimrc from devenv git repo to Windows home directory, name it _gvimrc The reason to give the name _gvimrc is to avoid the vim in git bash to load it. This would let the vim in git bash lighter and faster.
 Run below commands in git bash (copied from all_set.sh of devenv) 1 2 3 4 5 6  mkdir -p ~/.vim/autoload ~/.vim/bundle ~/.vim/colors \  &amp;amp;&amp;amp; git clone -q https://github.</description>
     </item>
     
     <item>
       <title>Oh My Zsh Tips</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/oh-my-zsh-tips/</link>
+      <link>http://localhost:1313/forgetful/2020/02/oh-my-zsh-tips/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/oh-my-zsh-tips/</guid>
+      <guid>http://localhost:1313/forgetful/2020/02/oh-my-zsh-tips/</guid>
       <description>Installation  sudo apt install -y zsh sh -c &amp;quot;$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)&amp;quot; git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions  Customized Configuration  In ~/.zshrc, set ZSH_THEME to robbyrussell. Modify plugins to: 1 2 3 4  plugins=( git zsh-autosuggestions )    Append below lines to ~/.zshrc. 1 2 3 4 5 6 7 8 9 10  export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE=&amp;#39;fg=10&amp;#39; export GOPATH=~/git/go export PATH=$PATH:$GOPATH/bin:/snap/bin # Jupyter notebook alias inote=&amp;#39;cd /mnt/hgfs/liangr-win10/git/ipython &amp;amp;&amp;amp; \ nohup /home/liangr/git/ml/venv/py36/bin/jupyter notebook \ --ip 0.</description>
     </item>
     
     <item>
       <title>OpenStack Dev Tips</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/openstack-dev/</link>
+      <link>http://localhost:1313/forgetful/2020/02/openstack-dev/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/openstack-dev/</guid>
-      <description>Add release notes 1 2 3 4 5 6  ---fixes:- | Dell EMC Unity Driver: Fixes `bug 1798529&amp;lt;https://bugs.launchpad.net/cinder/+bug/1798529&amp;gt;`__toaddanoptionforforcedeletingthesnapshotevenifitisattachedtohosts.  </description>
+      <guid>http://localhost:1313/forgetful/2020/02/openstack-dev/</guid>
+      <description>Add release notes 1 2 3 4 5 6  ---fixes:- |Dell EMC Unity Driver: Fixes `bug 1798529 &amp;lt;https://bugs.launchpad.net/cinder/+bug/1798529&amp;gt;`_ to add an option for force deleting the snapshot even if it is attached to hosts.  Check storops version 1 2  import pkg_resources pkg_resources.get_distribution(&amp;#34;storops&amp;#34;).version   Or
+1  $ python -c &amp;#34;import pkg_resources; print(pkg_resources.get_distribution(&amp;#39;storops&amp;#39;).version)&amp;#34;   </description>
     </item>
     
     <item>
       <title>OpenStack Install libpq-dev on Ubuntu18/Mint19</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/openstack-libpq-dev-install/</link>
+      <link>http://localhost:1313/forgetful/2020/02/openstack-libpq-dev-install/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/openstack-libpq-dev-install/</guid>
+      <guid>http://localhost:1313/forgetful/2020/02/openstack-libpq-dev-install/</guid>
       <description>Meet errors when running tox -e py27,pep8 of Cinder If meet below error, need to install libpq-dev with version 9.5.14.
 Error: could not determine PostgreSQL version from &amp;lsquo;10.6&amp;rsquo;</description>
     </item>
     
     <item>
       <title>Remote Desktop to Linux</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/dev-xrdp/</link>
+      <link>http://localhost:1313/forgetful/2020/02/dev-xrdp/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/dev-xrdp/</guid>
+      <guid>http://localhost:1313/forgetful/2020/02/dev-xrdp/</guid>
       <description> Install xrdp. Install tigervnc-server. Use gnome session instead of classic one:  1 2 3  echo &amp;#34;gnome-session&amp;#34; &amp;gt; ~/.Xclients chmod +x ~/.Xclients sudo systemctl restart xrdp.service   Start xrdp service and make it start as system boots.  1 2  systemctl start xrdp.service systemctl enable xrdp.service   If the connection fails, it could be caused by firewall settings. Just add a new rule to firewall.  1 2  firewall-cmd --permanent --zone=public --add-port=3389/tcp firewall-cmd --reload   </description>
     </item>
     
     <item>
       <title>Ubuntu Remove the Shortcuts of Ctrl&#43;Alt&#43;Left and Ctrl&#43;Alt&#43;Right</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/remove-shortcuts-ctrl-alt-left-right/</link>
+      <link>http://localhost:1313/forgetful/2020/02/remove-shortcuts-ctrl-alt-left-right/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/remove-shortcuts-ctrl-alt-left-right/</guid>
+      <guid>http://localhost:1313/forgetful/2020/02/remove-shortcuts-ctrl-alt-left-right/</guid>
       <description>In Ubuntu, PyCharm conflicts with the gnome desktop shortcuts, which makes key-bindings Ctrl+Alt+Left and Ctrl+Alt+Right not work.
 Use below commands to remove the shortcuts from gnome desktop.
 1 2 3 4 5 6 7 8  # List the current shortcuts. liangr@ubuntu-dev:~$ gsettings list-recursively org.gnome.desktop.wm.keybindings | grep Left org.gnome.desktop.wm.keybindings move-to-monitor-left [&amp;#39;&amp;lt;Super&amp;gt;&amp;lt;Shift&amp;gt;Left&amp;#39;] org.gnome.desktop.wm.keybindings move-to-workspace-left [&amp;#39;&amp;lt;Control&amp;gt;&amp;lt;Shift&amp;gt;&amp;lt;Alt&amp;gt;Left&amp;#39;] org.gnome.desktop.wm.keybindings switch-to-workspace-left [&amp;#39;&amp;lt;Control&amp;gt;&amp;lt;Alt&amp;gt;Left&amp;#39;] liangr@ubuntu-dev:~$ gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left &amp;#34;[]&amp;#34; liangr@ubuntu-dev:~$ gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right &amp;#34;[]&amp;#34;   </description>

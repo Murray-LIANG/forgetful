@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
+    <head><script src="/forgetful/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=forgetful/livereload" data-no-instant defer></script>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>Processes and Threads | Forgetful :/</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noodp" />
-<meta name="Description" content="Notes about everything"><link rel="prev" href="https://murray-liang.github.io/forgetful/2020/02/prometheus/" /><link rel="next" href="https://murray-liang.github.io/forgetful/2020/02/prefer-ipv4-on-ubuntu/" /><link rel="canonical" href="https://murray-liang.github.io/forgetful/2020/02/operating-system-processes-threads/" />
+<meta name="Description" content="Notes about everything"><link rel="prev" href="http://localhost:1313/forgetful/2020/02/prometheus/" /><link rel="next" href="http://localhost:1313/forgetful/2020/02/prefer-ipv4-on-ubuntu/" /><link rel="canonical" href="http://localhost:1313/forgetful/2020/02/operating-system-processes-threads/" />
 <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -16,16 +16,17 @@
 <meta name="theme-color" content="#ffffff"><meta property="og:title" content="Processes and Threads" />
 <meta property="og:description" content="Processes and Threads 进程是某个程序的一次运行活动，是资源分配和调度的一个独立单位。线程是进程中的一个控制线 程，最小的独立运行的基本单位。进程中所有线程共享进程的资源，如虚拟地址空间，文件描述符 。每个线程有自己的程序计数器，寄存器和栈等。
 Multiprocessing and Multithreading  单进程，单线程，MS-DOS大致是这种 多进程，单线程，多数Unix及Linux是这种 多进程，多线程，Windows，Solaris 2.x和OS/2是这种 单进程，多线程，VxWorks是这种  Thread的种类 User Level Threads 仅存于用户空间中。对于他们的创建，撤销，之间的同步和通信等功能无需系统调用来实现。在同一个进程中 的用户级线程切换不需要内核支持，而内核完全不知道用户线程的存在，而是视作一个进程，所以调 度是以进程为单位进行的。
- 优点   线程切换不需要转到内核空间，节省了宝贵的内核空间 调度算法进程专用，由用户程序制定   缺点   系统调用阻塞，同一个进程一个线程阻塞，整个进程都会阻塞 一个进程只能在一个CPU上获得执行  就线程的同时执行而言，任意给定时刻每个进程只能有一个线程在运行，而且只有一个处理器内核会被分配给该进 程。对于一个进程，可能有成千上万个用户级进程，但是他们对系统资源没有影响。运行时库调度并分派这些 线程。库调度器从进程中的多个线程中选择一个线程，然后该线程和该进程允许的一个内核线程关联起来。
+ 优点   线程切换不需要转到内核空间，节省了宝贵的内核空间 调度算法进程专用，由用户程序制定   缺点   系统调用阻塞，同一个进程一个线程阻塞，整个进程都会阻塞 一个进程只能在一个CPU上获得执行   就线程的同时执行而言，任意给定时刻每个进程只能有一个线程在运行，而且只有一个处理器内核会被分配给该进 程。对于一个进程，可能有成千上万个用户级进程，但是他们对系统资源没有影响。运行时库调度并分派这些 线程。库调度器从进程中的多个线程中选择一个线程，然后该线程和该进程允许的一个内核线程关联起来。
 Kernel Supported Threads 内核空间为每个内核支持的线程设置了一个线程控制块，内核则根据该控制块来感知线程的存在并控制。
 所以，
- 优点   在多核处理器上，内核可以调用同一个进程中的多个线程同时工作 如果一个进程中哦某个线程阻塞了，其他线程仍然可以得到工作   缺点   相对于用户线程来说，切换开销大，需要从用户态，进入内核态并且由内核进行切换，因为线程调度和管 理都在内核实现。  内核级线程是内核对象，常驻内核空间。用户线程与之一一对应。运行时 库会为每个用户线程分配一个内核级线 程。
-混合方式 结合了以上两种线程。库和操作系统都可以管理线程。进程有着自己的内核线程池。可运行的用户线程由运行 时库分派并标记为准备好执行的可用线程。操作系统选择用户线程并将它映射到线程池中的可用内核线程。
+ 优点   在多核处理器上，内核可以调用同一个进程中的多个线程同时工作 如果一个进程中哦某个线程阻塞了，其他线程仍然可以得到工作   缺点   相对于用户线程来说，切换开销大，需要从用户态，进入内核态并且由内核进行切换，因为线程调度和管 理都在内核实现。   内核级线程是内核对象，常驻内核空间。用户线程与之一一对应。运行时 库会为每个用户线程分配一个内核级线 程。
+混合方式  结合了以上两种线程。库和操作系统都可以管理线程。进程有着自己的内核线程池。可运行的用户线程由运行 时库分派并标记为准备好执行的可用线程。操作系统选择用户线程并将它映射到线程池中的可用内核线程。
 内核线程不会被销毁或者重建，只是在必要时被分配给不同的用户级线程，而不是每当创建新的用户级线程都会创 建新的内核线程。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://murray-liang.github.io/forgetful/2020/02/operating-system-processes-threads/" />
+<meta property="og:url" content="http://localhost:1313/forgetful/2020/02/operating-system-processes-threads/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2020-02-10T16:37:31+08:00" />
 <meta property="article:modified_time" content="2020-02-10T16:37:31+08:00" />
+
 <script type="application/ld+json">
     {
         "@context": "http://schema.org",
@@ -33,19 +34,19 @@ Kernel Supported Threads 内核空间为每个内核支持的线程设置了一�
         "headline": "Processes and Threads",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/murray-liang.github.io\/forgetful\/2020\/02\/operating-system-processes-threads\/"
+            "@id": "http:\/\/localhost:1313\/forgetful\/2020\/02\/operating-system-processes-threads\/"
         },"image": {
                 "@type": "ImageObject",
-                "url": "https:\/\/murray-liang.github.io\/forgetful\/cover.png",
+                "url": "http:\/\/localhost:1313\/forgetful\/cover.png",
                 "width":  800 ,
                 "height":  600 
             },"genre": "posts","keywords": "processes, threads, multi-processing, multi-threading","wordcount":  93 ,
-        "url": "https:\/\/murray-liang.github.io\/forgetful\/2020\/02\/operating-system-processes-threads\/","datePublished": "2020-02-10T16:37:31\x2b08:00","dateModified": "2020-02-10T16:37:31\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+        "url": "http:\/\/localhost:1313\/forgetful\/2020\/02\/operating-system-processes-threads\/","datePublished": "2020-02-10T16:37:31\u002b08:00","dateModified": "2020-02-10T16:37:31\u002b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "murray",
                 "logo": {
                 "@type": "ImageObject",
-                "url": "https:\/\/murray-liang.github.io\/forgetful\/logo.png",
+                "url": "http:\/\/localhost:1313\/forgetful\/logo.png",
                 "width":  127 ,
                 "height":  40 
                 }
@@ -62,22 +63,22 @@ Kernel Supported Threads 内核空间为每个内核支持的线程设置了一�
         </script><div class="wrapper"><nav class="navbar">
     <div class="navbar-container">
         <div class="navbar-header animated bounceIn">
-            <a href="https://murray-liang.github.io/forgetful">Forgetful :/</a>
+            <a href="http://localhost:1313/forgetful/">Forgetful :/</a>
         </div>
-        <div class="navbar-menu"><a class="menu-item" href="https://murray-liang.github.io/forgetful/posts" title="">Posts</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/tags" title="">Tags</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/categories" title="">Categories</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"><i class="fas fa-language fa-fw"></i></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        <div class="navbar-menu"><a class="menu-item" href="http://localhost:1313/forgetful/posts" title="">Posts</a><a class="menu-item" href="http://localhost:1313/forgetful/tags" title="">Tags</a><a class="menu-item" href="http://localhost:1313/forgetful/categories" title="">Categories</a><a class="menu-item" href="http://localhost:1313/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"><i class="fas fa-language fa-fw"></i></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
         </div>
     </div>
 </nav><nav class="navbar-mobile">
     <div class="navbar-container">
         <div class="navbar-header">
             <div class="navbar-header-title animated bounceIn">
-                <a href="https://murray-liang.github.io/forgetful">Forgetful :/</a>
+                <a href="http://localhost:1313/forgetful/">Forgetful :/</a>
             </div>
             <div class="menu-toggle" id="menu-toggle">
                 <span></span><span></span><span></span>
             </div>
         </div>
-        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://murray-liang.github.io/forgetful/posts" title="">Posts</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/tags" title="">Tags</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/categories" title="">Categories</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="http://localhost:1313/forgetful/posts" title="">Posts</a><a class="menu-item" href="http://localhost:1313/forgetful/tags" title="">Tags</a><a class="menu-item" href="http://localhost:1313/forgetful/categories" title="">Categories</a><a class="menu-item" href="http://localhost:1313/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
         </div>
     </div>
 </nav>
@@ -234,11 +235,13 @@ Kernel Supported Threads 内核空间为每个内核支持的线程设置了一�
 system call时，让内核创建一个<strong>新的内核级线程</strong>给进程去执行其他没有阻塞的用户级线程，然后内核通过
 <strong>upcalls</strong>来通知用户级线程管理器有线程阻塞，**新的内核线程已经分配用户级线程管理器去执行新的线程
 **。</p>
-<p><a href="http://www.it.uu.se/education/course/homepage/os/vt18/module-4/implementing-threads/">http://www.it.uu.se/education/course/homepage/os/vt18/module-4/implementing-threads/</a></p>
+<p><a href="http://www.it.uu.se/education/course/homepage/os/vt18/module-4/implementing-threads/" target="_blank">http://www.it.uu.se/education/course/homepage/os/vt18/module-4/implementing-threads/</a>
+</p>
 <a class="post-dummy-target" id="linux中没有scheduler-activation"></a><h2>Linux中没有Scheduler Activation</h2>
 <p>Go也并没有利用Scheduler Activation，而是使用了<strong>epoll</strong>来避免给每个<strong>阻塞</strong>的用户级线程分配内
 核线程。</p>
-<p><a href="https://groups.google.com/forum/#!topic/golang-dev/8U7zlE1OD3U">https://groups.google.com/forum/#!topic/golang-dev/8U7zlE1OD3U</a></p>
+<p><a href="https://groups.google.com/forum/#!topic/golang-dev/8U7zlE1OD3U" target="_blank">https://groups.google.com/forum/#!topic/golang-dev/8U7zlE1OD3U</a>
+</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
@@ -255,21 +258,21 @@ system call时，让内核创建一个<strong>新的内核级线程</strong>给�
 
     <div class="post-info-more">
         <section><span class="tag">
-                        <a href="https://murray-liang.github.io/forgetful/tags/processes/"><i class="fas fa-tag fa-fw"></i>&nbsp;processes</a>&nbsp;
+                        <a href="http://localhost:1313/forgetful/tags/processes/"><i class="fas fa-tag fa-fw"></i>&nbsp;processes</a>&nbsp;
                     </span><span class="tag">
-                        <a href="https://murray-liang.github.io/forgetful/tags/threads/"><i class="fas fa-tag fa-fw"></i>&nbsp;threads</a>&nbsp;
+                        <a href="http://localhost:1313/forgetful/tags/threads/"><i class="fas fa-tag fa-fw"></i>&nbsp;threads</a>&nbsp;
                     </span><span class="tag">
-                        <a href="https://murray-liang.github.io/forgetful/tags/multi-processing/"><i class="fas fa-tag fa-fw"></i>&nbsp;multi-processing</a>&nbsp;
+                        <a href="http://localhost:1313/forgetful/tags/multi-processing/"><i class="fas fa-tag fa-fw"></i>&nbsp;multi-processing</a>&nbsp;
                     </span><span class="tag">
-                        <a href="https://murray-liang.github.io/forgetful/tags/multi-threading/"><i class="fas fa-tag fa-fw"></i>&nbsp;multi-threading</a>&nbsp;
+                        <a href="http://localhost:1313/forgetful/tags/multi-threading/"><i class="fas fa-tag fa-fw"></i>&nbsp;multi-threading</a>&nbsp;
                     </span></section>
         <section>
-            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://murray-liang.github.io/forgetful">Home</a></span>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="http://localhost:1313/forgetful/">Home</a></span>
         </section>
     </div>
 
-    <div class="post-nav"><a href="https://murray-liang.github.io/forgetful/2020/02/prometheus/" class="prev" rel="prev" title="Prometheus"><i class="fas fa-angle-left fa-fw"></i>Prometheus</a>
-            <a href="https://murray-liang.github.io/forgetful/2020/02/prefer-ipv4-on-ubuntu/" class="next" rel="next" title="Prefer IPv4 on Ubuntu">Prefer IPv4 on Ubuntu<i class="fas fa-angle-right fa-fw"></i></a></div>
+    <div class="post-nav"><a href="http://localhost:1313/forgetful/2020/02/prometheus/" class="prev" rel="prev" title="Prometheus"><i class="fas fa-angle-left fa-fw"></i>Prometheus</a>
+            <a href="http://localhost:1313/forgetful/2020/02/prefer-ipv4-on-ubuntu/" class="next" rel="next" title="Prefer IPv4 on Ubuntu">Prefer IPv4 on Ubuntu<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 <div class="post-comment"></div>
     </article></div>
@@ -277,7 +280,7 @@ system call时，让内核创建一个<strong>新的内核级线程</strong>给�
     <div class="copyright"><div class="copyright-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
         </div>
 
-        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/Murray-LIANG" target="_blank">Murray-LIANG</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/Murray-LIANG" target="_blank">Murray-LIANG</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
     </div>
 </footer>
 </div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>

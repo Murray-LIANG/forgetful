@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>corosync on Forgetful :/</title>
+    <link>http://localhost:1313/forgetful/tags/corosync/</link>
+    <description>Recent content in corosync on Forgetful :/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Fri, 19 Nov 2021 18:15:34 +0800</lastBuildDate><atom:link href="http://localhost:1313/forgetful/tags/corosync/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Pacemaker Tutorial</title>
+      <link>http://localhost:1313/forgetful/2021/11/pacemaker-tutorial/</link>
+      <pubDate>Fri, 19 Nov 2021 18:15:34 +0800</pubDate>
+      
+      <guid>http://localhost:1313/forgetful/2021/11/pacemaker-tutorial/</guid>
+      <description>Pacemaker Tutorial MISC CRM Commands 1 2 3 4 5 6 7 8 9  $ # You can set a node to standby mode,  $ # which can be used to simulate a node becoming unavailable, $ # with this command: $ sudo crm node standby NodeName $ # You can change a node’s status from standby  $ # to online with this command: $ sudo crm node online NodeName   </description>
+    </item>
+    
+  </channel>
+</rss>

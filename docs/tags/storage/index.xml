@@ -2,42 +2,37 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>storage on Forgetful :/</title>
-    <link>https://murray-liang.github.io/forgetful/tags/storage/</link>
+    <link>http://localhost:1313/forgetful/tags/storage/</link>
     <description>Recent content in storage on Forgetful :/</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
-    
-	<atom:link href="https://murray-liang.github.io/forgetful/tags/storage/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate><atom:link href="http://localhost:1313/forgetful/tags/storage/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Block Storage and File Storage</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/block-storage-file-storage/</link>
+      <link>http://localhost:1313/forgetful/2020/02/block-storage-file-storage/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/block-storage-file-storage/</guid>
+      <guid>http://localhost:1313/forgetful/2020/02/block-storage-file-storage/</guid>
       <description>Block Storage   tgt framework could be used to implement a tgt server in user space.
   You could customize a new backend store type which could, for example, send the SCSI message in customized format via a socket. Then a user space program listening on the socket could deserialize from customized format and do some additional tasks on the SCSI message like multi-write them to different replicas.</description>
     </item>
     
     <item>
       <title>RAID</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/storage-raid/</link>
+      <link>http://localhost:1313/forgetful/2020/02/storage-raid/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/storage-raid/</guid>
-      <description>RAID http://oserror.com/backend/raid-principle/
-RAID的一般有如下作用  数据冗余： 指把数据的校验信息存放在冗余的磁盘中，在某些磁盘数据损坏时，能从其他未损坏的磁盘中，重新构建数据。 性能提升： 指RAID能把多块独立的磁盘组成磁盘阵列，通过把数据切成分片的方式，使得读/写数据能走多块磁盘，从而提升性能。  </description>
+      <guid>http://localhost:1313/forgetful/2020/02/storage-raid/</guid>
+      <description>RAID http://oserror.com/backend/raid-principle/ RAID的一般有如下作用  数据冗余： 指把数据的校验信息存放在冗余的磁盘中，在某些磁盘数据损坏时，能从其他未损坏的磁盘中，重新构建数据。 性能提升： 指RAID能把多块独立的磁盘组成磁盘阵列，通过把数据切成分片的方式，使得读/写数据能走多块磁盘，从而提升性能。  </description>
     </item>
     
     <item>
       <title>大话存储</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/%E5%A4%A7%E8%AF%9D%E5%AD%98%E5%82%A8/</link>
+      <link>http://localhost:1313/forgetful/2020/02/%E5%A4%A7%E8%AF%9D%E5%AD%98%E5%82%A8/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/%E5%A4%A7%E8%AF%9D%E5%AD%98%E5%82%A8/</guid>
+      <guid>http://localhost:1313/forgetful/2020/02/%E5%A4%A7%E8%AF%9D%E5%AD%98%E5%82%A8/</guid>
       <description>2. IO大法 主板上每个部件都是通过总线连接起来。
 网络通信：
  连-物理层 找-数据链路和网络层。设备区分，编址如IP 发-上三层。发什么数据，数据格式是什么  CPU向磁盘要数据：

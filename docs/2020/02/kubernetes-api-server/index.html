@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
+    <head><script src="/forgetful/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=forgetful/livereload" data-no-instant defer></script>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>Kubernetes API Server | Forgetful :/</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noodp" />
-<meta name="Description" content="Notes about everything"><link rel="prev" href="https://murray-liang.github.io/forgetful/2020/02/kubernetes-csi-unity/" /><link rel="next" href="https://murray-liang.github.io/forgetful/2020/02/kubernetes-and-csi/" /><link rel="canonical" href="https://murray-liang.github.io/forgetful/2020/02/kubernetes-api-server/" />
+<meta name="Description" content="Notes about everything"><link rel="prev" href="http://localhost:1313/forgetful/2020/02/kubernetes-csi-unity/" /><link rel="next" href="http://localhost:1313/forgetful/2020/02/kubernetes-and-csi/" /><link rel="canonical" href="http://localhost:1313/forgetful/2020/02/kubernetes-api-server/" />
 <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -17,9 +17,10 @@
 <meta property="og:description" content="Although kubelet could watch a directory and run pods found configured under that directory, but in a Kubernetes cluster, kubelet will get most its pods to run from the Kubernetes API server.
 Kubernetes stores all its cluster state in etcd, a distributed data store with a strong consistency model. This state includes what nodes exist in the cluster, what pods should be running, which nodes they are running on, and a whole lot more." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://murray-liang.github.io/forgetful/2020/02/kubernetes-api-server/" />
+<meta property="og:url" content="http://localhost:1313/forgetful/2020/02/kubernetes-api-server/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2020-02-10T16:37:31+08:00" />
 <meta property="article:modified_time" content="2020-02-10T16:37:31+08:00" />
+
 <script type="application/ld+json">
     {
         "@context": "http://schema.org",
@@ -27,19 +28,19 @@ Kubernetes stores all its cluster state in etcd, a distributed data store with a
         "headline": "Kubernetes API Server",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/murray-liang.github.io\/forgetful\/2020\/02\/kubernetes-api-server\/"
+            "@id": "http:\/\/localhost:1313\/forgetful\/2020\/02\/kubernetes-api-server\/"
         },"image": {
                 "@type": "ImageObject",
-                "url": "https:\/\/murray-liang.github.io\/forgetful\/cover.png",
+                "url": "http:\/\/localhost:1313\/forgetful\/cover.png",
                 "width":  800 ,
                 "height":  600 
             },"genre": "posts","keywords": "kubernetes, k8s, api server","wordcount":  722 ,
-        "url": "https:\/\/murray-liang.github.io\/forgetful\/2020\/02\/kubernetes-api-server\/","datePublished": "2020-02-10T16:37:31\x2b08:00","dateModified": "2020-02-10T16:37:31\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+        "url": "http:\/\/localhost:1313\/forgetful\/2020\/02\/kubernetes-api-server\/","datePublished": "2020-02-10T16:37:31\u002b08:00","dateModified": "2020-02-10T16:37:31\u002b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "murray",
                 "logo": {
                 "@type": "ImageObject",
-                "url": "https:\/\/murray-liang.github.io\/forgetful\/logo.png",
+                "url": "http:\/\/localhost:1313\/forgetful\/logo.png",
                 "width":  127 ,
                 "height":  40 
                 }
@@ -56,22 +57,22 @@ Kubernetes stores all its cluster state in etcd, a distributed data store with a
         </script><div class="wrapper"><nav class="navbar">
     <div class="navbar-container">
         <div class="navbar-header animated bounceIn">
-            <a href="https://murray-liang.github.io/forgetful">Forgetful :/</a>
+            <a href="http://localhost:1313/forgetful/">Forgetful :/</a>
         </div>
-        <div class="navbar-menu"><a class="menu-item" href="https://murray-liang.github.io/forgetful/posts" title="">Posts</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/tags" title="">Tags</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/categories" title="">Categories</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"><i class="fas fa-language fa-fw"></i></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        <div class="navbar-menu"><a class="menu-item" href="http://localhost:1313/forgetful/posts" title="">Posts</a><a class="menu-item" href="http://localhost:1313/forgetful/tags" title="">Tags</a><a class="menu-item" href="http://localhost:1313/forgetful/categories" title="">Categories</a><a class="menu-item" href="http://localhost:1313/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"><i class="fas fa-language fa-fw"></i></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
         </div>
     </div>
 </nav><nav class="navbar-mobile">
     <div class="navbar-container">
         <div class="navbar-header">
             <div class="navbar-header-title animated bounceIn">
-                <a href="https://murray-liang.github.io/forgetful">Forgetful :/</a>
+                <a href="http://localhost:1313/forgetful/">Forgetful :/</a>
             </div>
             <div class="menu-toggle" id="menu-toggle">
                 <span></span><span></span><span></span>
             </div>
         </div>
-        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://murray-liang.github.io/forgetful/posts" title="">Posts</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/tags" title="">Tags</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/categories" title="">Categories</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="http://localhost:1313/forgetful/posts" title="">Posts</a><a class="menu-item" href="http://localhost:1313/forgetful/tags" title="">Tags</a><a class="menu-item" href="http://localhost:1313/forgetful/categories" title="">Categories</a><a class="menu-item" href="http://localhost:1313/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
         </div>
     </div>
 </nav>
@@ -127,23 +128,23 @@ Kubernetes stores all its cluster state in etcd, a distributed data store with a
 <p>It&rsquo;s easy to run <code>etcd</code> in a container.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ # example of starting etcd
-$ mkdir etcd-data
-$ docker run --volume=$PWD/etcd-data:/default.etcd \
-    --detach --net=host quay.io/coreos/etcd &gt; etcd-container-id
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="gp">$ </span><span class="c1"># example of starting etcd</span>
+<span class="gp">$ </span>mkdir etcd-data
+<span class="gp">$ </span>docker run --volume<span class="o">=</span><span class="nv">$PWD</span>/etcd-data:/default.etcd <span class="se">\
+</span><span class="se"></span><span class="go">    --detach --net=host quay.io/coreos/etcd &gt; etcd-container-id
+</span></code></pre></td></tr></table>
 </div>
 </div><p><strong>NOTE: Use host networking makes the API server can talk to it at 127.0.0.1</strong></p>
 <a class="post-dummy-target" id="start-the-api-server"></a><h3>Start the API server</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -154,43 +155,43 @@ $ docker run --volume=$PWD/etcd-data:/default.etcd \
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ # download the apiserver of version 1.14.4
-$ wget https://storage.googleapis.com/kubernetes-release/release/v1.14.4/bin/linux/amd64/kube-apiserver
-
-$ chmod +x kube-apiserver
-
-$ # --disable-admission-plugins=ServiceAccount disables the authentication
-$ sudo ./kube-apiserver --etcd-servers=http://127.0.0.1:2379 \
-    --service-cluster-ip-range=10.0.0.0/16 \
-    --disable-admission-plugins=ServiceAccount
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="gp">$ </span><span class="c1"># download the apiserver of version 1.14.4</span>
+<span class="gp">$ </span>wget https://storage.googleapis.com/kubernetes-release/release/v1.14.4/bin/linux/amd64/kube-apiserver
+<span class="err">
+</span><span class="err"></span><span class="gp">$ </span>chmod +x kube-apiserver
+<span class="err">
+</span><span class="err"></span><span class="gp">$ </span><span class="c1"># --disable-admission-plugins=ServiceAccount disables the authentication</span>
+<span class="gp">$ </span>sudo ./kube-apiserver --etcd-servers<span class="o">=</span>http://127.0.0.1:2379 <span class="se">\
+</span><span class="se"></span><span class="go">    --service-cluster-ip-range=10.0.0.0/16 \
+</span><span class="go">    --disable-admission-plugins=ServiceAccount
+</span></code></pre></td></tr></table>
 </div>
 </div><p>Check what nodes in our cluster:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ curl --stderr /dev/null http://localhost:8080/api/v1/nodes | jq &#39;.items&#39;
-[]
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="gp">$ </span>curl --stderr /dev/null http://localhost:8080/api/v1/nodes <span class="p">|</span> jq <span class="s1">&#39;.items&#39;</span>
+<span class="go">[]
+</span></code></pre></td></tr></table>
 </div>
 </div><p>Check what pods our cluster is running:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ curl --stderr /dev/null http://localhost:8080/api/v1/pods | jq &#39;.items&#39;
-[]
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="gp">$ </span>curl --stderr /dev/null http://localhost:8080/api/v1/pods <span class="p">|</span> jq <span class="s1">&#39;.items&#39;</span>
+<span class="go">[]
+</span></code></pre></td></tr></table>
 </div>
 </div><a class="post-dummy-target" id="add-a-node"></a><h3>Add a node</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -210,30 +211,30 @@ $ sudo ./kube-apiserver --etcd-servers=http://127.0.0.1:2379 \
 </span><span class="lnt">18
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ # cluster server is the API server
-$ cat kubelet.conf
-apiVersion: v1
-clusters:
-- cluster:
-    server: http://127.0.0.1:8080
-  name: default-cluster
-contexts:
-- context:
-    cluster: default-cluster
-  name: default-context
-current-context: default-context
-kind: Config
-preferences: {}
-
-$ sudo ./kubelet \
-    --kubeconfig=/home/ryan/git/try/kube-apiserver/kubelet.conf \
-    --fail-swap-on=false
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="gp">$ </span><span class="c1"># cluster server is the API server</span>
+<span class="gp">$ </span>cat kubelet.conf
+<span class="go">apiVersion: v1
+</span><span class="go">clusters:
+</span><span class="go">- cluster:
+</span><span class="go">    server: http://127.0.0.1:8080
+</span><span class="go">  name: default-cluster
+</span><span class="go">contexts:
+</span><span class="go">- context:
+</span><span class="go">    cluster: default-cluster
+</span><span class="go">  name: default-context
+</span><span class="go">current-context: default-context
+</span><span class="go">kind: Config
+</span><span class="go">preferences: {}
+</span><span class="go"></span><span class="err">
+</span><span class="err"></span><span class="gp">$ </span>sudo ./kubelet <span class="se">\
+</span><span class="se"></span><span class="go">    --kubeconfig=/home/ryan/git/try/kube-apiserver/kubelet.conf \
+</span><span class="go">    --fail-swap-on=false
+</span></code></pre></td></tr></table>
 </div>
 </div><p>Check that we have a node in our cluster:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -246,24 +247,24 @@ $ sudo ./kubelet \
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ curl --stderr /dev/null http://localhost:8080/api/v1/nodes | jq &#39;.items&#39;                       
-[
-  {
-    &#34;metadata&#34;: {
-      &#34;name&#34;: &#34;mint-dev-vm&#34;,
-      &#34;selfLink&#34;: &#34;/api/v1/nodes/mint-dev-vm&#34;,
-      &#34;uid&#34;: &#34;88944812-a21f-11e9-9723-000c2905a808&#34;,
-      &#34;resourceVersion&#34;: &#34;5833&#34;,
-      &#34;creationTimestamp&#34;: &#34;2019-07-09T07:59:53Z&#34;,
-      &#34;labels&#34;: {
-......
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="gp">$ </span>curl --stderr /dev/null http://localhost:8080/api/v1/nodes <span class="p">|</span> jq <span class="s1">&#39;.items&#39;</span>                       
+<span class="go">[
+</span><span class="go">  {
+</span><span class="go">    &#34;metadata&#34;: {
+</span><span class="go">      &#34;name&#34;: &#34;mint-dev-vm&#34;,
+</span><span class="go">      &#34;selfLink&#34;: &#34;/api/v1/nodes/mint-dev-vm&#34;,
+</span><span class="go">      &#34;uid&#34;: &#34;88944812-a21f-11e9-9723-000c2905a808&#34;,
+</span><span class="go">      &#34;resourceVersion&#34;: &#34;5833&#34;,
+</span><span class="go">      &#34;creationTimestamp&#34;: &#34;2019-07-09T07:59:53Z&#34;,
+</span><span class="go">      &#34;labels&#34;: {
+</span><span class="go">......
+</span></code></pre></td></tr></table>
 </div>
 </div><a class="post-dummy-target" id="run-a-pod-via-the-api-server"></a><h3>Run a pod via the API server</h3>
 <p><strong>NOTE: pay attention to <code>nodeName</code> below the <code>spec:</code> line, it schedules the pods to the node where our <code>kubelet</code> is running manually. Normally, Kubernetes <code>kube-scheduler</code> does the job.</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -296,43 +297,43 @@ $ sudo ./kubelet \
 </span><span class="lnt">31
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ cat nginx.yaml
-apiVersion: v1
-kind: Pod
-metadata:
-  name: nginx
-spec:
-  nodeName: mint-dev-vm
-  containers:
-  - name: nginx
-    image: nginx
-    ports:
-    - containerPort: 80
-    volumeMounts:
-    - mountPath: /var/log/nginx
-      name: nginx-logs
-  - name: log-truncator
-    image: busybox
-    command:
-    - /bin/sh
-    args: [-c, &#39;while true; do cat /dev/null &gt; /logdir/access.log; sleep 10; done&#39;]
-    volumeMounts:
-    - mountPath: /logdir
-      name: nginx-logs
-  volumes:
-  - name: nginx-logs
-    emptyDir: {}
-
-$ # --data-binary is needed for inputting data in yaml file
-$ curl --stderr /dev/null \
-    --request POST http://localhost:8080/api/v1/namespaces/default/pods \
-    -H &#34;Content-Type: application/yaml&#34; --data-binary @nginx.yaml
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="gp">$ </span>cat nginx.yaml
+<span class="go">apiVersion: v1
+</span><span class="go">kind: Pod
+</span><span class="go">metadata:
+</span><span class="go">  name: nginx
+</span><span class="go">spec:
+</span><span class="go">  nodeName: mint-dev-vm
+</span><span class="go">  containers:
+</span><span class="go">  - name: nginx
+</span><span class="go">    image: nginx
+</span><span class="go">    ports:
+</span><span class="go">    - containerPort: 80
+</span><span class="go">    volumeMounts:
+</span><span class="go">    - mountPath: /var/log/nginx
+</span><span class="go">      name: nginx-logs
+</span><span class="go">  - name: log-truncator
+</span><span class="go">    image: busybox
+</span><span class="go">    command:
+</span><span class="go">    - /bin/sh
+</span><span class="go">    args: [-c, &#39;while true; do cat /dev/null &gt; /logdir/access.log; sleep 10; done&#39;]
+</span><span class="go">    volumeMounts:
+</span><span class="go">    - mountPath: /logdir
+</span><span class="go">      name: nginx-logs
+</span><span class="go">  volumes:
+</span><span class="go">  - name: nginx-logs
+</span><span class="go">    emptyDir: {}
+</span><span class="go"></span><span class="err">
+</span><span class="err"></span><span class="gp">$ </span><span class="c1"># --data-binary is needed for inputting data in yaml file</span>
+<span class="gp">$ </span>curl --stderr /dev/null <span class="se">\
+</span><span class="se"></span><span class="go">    --request POST http://localhost:8080/api/v1/namespaces/default/pods \
+</span><span class="go">    -H &#34;Content-Type: application/yaml&#34; --data-binary @nginx.yaml
+</span></code></pre></td></tr></table>
 </div>
 </div><p>Check what pods our cluster is running:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -348,26 +349,26 @@ $ curl --stderr /dev/null \
 </span><span class="lnt">14
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ curl --stderr /dev/null http://localhost:8080/api/v1/namespaces/default/pods | jq &#39;.items&#39;
-[
-  {
-    &#34;metadata&#34;: {
-      &#34;name&#34;: &#34;nginx&#34;,
-      &#34;namespace&#34;: &#34;default&#34;,
-      &#34;selfLink&#34;: &#34;/api/v1/namespaces/default/pods/nginx&#34;,
-      &#34;uid&#34;: &#34;a8d6c4f5-a2ba-11e9-8c9c-000c2905a808&#34;,
-      &#34;resourceVersion&#34;: &#34;5739&#34;,
-      &#34;creationTimestamp&#34;: &#34;2019-07-10T02:30:19Z&#34;
-    },
-    ......
-      &#34;podIP&#34;: &#34;172.17.0.2&#34;,
-......
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="gp">$ </span>curl --stderr /dev/null http://localhost:8080/api/v1/namespaces/default/pods <span class="p">|</span> jq <span class="s1">&#39;.items&#39;</span>
+<span class="go">[
+</span><span class="go">  {
+</span><span class="go">    &#34;metadata&#34;: {
+</span><span class="go">      &#34;name&#34;: &#34;nginx&#34;,
+</span><span class="go">      &#34;namespace&#34;: &#34;default&#34;,
+</span><span class="go">      &#34;selfLink&#34;: &#34;/api/v1/namespaces/default/pods/nginx&#34;,
+</span><span class="go">      &#34;uid&#34;: &#34;a8d6c4f5-a2ba-11e9-8c9c-000c2905a808&#34;,
+</span><span class="go">      &#34;resourceVersion&#34;: &#34;5739&#34;,
+</span><span class="go">      &#34;creationTimestamp&#34;: &#34;2019-07-10T02:30:19Z&#34;
+</span><span class="go">    },
+</span><span class="go">    ......
+</span><span class="go">      &#34;podIP&#34;: &#34;172.17.0.2&#34;,
+</span><span class="go">......
+</span></code></pre></td></tr></table>
 </div>
 </div><p>And <code>kubelet</code> will poll the info of pods to create from the API server and bring the containers for pods.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -375,36 +376,36 @@ $ curl --stderr /dev/null \
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ docker ps
-CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS              PORTS               NAMES
-cb57ac67ed38        busybox                &#34;/bin/sh -c &#39;while t…&#34;   15 minutes ago      Up 15 minutes                           k8s_log-truncator_nginx_default_a8d6c4f5-a2ba-11e9-8c9c-000c2905a808_0
-e2f9ec6c9e7b        nginx                  &#34;nginx -g &#39;daemon of…&#34;   15 minutes ago      Up 15 minutes                           k8s_nginx_nginx_default_a8d6c4f5-a2ba-11e9-8c9c-000c2905a808_0
-b3f2388ff746        k8s.gcr.io/pause:3.1   &#34;/pause&#34;                 15 minutes ago      Up 15 minutes                           k8s_POD_nginx_default_a8d6c4f5-a2ba-11e9-8c9c-000c2905a808_0
-faab0d697e32        quay.io/coreos/etcd    &#34;/usr/local/bin/etcd&#34;    19 hours ago        Up 19 hours                             mystifying_morse
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="gp">$ </span>docker ps
+<span class="go">CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS              PORTS               NAMES
+</span><span class="go">cb57ac67ed38        busybox                &#34;/bin/sh -c &#39;while t…&#34;   15 minutes ago      Up 15 minutes                           k8s_log-truncator_nginx_default_a8d6c4f5-a2ba-11e9-8c9c-000c2905a808_0
+</span><span class="go">e2f9ec6c9e7b        nginx                  &#34;nginx -g &#39;daemon of…&#34;   15 minutes ago      Up 15 minutes                           k8s_nginx_nginx_default_a8d6c4f5-a2ba-11e9-8c9c-000c2905a808_0
+</span><span class="go">b3f2388ff746        k8s.gcr.io/pause:3.1   &#34;/pause&#34;                 15 minutes ago      Up 15 minutes                           k8s_POD_nginx_default_a8d6c4f5-a2ba-11e9-8c9c-000c2905a808_0
+</span><span class="go">faab0d697e32        quay.io/coreos/etcd    &#34;/usr/local/bin/etcd&#34;    19 hours ago        Up 19 hours                             mystifying_morse
+</span></code></pre></td></tr></table>
 </div>
 </div><p>We could use <code>podIP</code> to access the running nginx.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ curl --stderr /dev/null http://172.17.0.2                                                           
-&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;
-&lt;title&gt;Welcome to nginx!&lt;/title&gt;
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="gp">$ </span>curl --stderr /dev/null http://172.17.0.2                                                           
+<span class="go">&lt;!DOCTYPE html&gt;
+</span><span class="go">&lt;html&gt;
+</span><span class="go">&lt;head&gt;
+</span><span class="go">&lt;title&gt;Welcome to nginx!&lt;/title&gt;
+</span></code></pre></td></tr></table>
 </div>
 </div><a class="post-dummy-target" id="kubectl-instead-of-curl-and-jq"></a><h2><code>kubectl</code> instead of <code>curl</code> and <code>jq</code></h2>
 <p>Talking to the API server&rsquo;s REST directly with <code>curl</code> and <code>jq</code> isn&rsquo;t the best user experience. Then <code>kubectl</code> is introduced which acts as a command line client.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -417,18 +418,18 @@ faab0d697e32        quay.io/coreos/etcd    &#34;/usr/local/bin/etcd&#34;    19 h
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ wget https://storage.googleapis.com/kubernetes-release/release/v1.14.4/bin/linux/amd64/kubectl
-
-$ chmod +x kubectl
-
-$ ./kubectl get nodes           
-NAME          STATUS   ROLES    AGE   VERSION
-mint-dev-vm   Ready    &lt;none&gt;   19h   v1.14.4
-
-$ ./kubectl get pods 
-NAME    READY   STATUS    RESTARTS   AGE
-nginx   2/2     Running   0          50m
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="gp">$ </span>wget https://storage.googleapis.com/kubernetes-release/release/v1.14.4/bin/linux/amd64/kubectl
+<span class="err">
+</span><span class="err"></span><span class="gp">$ </span>chmod +x kubectl
+<span class="err">
+</span><span class="err"></span><span class="gp">$ </span>./kubectl get nodes           
+<span class="go">NAME          STATUS   ROLES    AGE   VERSION
+</span><span class="go">mint-dev-vm   Ready    &lt;none&gt;   19h   v1.14.4
+</span><span class="go"></span><span class="err">
+</span><span class="err"></span><span class="gp">$ </span>./kubectl get pods 
+<span class="go">NAME    READY   STATUS    RESTARTS   AGE
+</span><span class="go">nginx   2/2     Running   0          50m
+</span></code></pre></td></tr></table>
 </div>
 </div></div><div class="post-footer" id="post-footer">
     <div class="post-info">
@@ -446,19 +447,19 @@ nginx   2/2     Running   0          50m
 
     <div class="post-info-more">
         <section><span class="tag">
-                        <a href="https://murray-liang.github.io/forgetful/tags/kubernetes/"><i class="fas fa-tag fa-fw"></i>&nbsp;kubernetes</a>&nbsp;
+                        <a href="http://localhost:1313/forgetful/tags/kubernetes/"><i class="fas fa-tag fa-fw"></i>&nbsp;kubernetes</a>&nbsp;
                     </span><span class="tag">
-                        <a href="https://murray-liang.github.io/forgetful/tags/k8s/"><i class="fas fa-tag fa-fw"></i>&nbsp;k8s</a>&nbsp;
+                        <a href="http://localhost:1313/forgetful/tags/k8s/"><i class="fas fa-tag fa-fw"></i>&nbsp;k8s</a>&nbsp;
                     </span><span class="tag">
-                        <a href="https://murray-liang.github.io/forgetful/tags/api-server/"><i class="fas fa-tag fa-fw"></i>&nbsp;api server</a>&nbsp;
+                        <a href="http://localhost:1313/forgetful/tags/api-server/"><i class="fas fa-tag fa-fw"></i>&nbsp;api server</a>&nbsp;
                     </span></section>
         <section>
-            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://murray-liang.github.io/forgetful">Home</a></span>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="http://localhost:1313/forgetful/">Home</a></span>
         </section>
     </div>
 
-    <div class="post-nav"><a href="https://murray-liang.github.io/forgetful/2020/02/kubernetes-csi-unity/" class="prev" rel="prev" title="Kubernetes CSI Unity"><i class="fas fa-angle-left fa-fw"></i>Kubernetes CSI Unity</a>
-            <a href="https://murray-liang.github.io/forgetful/2020/02/kubernetes-and-csi/" class="next" rel="next" title="Kubernetes and CSI">Kubernetes and CSI<i class="fas fa-angle-right fa-fw"></i></a></div>
+    <div class="post-nav"><a href="http://localhost:1313/forgetful/2020/02/kubernetes-csi-unity/" class="prev" rel="prev" title="Kubernetes CSI Unity"><i class="fas fa-angle-left fa-fw"></i>Kubernetes CSI Unity</a>
+            <a href="http://localhost:1313/forgetful/2020/02/kubernetes-and-csi/" class="next" rel="next" title="Kubernetes and CSI">Kubernetes and CSI<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 <div class="post-comment"></div>
     </article></div>
@@ -466,7 +467,7 @@ nginx   2/2     Running   0          50m
     <div class="copyright"><div class="copyright-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
         </div>
 
-        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/Murray-LIANG" target="_blank">Murray-LIANG</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/Murray-LIANG" target="_blank">Murray-LIANG</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
     </div>
 </footer>
 </div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>

@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
+    <head><script src="/forgetful/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=forgetful/livereload" data-no-instant defer></script>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>OpenStack Deployment using Kolla Ansible | Forgetful :/</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noodp" />
-<meta name="Description" content="Notes about everything"><link rel="prev" href="https://murray-liang.github.io/forgetful/2020/02/openstack-dev/" /><link rel="next" href="https://murray-liang.github.io/forgetful/2020/02/openstack-curl-rest-examples/" /><link rel="canonical" href="https://murray-liang.github.io/forgetful/2020/02/openstack-kolla-ansible/" />
+<meta name="Description" content="Notes about everything"><link rel="prev" href="http://localhost:1313/forgetful/2020/02/openstack-dev/" /><link rel="next" href="http://localhost:1313/forgetful/2020/02/openstack-curl-rest-examples/" /><link rel="canonical" href="http://localhost:1313/forgetful/2020/02/openstack-kolla-ansible/" />
 <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -18,9 +18,10 @@
 NOTE: 172.30.X.X/16 subnet is used as the floating IP of OpenStack VMs. Do NOT use 192.168.1.X/24 subnet. Refer to Network settings
   External VIP: 192.168.1.254, used to access Horizon from Windows Client. Because the eth0 of Neutron node (aka. ubuntu-server3) is bound to br-ex, IP 192.168.1.254 need to be set to br-ex manually after deploy, so as IP 192." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://murray-liang.github.io/forgetful/2020/02/openstack-kolla-ansible/" />
+<meta property="og:url" content="http://localhost:1313/forgetful/2020/02/openstack-kolla-ansible/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2020-02-10T16:37:31+08:00" />
 <meta property="article:modified_time" content="2020-02-10T16:37:31+08:00" />
+
 <script type="application/ld+json">
     {
         "@context": "http://schema.org",
@@ -28,19 +29,19 @@ NOTE: 172.30.X.X/16 subnet is used as the floating IP of OpenStack VMs. Do NOT u
         "headline": "OpenStack Deployment using Kolla Ansible",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/murray-liang.github.io\/forgetful\/2020\/02\/openstack-kolla-ansible\/"
+            "@id": "http:\/\/localhost:1313\/forgetful\/2020\/02\/openstack-kolla-ansible\/"
         },"image": {
                 "@type": "ImageObject",
-                "url": "https:\/\/murray-liang.github.io\/forgetful\/cover.png",
+                "url": "http:\/\/localhost:1313\/forgetful\/cover.png",
                 "width":  800 ,
                 "height":  600 
-            },"genre": "posts","keywords": "openstack, kolla ansible","wordcount":  955 ,
-        "url": "https:\/\/murray-liang.github.io\/forgetful\/2020\/02\/openstack-kolla-ansible\/","datePublished": "2020-02-10T16:37:31\x2b08:00","dateModified": "2020-02-10T16:37:31\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            },"genre": "posts","keywords": "openstack, kolla ansible","wordcount":  978 ,
+        "url": "http:\/\/localhost:1313\/forgetful\/2020\/02\/openstack-kolla-ansible\/","datePublished": "2020-02-10T16:37:31\u002b08:00","dateModified": "2020-02-10T16:37:31\u002b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "murray",
                 "logo": {
                 "@type": "ImageObject",
-                "url": "https:\/\/murray-liang.github.io\/forgetful\/logo.png",
+                "url": "http:\/\/localhost:1313\/forgetful\/logo.png",
                 "width":  127 ,
                 "height":  40 
                 }
@@ -57,22 +58,22 @@ NOTE: 172.30.X.X/16 subnet is used as the floating IP of OpenStack VMs. Do NOT u
         </script><div class="wrapper"><nav class="navbar">
     <div class="navbar-container">
         <div class="navbar-header animated bounceIn">
-            <a href="https://murray-liang.github.io/forgetful">Forgetful :/</a>
+            <a href="http://localhost:1313/forgetful/">Forgetful :/</a>
         </div>
-        <div class="navbar-menu"><a class="menu-item" href="https://murray-liang.github.io/forgetful/posts" title="">Posts</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/tags" title="">Tags</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/categories" title="">Categories</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"><i class="fas fa-language fa-fw"></i></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        <div class="navbar-menu"><a class="menu-item" href="http://localhost:1313/forgetful/posts" title="">Posts</a><a class="menu-item" href="http://localhost:1313/forgetful/tags" title="">Tags</a><a class="menu-item" href="http://localhost:1313/forgetful/categories" title="">Categories</a><a class="menu-item" href="http://localhost:1313/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"><i class="fas fa-language fa-fw"></i></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
         </div>
     </div>
 </nav><nav class="navbar-mobile">
     <div class="navbar-container">
         <div class="navbar-header">
             <div class="navbar-header-title animated bounceIn">
-                <a href="https://murray-liang.github.io/forgetful">Forgetful :/</a>
+                <a href="http://localhost:1313/forgetful/">Forgetful :/</a>
             </div>
             <div class="menu-toggle" id="menu-toggle">
                 <span></span><span></span><span></span>
             </div>
         </div>
-        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://murray-liang.github.io/forgetful/posts" title="">Posts</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/tags" title="">Tags</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/categories" title="">Categories</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="http://localhost:1313/forgetful/posts" title="">Posts</a><a class="menu-item" href="http://localhost:1313/forgetful/tags" title="">Tags</a><a class="menu-item" href="http://localhost:1313/forgetful/categories" title="">Categories</a><a class="menu-item" href="http://localhost:1313/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
         </div>
     </div>
 </nav>
@@ -82,7 +83,7 @@ NOTE: 172.30.X.X/16 subnet is used as the floating IP of OpenStack VMs. Do NOT u
                     <i class="fas fa-user-circle fa-fw"></i>Murray-LIANG
                 </a>&nbsp;</div>
             <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-02-10>2020-02-10</time>&nbsp;
-                <i class="fas fa-pencil-alt fa-fw"></i>about 955 words&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 978 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>5 min&nbsp;</div>
         </div><div class="post-toc" id="post-toc">
                 <h2 class="post-toc-title">Contents</h2>
@@ -226,16 +227,16 @@ NOTE: 172.30.X.X/16 subnet is used as the floating IP of OpenStack VMs. Do NOT u
 <li>Add MASQUERADE rules:
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">$ sudo iptables -t nat -A POSTROUTING -s 192.168.4.0/255.255.255.0 -o eth0 -j MASQUERADE
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ sudo iptables -t nat -A POSTROUTING -s 192.168.4.0/255.255.255.0 -o eth0 -j MASQUERADE
 $ sudo iptables -t nat -A POSTROUTING -s 172.30.0.0/16 -o eth0 -j MASQUERADE
-   
-<span class="c1"># check the rules via: iptables -L -t nat</span> 
+
+<span class="c1"># check the rules via: iptables -L -t nat </span>
 </code></pre></td></tr></table>
 </div>
 </div></li>
@@ -257,17 +258,17 @@ $ sudo iptables -t nat -A POSTROUTING -s 172.30.0.0/16 -o eth0 -j MASQUERADE
 <li>Gen ssh key and configure ssh via the key (passwordless)
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">$ ssh-keygen -t rsa -b <span class="m">4096</span> -C <span class="s2">&#34;ubuntu-server8&#34;</span>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ ssh-keygen -t rsa -b <span class="m">4096</span> -C <span class="s2">&#34;ubuntu-server8&#34;</span>
 $ <span class="nb">eval</span> <span class="k">$(</span>ssh-agent -s<span class="k">)</span>
 $ ssh-add ~/.ssh/id_rsa
-<span class="c1"># add the public key to /home/stack/.ssh/authorized_keys of</span> 
+<span class="c1"># add the public key to /home/stack/.ssh/authorized_keys of </span>
 <span class="c1"># other ubuntu-serverX</span>
 </code></pre></td></tr></table>
 </div>
@@ -277,24 +278,25 @@ $ ssh-add ~/.ssh/id_rsa
 <p>Add below lines to <code>/etc/ntp.conf</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">pool 10.244.255.118
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">pool 10.244.255.118
 pool 10.228.254.10
 </code></pre></td></tr></table>
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">$ sudo service ntp stop <span class="o">&amp;&amp;</span> sudo ntpd -gq <span class="o">&amp;&amp;</span> sudo service ntp start
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ sudo service ntp stop <span class="o">&amp;&amp;</span> sudo ntpd -gq <span class="o">&amp;&amp;</span> sudo service ntp start
 </code></pre></td></tr></table>
 </div>
 </div><a class="post-dummy-target" id="customize-kolla-for-dell"></a><h2>Customize kolla for Dell</h2>
-<p>The official repo was forked to <a href="https://github.com/Murray-LIANG/kolla">https://github.com/Murray-LIANG/kolla</a>.</p>
+<p>The official repo was forked to <a href="https://github.com/Murray-LIANG/kolla" target="_blank">https://github.com/Murray-LIANG/kolla</a>
+.</p>
 <p>The branch is <code>dell-customize</code>. Need to rebase with the latest <code>master</code> of official kolla before do <code>kolla-build</code>.</p>
 <a class="post-dummy-target" id="start-local-docker-registry"></a><h2>Start local docker registry</h2>
 <a class="post-dummy-target" id="set-up-the-registry"></a><h3>Set up the registry</h3>
@@ -303,7 +305,7 @@ pool 10.228.254.10
 <p><strong>NOTE: Use port 5050 on host to avoid conflict with the port used by keystone.</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -311,7 +313,7 @@ pool 10.228.254.10
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">$ docker run -d <span class="se">\
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ docker run -d <span class="se">\
 </span><span class="se"></span>    --name registry <span class="se">\
 </span><span class="se"></span>    --restart<span class="o">=</span>always <span class="se">\
 </span><span class="se"></span>    -p 5050:5000 <span class="se">\
@@ -322,14 +324,14 @@ pool 10.228.254.10
 </div><a class="post-dummy-target" id="set-up-the-gui-to-view-the-images-in-local-registry"></a><h3>Set up the GUI to view the images in local registry</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">$ docker run -d -p 8080:80 <span class="se">\
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ docker run -d -p 8080:80 <span class="se">\
 </span><span class="se"></span>    --restart<span class="o">=</span>always <span class="se">\
 </span><span class="se"></span>    -e <span class="nv">ENV_DOCKER_REGISTRY_HOST</span><span class="o">=</span>192.168.1.8 <span class="se">\
 </span><span class="se"></span>    -e <span class="nv">ENV_DOCKER_REGISTRY_PORT</span><span class="o">=</span><span class="m">5050</span> <span class="se">\
@@ -340,7 +342,7 @@ pool 10.228.254.10
 <p>Install to folder <code>~/pyvenv</code>, then run commands:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -349,7 +351,7 @@ pool 10.228.254.10
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">$ <span class="nb">cd</span> ~/git
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ <span class="nb">cd</span> ~/git
 $ git clone https://murray-liang@github.com/Murray-LIANG/kolla.git
 $ git clone https://github.com/openstack/kolla-ansible
 $ <span class="nb">source</span> ~/pyvenv/bin/activate
@@ -361,12 +363,13 @@ $ <span class="nb">cd</span> ~/git/kolla-ansible <span class="o">&amp;&amp;</spa
 </div><a class="post-dummy-target" id="build-docker-images-via-kolla-build"></a><h2>Build docker images via kolla-build</h2>
 <p>TODO</p>
 <a class="post-dummy-target" id="customize-the-openstack-service-configuration"></a><h2>Customize the OpenStack service configuration</h2>
-<p>Refer to <a href="https://docs.openstack.org/kolla-ansible/latest/admin/advanced-configuration.html#openstack-service-configuration-in-kolla">https://docs.openstack.org/kolla-ansible/latest/admin/advanced-configuration.html#openstack-service-configuration-in-kolla</a></p>
+<p>Refer to <a href="https://docs.openstack.org/kolla-ansible/latest/admin/advanced-configuration.html#openstack-service-configuration-in-kolla" target="_blank">https://docs.openstack.org/kolla-ansible/latest/admin/advanced-configuration.html#openstack-service-configuration-in-kolla</a>
+</p>
 <p><strong>TODO: push all the configuration to git.</strong></p>
 <a class="post-dummy-target" id="deploy"></a><h2>Deploy</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -382,7 +385,7 @@ $ <span class="nb">cd</span> ~/git/kolla-ansible <span class="o">&amp;&amp;</spa
 </span><span class="lnt">14
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># enter virtualenv</span>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># enter virtualenv</span>
 $ <span class="nb">source</span> ~/pyvenv/bin/activate
 $ kolla-ansible -i ./multinode bootstrap-servers
 $ kolla-ansible -i ./multinode deploy
@@ -403,23 +406,23 @@ $ docker <span class="nb">exec</span> kolla_toolbox openstack --os-interface int
 <p><strong>On control and compute nodes: ubuntu-server3,4,5,6,7,12,13,14</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">$ docker <span class="nb">exec</span> -u <span class="m">0</span> openvswitch_vswitchd ovs-vsctl add-br br-eth1
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ docker <span class="nb">exec</span> -u <span class="m">0</span> openvswitch_vswitchd ovs-vsctl add-br br-eth1
 </code></pre></td></tr></table>
 </div>
 </div><a class="post-dummy-target" id="set-ip-to-br-ex-of-ubuntu-server3-re-configure-manually-after-reboot"></a><h3>Set IP to <code>br-ex</code> of ubuntu-server3 (Re-configure manually after reboot)</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># remove 192.168.1.254 from eth0</span>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># remove 192.168.1.254 from eth0</span>
 $ sudo ip addr del 192.168.1.254/32 dev eth0
 $ sudo ip addr add 192.168.1.254/32 dev br-ex
 $ sudo ip addr add 192.168.1.3/32 dev br-ex
@@ -429,17 +432,21 @@ $ sudo ip link <span class="nb">set</span> br-ex up
 </div><a class="post-dummy-target" id="set-default-gateway-on-neutron-node-ubuntu-server3"></a><h3>Set default gateway on Neutron node: ubuntu-server3</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">$ sudo route add default gw 192.168.4.1 eth3
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ sudo route add default gw 192.168.4.1 eth3
+$ <span class="c1"># need to check below route exists, add it if not.</span>
+$ sudo ip route add 192.168.1.0/24 dev br-ex
 </code></pre></td></tr></table>
 </div>
 </div><a class="post-dummy-target" id="enable-nested-virtualization-on-compute-nodes"></a><h3>Enable nested virtualization on compute nodes</h3>
 <p><strong>On ubuntu-server4,5,6,7,12,13,14</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -451,7 +458,7 @@ $ sudo ip link <span class="nb">set</span> br-ex up
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">$ cat /sys/module/kvm_intel/parameters/nested
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ cat /sys/module/kvm_intel/parameters/nested
 N
 $ sudo rmmod kvm-intel
 $ sudo sh -c <span class="s2">&#34;echo &#39;options kvm-intel nested=y&#39; &gt;&gt; /etc/modprobe.d/dist.conf&#34;</span>
@@ -466,7 +473,7 @@ $ docker restart nova_compute nova_libvirt
 </div><a class="post-dummy-target" id="troubleshooting"></a><h2>Troubleshooting</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -487,7 +494,7 @@ $ docker restart nova_compute nova_libvirt
 </span><span class="lnt">19
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># failed to start iscsid container with below error:</span>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># failed to start iscsid container with below error:</span>
 <span class="c1"># APIError: 500 Server Error: Internal Server Error (\&#34;mkdir /sys/kernel/config: operation not permitted\&#34;)</span>
 $ sudo systemctl status sys-kernel-config.mount <span class="p">;</span> <span class="se">\
 </span><span class="se"></span>    sudo modprobe configfs <span class="o">&amp;&amp;</span> sudo systemctl start sys-kernel-config.mount <span class="se">\
@@ -512,7 +519,7 @@ other::---
 <a class="post-dummy-target" id="clean-up-before-re-deploy"></a><h3>Clean-up before re-deploy</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -521,7 +528,7 @@ other::---
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># pip uninstall all packages. No need when using virtualenv.</span>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># pip uninstall all packages. No need when using virtualenv.</span>
 $ pip freeze <span class="p">|</span> grep -v virtualenv <span class="p">|</span> sudo xargs pip uninstall -y
 
 <span class="c1"># you may encounter issue of docker, run below command to clean.</span>
@@ -533,7 +540,7 @@ $ sudo apt-get remove -y docker docker-engine docker-ce docker.io <span class="s
 </div><a class="post-dummy-target" id="tips"></a><h2>Tips</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -543,7 +550,7 @@ $ sudo apt-get remove -y docker docker-engine docker-ce docker.io <span class="s
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># ssh to OpenStack VM using tenant network</span>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># ssh to OpenStack VM using tenant network</span>
 <span class="o">(</span>openvswitch-vswitchd<span class="o">)[</span>root@ubuntu-server3 /<span class="o">]</span><span class="c1"># ip netns exec \</span>
     qdhcp-fd3363af-c26e-4219-847b-968b401680e7 ssh -i key-admin.pem ubuntu@172.16.1.3
 
@@ -571,17 +578,17 @@ stack@ubuntu-server8:~/kolla-ansible$ openstack server create --image Ubuntu <sp
 
     <div class="post-info-more">
         <section><span class="tag">
-                        <a href="https://murray-liang.github.io/forgetful/tags/openstack/"><i class="fas fa-tag fa-fw"></i>&nbsp;openstack</a>&nbsp;
+                        <a href="http://localhost:1313/forgetful/tags/openstack/"><i class="fas fa-tag fa-fw"></i>&nbsp;openstack</a>&nbsp;
                     </span><span class="tag">
-                        <a href="https://murray-liang.github.io/forgetful/tags/kolla-ansible/"><i class="fas fa-tag fa-fw"></i>&nbsp;kolla ansible</a>&nbsp;
+                        <a href="http://localhost:1313/forgetful/tags/kolla-ansible/"><i class="fas fa-tag fa-fw"></i>&nbsp;kolla ansible</a>&nbsp;
                     </span></section>
         <section>
-            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://murray-liang.github.io/forgetful">Home</a></span>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="http://localhost:1313/forgetful/">Home</a></span>
         </section>
     </div>
 
-    <div class="post-nav"><a href="https://murray-liang.github.io/forgetful/2020/02/openstack-dev/" class="prev" rel="prev" title="OpenStack Dev Tips"><i class="fas fa-angle-left fa-fw"></i>OpenStack Dev Tips</a>
-            <a href="https://murray-liang.github.io/forgetful/2020/02/openstack-curl-rest-examples/" class="next" rel="next" title="OpenStack Curl Command Examples">OpenStack Curl Command Examples<i class="fas fa-angle-right fa-fw"></i></a></div>
+    <div class="post-nav"><a href="http://localhost:1313/forgetful/2020/02/openstack-dev/" class="prev" rel="prev" title="OpenStack Dev Tips"><i class="fas fa-angle-left fa-fw"></i>OpenStack Dev Tips</a>
+            <a href="http://localhost:1313/forgetful/2020/02/openstack-curl-rest-examples/" class="next" rel="next" title="OpenStack Curl Command Examples">OpenStack Curl Command Examples<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 <div class="post-comment"></div>
     </article></div>
@@ -589,7 +596,7 @@ stack@ubuntu-server8:~/kolla-ansible$ openstack server create --image Ubuntu <sp
     <div class="copyright"><div class="copyright-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
         </div>
 
-        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/Murray-LIANG" target="_blank">Murray-LIANG</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/Murray-LIANG" target="_blank">Murray-LIANG</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
     </div>
 </footer>
 </div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>

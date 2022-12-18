@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
+    <head><script src="/forgetful/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=forgetful/livereload" data-no-instant defer></script>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>OpenStack Curl Command Examples | Forgetful :/</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noodp" />
-<meta name="Description" content="Notes about everything"><link rel="prev" href="https://murray-liang.github.io/forgetful/2020/02/openstack-kolla-ansible/" /><link rel="next" href="https://murray-liang.github.io/forgetful/2020/02/openstack-cinder-unity-multi-backends-test/" /><link rel="canonical" href="https://murray-liang.github.io/forgetful/2020/02/openstack-curl-rest-examples/" />
+<meta name="Description" content="Notes about everything"><link rel="prev" href="http://localhost:1313/forgetful/2020/02/openstack-kolla-ansible/" /><link rel="next" href="http://localhost:1313/forgetful/2020/02/openstack-cinder-unity-multi-backends-test/" /><link rel="canonical" href="http://localhost:1313/forgetful/2020/02/openstack-curl-rest-examples/" />
 <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -16,9 +16,10 @@
 <meta name="theme-color" content="#ffffff"><meta property="og:title" content="OpenStack Curl Command Examples" />
 <meta property="og:description" content="1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27  # create volume curl -g -i \  -X POST http://192.168.77.63/volume/v2/2a97f77210a54665ba9df8a505df6624/volumes \  -H &#34;User-Agent: python-cinderclient&#34; \  -H &#34;Content-Type: application/json&#34; \  -H &#34;Accept: application/json&#34; \  -H &#34;X-Auth-Token: {SHA1}5b729489a9259aae07eb591361c474bdad29e71d&#34; \  -d &#39; {&#34;volume&#34;: {&#34;status&#34;: &#34;creating&#34;, &#34;user_id&#34;: null, &#34;name&#34;: &#34;v-m-3&#34;, &#34;imageRef&#34;: null, &#34;availability_zone&#34;: null, &#34;description&#34;: null, &#34;multiattach&#34;: false, &#34;attach_status&#34;: &#34;detached&#34;, &#34;volume_type&#34;: null, &#34;metadata&#34;: {}, &#34;consistencygroup_id&#34;: null, &#34;source_volid&#34;: null, &#34;snapshot_id&#34;: null, &#34;project_id&#34;: null, &#34;source_replica&#34;: null, &#34;size&#34;: 1 } }&#39;   1 2 3 4 5 6 7 8 9 10 11 12 13 14  # force detach curl -g -i \  -X POST \  http://192." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://murray-liang.github.io/forgetful/2020/02/openstack-curl-rest-examples/" />
+<meta property="og:url" content="http://localhost:1313/forgetful/2020/02/openstack-curl-rest-examples/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2020-02-10T16:37:31+08:00" />
 <meta property="article:modified_time" content="2020-02-10T16:37:31+08:00" />
+
 <script type="application/ld+json">
     {
         "@context": "http://schema.org",
@@ -26,19 +27,19 @@
         "headline": "OpenStack Curl Command Examples",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/murray-liang.github.io\/forgetful\/2020\/02\/openstack-curl-rest-examples\/"
+            "@id": "http:\/\/localhost:1313\/forgetful\/2020\/02\/openstack-curl-rest-examples\/"
         },"image": {
                 "@type": "ImageObject",
-                "url": "https:\/\/murray-liang.github.io\/forgetful\/cover.png",
+                "url": "http:\/\/localhost:1313\/forgetful\/cover.png",
                 "width":  800 ,
                 "height":  600 
             },"genre": "posts","keywords": "openstack, curl","wordcount":  216 ,
-        "url": "https:\/\/murray-liang.github.io\/forgetful\/2020\/02\/openstack-curl-rest-examples\/","datePublished": "2020-02-10T16:37:31\x2b08:00","dateModified": "2020-02-10T16:37:31\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+        "url": "http:\/\/localhost:1313\/forgetful\/2020\/02\/openstack-curl-rest-examples\/","datePublished": "2020-02-10T16:37:31\u002b08:00","dateModified": "2020-02-10T16:37:31\u002b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "murray",
                 "logo": {
                 "@type": "ImageObject",
-                "url": "https:\/\/murray-liang.github.io\/forgetful\/logo.png",
+                "url": "http:\/\/localhost:1313\/forgetful\/logo.png",
                 "width":  127 ,
                 "height":  40 
                 }
@@ -55,22 +56,22 @@
         </script><div class="wrapper"><nav class="navbar">
     <div class="navbar-container">
         <div class="navbar-header animated bounceIn">
-            <a href="https://murray-liang.github.io/forgetful">Forgetful :/</a>
+            <a href="http://localhost:1313/forgetful/">Forgetful :/</a>
         </div>
-        <div class="navbar-menu"><a class="menu-item" href="https://murray-liang.github.io/forgetful/posts" title="">Posts</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/tags" title="">Tags</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/categories" title="">Categories</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"><i class="fas fa-language fa-fw"></i></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        <div class="navbar-menu"><a class="menu-item" href="http://localhost:1313/forgetful/posts" title="">Posts</a><a class="menu-item" href="http://localhost:1313/forgetful/tags" title="">Tags</a><a class="menu-item" href="http://localhost:1313/forgetful/categories" title="">Categories</a><a class="menu-item" href="http://localhost:1313/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"><i class="fas fa-language fa-fw"></i></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
         </div>
     </div>
 </nav><nav class="navbar-mobile">
     <div class="navbar-container">
         <div class="navbar-header">
             <div class="navbar-header-title animated bounceIn">
-                <a href="https://murray-liang.github.io/forgetful">Forgetful :/</a>
+                <a href="http://localhost:1313/forgetful/">Forgetful :/</a>
             </div>
             <div class="menu-toggle" id="menu-toggle">
                 <span></span><span></span><span></span>
             </div>
         </div>
-        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://murray-liang.github.io/forgetful/posts" title="">Posts</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/tags" title="">Tags</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/categories" title="">Categories</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="http://localhost:1313/forgetful/posts" title="">Posts</a><a class="menu-item" href="http://localhost:1313/forgetful/tags" title="">Tags</a><a class="menu-item" href="http://localhost:1313/forgetful/categories" title="">Categories</a><a class="menu-item" href="http://localhost:1313/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
         </div>
     </div>
 </nav>
@@ -98,7 +99,7 @@
                 </details>
             </div><div class="post-content"><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -127,7 +128,7 @@
 </span><span class="lnt">27
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># create volume</span>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># create volume</span>
 curl -g -i <span class="se">\
 </span><span class="se"></span>  -X POST http://192.168.77.63/volume/v2/2a97f77210a54665ba9df8a505df6624/volumes <span class="se">\
 </span><span class="se"></span>  -H <span class="s2">&#34;User-Agent: python-cinderclient&#34;</span> <span class="se">\
@@ -158,7 +159,7 @@ curl -g -i <span class="se">\
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -174,7 +175,7 @@ curl -g -i <span class="se">\
 </span><span class="lnt">14
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># force detach</span>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># force detach</span>
 curl -g -i <span class="se">\
 </span><span class="se"></span>  -X POST <span class="se">\
 </span><span class="se"></span>  http://192.168.77.63/volume/v2/2a97f77210a54665ba9df8a505df6624/volumes/c8fd9bf0-12d9-4152-b2bd-dec2503e21c4/action <span class="se">\
@@ -192,7 +193,7 @@ curl -g -i <span class="se">\
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -218,7 +219,7 @@ curl -g -i <span class="se">\
 </span><span class="lnt">24
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># get token</span>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># get token</span>
 curl -i <span class="se">\
 </span><span class="se"></span>  -H <span class="s2">&#34;Content-Type: application/json&#34;</span> <span class="se">\
 </span><span class="se"></span>  -d <span class="s1">&#39;
@@ -260,17 +261,17 @@ curl -i <span class="se">\
 
     <div class="post-info-more">
         <section><span class="tag">
-                        <a href="https://murray-liang.github.io/forgetful/tags/openstack/"><i class="fas fa-tag fa-fw"></i>&nbsp;openstack</a>&nbsp;
+                        <a href="http://localhost:1313/forgetful/tags/openstack/"><i class="fas fa-tag fa-fw"></i>&nbsp;openstack</a>&nbsp;
                     </span><span class="tag">
-                        <a href="https://murray-liang.github.io/forgetful/tags/curl/"><i class="fas fa-tag fa-fw"></i>&nbsp;curl</a>&nbsp;
+                        <a href="http://localhost:1313/forgetful/tags/curl/"><i class="fas fa-tag fa-fw"></i>&nbsp;curl</a>&nbsp;
                     </span></section>
         <section>
-            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://murray-liang.github.io/forgetful">Home</a></span>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="http://localhost:1313/forgetful/">Home</a></span>
         </section>
     </div>
 
-    <div class="post-nav"><a href="https://murray-liang.github.io/forgetful/2020/02/openstack-kolla-ansible/" class="prev" rel="prev" title="OpenStack Deployment using Kolla Ansible"><i class="fas fa-angle-left fa-fw"></i>OpenStack Deployment using Kolla Ansible</a>
-            <a href="https://murray-liang.github.io/forgetful/2020/02/openstack-cinder-unity-multi-backends-test/" class="next" rel="next" title="OpenStack Cinder Multiple Backends">OpenStack Cinder Multiple Backends<i class="fas fa-angle-right fa-fw"></i></a></div>
+    <div class="post-nav"><a href="http://localhost:1313/forgetful/2020/02/openstack-kolla-ansible/" class="prev" rel="prev" title="OpenStack Deployment using Kolla Ansible"><i class="fas fa-angle-left fa-fw"></i>OpenStack Deployment using Kolla Ansible</a>
+            <a href="http://localhost:1313/forgetful/2020/02/openstack-cinder-unity-multi-backends-test/" class="next" rel="next" title="OpenStack Cinder Multiple Backends">OpenStack Cinder Multiple Backends<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 <div class="post-comment"></div>
     </article></div>
@@ -278,7 +279,7 @@ curl -i <span class="se">\
     <div class="copyright"><div class="copyright-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
         </div>
 
-        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/Murray-LIANG" target="_blank">Murray-LIANG</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/Murray-LIANG" target="_blank">Murray-LIANG</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
     </div>
 </footer>
 </div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>

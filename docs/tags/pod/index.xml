@@ -2,22 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>pod on Forgetful :/</title>
-    <link>https://murray-liang.github.io/forgetful/tags/pod/</link>
+    <link>http://localhost:1313/forgetful/tags/pod/</link>
     <description>Recent content in pod on Forgetful :/</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
-    
-	<atom:link href="https://murray-liang.github.io/forgetful/tags/pod/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate><atom:link href="http://localhost:1313/forgetful/tags/pod/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>What Even Is A Container And A Kubernetes Pod</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/kubernetes-container-pod-what-it-is/</link>
+      <link>http://localhost:1313/forgetful/2020/02/kubernetes-container-pod-what-it-is/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/kubernetes-container-pod-what-it-is/</guid>
+      <guid>http://localhost:1313/forgetful/2020/02/kubernetes-container-pod-what-it-is/</guid>
       <description>Container The word container doesn&amp;rsquo;t mean anything super precise. Basically there are a few new Linux kernel features (namespaces and cgroups) that let you isolate processes from each other. When you use those features, you call it containers.
 Basically these features let you pretend you have something like a virtual machine, except it&amp;rsquo;s not a virtual machine at all, it&amp;rsquo;s just processes running in the same Linux kernel.
 Namespaces namespaces is a Linux feature which could separate your processes from the other processes on the same computer.</description>

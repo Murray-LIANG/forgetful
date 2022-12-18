@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head><script src="/forgetful/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=forgetful/livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>OpenStack Manila Share Group Replication Dev Tips | Forgetful :/</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="Notes about everything"><link rel="prev" href="http://localhost:1313/forgetful/2020/05/openstack-manila/" /><link rel="next" href="http://localhost:1313/forgetful/2020/09/python-entry-points/" /><link rel="canonical" href="http://localhost:1313/forgetful/2020/06/openstack-manila-share-group-replication-dev-tips/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff"><meta property="og:title" content="OpenStack Manila Share Group Replication Dev Tips" />
+<meta property="og:description" content="When Share Group Replication Creation Succeed    Share
+Replication
+Type create_replica
+/delete_replica
+Implemented Group
+Replication
+Type create_share
+_group_replica
+Implemented Succeed in share group replication creation Note     write/read/dr/None yes/no None yes or no no, raise error from share_group/api.    write/read/dr/None yes/no write/read/dr yes yes    write/read/dr yes write/read/dr no yes, the default implementation is creating replicas for shares in the group." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/forgetful/2020/06/openstack-manila-share-group-replication-dev-tips/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-06-23T15:45:28+08:00" />
+<meta property="article:modified_time" content="2020-06-23T15:45:40+08:00" />
+
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "OpenStack Manila Share Group Replication Dev Tips",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/localhost:1313\/forgetful\/2020\/06\/openstack-manila-share-group-replication-dev-tips\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "http:\/\/localhost:1313\/forgetful\/cover.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "posts","keywords": "openstack, manila, share group replication, replication, dev tips","wordcount":  164 ,
+        "url": "http:\/\/localhost:1313\/forgetful\/2020\/06\/openstack-manila-share-group-replication-dev-tips\/","datePublished": "2020-06-23T15:45:28\u002b08:00","dateModified": "2020-06-23T15:45:40\u002b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "murray",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "http:\/\/localhost:1313\/forgetful\/logo.png",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": ""
+    }
+    </script><link rel="stylesheet" href="/forgetful/css/style.min.css"><link rel="stylesheet" href="/forgetful/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/forgetful/css/lib/forkawesome/forkawesome.min.css"><link rel="stylesheet" href="/forgetful/css/lib/animate/animate.min.css"></head>
+    <body><script>
+            if (!window.localStorage || !window.localStorage.getItem('theme')) {
+                window.isDark = 'dark' === 'dark';
+            } else {
+                window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            }
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header animated bounceIn">
+            <a href="http://localhost:1313/forgetful/">Forgetful :/</a>
+        </div>
+        <div class="navbar-menu"><a class="menu-item" href="http://localhost:1313/forgetful/posts" title="">Posts</a><a class="menu-item" href="http://localhost:1313/forgetful/tags" title="">Tags</a><a class="menu-item" href="http://localhost:1313/forgetful/categories" title="">Categories</a><a class="menu-item" href="http://localhost:1313/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"><i class="fas fa-language fa-fw"></i></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav><nav class="navbar-mobile">
+    <div class="navbar-container">
+        <div class="navbar-header">
+            <div class="navbar-header-title animated bounceIn">
+                <a href="http://localhost:1313/forgetful/">Forgetful :/</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="http://localhost:1313/forgetful/posts" title="">Posts</a><a class="menu-item" href="http://localhost:1313/forgetful/tags" title="">Tags</a><a class="menu-item" href="http://localhost:1313/forgetful/categories" title="">Categories</a><a class="menu-item" href="http://localhost:1313/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav>
+<main class="main">
+                <div class="container"><article class="page"><h1 class="post-title animated flipInX">OpenStack Manila Share Group Replication Dev Tips</h1><div class="post-meta">
+            <div class="post-meta-main"><a class="author" href="https://github.com/Murray-LIANG" rel="author" target="_blank">
+                    <i class="fas fa-user-circle fa-fw"></i>Murray-LIANG
+                </a>&nbsp;</div>
+            <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-06-23>2020-06-23</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 164 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>1 min&nbsp;</div>
+        </div><div class="post-toc" id="post-toc">
+                <h2 class="post-toc-title">Contents</h2>
+                <div class="post-toc-content"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#when-share-group-replication-creation-succeed">When Share Group Replication Creation Succeed</a></li>
+    <li><a href="#manila-db-upgradedowngrade">Manila DB Upgrade/Downgrade</a></li>
+  </ul>
+</nav></div>
+            </div>
+            <div class="post-toc-mobile" id="post-toc-mobile">
+                <details>
+                    <summary>
+                        <div class="post-toc-title">
+                            <span>Contents</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="post-toc-content"><nav id="TableOfContentsMobile">
+  <ul>
+    <li><a href="#when-share-group-replication-creation-succeed">When Share Group Replication Creation Succeed</a></li>
+    <li><a href="#manila-db-upgradedowngrade">Manila DB Upgrade/Downgrade</a></li>
+  </ul>
+</nav></div>
+                </details>
+            </div><div class="post-content"><a class="post-dummy-target" id="when-share-group-replication-creation-succeed"></a><h2>When Share Group Replication Creation Succeed</h2>
+<table>
+<thead>
+<tr>
+<th>Share<br>Replication<br>Type</th>
+<th>create_replica<br>/delete_replica<br>Implemented</th>
+<th>Group<br>Replication<br>Type</th>
+<th>create_share<br>_group_replica<br>Implemented</th>
+<th>Succeed in share group replication creation</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>write/read/dr/None</td>
+<td>yes/no</td>
+<td>None</td>
+<td>yes or no</td>
+<td>no, raise error from share_group/api.</td>
+<td></td>
+</tr>
+<tr>
+<td>write/read/dr/None</td>
+<td>yes/no</td>
+<td>write/read/dr</td>
+<td>yes</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>write/read/dr</td>
+<td>yes</td>
+<td>write/read/dr</td>
+<td>no</td>
+<td>yes, the default implementation is <br>creating replicas for shares in the group.<br>But <code>share replication type</code> should be consistent<br>with <code>share group replication type</code>, otherwise,<br>an exception raised when creating <br>the share group (share_group/api.py:create())</td>
+<td></td>
+</tr>
+<tr>
+<td>None</td>
+<td>yes</td>
+<td>write/read/dr</td>
+<td>no</td>
+<td>yes, the default implementation is used. Just assume<br>the <code>share replication type</code> is the same as<br><code>share group replication type</code>.</td>
+<td></td>
+</tr>
+<tr>
+<td>write/read/dr/None</td>
+<td>no</td>
+<td>write/read/dr</td>
+<td>no</td>
+<td>no, raise error from share/driver.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<a class="post-dummy-target" id="manila-db-upgradedowngrade"></a><h2>Manila DB Upgrade/Downgrade</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="gp">$ </span><span class="c1"># Get the current version before upgrade.</span>
+<span class="gp">$ </span>manila-manage db version
+<span class="go">e6d88547b381
+</span><span class="go"></span><span class="err">
+</span><span class="err"></span><span class="gp">$ </span><span class="c1"># Update the alembic file.</span>
+<span class="gp">$ </span>vim manila/db/migrations/alembic/versions/d34c9e9098fa_add_share_group_instances.py
+<span class="gp">$ </span><span class="c1"># Change the down_revision to e6d88547b381.</span>
+<span class="err">
+</span><span class="err"></span><span class="gp">$ </span><span class="c1"># Upgrade de.</span>
+<span class="gp">$ </span>manila-manage db sync
+<span class="err">
+</span><span class="err">
+</span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>The article was updated on 2020-06-23</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><span></span></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section><span class="tag">
+                        <a href="http://localhost:1313/forgetful/tags/openstack/"><i class="fas fa-tag fa-fw"></i>&nbsp;openstack</a>&nbsp;
+                    </span><span class="tag">
+                        <a href="http://localhost:1313/forgetful/tags/manila/"><i class="fas fa-tag fa-fw"></i>&nbsp;manila</a>&nbsp;
+                    </span><span class="tag">
+                        <a href="http://localhost:1313/forgetful/tags/share-group-replication/"><i class="fas fa-tag fa-fw"></i>&nbsp;share group replication</a>&nbsp;
+                    </span><span class="tag">
+                        <a href="http://localhost:1313/forgetful/tags/replication/"><i class="fas fa-tag fa-fw"></i>&nbsp;replication</a>&nbsp;
+                    </span><span class="tag">
+                        <a href="http://localhost:1313/forgetful/tags/dev-tips/"><i class="fas fa-tag fa-fw"></i>&nbsp;dev tips</a>&nbsp;
+                    </span></section>
+        <section>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="http://localhost:1313/forgetful/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="http://localhost:1313/forgetful/2020/05/openstack-manila/" class="prev" rel="prev" title="OpenStack Manila"><i class="fas fa-angle-left fa-fw"></i>OpenStack Manila</a>
+            <a href="http://localhost:1313/forgetful/2020/09/python-entry-points/" class="next" rel="next" title="Python Module Entry Points">Python Module Entry Points<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div class="post-comment"></div>
+    </article></div>
+            </main><footer class="footer">
+    <div class="copyright"><div class="copyright-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
+        </div>
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/Murray-LIANG" target="_blank">Murray-LIANG</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+    </div>
+</footer>
+</div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>
+            <span>&nbsp;</span>
+        </a><script src="/forgetful/js/lib/jquery/jquery.slim.min.js"></script><script src="/forgetful/js/lib/lazysizes/lazysizes.min.js"></script><script src="/forgetful/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script><link rel="stylesheet" href="/forgetful/css/lib/katex/katex.min.css"><script src="/forgetful/js/lib/katex/katex.min.js"></script><script defer src="/forgetful/js/lib/katex/auto-render.min.js"></script><link rel="stylesheet" href="/forgetful/css/lib/katex/copy-tex.min.css"><script defer src="/forgetful/js/lib/katex/copy-tex.min.js"></script><script defer src="/forgetful/js/lib/katex/mhchem.min.js"></script><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },{ left: "$", right: "$", display: false },]
+            });
+        });
+    </script><script src="/forgetful/js/blog.min.js"></script>
+</body>
+</html>

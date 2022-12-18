@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
+    <head><script src="/forgetful/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=forgetful/livereload" data-no-instant defer></script>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>Kubernetes CSI Unity | Forgetful :/</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noodp" />
-<meta name="Description" content="Notes about everything"><link rel="prev" href="https://murray-liang.github.io/forgetful/2020/02/kubernetes-demo/" /><link rel="next" href="https://murray-liang.github.io/forgetful/2020/02/kubernetes-api-server/" /><link rel="canonical" href="https://murray-liang.github.io/forgetful/2020/02/kubernetes-csi-unity/" />
+<meta name="Description" content="Notes about everything"><link rel="prev" href="http://localhost:1313/forgetful/2020/02/kubernetes-demo/" /><link rel="next" href="http://localhost:1313/forgetful/2020/02/kubernetes-api-server/" /><link rel="canonical" href="http://localhost:1313/forgetful/2020/02/kubernetes-csi-unity/" />
 <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -14,13 +14,13 @@
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff"><meta property="og:title" content="Kubernetes CSI Unity" />
-<meta property="og:description" content="Setup K8S Nodes 1. Create three VMs. 2. Create the user k8s with password welcome, add it to sudo group. 3. Add corp CA certs on all nodes. https://eos2git.cec.lab.emc.com/liangr/corp-notes/blob/master/fix-pip-emc-cert.md
-4. Install docker.io on all nodes. NOTE: Do NOT use 18.09.2 currently (2019-04-25). It causes below errors:
+<meta property="og:description" content="Setup K8S Nodes 1. Create three VMs. 2. Create the user k8s with password welcome, add it to sudo group. 3. Add corp CA certs on all nodes. https://eos2git.cec.lab.emc.com/liangr/corp-notes/blob/master/fix-pip-emc-cert.md 4. Install docker.io on all nodes. NOTE: Do NOT use 18.09.2 currently (2019-04-25). It causes below errors:
 1 2 3 4 5 6  root@k8s-master:~# docker pull k8s.gcr.io/kube-apiserver:v1.14.1 v1.14.1: Pulling from kube-apiserver 346aee5ea5bc: Pulling fs layer 7f0e834d5a94: Pulling fs layer error pulling image configuration: Get https://storage." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://murray-liang.github.io/forgetful/2020/02/kubernetes-csi-unity/" />
+<meta property="og:url" content="http://localhost:1313/forgetful/2020/02/kubernetes-csi-unity/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2020-02-10T16:37:31+08:00" />
 <meta property="article:modified_time" content="2020-02-10T16:37:31+08:00" />
+
 <script type="application/ld+json">
     {
         "@context": "http://schema.org",
@@ -28,19 +28,19 @@
         "headline": "Kubernetes CSI Unity",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/murray-liang.github.io\/forgetful\/2020\/02\/kubernetes-csi-unity\/"
+            "@id": "http:\/\/localhost:1313\/forgetful\/2020\/02\/kubernetes-csi-unity\/"
         },"image": {
                 "@type": "ImageObject",
-                "url": "https:\/\/murray-liang.github.io\/forgetful\/cover.png",
+                "url": "http:\/\/localhost:1313\/forgetful\/cover.png",
                 "width":  800 ,
                 "height":  600 
-            },"genre": "posts","keywords": "kubernetes, k8s, csi, unity","wordcount":  647 ,
-        "url": "https:\/\/murray-liang.github.io\/forgetful\/2020\/02\/kubernetes-csi-unity\/","datePublished": "2020-02-10T16:37:31\x2b08:00","dateModified": "2020-02-10T16:37:31\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            },"genre": "posts","keywords": "kubernetes, k8s, csi, unity","wordcount":  648 ,
+        "url": "http:\/\/localhost:1313\/forgetful\/2020\/02\/kubernetes-csi-unity\/","datePublished": "2020-02-10T16:37:31\u002b08:00","dateModified": "2020-02-10T16:37:31\u002b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "murray",
                 "logo": {
                 "@type": "ImageObject",
-                "url": "https:\/\/murray-liang.github.io\/forgetful\/logo.png",
+                "url": "http:\/\/localhost:1313\/forgetful\/logo.png",
                 "width":  127 ,
                 "height":  40 
                 }
@@ -57,22 +57,22 @@
         </script><div class="wrapper"><nav class="navbar">
     <div class="navbar-container">
         <div class="navbar-header animated bounceIn">
-            <a href="https://murray-liang.github.io/forgetful">Forgetful :/</a>
+            <a href="http://localhost:1313/forgetful/">Forgetful :/</a>
         </div>
-        <div class="navbar-menu"><a class="menu-item" href="https://murray-liang.github.io/forgetful/posts" title="">Posts</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/tags" title="">Tags</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/categories" title="">Categories</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"><i class="fas fa-language fa-fw"></i></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        <div class="navbar-menu"><a class="menu-item" href="http://localhost:1313/forgetful/posts" title="">Posts</a><a class="menu-item" href="http://localhost:1313/forgetful/tags" title="">Tags</a><a class="menu-item" href="http://localhost:1313/forgetful/categories" title="">Categories</a><a class="menu-item" href="http://localhost:1313/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"><i class="fas fa-language fa-fw"></i></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
         </div>
     </div>
 </nav><nav class="navbar-mobile">
     <div class="navbar-container">
         <div class="navbar-header">
             <div class="navbar-header-title animated bounceIn">
-                <a href="https://murray-liang.github.io/forgetful">Forgetful :/</a>
+                <a href="http://localhost:1313/forgetful/">Forgetful :/</a>
             </div>
             <div class="menu-toggle" id="menu-toggle">
                 <span></span><span></span><span></span>
             </div>
         </div>
-        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://murray-liang.github.io/forgetful/posts" title="">Posts</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/tags" title="">Tags</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/categories" title="">Categories</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="http://localhost:1313/forgetful/posts" title="">Posts</a><a class="menu-item" href="http://localhost:1313/forgetful/tags" title="">Tags</a><a class="menu-item" href="http://localhost:1313/forgetful/categories" title="">Categories</a><a class="menu-item" href="http://localhost:1313/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
         </div>
     </div>
 </nav>
@@ -82,7 +82,7 @@
                     <i class="fas fa-user-circle fa-fw"></i>Murray-LIANG
                 </a>&nbsp;</div>
             <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-02-10>2020-02-10</time>&nbsp;
-                <i class="fas fa-pencil-alt fa-fw"></i>about 647 words&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 648 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>4 min&nbsp;</div>
         </div><div class="post-toc" id="post-toc">
                 <h2 class="post-toc-title">Contents</h2>
@@ -158,12 +158,13 @@
 <a class="post-dummy-target" id="1-create-three-vms"></a><h3>1. Create three VMs.</h3>
 <a class="post-dummy-target" id="2-create-the-user-k8s-with-password-welcome-add-it-to-sudo-group"></a><h3>2. Create the user <code>k8s</code> with password <code>welcome</code>, add it to <code>sudo</code> group.</h3>
 <a class="post-dummy-target" id="3-add-corp-ca-certs-on-all-nodes"></a><h3>3. Add corp CA certs on all nodes.</h3>
-<p><a href="https://eos2git.cec.lab.emc.com/liangr/corp-notes/blob/master/fix-pip-emc-cert.md">https://eos2git.cec.lab.emc.com/liangr/corp-notes/blob/master/fix-pip-emc-cert.md</a></p>
+<p><a href="https://eos2git.cec.lab.emc.com/liangr/corp-notes/blob/master/fix-pip-emc-cert.md" target="_blank">https://eos2git.cec.lab.emc.com/liangr/corp-notes/blob/master/fix-pip-emc-cert.md</a>
+</p>
 <a class="post-dummy-target" id="4-install-dockerio-on-all-nodes"></a><h3>4. Install <code>docker.io</code> on all nodes.</h3>
 <p><strong>NOTE: Do NOT use 18.09.2 currently (2019-04-25). It causes below errors:</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -171,18 +172,18 @@
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">root@k8s-master:~# docker pull k8s.gcr.io/kube-apiserver:v1.14.1
-v1.14.1: Pulling from kube-apiserver
-346aee5ea5bc: Pulling fs layer
-7f0e834d5a94: Pulling fs layer
-error pulling image configuration: Get https://storage.googleapis.com/us.artifacts.google-containers.appspot.com/containers/images/sha256:cfaa4ad74c379e428b953c9aa9962e25a6de470a38b3b62ea2fe
-aef1bfb30e0d: remote error: tls: handshake failure
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="go">root@k8s-master:~# docker pull k8s.gcr.io/kube-apiserver:v1.14.1
+</span><span class="go">v1.14.1: Pulling from kube-apiserver
+</span><span class="go">346aee5ea5bc: Pulling fs layer
+</span><span class="go">7f0e834d5a94: Pulling fs layer
+</span><span class="go">error pulling image configuration: Get https://storage.googleapis.com/us.artifacts.google-containers.appspot.com/containers/images/sha256:cfaa4ad74c379e428b953c9aa9962e25a6de470a38b3b62ea2fe
+</span><span class="go">aef1bfb30e0d: remote error: tls: handshake failure
+</span></code></pre></td></tr></table>
 </div>
 </div><p>Need more configuration after installation.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -202,7 +203,7 @@ aef1bfb30e0d: remote error: tls: handshake failure
 </span><span class="lnt">18
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># under root user</span>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># under root user</span>
 cat &gt; /etc/docker/daemon.json <span class="s">&lt;&lt;EOF
 </span><span class="s">{
 </span><span class="s">    &#34;dns&#34;: [&#34;10.254.174.10&#34;, &#34;10.104.128.235&#34;],
@@ -223,15 +224,16 @@ systemctl restart docker
 </code></pre></td></tr></table>
 </div>
 </div><a class="post-dummy-target" id="5-install-kubelet-kubeadm-kubectl-on-all-nodes"></a><h3>5. Install <code>kubelet</code>, <code>kubeadm</code>, <code>kubectl</code> on all nodes.</h3>
-<p><a href="https://kubernetes.io/docs/setup/independent/install-kubeadm/">https://kubernetes.io/docs/setup/independent/install-kubeadm/</a></p>
+<p><a href="https://kubernetes.io/docs/setup/independent/install-kubeadm/" target="_blank">https://kubernetes.io/docs/setup/independent/install-kubeadm/</a>
+</p>
 <p><strong>NOTE: Do NOT forget to configure cgroup driver used by kubelet on Master Node</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">$ sudo vim /etc/default/kubelet
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ sudo vim /etc/default/kubelet
 <span class="nv">KUBELET_EXTRA_ARGS</span><span class="o">=</span>--cgroup-driver<span class="o">=</span>systemd
 </code></pre></td></tr></table>
 </div>
@@ -240,7 +242,7 @@ systemctl restart docker
 <p>Switch to the user <code>k8s</code>.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -250,7 +252,7 @@ systemctl restart docker
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># To start using your cluster, you need to run the following as a regular user:</span>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># To start using your cluster, you need to run the following as a regular user:</span>
 
 $ mkdir -p <span class="nv">$HOME</span>/.kube <span class="o">&amp;&amp;</span> <span class="se">\
 </span><span class="se"></span>    sudo cp -i /etc/kubernetes/admin.conf <span class="nv">$HOME</span>/.kube/config <span class="o">&amp;&amp;</span> <span class="se">\
@@ -261,21 +263,21 @@ $ kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/a70459be0084
 </code></pre></td></tr></table>
 </div>
 </div><a class="post-dummy-target" id="7-join-the-worker-nodes-to-the-cluster"></a><h3>7. Join the worker nodes to the cluster.</h3>
-<p><code>kubeadm join 172.16.1.8:6443 --token 60xmgt.n6ki3huo6bife2qb \ --discovery-token-ca-cert-hash sha256:fd15de9d8ac029893cda34f4e356bb540477500fe243d6b65c947419c111c53b</code></p>
+<p><code>kubeadm join 172.16.1.8:6443 --token 60xmgt.n6ki3huo6bife2qb \ --discovery-token-ca-cert-hash sha256:fd15de9d8ac029893cda34f4e356bb540477500fe243d6b65c947419c111c53b</code></p>
 <a class="post-dummy-target" id="8-set-auto-bash-completion-for-kubectl"></a><h3>8. Set auto bash completion for <code>kubectl</code>.</h3>
 <ul>
 <li>For current console:</li>
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ source &lt;(kubectl completion bash)
-
-$ source &lt;(kubectl completion zsh)
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="gp">$ </span><span class="nb">source</span> &lt;<span class="o">(</span>kubectl completion bash<span class="o">)</span>
+<span class="err">
+</span><span class="err"></span><span class="gp">$ </span><span class="nb">source</span> &lt;<span class="o">(</span>kubectl completion zsh<span class="o">)</span>
 </code></pre></td></tr></table>
 </div>
 </div><ul>
@@ -283,30 +285,31 @@ $ source &lt;(kubectl completion zsh)
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ kubectl completion bash | sudo tee /etc/bash_completion.d/k8s \
-  &amp;&amp; source /etc/bash_completion.d/k8s
-
-$ kubectl completion zsh &gt; &#34;${fpath[1]}/_kubectl&#34;
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="gp">$ </span>kubectl completion bash <span class="p">|</span> sudo tee /etc/bash_completion.d/k8s <span class="se">\
+</span><span class="se"></span><span class="go">  &amp;&amp; source /etc/bash_completion.d/k8s
+</span><span class="go"></span><span class="err">
+</span><span class="err"></span><span class="gp">$ </span>kubectl completion zsh &gt; <span class="s2">&#34;</span><span class="si">${</span><span class="nv">fpath</span><span class="p">[1]</span><span class="si">}</span><span class="s2">/_kubectl&#34;</span>
 </code></pre></td></tr></table>
 </div>
 </div><a class="post-dummy-target" id="9-tear-down"></a><h3>9. Tear down</h3>
-<p><a href="https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/#tear-down">https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/#tear-down</a></p>
+<p><a href="https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/#tear-down" target="_blank">https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/#tear-down</a>
+</p>
 <p>On <code>k8s-master</code>:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="k">for</span> node in k8s-node1 k8s-node2 k8s-master<span class="p">;</span> <span class="k">do</span> <span class="se">\
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="k">for</span> node in k8s-node1 k8s-node2 k8s-master<span class="p">;</span> <span class="k">do</span> <span class="se">\
 </span><span class="se"></span>    kubectl drain <span class="nv">$node</span> --delete-local-data --force --ignore-daemonsets <span class="o">&amp;&amp;</span> <span class="se">\
 </span><span class="se"></span>    kubectl delete node <span class="nv">$node</span><span class="p">;</span> <span class="se">\
 </span><span class="se"></span><span class="k">done</span>
@@ -315,12 +318,12 @@ $ kubectl completion zsh &gt; &#34;${fpath[1]}/_kubectl&#34;
 </div><p>On <code>k8s-master</code>, <code>k8s-node1</code>, <code>k8s-node2</code>:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ sudo su -
-# kubeadm reset
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="gp">$ </span>sudo su -
+<span class="gp"># </span>kubeadm reset
 </code></pre></td></tr></table>
 </div>
 </div><a class="post-dummy-target" id="tips"></a><h2>Tips</h2>
@@ -328,18 +331,18 @@ $ kubectl completion zsh &gt; &#34;${fpath[1]}/_kubectl&#34;
 <p>On all nodes:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ sudo su -
-
-$ apt-cache policy kubeadm | less
-
-$ apt install --allow-downgrades -y kubeadm=1.13.6-00 kubelet=1.13.6-00 kubectl=1.13.6-00
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="gp">$ </span>sudo su -
+<span class="err">
+</span><span class="err"></span><span class="gp">$ </span>apt-cache policy kubeadm <span class="p">|</span> less
+<span class="err">
+</span><span class="err"></span><span class="gp">$ </span>apt install --allow-downgrades -y <span class="nv">kubeadm</span><span class="o">=</span>1.13.6-00 <span class="nv">kubelet</span><span class="o">=</span>1.13.6-00 <span class="nv">kubectl</span><span class="o">=</span>1.13.6-00
 </code></pre></td></tr></table>
 </div>
 </div><a class="post-dummy-target" id="troubleshooting"></a><h2>Troubleshooting</h2>
@@ -347,73 +350,75 @@ $ apt install --allow-downgrades -y kubeadm=1.13.6-00 kubelet=1.13.6-00 kubectl=
 <p>After deploy of k8s cluster, run:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ sudo kubectl proxy --port 8001 &amp;
-$ kubectl get nodes
-$ curl -sSL &#34;http://localhost:8001/api/v1/nodes/k8s-node1/proxy/configz&#34;  | python3 -m json.tool | grep cgroup
-        &#34;cgroupsPerQOS&#34;: true,
-        &#34;cgroupDriver&#34;: &#34;systemd&#34;,
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="gp">$ </span>sudo kubectl proxy --port <span class="m">8001</span> <span class="p">&amp;</span>
+<span class="gp">$ </span>kubectl get nodes
+<span class="gp">$ </span>curl -sSL <span class="s2">&#34;http://localhost:8001/api/v1/nodes/k8s-node1/proxy/configz&#34;</span>  <span class="p">|</span> python3 -m json.tool <span class="p">|</span> grep cgroup
+<span class="go">        &#34;cgroupsPerQOS&#34;: true,
+</span><span class="go">        &#34;cgroupDriver&#34;: &#34;systemd&#34;,
+</span></code></pre></td></tr></table>
 </div>
 </div><a class="post-dummy-target" id="different-paths-mounted-in-containers"></a><h3>Different paths mounted in containers.</h3>
 <p>Application container:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-json" data-lang="json"><span class="s2">&#34;Source&#34;</span><span class="err">:</span> <span class="s2">&#34;/var/lib/kubelet/pods/33d9ee75-7307-11e9-9080-fa163ece4076/volumes/kubernetes.io~csi/pvc-6cccf68a-7304-11e9-9080-fa163ece4076/mount&#34;</span><span class="err">,</span>
+<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="s2">&#34;Source&#34;</span><span class="err">:</span> <span class="s2">&#34;/var/lib/kubelet/pods/33d9ee75-7307-11e9-9080-fa163ece4076/volumes/kubernetes.io~csi/pvc-6cccf68a-7304-11e9-9080-fa163ece4076/mount&#34;</span><span class="err">,</span>
 <span class="s2">&#34;Destination&#34;</span><span class="err">:</span> <span class="s2">&#34;/var/lib/mysql&#34;</span><span class="err">,</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>Node Server container:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">10.245.47.97:/csi-nfs-74baf2fc-7304-11e9-817f-fa163ecc7867   10G  1.8G  8.3G  18% /var/lib/kubelet/pods/33d9ee75-7307-11e9-9080-fa163ece4076/volumes/kubernetes.io~csi/pvc-6cccf68a-7304-11e9-9080-fa163ece4076/mount
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">10.245.47.97:/csi-nfs-74baf2fc-7304-11e9-817f-fa163ecc7867   10G  1.8G  8.3G  18% /var/lib/kubelet/pods/33d9ee75-7307-11e9-9080-fa163ece4076/volumes/kubernetes.io~csi/pvc-6cccf68a-7304-11e9-9080-fa163ece4076/mount
 </code></pre></td></tr></table>
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="s2">&#34;Source&#34;</span>: <span class="s2">&#34;/var/lib/kubelet/pods&#34;</span>,
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="s2">&#34;Source&#34;</span>: <span class="s2">&#34;/var/lib/kubelet/pods&#34;</span>,
 <span class="s2">&#34;Destination&#34;</span>: <span class="s2">&#34;/var/lib/kubelet/pods&#34;</span>,
 <span class="s2">&#34;Mode&#34;</span>: <span class="s2">&#34;rshared&#34;</span>,
 </code></pre></td></tr></table>
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">Warning  FailedAttachVolume  10s <span class="o">(</span>x8 over 74s<span class="o">)</span>  attachdetach-controller  AttachVolume.Attach failed <span class="k">for</span> volume <span class="s2">&#34;pvc-48f80977-7851-11e9-9080-fa163ece4076&#34;</span> : failed to load secret <span class="s2">&#34;default/csi-unity-secret&#34;</span>: secrets <span class="s2">&#34;csi-unity-secret&#34;</span> is forbidden: User <span class="s2">&#34;system:serviceaccount:default:csi-attacher&#34;</span> cannot get resource <span class="s2">&#34;secrets&#34;</span> in API group <span class="s2">&#34;&#34;</span> in the namespace <span class="s2">&#34;default&#34;</span>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">Warning  FailedAttachVolume  10s <span class="o">(</span>x8 over 74s<span class="o">)</span>  attachdetach-controller  AttachVolume.Attach failed <span class="k">for</span> volume <span class="s2">&#34;pvc-48f80977-7851-11e9-9080-fa163ece4076&#34;</span> : failed to load secret <span class="s2">&#34;default/csi-unity-secret&#34;</span>: secrets <span class="s2">&#34;csi-unity-secret&#34;</span> is forbidden: User <span class="s2">&#34;system:serviceaccount:default:csi-attacher&#34;</span> cannot get resource <span class="s2">&#34;secrets&#34;</span> in API group <span class="s2">&#34;&#34;</span> in the namespace <span class="s2">&#34;default&#34;</span>
 </code></pre></td></tr></table>
 </div>
 </div><a class="post-dummy-target" id="the-feature-gates-and-required-ones-by-csi"></a><h3>The feature gates and required ones by CSI.</h3>
 <ol>
 <li>
 <p>The raw block support needs the Kubernetes cluster to enable <code>BlockVolume</code> and <code>CSIBlockVolume</code>.
-Quoted from the page (scroll to bottom): <a href="https://kubernetes-csi.github.io/docs/raw-block.html">https://kubernetes-csi.github.io/docs/raw-block.html</a></p>
+Quoted from the page (scroll to bottom): <a href="https://kubernetes-csi.github.io/docs/raw-block.html" target="_blank">https://kubernetes-csi.github.io/docs/raw-block.html</a>
+</p>
 <pre><code> The BlockVolume and CSIBlockVolume feature gates need to be enabled on all Kubernetes masters and nodes.
 
  --feature-gates=BlockVolume=true,CSIBlockVolume=true...
 </code></pre>
 </li>
 <li>
-<p>Check the <code>BlockVolume</code> and <code>CSIBlockVolume</code> in the feature list: <a href="https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/">https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/</a>. We could know that <code>BlockVolume</code> is enabled by default from 1.13 however <code>CSIBlockVolume</code> is enabled by default from 1.14. (Supposing we are using Kubernetes 1.13)</p>
+<p>Check the <code>BlockVolume</code> and <code>CSIBlockVolume</code> in the feature list: <a href="https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/" target="_blank">https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/</a>
+. We could know that <code>BlockVolume</code> is enabled by default from 1.13 however <code>CSIBlockVolume</code> is enabled by default from 1.14. (Supposing we are using Kubernetes 1.13)</p>
 </li>
 <li>
 <p>Thus, we need to enable <code>CSIBlockVolume</code> in Kubernetes 1.13. There are two places need to modify: <code>kubelet</code> and <code>apiserver</code>.</p>
@@ -422,11 +427,11 @@ Quoted from the page (scroll to bottom): <a href="https://kubernetes-csi.github.
 <li>kubelet: modify the <code>/etc/default/kubelet</code> file.
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">$ cat /etc/default/kubelet
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ cat /etc/default/kubelet
 <span class="nv">KUBELET_EXTRA_ARGS</span><span class="o">=</span><span class="s2">&#34;--cgroup-driver=systemd --feature-gates=CSIBlockVolume=true&#34;</span>
 </code></pre></td></tr></table>
 </div>
@@ -434,7 +439,7 @@ Quoted from the page (scroll to bottom): <a href="https://kubernetes-csi.github.
 <li>apiserver: modify the <code>/etc/kubernetes/manifests/kube-apiserver.yaml</code> (can be found in master node)
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -443,7 +448,7 @@ Quoted from the page (scroll to bottom): <a href="https://kubernetes-csi.github.
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">spec:
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">spec:
     containers:
         - command:
             - kube-apiserver
@@ -473,21 +478,21 @@ Quoted from the page (scroll to bottom): <a href="https://kubernetes-csi.github.
 
     <div class="post-info-more">
         <section><span class="tag">
-                        <a href="https://murray-liang.github.io/forgetful/tags/kubernetes/"><i class="fas fa-tag fa-fw"></i>&nbsp;kubernetes</a>&nbsp;
+                        <a href="http://localhost:1313/forgetful/tags/kubernetes/"><i class="fas fa-tag fa-fw"></i>&nbsp;kubernetes</a>&nbsp;
                     </span><span class="tag">
-                        <a href="https://murray-liang.github.io/forgetful/tags/k8s/"><i class="fas fa-tag fa-fw"></i>&nbsp;k8s</a>&nbsp;
+                        <a href="http://localhost:1313/forgetful/tags/k8s/"><i class="fas fa-tag fa-fw"></i>&nbsp;k8s</a>&nbsp;
                     </span><span class="tag">
-                        <a href="https://murray-liang.github.io/forgetful/tags/csi/"><i class="fas fa-tag fa-fw"></i>&nbsp;csi</a>&nbsp;
+                        <a href="http://localhost:1313/forgetful/tags/csi/"><i class="fas fa-tag fa-fw"></i>&nbsp;csi</a>&nbsp;
                     </span><span class="tag">
-                        <a href="https://murray-liang.github.io/forgetful/tags/unity/"><i class="fas fa-tag fa-fw"></i>&nbsp;unity</a>&nbsp;
+                        <a href="http://localhost:1313/forgetful/tags/unity/"><i class="fas fa-tag fa-fw"></i>&nbsp;unity</a>&nbsp;
                     </span></section>
         <section>
-            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://murray-liang.github.io/forgetful">Home</a></span>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="http://localhost:1313/forgetful/">Home</a></span>
         </section>
     </div>
 
-    <div class="post-nav"><a href="https://murray-liang.github.io/forgetful/2020/02/kubernetes-demo/" class="prev" rel="prev" title="Kubernetes Demo"><i class="fas fa-angle-left fa-fw"></i>Kubernetes Demo</a>
-            <a href="https://murray-liang.github.io/forgetful/2020/02/kubernetes-api-server/" class="next" rel="next" title="Kubernetes API Server">Kubernetes API Server<i class="fas fa-angle-right fa-fw"></i></a></div>
+    <div class="post-nav"><a href="http://localhost:1313/forgetful/2020/02/kubernetes-demo/" class="prev" rel="prev" title="Kubernetes Demo"><i class="fas fa-angle-left fa-fw"></i>Kubernetes Demo</a>
+            <a href="http://localhost:1313/forgetful/2020/02/kubernetes-api-server/" class="next" rel="next" title="Kubernetes API Server">Kubernetes API Server<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 <div class="post-comment"></div>
     </article></div>
@@ -495,7 +500,7 @@ Quoted from the page (scroll to bottom): <a href="https://kubernetes-csi.github.
     <div class="copyright"><div class="copyright-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
         </div>
 
-        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/Murray-LIANG" target="_blank">Murray-LIANG</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/Murray-LIANG" target="_blank">Murray-LIANG</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
     </div>
 </footer>
 </div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>

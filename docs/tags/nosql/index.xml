@@ -2,22 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>nosql on Forgetful :/</title>
-    <link>https://murray-liang.github.io/forgetful/tags/nosql/</link>
+    <link>http://localhost:1313/forgetful/tags/nosql/</link>
     <description>Recent content in nosql on Forgetful :/</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
-    
-	<atom:link href="https://murray-liang.github.io/forgetful/tags/nosql/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate><atom:link href="http://localhost:1313/forgetful/tags/nosql/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Some Design Thoughts</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/design-thoughts/</link>
+      <link>http://localhost:1313/forgetful/2020/02/design-thoughts/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/design-thoughts/</guid>
+      <guid>http://localhost:1313/forgetful/2020/02/design-thoughts/</guid>
       <description>SQL or NoSQL SQL Tables vs NoSQL Documents SQL databases store data records in tables.
 NoSQL databases store JSON-like field-value pair documents. Similar documents can be stored in a collection, which is analogous to an SQL table.
 SQL Schema vs NoSQL Schemaless SQL Normalization vs NoSQL Denormalization SQL databases use foreign key to relate one table to another, which minimizes data redundancy.

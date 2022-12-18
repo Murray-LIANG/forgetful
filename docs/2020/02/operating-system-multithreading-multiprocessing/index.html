@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
+    <head><script src="/forgetful/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=forgetful/livereload" data-no-instant defer></script>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>Multi-Threading and Multi-Processing | Forgetful :/</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noodp" />
-<meta name="Description" content="Notes about everything"><link rel="prev" href="https://murray-liang.github.io/forgetful/2020/02/network-package-forwarding/" /><link rel="next" href="https://murray-liang.github.io/forgetful/2020/02/microservices-architecture/" /><link rel="canonical" href="https://murray-liang.github.io/forgetful/2020/02/operating-system-multithreading-multiprocessing/" />
+<meta name="Description" content="Notes about everything"><link rel="prev" href="http://localhost:1313/forgetful/2020/02/network-package-forwarding/" /><link rel="next" href="http://localhost:1313/forgetful/2020/02/microservices-architecture/" /><link rel="canonical" href="http://localhost:1313/forgetful/2020/02/operating-system-multithreading-multiprocessing/" />
 <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -17,9 +17,10 @@
 <meta property="og:description" content="Multithreading refers to the general task of running more that one thread of execution within an operating system. Multithreading is more generically called multiprocessing, which can include multiple system processes (a simple example on Windows would be, e.g., running Internet Explorer and Microsoft Word at the same time), or it can consist of one process that has multiple threads within it.
 Multithreading (or should I say, multiprocessing) is a software concept." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://murray-liang.github.io/forgetful/2020/02/operating-system-multithreading-multiprocessing/" />
+<meta property="og:url" content="http://localhost:1313/forgetful/2020/02/operating-system-multithreading-multiprocessing/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2020-02-10T16:37:31+08:00" />
 <meta property="article:modified_time" content="2020-02-10T16:37:31+08:00" />
+
 <script type="application/ld+json">
     {
         "@context": "http://schema.org",
@@ -27,19 +28,19 @@ Multithreading (or should I say, multiprocessing) is a software concept." />
         "headline": "Multi-Threading and Multi-Processing",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/murray-liang.github.io\/forgetful\/2020\/02\/operating-system-multithreading-multiprocessing\/"
+            "@id": "http:\/\/localhost:1313\/forgetful\/2020\/02\/operating-system-multithreading-multiprocessing\/"
         },"image": {
                 "@type": "ImageObject",
-                "url": "https:\/\/murray-liang.github.io\/forgetful\/cover.png",
+                "url": "http:\/\/localhost:1313\/forgetful\/cover.png",
                 "width":  800 ,
                 "height":  600 
             },"genre": "posts","keywords": "multi-threading, multi-processing","wordcount":  297 ,
-        "url": "https:\/\/murray-liang.github.io\/forgetful\/2020\/02\/operating-system-multithreading-multiprocessing\/","datePublished": "2020-02-10T16:37:31\x2b08:00","dateModified": "2020-02-10T16:37:31\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+        "url": "http:\/\/localhost:1313\/forgetful\/2020\/02\/operating-system-multithreading-multiprocessing\/","datePublished": "2020-02-10T16:37:31\u002b08:00","dateModified": "2020-02-10T16:37:31\u002b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "murray",
                 "logo": {
                 "@type": "ImageObject",
-                "url": "https:\/\/murray-liang.github.io\/forgetful\/logo.png",
+                "url": "http:\/\/localhost:1313\/forgetful\/logo.png",
                 "width":  127 ,
                 "height":  40 
                 }
@@ -56,22 +57,22 @@ Multithreading (or should I say, multiprocessing) is a software concept." />
         </script><div class="wrapper"><nav class="navbar">
     <div class="navbar-container">
         <div class="navbar-header animated bounceIn">
-            <a href="https://murray-liang.github.io/forgetful">Forgetful :/</a>
+            <a href="http://localhost:1313/forgetful/">Forgetful :/</a>
         </div>
-        <div class="navbar-menu"><a class="menu-item" href="https://murray-liang.github.io/forgetful/posts" title="">Posts</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/tags" title="">Tags</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/categories" title="">Categories</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"><i class="fas fa-language fa-fw"></i></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        <div class="navbar-menu"><a class="menu-item" href="http://localhost:1313/forgetful/posts" title="">Posts</a><a class="menu-item" href="http://localhost:1313/forgetful/tags" title="">Tags</a><a class="menu-item" href="http://localhost:1313/forgetful/categories" title="">Categories</a><a class="menu-item" href="http://localhost:1313/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"><i class="fas fa-language fa-fw"></i></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
         </div>
     </div>
 </nav><nav class="navbar-mobile">
     <div class="navbar-container">
         <div class="navbar-header">
             <div class="navbar-header-title animated bounceIn">
-                <a href="https://murray-liang.github.io/forgetful">Forgetful :/</a>
+                <a href="http://localhost:1313/forgetful/">Forgetful :/</a>
             </div>
             <div class="menu-toggle" id="menu-toggle">
                 <span></span><span></span><span></span>
             </div>
         </div>
-        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://murray-liang.github.io/forgetful/posts" title="">Posts</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/tags" title="">Tags</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/categories" title="">Categories</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="http://localhost:1313/forgetful/posts" title="">Posts</a><a class="menu-item" href="http://localhost:1313/forgetful/tags" title="">Tags</a><a class="menu-item" href="http://localhost:1313/forgetful/categories" title="">Categories</a><a class="menu-item" href="http://localhost:1313/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
         </div>
     </div>
 </nav>
@@ -100,28 +101,28 @@ Multithreading (or should I say, multiprocessing) is a software concept." />
             </div><div class="post-content"><p><strong>Multithreading</strong> refers to the general task of running more that one thread of
 execution within an operating system. <strong>Multithreading</strong> is more generically
 called <strong>multiprocessing</strong>, which can include multiple <strong>system processes</strong> (a
-simple example on Windows would be, e.g., running Internet Explorer and 
-Microsoft Word at the same time), or it can consist of one process that has 
+simple example on Windows would be, e.g., running Internet Explorer and
+Microsoft Word at the same time), or it can consist of one process that has
 multiple <strong>threads</strong> within it.</p>
 <p><strong>Multithreading</strong> (or should I say, <strong>multiprocessing</strong>) is a <strong>software</strong> concept.
 Practically any Turing-complete CPU can perform multithreading, even if the
 computer only has one CPU core and that core does not support <strong>hyperthreading</strong>.
-In order to support multiprocessing, the CPU will <strong>interleave</strong> execution of 
+In order to support multiprocessing, the CPU will <strong>interleave</strong> execution of
 different threads of execution, by executing one, then another, then another, where
-the operating system will divide up the <strong>time</strong> available into &ldquo;<strong>slices</strong>&rdquo; and 
-give a roughly <strong>equal amount of time to each thread</strong> (the time doesn&rsquo;t have to be 
-equal, but that&rsquo;s typically how it&rsquo;s done unless a process requests a higher 
+the operating system will divide up the <strong>time</strong> available into &ldquo;<strong>slices</strong>&rdquo; and
+give a roughly <strong>equal amount of time to each thread</strong> (the time doesn&rsquo;t have to be
+equal, but that&rsquo;s typically how it&rsquo;s done unless a process requests a higher
 priority).</p>
-<p>Note that, whenever there are <strong>more software threads</strong> of execution trying to 
-execute at any given time <strong>than</strong> there are available <strong>hardware (simultaneous) 
-threads</strong> of execution, then these <strong>software threads</strong> will be &ldquo;<strong>interleaved</strong>&rdquo; 
-among the <strong>available cores</strong>. In the case of a &ldquo;uniprocessor&rdquo; (one CPU core with 
-no hyperthreading), if you have more than one software thread, they will always be 
+<p>Note that, whenever there are <strong>more software threads</strong> of execution trying to
+execute at any given time <strong>than</strong> there are available <strong>hardware (simultaneous)
+threads</strong> of execution, then these <strong>software threads</strong> will be &ldquo;<strong>interleaved</strong>&rdquo;
+among the <strong>available cores</strong>. In the case of a &ldquo;uniprocessor&rdquo; (one CPU core with
+no hyperthreading), if you have more than one software thread, they will always be
 interleaved. If you have a <strong>4-core CPU with hyperthreading</strong>, that&rsquo;s <strong>8 &ldquo;hardware
-threads&rdquo;</strong>, meaning the CPU can execute 8 simultaneous threads of execution at the 
-same instant, so if you had 8 software threads trying to run, they could all run at 
-once; but if you had 9 software threads, one of the hardware threads would have to 
-interleave a pair of threads (the exact pair of threads chosen would depend on the 
+threads&rdquo;</strong>, meaning the CPU can execute 8 simultaneous threads of execution at the
+same instant, so if you had 8 software threads trying to run, they could all run at
+once; but if you had 9 software threads, one of the hardware threads would have to
+interleave a pair of threads (the exact pair of threads chosen would depend on the
 operating system&rsquo;s scheduler implementation).</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
@@ -139,17 +140,17 @@ operating system&rsquo;s scheduler implementation).</p>
 
     <div class="post-info-more">
         <section><span class="tag">
-                        <a href="https://murray-liang.github.io/forgetful/tags/multi-threading/"><i class="fas fa-tag fa-fw"></i>&nbsp;multi-threading</a>&nbsp;
+                        <a href="http://localhost:1313/forgetful/tags/multi-threading/"><i class="fas fa-tag fa-fw"></i>&nbsp;multi-threading</a>&nbsp;
                     </span><span class="tag">
-                        <a href="https://murray-liang.github.io/forgetful/tags/multi-processing/"><i class="fas fa-tag fa-fw"></i>&nbsp;multi-processing</a>&nbsp;
+                        <a href="http://localhost:1313/forgetful/tags/multi-processing/"><i class="fas fa-tag fa-fw"></i>&nbsp;multi-processing</a>&nbsp;
                     </span></section>
         <section>
-            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://murray-liang.github.io/forgetful">Home</a></span>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="http://localhost:1313/forgetful/">Home</a></span>
         </section>
     </div>
 
-    <div class="post-nav"><a href="https://murray-liang.github.io/forgetful/2020/02/network-package-forwarding/" class="prev" rel="prev" title="Network Packages Forwarding"><i class="fas fa-angle-left fa-fw"></i>Network Packages Forwarding</a>
-            <a href="https://murray-liang.github.io/forgetful/2020/02/microservices-architecture/" class="next" rel="next" title="Microservices Architecture">Microservices Architecture<i class="fas fa-angle-right fa-fw"></i></a></div>
+    <div class="post-nav"><a href="http://localhost:1313/forgetful/2020/02/network-package-forwarding/" class="prev" rel="prev" title="Network Packages Forwarding"><i class="fas fa-angle-left fa-fw"></i>Network Packages Forwarding</a>
+            <a href="http://localhost:1313/forgetful/2020/02/microservices-architecture/" class="next" rel="next" title="Microservices Architecture">Microservices Architecture<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 <div class="post-comment"></div>
     </article></div>
@@ -157,7 +158,7 @@ operating system&rsquo;s scheduler implementation).</p>
     <div class="copyright"><div class="copyright-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
         </div>
 
-        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/Murray-LIANG" target="_blank">Murray-LIANG</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/Murray-LIANG" target="_blank">Murray-LIANG</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
     </div>
 </footer>
 </div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>

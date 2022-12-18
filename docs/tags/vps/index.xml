@@ -2,25 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>vps on Forgetful :/</title>
-    <link>https://murray-liang.github.io/forgetful/tags/vps/</link>
+    <link>http://localhost:1313/forgetful/tags/vps/</link>
     <description>Recent content in vps on Forgetful :/</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
-    
-	<atom:link href="https://murray-liang.github.io/forgetful/tags/vps/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate><atom:link href="http://localhost:1313/forgetful/tags/vps/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Set Up Shadowsocks on VPS</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/shadowsocks/</link>
+      <link>http://localhost:1313/forgetful/2020/02/shadowsocks/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/shadowsocks/</guid>
+      <guid>http://localhost:1313/forgetful/2020/02/shadowsocks/</guid>
       <description>Buy a Linux VPS service from iozoom.com The default user is root.
-Install SSR https://github.com/Alvin9999/new-pac/wiki/%E8%87%AA%E5%BB%BAss%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%95%99%E7%A8%8B
-1 2 3 4 5 6 7  $ wget -N --no-check-certificate https://raw.githubusercontent.com/ToyoDAdoubi/doubi/master/ssr.sh &amp;amp;&amp;amp; chmod +x ssr.sh &amp;amp;&amp;amp; bash ssr.sh $ # or $ wget --no-check-certificate https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocksR.sh $ chmod +x shadowsocksR.sh $ ./shadowsocksR.sh 2&amp;gt;&amp;amp;1 | tee shadowsocksR.log   Modify SSR 1  $ bash ssr.sh   [Do NOT use this, python shadowsocks not maintained, too old] Bring shadowsocks online 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15  # Install $ apt-get install python-pip $ pip install shadowsocks # Do some configuration and start service $ ssserver -h $ vim /etc/shadowsocks.</description>
+Install SSR https://github.com/Alvin9999/new-pac/wiki/%E8%87%AA%E5%BB%BAss%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%95%99%E7%A8%8B 1 2 3 4 5 6 7  $ wget -N --no-check-certificate https://raw.githubusercontent.com/ToyoDAdoubi/doubi/master/ssr.sh &amp;amp;&amp;amp; chmod +x ssr.sh &amp;amp;&amp;amp; bash ssr.sh $ # or $ wget --no-check-certificate https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocksR.sh $ chmod +x shadowsocksR.sh $ ./shadowsocksR.sh 2&amp;gt;&amp;amp;1 | tee shadowsocksR.log   Modify SSR 1  $ bash ssr.sh   [Do NOT use this, python shadowsocks not maintained, too old] Bring shadowsocks online 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15  # Install $ apt-get install python-pip $ pip install shadowsocks # Do some configuration and start service $ ssserver -h $ vim /etc/shadowsocks.</description>
     </item>
     
   </channel>

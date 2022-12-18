@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>windows on Forgetful :/</title>
+    <link>http://localhost:1313/forgetful/tags/windows/</link>
+    <description>Recent content in windows on Forgetful :/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Tue, 20 Apr 2021 23:15:39 +0800</lastBuildDate><atom:link href="http://localhost:1313/forgetful/tags/windows/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>WSL</title>
+      <link>http://localhost:1313/forgetful/2021/04/wsl/</link>
+      <pubDate>Tue, 20 Apr 2021 23:15:39 +0800</pubDate>
+      
+      <guid>http://localhost:1313/forgetful/2021/04/wsl/</guid>
+      <description>Issues 1. wslregisterdistribution failed with error 0x80080005.  Run PowerShell as admin. .\sc.exe stop LxssManager then .\sc.exe start LxssManager. You may find LxssManager is under STOP_PENDING status after you stop it. .\sc.exe queryex LxssManager  1 2 3 4 5 6 7 8 9 10 11 12  PS C:\WINDOWS\system32&amp;gt; .\sc.exe queryex LxssManager SERVICE_NAME: LxssManager TYPE  : 30 WIN32 STATE : 4 RUNNING (STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN) WIN32_EXIT_CODE : 0 (0x0) SERVICE_EXIT_CODE : 0 (0x0) CHECKPOINT : 0x0 WAIT_HINT : 0x0 PID : 27192 FLAGS :   Open Task Manger and switch to tab Details.</description>
+    </item>
+    
+  </channel>
+</rss>

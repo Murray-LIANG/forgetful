@@ -2,41 +2,46 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>system design on Forgetful :/</title>
-    <link>https://murray-liang.github.io/forgetful/tags/system-design/</link>
+    <link>http://localhost:1313/forgetful/tags/system-design/</link>
     <description>Recent content in system design on Forgetful :/</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
-    
-	<atom:link href="https://murray-liang.github.io/forgetful/tags/system-design/index.xml" rel="self" type="application/rss+xml" />
-    
+    <lastBuildDate>Sat, 11 Dec 2021 22:08:35 +0800</lastBuildDate><atom:link href="http://localhost:1313/forgetful/tags/system-design/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Designing Data Intensive Applications</title>
+      <link>http://localhost:1313/forgetful/2021/12/designing-data-intensive-applications/</link>
+      <pubDate>Sat, 11 Dec 2021 22:08:35 +0800</pubDate>
+      
+      <guid>http://localhost:1313/forgetful/2021/12/designing-data-intensive-applications/</guid>
+      <description>Data intensive application Common seen functionalities:
+ Store data so that they, or another application, can find it again later (databases) Remember the result of an expensive operation, to speed up reads (caches) Allow users to search data by keyword or filter it in various ways (search indexes) Send a message to another process, to be handled asynchronously (stream processing) Periodically crunch a large amount of accumulated data (batch processing)  Reliability Continuing to work correctly, even when things go wrong.</description>
+    </item>
     
     <item>
       <title>Design Learning: Cassandra Best Practices at eBay</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/design-cassandra-best-practices-ebay/</link>
+      <link>http://localhost:1313/forgetful/2020/02/design-cassandra-best-practices-ebay/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/design-cassandra-best-practices-ebay/</guid>
-      <description>https://www.ebayinc.com/stories/blogs/tech/cassandra-data-modeling-best-practices-part-1/</description>
+      <guid>http://localhost:1313/forgetful/2020/02/design-cassandra-best-practices-ebay/</guid>
+      <description>https://www.ebayinc.com/stories/blogs/tech/cassandra-data-modeling-best-practices-part-1/ </description>
     </item>
     
     <item>
       <title>Design News Feed System</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/design-news-feed/</link>
+      <link>http://localhost:1313/forgetful/2020/02/design-news-feed/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/design-news-feed/</guid>
-      <description>http://blog.gainlo.co/index.php/2016/03/29/design-news-feed-system-part-1-system-design-interview-questions/
-Requirements Features  CRUD posts Comment on posts Share posts  What is in a news feed post?  Author Content Media (photos, videos, .etc) Comments and replies Operations:  CRUD Comment and reply on posts Share posts    What is on news feed page?  Sequence of posts Query or filter posts Operations:  Load more posts Delete posts I don&amp;rsquo;t want to see    Estimations (scale requirements)  How many users?</description>
+      <guid>http://localhost:1313/forgetful/2020/02/design-news-feed/</guid>
+      <description>http://blog.gainlo.co/index.php/2016/03/29/design-news-feed-system-part-1-system-design-interview-questions/ Requirements Features  CRUD posts Comment on posts Share posts  What is in a news feed post?  Author Content Media (photos, videos, .etc) Comments and replies Operations:  CRUD Comment and reply on posts Share posts    What is on news feed page?  Sequence of posts Query or filter posts Operations:  Load more posts Delete posts I don&amp;rsquo;t want to see    Estimations (scale requirements)  How many users?</description>
     </item>
     
     <item>
       <title>How to Approach a System Design Interview Question</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/design-how-to-approach-a-system-design-interview-question/</link>
+      <link>http://localhost:1313/forgetful/2020/02/design-how-to-approach-a-system-design-interview-question/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/design-how-to-approach-a-system-design-interview-question/</guid>
+      <guid>http://localhost:1313/forgetful/2020/02/design-how-to-approach-a-system-design-interview-question/</guid>
       <description>The system design interview is an open-ended conversation. You are expected to lead it.
 Step 1: Outline use cases, constraints, and assumptions. Gather requirements and scope the problem. Ask questions to clarify use cases and constraints. Discuss assumptions.
 Question examples:
@@ -45,31 +50,29 @@ Question examples:
     
     <item>
       <title>Sharding Pinterest</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/sharding-pinterest/</link>
+      <link>http://localhost:1313/forgetful/2020/02/sharding-pinterest/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/sharding-pinterest/</guid>
-      <description>Note of https://medium.com/@Pinterest_Engineering/sharding-pinterest-how-we-scaled-our-mysql-fleet-3f341e96ca6f
-Feature Required  Create Pins. Like other Pins. Follow other Pinners. View a home feed of all the Pinners he/she follows. Support asking for N number of Pins in a board in a deterministic order (such as reverse creation time or user specified ordering).  Scale Required 50M Pins have been saved by Pinners onto 1B boards.
+      <guid>http://localhost:1313/forgetful/2020/02/sharding-pinterest/</guid>
+      <description>Note of https://medium.com/@Pinterest_Engineering/sharding-pinterest-how-we-scaled-our-mysql-fleet-3f341e96ca6f Feature Required  Create Pins. Like other Pins. Follow other Pinners. View a home feed of all the Pinners he/she follows. Support asking for N number of Pins in a board in a deterministic order (such as reverse creation time or user specified ordering).  Scale Required 50M Pins have been saved by Pinners onto 1B boards.
 Design Goals  Stable and high available. Low latency. Eventually consistency.</description>
     </item>
     
     <item>
       <title>Sharding Pinterest: How We Scaled Our MySQL Fleet</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/design-sharding-pinterest/</link>
+      <link>http://localhost:1313/forgetful/2020/02/design-sharding-pinterest/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/design-sharding-pinterest/</guid>
-      <description>https://medium.com/@Pinterest_Engineering/sharding-pinterest-how-we-scaled-our-mysql-fleet-3f341e96ca6f
-TODO</description>
+      <guid>http://localhost:1313/forgetful/2020/02/design-sharding-pinterest/</guid>
+      <description>https://medium.com/@Pinterest_Engineering/sharding-pinterest-how-we-scaled-our-mysql-fleet-3f341e96ca6f TODO</description>
     </item>
     
     <item>
       <title>Some Design Thoughts</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/design-thoughts/</link>
+      <link>http://localhost:1313/forgetful/2020/02/design-thoughts/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/design-thoughts/</guid>
+      <guid>http://localhost:1313/forgetful/2020/02/design-thoughts/</guid>
       <description>SQL or NoSQL SQL Tables vs NoSQL Documents SQL databases store data records in tables.
 NoSQL databases store JSON-like field-value pair documents. Similar documents can be stored in a collection, which is analogous to an SQL table.
 SQL Schema vs NoSQL Schemaless SQL Normalization vs NoSQL Denormalization SQL databases use foreign key to relate one table to another, which minimizes data redundancy.
@@ -78,10 +81,10 @@ We can use normalization in NoSQL, but this is not always practical.</descriptio
     
     <item>
       <title>System Design</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/system-design/</link>
+      <link>http://localhost:1313/forgetful/2020/02/system-design/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/system-design/</guid>
+      <guid>http://localhost:1313/forgetful/2020/02/system-design/</guid>
       <description>No design is correct or wrong. There are just good designs and bad designs which heavily depend on the use case.
 Hence, it is extremely important to clarify the requirements for the problem asked.
 Basic Terminologies Replication Frequently copying the data across multiple machines.
@@ -91,19 +94,19 @@ Eventual Consistency All machines will have the same data eventually.</descripti
     
     <item>
       <title>System Design Facebook Interview</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/design-facebook-interview/</link>
+      <link>http://localhost:1313/forgetful/2020/02/design-facebook-interview/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/design-facebook-interview/</guid>
+      <guid>http://localhost:1313/forgetful/2020/02/design-facebook-interview/</guid>
       <description>Guideline  Should not assume anything. Pin down the requirements, they&amp;rsquo;re looking for me to drive conversation. It should be my design, not half mine and half the interviewers. Try to cover both breadth and depth. Need to talk about both high level concepts and details associated.  What is Facebook looking for  They want to understand how I reason through a problem that I&amp;rsquo;ve not necessarily encountered before. They are looking to get signal on both my techincal and communication skills.</description>
     </item>
     
     <item>
       <title>System Design Topics</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/design-topics/</link>
+      <link>http://localhost:1313/forgetful/2020/02/design-topics/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/design-topics/</guid>
+      <guid>http://localhost:1313/forgetful/2020/02/design-topics/</guid>
       <description>Some high-level trade-offs  Performance vs scalability Latency vs throughput Availability vs consistency  Keep in mind that everything is a trade-off.
 Performance vs scalability A service is scalable if it results in increased performance in a manner proportional to resources added. Generally, increasing performance means serving more units of work, but it can also be to handle larger units of work, such as when datasets grow.
 Many algorithms that perform reasonably well under low load and small datasets can explode in cost if either requests rates increase, the dataset grows or the number of nodes in the distributed system increases.</description>

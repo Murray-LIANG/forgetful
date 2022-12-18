@@ -150,6 +150,8 @@ $ sudo ip link set br-ex up
 ### Set default gateway on Neutron node: ubuntu-server3
 ```bash
 $ sudo route add default gw 192.168.4.1 eth3
+$ # need to check below route exists, add it if not.
+$ sudo ip route add 192.168.1.0/24 dev br-ex
 ```
 
 ### Enable nested virtualization on compute nodes

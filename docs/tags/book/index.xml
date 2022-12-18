@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>book on Forgetful :/</title>
+    <link>http://localhost:1313/forgetful/tags/book/</link>
+    <description>Recent content in book on Forgetful :/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Sat, 11 Dec 2021 22:08:35 +0800</lastBuildDate><atom:link href="http://localhost:1313/forgetful/tags/book/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Designing Data Intensive Applications</title>
+      <link>http://localhost:1313/forgetful/2021/12/designing-data-intensive-applications/</link>
+      <pubDate>Sat, 11 Dec 2021 22:08:35 +0800</pubDate>
+      
+      <guid>http://localhost:1313/forgetful/2021/12/designing-data-intensive-applications/</guid>
+      <description>Data intensive application Common seen functionalities:
+ Store data so that they, or another application, can find it again later (databases) Remember the result of an expensive operation, to speed up reads (caches) Allow users to search data by keyword or filter it in various ways (search indexes) Send a message to another process, to be handled asynchronously (stream processing) Periodically crunch a large amount of accumulated data (batch processing)  Reliability Continuing to work correctly, even when things go wrong.</description>
+    </item>
+    
+  </channel>
+</rss>

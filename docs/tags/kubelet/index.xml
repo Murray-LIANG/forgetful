@@ -2,22 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>kubelet on Forgetful :/</title>
-    <link>https://murray-liang.github.io/forgetful/tags/kubelet/</link>
+    <link>http://localhost:1313/forgetful/tags/kubelet/</link>
     <description>Recent content in kubelet on Forgetful :/</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
-    
-	<atom:link href="https://murray-liang.github.io/forgetful/tags/kubelet/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate><atom:link href="http://localhost:1313/forgetful/tags/kubelet/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Kubernetes Kubelet</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/kubernetes-kubelet/</link>
+      <link>http://localhost:1313/forgetful/2020/02/kubernetes-kubelet/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/kubernetes-kubelet/</guid>
+      <guid>http://localhost:1313/forgetful/2020/02/kubernetes-kubelet/</guid>
       <description>kubelet is the lowest level component in Kubernetes. It&amp;rsquo;s responsible for what&amp;rsquo;s running on an individual machine. You can think of it as a process watcher like supervisord, but focused on running containers. It has one job: given a set of containers to run, make sure they are all running.
 There are a few ways the kubelet finds pods to run:
  a directory it polls for new pod manifests to run a URL it polls and downloads pod manifests from from the Kubernetes API server  The first one above is the simplest: to run a pod, we just put a manifest file in the watched directory.</description>

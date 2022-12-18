@@ -2,26 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>math on Forgetful :/</title>
-    <link>https://murray-liang.github.io/forgetful/tags/math/</link>
+    <link>http://localhost:1313/forgetful/tags/math/</link>
     <description>Recent content in math on Forgetful :/</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
-    
-	<atom:link href="https://murray-liang.github.io/forgetful/tags/math/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate><atom:link href="http://localhost:1313/forgetful/tags/math/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Basic Math Knowledge</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/ml-math-basic/</link>
+      <link>http://localhost:1313/forgetful/2020/02/ml-math-basic/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/ml-math-basic/</guid>
+      <guid>http://localhost:1313/forgetful/2020/02/ml-math-basic/</guid>
       <description>平均数是一个统计学概念，期望是一个概率论概念。
 平均数是实验后根据实际结果统计得到的样本的平均值，期望是实验前根据概率分布预测的样本的平均值。
 之所以说预测是因为在实验前能得到的期望与实际实验得到的样本的平均数总会不可避免地存在偏差，毕竟随机实验的结果永远充满着不确定性。如果我们能进行无穷次随机实验并计算出其样本的平均数的话，那么这个平均数其实就是期望。当然实际上根本不可能进行无穷次实验，但是实验样本的平均数会随着实验样本的增多越来越接近期望，就像频率随着实验样本的增多会越来越接近概率一样如果说概率是频率随样本趋于无穷的极限那么期望就是平均数随样本趋于无穷的极限。
-作者：奇诺城堡链接：https://www.zhihu.com/question/25391960/answer/39780528来源：知乎著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。 </description>
+作者：奇诺城堡 链接：https://www.zhihu.com/question/25391960/answer/39780528 来源：知乎 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。  </description>
     </item>
     
   </channel>

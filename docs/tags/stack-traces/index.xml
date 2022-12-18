@@ -2,24 +2,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>stack traces on Forgetful :/</title>
-    <link>https://murray-liang.github.io/forgetful/tags/stack-traces/</link>
+    <link>http://localhost:1313/forgetful/tags/stack-traces/</link>
     <description>Recent content in stack traces on Forgetful :/</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
-    
-	<atom:link href="https://murray-liang.github.io/forgetful/tags/stack-traces/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate><atom:link href="http://localhost:1313/forgetful/tags/stack-traces/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Golang Stack Traces</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/golang-stack-traces/</link>
+      <link>http://localhost:1313/forgetful/2020/02/golang-stack-traces/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/golang-stack-traces/</guid>
-      <description>https://www.ardanlabs.com/blog/2015/01/stack-traces-in-go.html
-1 2 3 4 5 6 7 8 9 10  package main func main() { slice := make([]string, 2, 4) Example(slice, &amp;#34;hello&amp;#34;, 10) } func Example(slice []string, str string, i int) { panic(&amp;#34;Want stack trace&amp;#34;) }   You will get a stack track like this:
+      <guid>http://localhost:1313/forgetful/2020/02/golang-stack-traces/</guid>
+      <description>https://www.ardanlabs.com/blog/2015/01/stack-traces-in-go.html 1 2 3 4 5 6 7 8 9 10  package main func main() { slice := make([]string, 2, 4) Example(slice, &amp;#34;hello&amp;#34;, 10) } func Example(slice []string, str string, i int) { panic(&amp;#34;Want stack trace&amp;#34;) }   You will get a stack track like this:
 1 2 3 4 5 6 7  01 goroutine 1 [running]: 02 main.Example(0x2080c3f50, 0x2, 0x4, 0x425c0, 0x5, 0xa) /Users/bill/Spaces/Go/Projects/src/github.com/goinaction/code/ temp/main.go:9 +0x64 03 main.</description>
     </item>
     

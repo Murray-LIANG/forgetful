@@ -17,3 +17,8 @@ Because GitHub Pages only supports building site from `master` branch or `docs` 
 ## Notes
 1. The `baseURL` in `config.toml` is set to `baseURL = "https://murray-liang.github.io/forgetful"`.
 2. GitHub Pages of `forgetful` repo is set to built from `master branch /docs folder`.
+
+## Hugo Tips
+1. `sudo apt install hugo` to install hugo.
+2. `git submodule init` and `git submodule update` to populate the `themes/LoveIt` folder.
+3. `hugo server -D --bind 172.30.141.10 -d docs` to start a development server to verify your change. `172.30.141.10` is your WSL IP. You need to use it in Chrome in Windows.

@@ -3,6 +3,8 @@
 
 ## Reactive Programming
 
+https://medium.com/@mahdichtioui/reactivex-reactive-programming-principles-dbb1bafa8384
+
 **Reactive programming is programming with *asynchronous data streams*.**
 
 When using reactive programming, data streams are going to be the spine of your

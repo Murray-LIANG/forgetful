@@ -2,22 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>uds on Forgetful :/</title>
-    <link>https://murray-liang.github.io/forgetful/tags/uds/</link>
+    <link>http://localhost:1313/forgetful/tags/uds/</link>
     <description>Recent content in uds on Forgetful :/</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
-    
-	<atom:link href="https://murray-liang.github.io/forgetful/tags/uds/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate><atom:link href="http://localhost:1313/forgetful/tags/uds/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Unix Domain Socket</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/uds/</link>
+      <link>http://localhost:1313/forgetful/2020/02/uds/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/uds/</guid>
+      <guid>http://localhost:1313/forgetful/2020/02/uds/</guid>
       <description>When it comes to inter-process communication (IPC) between processes on the same Linux host, there are multiple options:
  FIFOs pipes shared memory sockets and so on  Unix Domain Sockets combine the convinient API of sockets with higher performance of other single-host methods.
 UDS supports streams (TCP equivalent) and datagrams (UDP equivalent).

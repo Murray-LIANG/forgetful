@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>yield from on Forgetful :/</title>
+    <link>http://localhost:1313/forgetful/tags/yield-from/</link>
+    <description>Recent content in yield from on Forgetful :/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Mon, 30 Nov 2020 11:49:59 +0800</lastBuildDate><atom:link href="http://localhost:1313/forgetful/tags/yield-from/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Python Asynchronous Programming</title>
+      <link>http://localhost:1313/forgetful/2020/11/python-async-programming/</link>
+      <pubDate>Mon, 30 Nov 2020 11:49:59 +0800</pubDate>
+      
+      <guid>http://localhost:1313/forgetful/2020/11/python-async-programming/</guid>
+      <description>References  深入理解Python异步编程(上)  how-does-asyncio-actually-work  Example: Chain coroutines    Codes git/py-asyncio-play</description>
+    </item>
+    
+  </channel>
+</rss>

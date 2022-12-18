@@ -2,22 +2,27 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>linux on Forgetful :/</title>
-    <link>https://murray-liang.github.io/forgetful/tags/linux/</link>
+    <link>http://localhost:1313/forgetful/tags/linux/</link>
     <description>Recent content in linux on Forgetful :/</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
-    
-	<atom:link href="https://murray-liang.github.io/forgetful/tags/linux/index.xml" rel="self" type="application/rss+xml" />
-    
+    <lastBuildDate>Tue, 20 Apr 2021 23:15:39 +0800</lastBuildDate><atom:link href="http://localhost:1313/forgetful/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>WSL</title>
+      <link>http://localhost:1313/forgetful/2021/04/wsl/</link>
+      <pubDate>Tue, 20 Apr 2021 23:15:39 +0800</pubDate>
+      
+      <guid>http://localhost:1313/forgetful/2021/04/wsl/</guid>
+      <description>Issues 1. wslregisterdistribution failed with error 0x80080005.  Run PowerShell as admin. .\sc.exe stop LxssManager then .\sc.exe start LxssManager. You may find LxssManager is under STOP_PENDING status after you stop it. .\sc.exe queryex LxssManager  1 2 3 4 5 6 7 8 9 10 11 12  PS C:\WINDOWS\system32&amp;gt; .\sc.exe queryex LxssManager SERVICE_NAME: LxssManager TYPE  : 30 WIN32 STATE : 4 RUNNING (STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN) WIN32_EXIT_CODE : 0 (0x0) SERVICE_EXIT_CODE : 0 (0x0) CHECKPOINT : 0x0 WAIT_HINT : 0x0 PID : 27192 FLAGS :   Open Task Manger and switch to tab Details.</description>
+    </item>
     
     <item>
       <title>Linux Bridge and VLAN</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/linux_bridge_and_vlan/</link>
+      <link>http://localhost:1313/forgetful/2020/02/linux_bridge_and_vlan/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/linux_bridge_and_vlan/</guid>
+      <guid>http://localhost:1313/forgetful/2020/02/linux_bridge_and_vlan/</guid>
       <description>What is Linux Bridge? There is a VM on the Host. And only one ethernet port on the Host, named eth0.
 If bind eth0 to the VM, then the Host and other new VMs have no port to access the internet.
 So the solution is to create a bridge on the Host, name it br0. Assign a virtual card to VM, name it vnet0. br0 connects the vnet0 and eth0.</description>
@@ -25,10 +30,10 @@ So the solution is to create a bridge on the Host, name it br0. Assign a virtual
     
     <item>
       <title>Linux Interview Questions</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/linux-interview-questions/</link>
+      <link>http://localhost:1313/forgetful/2020/02/linux-interview-questions/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/linux-interview-questions/</guid>
+      <guid>http://localhost:1313/forgetful/2020/02/linux-interview-questions/</guid>
       <description>查看系统负载的常用命令 1 2 3 4 5 6  [root@centos6 ~ 10:56 #37]# w 10:57:38 up 14 min, 1 user, load average: 0.00, 0.00, 0.00 USER TTY FROM LOGIN@ IDLE JCPU PCPU WHAT root pts/0 192.168.147.1 18:44 0.00s 0.10s 0.00s w [root@centos6 ~ 10:57 #38]# uptime 10:57:47 up 14 min, 1 user, load average: 0.00, 0.00, 0.00   其中load average即系统负载，三个数值分别表示一分钟、五分钟、十五分钟内系统的平均负载，即平均任务数。
 linux系统里，知道buffer和cache如何区分吗？ buffer和cache都是内存中的一块区域，当CPU需要写数据到磁盘时，由于磁盘速度比较慢，所以CPU先把数据存进buffer，然后CPU去执行其他任务，buffer中的数据会定期写入磁盘；当CPU需要从磁盘读入数据时，由于磁盘速度比较慢，可以把即将用到的数据提前存入cache，CPU直接从Cache中拿数据要快的多。
 常用的查看系统资源的命令 top, free
@@ -37,10 +42,10 @@ linux系统里，知道buffer和cache如何区分吗？ buffer和cache都是内�
     
     <item>
       <title>Remote Desktop to Linux</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/dev-xrdp/</link>
+      <link>http://localhost:1313/forgetful/2020/02/dev-xrdp/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/dev-xrdp/</guid>
+      <guid>http://localhost:1313/forgetful/2020/02/dev-xrdp/</guid>
       <description> Install xrdp. Install tigervnc-server. Use gnome session instead of classic one:  1 2 3  echo &amp;#34;gnome-session&amp;#34; &amp;gt; ~/.Xclients chmod +x ~/.Xclients sudo systemctl restart xrdp.service   Start xrdp service and make it start as system boots.  1 2  systemctl start xrdp.service systemctl enable xrdp.service   If the connection fails, it could be caused by firewall settings. Just add a new rule to firewall.  1 2  firewall-cmd --permanent --zone=public --add-port=3389/tcp firewall-cmd --reload   </description>
     </item>
     

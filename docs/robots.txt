@@ -61,4 +61,4 @@ Disallow: /
 User-agent: ZoominfoBot
 Disallow: /
 
-Sitemap: https://murray-liang.github.io/forgetful/sitemap.xml
+Sitemap: http://localhost:1313/forgetful/sitemap.xml

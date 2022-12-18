@@ -2,25 +2,31 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>rxjava on Forgetful :/</title>
-    <link>https://murray-liang.github.io/forgetful/tags/rxjava/</link>
+    <link>http://localhost:1313/forgetful/tags/rxjava/</link>
     <description>Recent content in rxjava on Forgetful :/</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
-    
-	<atom:link href="https://murray-liang.github.io/forgetful/tags/rxjava/index.xml" rel="self" type="application/rss+xml" />
-    
+    <lastBuildDate>Tue, 01 Dec 2020 11:21:10 +0800</lastBuildDate><atom:link href="http://localhost:1313/forgetful/tags/rxjava/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Reactive Programming, RX and RxJava</title>
+      <link>http://localhost:1313/forgetful/2020/12/reactive-programming-rxjava/</link>
+      <pubDate>Tue, 01 Dec 2020 11:21:10 +0800</pubDate>
+      
+      <guid>http://localhost:1313/forgetful/2020/12/reactive-programming-rxjava/</guid>
+      <description>Reactive programming Reactive means acting in response to a situation rather than creating or controlling it: reacting to it. Reactive programming is actually similar to this definition, meaning writing code that reacts to changes.
+It’s actually a way of coding with asynchronous data streams that will make it easier for us to code apps and interfaces that respond dynamically to changes in data. Meaning that whenever we have changes in the data, our app will respond reactively to those changes.</description>
+    </item>
     
     <item>
       <title>Reactive Programming, Rxjava and Vert.x</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/reactive-programming-rxjava-vertx/</link>
+      <link>http://localhost:1313/forgetful/2020/02/reactive-programming-rxjava-vertx/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/reactive-programming-rxjava-vertx/</guid>
-      <description>Reactive Programming Reactive programming is programming with asynchronous data streams.
+      <guid>http://localhost:1313/forgetful/2020/02/reactive-programming-rxjava-vertx/</guid>
+      <description>Reactive Programming https://medium.com/@mahdichtioui/reactivex-reactive-programming-principles-dbb1bafa8384 Reactive programming is programming with asynchronous data streams.
 When using reactive programming, data streams are going to be the spine of your application. Events, messages, calls, and even failures are going to be conveyed by a data stream. With reactive programming, you observe these streams and react when a value is emitted.
-Rxjava Reactive eXtension (http://reactivex.io, aka. RX) is an implementation of the reactive programming principles to “compose asynchronous and event-based programs by using observable sequence”.</description>
+Rxjava Reactive eXtension (http://reactivex.io , aka. RX) is an implementation of the reactive programming principles to “compose asynchronous and event-based programs by using observable sequence”.</description>
     </item>
     
   </channel>

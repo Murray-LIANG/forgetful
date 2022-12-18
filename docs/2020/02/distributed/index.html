@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
+    <head><script src="/forgetful/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=forgetful/livereload" data-no-instant defer></script>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>Distributed | Forgetful :/</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noodp" />
-<meta name="Description" content="Notes about everything"><link rel="prev" href="https://murray-liang.github.io/forgetful/2020/02/docker-tips/" /><link rel="next" href="https://murray-liang.github.io/forgetful/2020/02/design-news-feed/" /><link rel="canonical" href="https://murray-liang.github.io/forgetful/2020/02/distributed/" />
+<meta name="Description" content="Notes about everything"><link rel="prev" href="http://localhost:1313/forgetful/2020/02/docker-tips/" /><link rel="next" href="http://localhost:1313/forgetful/2020/02/design-news-feed/" /><link rel="canonical" href="http://localhost:1313/forgetful/2020/02/distributed/" />
 <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -15,11 +15,12 @@
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff"><meta property="og:title" content="Distributed" />
 <meta property="og:description" content="Partitioning / Sharding github.com/Murray-LIANG/nodering
-Distributed Lock  Could use etcd as backend. Some implementation: https://github.com/etcd-io/etcd/blob/master/clientv3/concurrency/mutex.go If two clients request to lock at the same time, the later client would change the value of same key in etcd3 but with new revision. The lock logic needs to wait for old revision deletion which means the older lock is released. To make sure locks released even when clients crash, use expiration on the key." />
+Distributed Lock  Could use etcd as backend. Some implementation: https://github.com/etcd-io/etcd/blob/master/clientv3/concurrency/mutex.go  If two clients request to lock at the same time, the later client would change the value of same key in etcd3 but with new revision. The lock logic needs to wait for old revision deletion which means the older lock is released. To make sure locks released even when clients crash, use expiration on the key." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://murray-liang.github.io/forgetful/2020/02/distributed/" />
+<meta property="og:url" content="http://localhost:1313/forgetful/2020/02/distributed/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2020-02-10T16:37:31+08:00" />
 <meta property="article:modified_time" content="2020-02-10T16:37:31+08:00" />
+
 <script type="application/ld+json">
     {
         "@context": "http://schema.org",
@@ -27,19 +28,19 @@ Distributed Lock  Could use etcd as backend. Some implementation: https://github
         "headline": "Distributed",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/murray-liang.github.io\/forgetful\/2020\/02\/distributed\/"
+            "@id": "http:\/\/localhost:1313\/forgetful\/2020\/02\/distributed\/"
         },"image": {
                 "@type": "ImageObject",
-                "url": "https:\/\/murray-liang.github.io\/forgetful\/cover.png",
+                "url": "http:\/\/localhost:1313\/forgetful\/cover.png",
                 "width":  800 ,
                 "height":  600 
             },"genre": "posts","keywords": "distributed, sharding, distributed lock, distributed queue, heartbeat","wordcount":  335 ,
-        "url": "https:\/\/murray-liang.github.io\/forgetful\/2020\/02\/distributed\/","datePublished": "2020-02-10T16:37:31\x2b08:00","dateModified": "2020-02-10T16:37:31\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+        "url": "http:\/\/localhost:1313\/forgetful\/2020\/02\/distributed\/","datePublished": "2020-02-10T16:37:31\u002b08:00","dateModified": "2020-02-10T16:37:31\u002b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "murray",
                 "logo": {
                 "@type": "ImageObject",
-                "url": "https:\/\/murray-liang.github.io\/forgetful\/logo.png",
+                "url": "http:\/\/localhost:1313\/forgetful\/logo.png",
                 "width":  127 ,
                 "height":  40 
                 }
@@ -56,22 +57,22 @@ Distributed Lock  Could use etcd as backend. Some implementation: https://github
         </script><div class="wrapper"><nav class="navbar">
     <div class="navbar-container">
         <div class="navbar-header animated bounceIn">
-            <a href="https://murray-liang.github.io/forgetful">Forgetful :/</a>
+            <a href="http://localhost:1313/forgetful/">Forgetful :/</a>
         </div>
-        <div class="navbar-menu"><a class="menu-item" href="https://murray-liang.github.io/forgetful/posts" title="">Posts</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/tags" title="">Tags</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/categories" title="">Categories</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"><i class="fas fa-language fa-fw"></i></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        <div class="navbar-menu"><a class="menu-item" href="http://localhost:1313/forgetful/posts" title="">Posts</a><a class="menu-item" href="http://localhost:1313/forgetful/tags" title="">Tags</a><a class="menu-item" href="http://localhost:1313/forgetful/categories" title="">Categories</a><a class="menu-item" href="http://localhost:1313/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"><i class="fas fa-language fa-fw"></i></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
         </div>
     </div>
 </nav><nav class="navbar-mobile">
     <div class="navbar-container">
         <div class="navbar-header">
             <div class="navbar-header-title animated bounceIn">
-                <a href="https://murray-liang.github.io/forgetful">Forgetful :/</a>
+                <a href="http://localhost:1313/forgetful/">Forgetful :/</a>
             </div>
             <div class="menu-toggle" id="menu-toggle">
                 <span></span><span></span><span></span>
             </div>
         </div>
-        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://murray-liang.github.io/forgetful/posts" title="">Posts</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/tags" title="">Tags</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/categories" title="">Categories</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="http://localhost:1313/forgetful/posts" title="">Posts</a><a class="menu-item" href="http://localhost:1313/forgetful/tags" title="">Tags</a><a class="menu-item" href="http://localhost:1313/forgetful/categories" title="">Categories</a><a class="menu-item" href="http://localhost:1313/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
         </div>
     </div>
 </nav>
@@ -115,10 +116,12 @@ Distributed Lock  Could use etcd as backend. Some implementation: https://github
 <p>github.com/Murray-LIANG/nodering</p>
 <a class="post-dummy-target" id="distributed-lock"></a><h2>Distributed Lock</h2>
 <ul>
-<li>Could use etcd as backend. Some implementation: <a href="https://github.com/etcd-io/etcd/blob/master/clientv3/concurrency/mutex.go">https://github.com/etcd-io/etcd/blob/master/clientv3/concurrency/mutex.go</a></li>
+<li>Could use etcd as backend. Some implementation: <a href="https://github.com/etcd-io/etcd/blob/master/clientv3/concurrency/mutex.go" target="_blank">https://github.com/etcd-io/etcd/blob/master/clientv3/concurrency/mutex.go</a>
+</li>
 <li>If two clients request to lock at the same time, the later client would change the value of same key in etcd3 but with new revision. The lock logic needs to wait for old revision deletion which means the older lock is released.</li>
 <li>To make sure locks released even when clients crash, use expiration on the key.</li>
-<li>If clients crash then start or some blocking action executed longer than lock expiration, there could be two clients holding the lock at the same time. Use tech like fencing to keep the data right. Refer to <a href="https://martin.kleppmann.com/2016/02/08/how-to-do-distributed-locking.html">https://martin.kleppmann.com/2016/02/08/how-to-do-distributed-locking.html</a></li>
+<li>If clients crash then start or some blocking action executed longer than lock expiration, there could be two clients holding the lock at the same time. Use tech like fencing to keep the data right. Refer to <a href="https://martin.kleppmann.com/2016/02/08/how-to-do-distributed-locking.html" target="_blank">https://martin.kleppmann.com/2016/02/08/how-to-do-distributed-locking.html</a>
+</li>
 <li>Could start another thread as the heartbeat which will be called periodically at a given rate to avoid locks, sessions and other from being automatically closed/discarded by etc3. During each beat, the lock lease will be refreshed. This could make sure the lock is always acquired as long as the client is alive even some blocking action executed long time.</li>
 </ul>
 <a class="post-dummy-target" id="distributed-queue"></a><h2>Distributed Queue</h2>
@@ -150,23 +153,23 @@ Distributed Lock  Could use etcd as backend. Some implementation: https://github
 
     <div class="post-info-more">
         <section><span class="tag">
-                        <a href="https://murray-liang.github.io/forgetful/tags/distributed/"><i class="fas fa-tag fa-fw"></i>&nbsp;distributed</a>&nbsp;
+                        <a href="http://localhost:1313/forgetful/tags/distributed/"><i class="fas fa-tag fa-fw"></i>&nbsp;distributed</a>&nbsp;
                     </span><span class="tag">
-                        <a href="https://murray-liang.github.io/forgetful/tags/sharding/"><i class="fas fa-tag fa-fw"></i>&nbsp;sharding</a>&nbsp;
+                        <a href="http://localhost:1313/forgetful/tags/sharding/"><i class="fas fa-tag fa-fw"></i>&nbsp;sharding</a>&nbsp;
                     </span><span class="tag">
-                        <a href="https://murray-liang.github.io/forgetful/tags/distributed-lock/"><i class="fas fa-tag fa-fw"></i>&nbsp;distributed lock</a>&nbsp;
+                        <a href="http://localhost:1313/forgetful/tags/distributed-lock/"><i class="fas fa-tag fa-fw"></i>&nbsp;distributed lock</a>&nbsp;
                     </span><span class="tag">
-                        <a href="https://murray-liang.github.io/forgetful/tags/distributed-queue/"><i class="fas fa-tag fa-fw"></i>&nbsp;distributed queue</a>&nbsp;
+                        <a href="http://localhost:1313/forgetful/tags/distributed-queue/"><i class="fas fa-tag fa-fw"></i>&nbsp;distributed queue</a>&nbsp;
                     </span><span class="tag">
-                        <a href="https://murray-liang.github.io/forgetful/tags/heartbeat/"><i class="fas fa-tag fa-fw"></i>&nbsp;heartbeat</a>&nbsp;
+                        <a href="http://localhost:1313/forgetful/tags/heartbeat/"><i class="fas fa-tag fa-fw"></i>&nbsp;heartbeat</a>&nbsp;
                     </span></section>
         <section>
-            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://murray-liang.github.io/forgetful">Home</a></span>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="http://localhost:1313/forgetful/">Home</a></span>
         </section>
     </div>
 
-    <div class="post-nav"><a href="https://murray-liang.github.io/forgetful/2020/02/docker-tips/" class="prev" rel="prev" title="Docker Tips"><i class="fas fa-angle-left fa-fw"></i>Docker Tips</a>
-            <a href="https://murray-liang.github.io/forgetful/2020/02/design-news-feed/" class="next" rel="next" title="Design News Feed System">Design News Feed System<i class="fas fa-angle-right fa-fw"></i></a></div>
+    <div class="post-nav"><a href="http://localhost:1313/forgetful/2020/02/docker-tips/" class="prev" rel="prev" title="Docker Tips"><i class="fas fa-angle-left fa-fw"></i>Docker Tips</a>
+            <a href="http://localhost:1313/forgetful/2020/02/design-news-feed/" class="next" rel="next" title="Design News Feed System">Design News Feed System<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 <div class="post-comment"></div>
     </article></div>
@@ -174,7 +177,7 @@ Distributed Lock  Could use etcd as backend. Some implementation: https://github
     <div class="copyright"><div class="copyright-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
         </div>
 
-        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/Murray-LIANG" target="_blank">Murray-LIANG</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/Murray-LIANG" target="_blank">Murray-LIANG</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
     </div>
 </footer>
 </div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>

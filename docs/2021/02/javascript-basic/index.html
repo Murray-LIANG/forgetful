@@ -1,0 +1,1585 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head><script src="/forgetful/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=forgetful/livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Javascript Basic | Forgetful :/</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="Notes about everything"><link rel="prev" href="http://localhost:1313/forgetful/2020/12/nomachine-setup/" /><link rel="next" href="http://localhost:1313/forgetful/2021/04/wsl/" /><link rel="canonical" href="http://localhost:1313/forgetful/2021/02/javascript-basic/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff"><meta property="og:title" content="Javascript Basic" />
+<meta property="og:description" content="References https://javascript.info Comparison of different types When comparing values of different types, JavaScript converts the values to numbers.
+Strict equality === and !== Checks the equality without type conversion. If a and b are of different types, the a === b immediately returns false without an attempt to convert them.
+1 2 3  alert(0 == false); // true alert(&#39;&#39; == false); // true alert(0 === false); // false   Comparison with null and undefined 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17  alert(null === undefined); // false alert(null == undefined); // true  // null converts to 0, while undefined converts to NaN." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/forgetful/2021/02/javascript-basic/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-02-18T15:12:06+08:00" />
+<meta property="article:modified_time" content="2021-02-18T15:12:13+08:00" />
+
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Javascript Basic",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/localhost:1313\/forgetful\/2021\/02\/javascript-basic\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "http:\/\/localhost:1313\/forgetful\/cover.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "posts","keywords": "javascript, learning","wordcount":  4477 ,
+        "url": "http:\/\/localhost:1313\/forgetful\/2021\/02\/javascript-basic\/","datePublished": "2021-02-18T15:12:06\u002b08:00","dateModified": "2021-02-18T15:12:13\u002b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "murray",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "http:\/\/localhost:1313\/forgetful\/logo.png",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": ""
+    }
+    </script><link rel="stylesheet" href="/forgetful/css/style.min.css"><link rel="stylesheet" href="/forgetful/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/forgetful/css/lib/forkawesome/forkawesome.min.css"><link rel="stylesheet" href="/forgetful/css/lib/animate/animate.min.css"></head>
+    <body><script>
+            if (!window.localStorage || !window.localStorage.getItem('theme')) {
+                window.isDark = 'dark' === 'dark';
+            } else {
+                window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            }
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header animated bounceIn">
+            <a href="http://localhost:1313/forgetful/">Forgetful :/</a>
+        </div>
+        <div class="navbar-menu"><a class="menu-item" href="http://localhost:1313/forgetful/posts" title="">Posts</a><a class="menu-item" href="http://localhost:1313/forgetful/tags" title="">Tags</a><a class="menu-item" href="http://localhost:1313/forgetful/categories" title="">Categories</a><a class="menu-item" href="http://localhost:1313/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"><i class="fas fa-language fa-fw"></i></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav><nav class="navbar-mobile">
+    <div class="navbar-container">
+        <div class="navbar-header">
+            <div class="navbar-header-title animated bounceIn">
+                <a href="http://localhost:1313/forgetful/">Forgetful :/</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="http://localhost:1313/forgetful/posts" title="">Posts</a><a class="menu-item" href="http://localhost:1313/forgetful/tags" title="">Tags</a><a class="menu-item" href="http://localhost:1313/forgetful/categories" title="">Categories</a><a class="menu-item" href="http://localhost:1313/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav>
+<main class="main">
+                <div class="container"><article class="page"><h1 class="post-title animated flipInX">Javascript Basic</h1><div class="post-meta">
+            <div class="post-meta-main"><a class="author" href="https://github.com/Murray-LIANG" rel="author" target="_blank">
+                    <i class="fas fa-user-circle fa-fw"></i>Murray-LIANG
+                </a>&nbsp;</div>
+            <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2021-02-18>2021-02-18</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 4477 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>22 min&nbsp;</div>
+        </div><div class="post-toc" id="post-toc">
+                <h2 class="post-toc-title">Contents</h2>
+                <div class="post-toc-content"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#references">References</a></li>
+    <li><a href="#comparison-of-different-types">Comparison of different types</a></li>
+    <li><a href="#strict-equality--and-">Strict equality <code>===</code> and <code>!==</code></a></li>
+    <li><a href="#comparison-with-null-and-undefined">Comparison with <code>null</code> and <code>undefined</code></a></li>
+    <li><a href="#objects">Objects</a></li>
+    <li><a href="#property-names-limitations">Property names limitations</a></li>
+    <li><a href="#property-existence">Property existence</a></li>
+    <li><a href="#properties-order">Properties order</a></li>
+    <li><a href="#objects-are-stored-and-copied-by-reference-for-non-primitive">Objects are stored and copied <code>by reference</code> for non-primitive.</a></li>
+    <li><a href="#garbage-collection">Garbage collection</a></li>
+    <li><a href="#object-method">Object method</a></li>
+    <li><a href="#constructor-function">Constructor function</a></li>
+    <li><a href="#optional-chaining-">Optional chaining <code>&quot;?.&quot;</code></a></li>
+    <li><a href="#-and-"><code>&quot;?.()&quot;</code> and <code>&quot;?.[]&quot;</code></a></li>
+    <li><a href="#symbols">Symbols</a>
+      <ul>
+        <li><a href="#global-symbols">Global symbols</a></li>
+      </ul>
+    </li>
+    <li><a href="#object-to-primitive-conversion">Object to primitive conversion</a>
+      <ul>
+        <li><a href="#symboltoprimitive">Symbol.toPrimitive</a></li>
+        <li><a href="#further-conversions">Further conversions</a></li>
+      </ul>
+    </li>
+    <li><a href="#methods-of-primitives">Methods of primitives</a>
+      <ul>
+        <li><a href="#constructors-stringnumberboolean-are-for-internal-use-only">Constructors <code>String</code>/<code>Number</code>/<code>Boolean</code> are for internal use only</a></li>
+        <li><a href="#nullundefined-have-no-methods"><code>null</code>/<code>undefined</code> have no methods</a></li>
+      </ul>
+    </li>
+    <li><a href="#numbers">Numbers</a>
+      <ul>
+        <li><a href="#regular-numbers-are--253---1--x--253---1">Regular numbers are <code>-(2^53 - 1) &lt;= x &lt;= 2^53 - 1</code></a></li>
+        <li><a href="#supports-_-and-e">Supports <code>_</code> and <code>e</code>.</a></li>
+        <li><a href="#tostringbase"><code>toString(base)</code></a></li>
+        <li><a href="#imprecise-calculations">Imprecise calculations</a></li>
+        <li><a href="#isfinite-and-isnan"><code>isFinite()</code> and <code>isNaN()</code></a></li>
+        <li><a href="#objectis-compares-values-like--but-isnt-exactly-same-with-"><code>Object.is</code> compares values like <code>===</code> but isn&rsquo;t exactly same with <code>===</code></a></li>
+        <li><a href="#parseint-and-parsefloat"><code>parseInt</code> and <code>parseFloat</code></a></li>
+      </ul>
+    </li>
+    <li><a href="#strings">Strings</a>
+      <ul>
+        <li><a href="#immutable">Immutable</a></li>
+        <li><a href="#comparing-strings">Comparing strings</a></li>
+        <li><a href="#correct-comparisons">Correct comparisons</a></li>
+      </ul>
+    </li>
+    <li><a href="#arrays">Arrays</a>
+      <ul>
+        <li><a href="#internals">Internals</a></li>
+        <li><a href="#a-word-about-length">A word about &ldquo;length&rdquo;</a></li>
+        <li><a href="#new-array"><code>new Array()</code></a></li>
+        <li><a href="#tostring">toString</a></li>
+        <li><a href="#dont-compare-arrays-with-">Don&rsquo;t compare arrays with <code>==</code></a></li>
+      </ul>
+    </li>
+    <li><a href="#array-methods">Array methods</a>
+      <ul>
+        <li><a href="#pushpop-shiftunshift"><code>push</code>/<code>pop</code>, <code>shift</code>/<code>unshift</code></a></li>
+        <li><a href="#splice"><code>splice</code></a></li>
+        <li><a href="#slice"><code>slice</code></a></li>
+        <li><a href="#concat"><code>concat</code></a></li>
+        <li><a href="#foreach"><code>forEach</code></a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div>
+            <div class="post-toc-mobile" id="post-toc-mobile">
+                <details>
+                    <summary>
+                        <div class="post-toc-title">
+                            <span>Contents</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="post-toc-content"><nav id="TableOfContentsMobile">
+  <ul>
+    <li><a href="#references">References</a></li>
+    <li><a href="#comparison-of-different-types">Comparison of different types</a></li>
+    <li><a href="#strict-equality--and-">Strict equality <code>===</code> and <code>!==</code></a></li>
+    <li><a href="#comparison-with-null-and-undefined">Comparison with <code>null</code> and <code>undefined</code></a></li>
+    <li><a href="#objects">Objects</a></li>
+    <li><a href="#property-names-limitations">Property names limitations</a></li>
+    <li><a href="#property-existence">Property existence</a></li>
+    <li><a href="#properties-order">Properties order</a></li>
+    <li><a href="#objects-are-stored-and-copied-by-reference-for-non-primitive">Objects are stored and copied <code>by reference</code> for non-primitive.</a></li>
+    <li><a href="#garbage-collection">Garbage collection</a></li>
+    <li><a href="#object-method">Object method</a></li>
+    <li><a href="#constructor-function">Constructor function</a></li>
+    <li><a href="#optional-chaining-">Optional chaining <code>&quot;?.&quot;</code></a></li>
+    <li><a href="#-and-"><code>&quot;?.()&quot;</code> and <code>&quot;?.[]&quot;</code></a></li>
+    <li><a href="#symbols">Symbols</a>
+      <ul>
+        <li><a href="#global-symbols">Global symbols</a></li>
+      </ul>
+    </li>
+    <li><a href="#object-to-primitive-conversion">Object to primitive conversion</a>
+      <ul>
+        <li><a href="#symboltoprimitive">Symbol.toPrimitive</a></li>
+        <li><a href="#further-conversions">Further conversions</a></li>
+      </ul>
+    </li>
+    <li><a href="#methods-of-primitives">Methods of primitives</a>
+      <ul>
+        <li><a href="#constructors-stringnumberboolean-are-for-internal-use-only">Constructors <code>String</code>/<code>Number</code>/<code>Boolean</code> are for internal use only</a></li>
+        <li><a href="#nullundefined-have-no-methods"><code>null</code>/<code>undefined</code> have no methods</a></li>
+      </ul>
+    </li>
+    <li><a href="#numbers">Numbers</a>
+      <ul>
+        <li><a href="#regular-numbers-are--253---1--x--253---1">Regular numbers are <code>-(2^53 - 1) &lt;= x &lt;= 2^53 - 1</code></a></li>
+        <li><a href="#supports-_-and-e">Supports <code>_</code> and <code>e</code>.</a></li>
+        <li><a href="#tostringbase"><code>toString(base)</code></a></li>
+        <li><a href="#imprecise-calculations">Imprecise calculations</a></li>
+        <li><a href="#isfinite-and-isnan"><code>isFinite()</code> and <code>isNaN()</code></a></li>
+        <li><a href="#objectis-compares-values-like--but-isnt-exactly-same-with-"><code>Object.is</code> compares values like <code>===</code> but isn&rsquo;t exactly same with <code>===</code></a></li>
+        <li><a href="#parseint-and-parsefloat"><code>parseInt</code> and <code>parseFloat</code></a></li>
+      </ul>
+    </li>
+    <li><a href="#strings">Strings</a>
+      <ul>
+        <li><a href="#immutable">Immutable</a></li>
+        <li><a href="#comparing-strings">Comparing strings</a></li>
+        <li><a href="#correct-comparisons">Correct comparisons</a></li>
+      </ul>
+    </li>
+    <li><a href="#arrays">Arrays</a>
+      <ul>
+        <li><a href="#internals">Internals</a></li>
+        <li><a href="#a-word-about-length">A word about &ldquo;length&rdquo;</a></li>
+        <li><a href="#new-array"><code>new Array()</code></a></li>
+        <li><a href="#tostring">toString</a></li>
+        <li><a href="#dont-compare-arrays-with-">Don&rsquo;t compare arrays with <code>==</code></a></li>
+      </ul>
+    </li>
+    <li><a href="#array-methods">Array methods</a>
+      <ul>
+        <li><a href="#pushpop-shiftunshift"><code>push</code>/<code>pop</code>, <code>shift</code>/<code>unshift</code></a></li>
+        <li><a href="#splice"><code>splice</code></a></li>
+        <li><a href="#slice"><code>slice</code></a></li>
+        <li><a href="#concat"><code>concat</code></a></li>
+        <li><a href="#foreach"><code>forEach</code></a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+                </details>
+            </div><div class="post-content"><a class="post-dummy-target" id="references"></a><h2>References</h2>
+<p><a href="https://javascript.info" target="_blank">https://javascript.info</a>
+</p>
+<a class="post-dummy-target" id="comparison-of-different-types"></a><h2>Comparison of different types</h2>
+<p>When comparing values of different types, JavaScript converts the values to numbers.</p>
+<a class="post-dummy-target" id="strict-equality--and-"></a><h2>Strict equality <code>===</code> and <code>!==</code></h2>
+<p><strong>Checks the equality without type conversion.</strong> If <code>a</code> and <code>b</code> are of different types, the <code>a === b</code> immediately returns <code>false</code> without an attempt to convert them.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="nx">alert</span><span class="p">(</span><span class="mi">0</span> <span class="o">==</span> <span class="kc">false</span><span class="p">);</span>  <span class="c1">// true
+</span><span class="c1"></span><span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;&#39;</span> <span class="o">==</span> <span class="kc">false</span><span class="p">);</span>  <span class="c1">// true
+</span><span class="c1"></span><span class="nx">alert</span><span class="p">(</span><span class="mi">0</span> <span class="o">===</span> <span class="kc">false</span><span class="p">);</span>  <span class="c1">// false
+</span></code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="comparison-with-null-and-undefined"></a><h2>Comparison with <code>null</code> and <code>undefined</code></h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="nx">alert</span><span class="p">(</span><span class="kc">null</span> <span class="o">===</span> <span class="kc">undefined</span><span class="p">);</span>  <span class="c1">// false
+</span><span class="c1"></span><span class="nx">alert</span><span class="p">(</span><span class="kc">null</span> <span class="o">==</span> <span class="kc">undefined</span><span class="p">);</span>  <span class="c1">// true
+</span><span class="c1"></span>
+<span class="c1">// null converts to 0, while undefined converts to NaN.
+</span><span class="c1">// And NaN is a special numeric value which returns false for all comparisons.
+</span><span class="c1"></span><span class="nx">alert</span><span class="p">(</span><span class="kc">null</span> <span class="o">&gt;</span> <span class="kc">undefined</span><span class="p">);</span>  <span class="c1">// false
+</span><span class="c1"></span><span class="nx">alert</span><span class="p">(</span><span class="kc">null</span> <span class="o">&lt;=</span> <span class="kc">undefined</span><span class="p">);</span>  <span class="c1">// false
+</span><span class="c1"></span><span class="nx">alert</span><span class="p">(</span><span class="kc">null</span> <span class="o">&lt;</span> <span class="kc">undefined</span><span class="p">);</span>  <span class="c1">// false
+</span><span class="c1"></span><span class="nx">alert</span><span class="p">(</span><span class="kc">null</span> <span class="o">&gt;=</span> <span class="kc">undefined</span><span class="p">);</span>  <span class="c1">// false
+</span><span class="c1"></span>
+<span class="nx">alert</span><span class="p">(</span> <span class="kc">null</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="p">);</span>  <span class="c1">// false
+</span><span class="c1"></span><span class="nx">alert</span><span class="p">(</span> <span class="kc">null</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="p">);</span> <span class="c1">// true, null converts to 0
+</span><span class="c1"></span>
+<span class="c1">// NOTE: null and undefined only equal `==` each other and do not equal
+</span><span class="c1">// any other value.
+</span><span class="c1"></span><span class="nx">alert</span><span class="p">(</span> <span class="kc">null</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">);</span> <span class="c1">// false
+</span><span class="c1"></span><span class="nx">alert</span><span class="p">(</span> <span class="kc">undefined</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">);</span> <span class="c1">// false
+</span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>Treat any comparison with <code>undefined/null</code> except the strict equality <code>===</code> with exceptional care.</li>
+<li>Don&rsquo;t use comparisons <code>&gt;=</code> <code>&gt;</code> <code>&lt;</code> <code>&lt;=</code> with a variable which may be <code>null/undefined</code>, unless you&rsquo;re really sure of what you&rsquo;re doing. If a variable can have these values, check for them separately.</li>
+</ul>
+<a class="post-dummy-target" id="objects"></a><h2>Objects</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">user</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Object</span><span class="p">();</span>
+<span class="kd">let</span> <span class="nx">user</span> <span class="o">=</span> <span class="p">{};</span>
+
+<span class="c1">/////
+</span><span class="c1"></span><span class="kd">let</span> <span class="nx">user</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">name</span><span class="o">:</span> <span class="s2">&#34;John&#34;</span><span class="p">,</span>
+    <span class="nx">age</span><span class="o">:</span> <span class="mi">30</span><span class="p">,</span>
+    <span class="s2">&#34;likes birds&#34;</span><span class="o">:</span> <span class="kc">true</span>  <span class="c1">// must be quoted
+</span><span class="c1"></span><span class="p">};</span>
+
+<span class="nx">user</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s2">&#34;john&#34;</span><span class="p">;</span>
+<span class="nx">user</span><span class="p">[</span><span class="s2">&#34;likes birds&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>  <span class="c1">// must use square brackets
+</span><span class="c1"></span>
+
+<span class="c1">/////
+</span><span class="c1"></span><span class="kd">let</span> <span class="nx">fruit</span> <span class="o">=</span> <span class="nx">prompt</span><span class="p">(</span><span class="s2">&#34;Which fruit to buy?&#34;</span><span class="p">,</span> <span class="s2">&#34;apple&#34;</span><span class="p">);</span>
+
+<span class="kd">let</span> <span class="nx">bag</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">[</span><span class="nx">fruit</span><span class="p">]</span><span class="o">:</span> <span class="mi">5</span><span class="p">,</span>  <span class="c1">// the name of the property is taken from the variable fruit
+</span><span class="c1"></span>    <span class="s2">&#34;fruit&#34;</span><span class="o">:</span> <span class="s2">&#34;unknown&#34;</span><span class="p">,</span>  <span class="c1">// just a property named &#34;fruit&#34;
+</span><span class="c1"></span><span class="p">};</span>
+
+<span class="nx">alert</span><span class="p">(</span> <span class="nx">bag</span><span class="p">.</span><span class="nx">apple</span> <span class="p">);</span>  <span class="c1">// 5 if fruit=&#34;apple&#34;
+</span><span class="c1"></span><span class="nx">alert</span><span class="p">(</span> <span class="nx">bag</span><span class="p">[</span><span class="nx">fruit</span><span class="p">]</span> <span class="p">);</span>  <span class="c1">// 5 if fruit=&#34;apple&#34;
+</span><span class="c1"></span><span class="nx">alert</span><span class="p">(</span> <span class="nx">bag</span><span class="p">[</span><span class="s2">&#34;fruit&#34;</span><span class="p">]</span> <span class="p">);</span>  <span class="c1">// unknown
+</span><span class="c1"></span><span class="nx">alert</span><span class="p">(</span> <span class="nx">bag</span><span class="p">.</span><span class="nx">fruit</span> <span class="p">);</span>  <span class="c1">// unknown
+</span></code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="property-names-limitations"></a><h2>Property names limitations</h2>
+<p>Property names can be any strings or symbols.</p>
+<p>Other types are automatically converted to strings.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="mi">0</span><span class="o">:</span> <span class="s2">&#34;test&#34;</span>  <span class="c1">// same as &#34;0&#34;: &#34;test&#34;
+</span><span class="c1"></span><span class="p">};</span>
+
+<span class="nx">alert</span><span class="p">(</span> <span class="nx">obj</span><span class="p">[</span><span class="s2">&#34;0&#34;</span><span class="p">]</span> <span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span> <span class="nx">obj</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="property-existence"></a><h2>Property existence</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">user</span> <span class="o">=</span> <span class="p">{};</span>
+<span class="c1">// Reading a non-existing property just returns `undefined`.
+</span><span class="c1"></span><span class="nx">alert</span><span class="p">(</span> <span class="nx">user</span><span class="p">.</span><span class="nx">noSuchProperty</span> <span class="o">===</span> <span class="kc">undefined</span> <span class="p">);</span>  <span class="c1">// true
+</span><span class="c1"></span>
+
+<span class="c1">// Use `in` to check if a property exists.
+</span><span class="c1"></span><span class="nx">alert</span><span class="p">(</span> <span class="s2">&#34;noSuchProperty&#34;</span> <span class="k">in</span> <span class="nx">user</span> <span class="p">);</span>  <span class="c1">// true
+</span><span class="c1"></span>
+
+<span class="c1">// User `for ... in` to visit every property.
+</span><span class="c1"></span><span class="kd">let</span> <span class="nx">user</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">name</span><span class="o">:</span> <span class="s2">&#34;John&#34;</span><span class="p">,</span>
+    <span class="nx">age</span><span class="o">:</span> <span class="mi">30</span><span class="p">,</span>
+    <span class="nx">isAdmin</span><span class="o">:</span> <span class="kc">true</span>
+<span class="p">};</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">key</span> <span class="k">in</span> <span class="nx">user</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">alert</span><span class="p">(</span> <span class="nx">key</span> <span class="p">);</span>
+    <span class="nx">alert</span><span class="p">(</span> <span class="nx">user</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="p">);</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="properties-order"></a><h2>Properties order</h2>
+<p>Integer properties are sorted, others appear in creation order.</p>
+<p>The <code>Integer property</code> here means a string can be converted to-and-from an integer without a change.</p>
+<p>So, &ldquo;49&rdquo; is an integer property name. But &ldquo;+49&rdquo; and &ldquo;1.2&rdquo; are not.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">codes</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&#34;49&#34;</span><span class="o">:</span> <span class="s2">&#34;Germany&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;41&#34;</span><span class="o">:</span> <span class="s2">&#34;Switzerland&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;44&#34;</span><span class="o">:</span> <span class="s2">&#34;Great Britain&#34;</span><span class="p">,</span>
+    <span class="c1">// ..,
+</span><span class="c1"></span>    <span class="s2">&#34;1&#34;</span><span class="o">:</span> <span class="s2">&#34;USA&#34;</span>
+<span class="p">};</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">code</span> <span class="k">in</span> <span class="nx">codes</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="nx">code</span><span class="p">);</span> <span class="c1">// 1, 41, 44, 49
+</span><span class="c1"></span><span class="p">}</span>
+
+<span class="c1">// Workaround.
+</span><span class="c1"></span><span class="kd">let</span> <span class="nx">codes</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&#34;+49&#34;</span><span class="o">:</span> <span class="s2">&#34;Germany&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;+41&#34;</span><span class="o">:</span> <span class="s2">&#34;Switzerland&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;+44&#34;</span><span class="o">:</span> <span class="s2">&#34;Great Britain&#34;</span><span class="p">,</span>
+    <span class="c1">// ..,
+</span><span class="c1"></span>    <span class="s2">&#34;+1&#34;</span><span class="o">:</span> <span class="s2">&#34;USA&#34;</span>
+<span class="p">};</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">code</span> <span class="k">in</span> <span class="nx">codes</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// NOTE the `+code`
+</span><span class="c1"></span>    <span class="nx">alert</span><span class="p">(</span> <span class="o">+</span><span class="nx">code</span> <span class="p">);</span> <span class="c1">// 49, 41, 44, 1
+</span><span class="c1"></span><span class="p">}</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="objects-are-stored-and-copied-by-reference-for-non-primitive"></a><h2>Objects are stored and copied <code>by reference</code> for non-primitive.</h2>
+<a class="post-dummy-target" id="garbage-collection"></a><h2>Garbage collection</h2>
+<p>The basic garbage collection algorithm is called <strong><code>mark-and-sweep</code></strong>.</p>
+<p>The following &ldquo;garbage collection&rdquo; steps are regularly performed:</p>
+<ol>
+<li>The garbage collector takes <code>roots</code> and &ldquo;marks&rdquo; (remembers) them.</li>
+<li>Then it visits and &ldquo;marks&rdquo; all references from them.</li>
+<li>Then it visits marked objects and marks their references. All visited objects are remembered, so as not to visit the same object twice in the future.</li>
+<li>…And so on until every reachable (from the <code>roots</code>) references are visited.
+All objects except marked ones are removed.</li>
+</ol>
+<p>Some optimizations are used, like <code>Generational collection</code>, <code>Incremental collection</code>, <code>Idle-time collection</code>.</p>
+<a class="post-dummy-target" id="object-method"></a><h2>Object method</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">user</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">name</span><span class="o">:</span> <span class="s2">&#34;John&#34;</span><span class="p">,</span>
+    <span class="nx">age</span><span class="o">:</span> <span class="mi">30</span><span class="p">,</span>
+
+    <span class="nx">sayHi</span><span class="p">()</span> <span class="p">{</span>  <span class="c1">// object method definition
+</span><span class="c1"></span>        <span class="nx">alert</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="c1">// Or use this to define an object method.
+</span><span class="c1"></span>    <span class="nx">sayBye</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="s2">&#34;Goodbye&#34;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="constructor-function"></a><h2>Constructor function</h2>
+<p>Just regular functions, but with two conventions:</p>
+<ol>
+<li>Named with capital letter first.</li>
+<li>Should be executed only with <code>&quot;new&quot;</code> operator.</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">user</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">User</span><span class="p">(</span><span class="s2">&#34;Jack&#34;</span><span class="p">);</span>
+
+<span class="nx">alert</span><span class="p">(</span><span class="nx">user</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// Jack
+</span><span class="c1"></span><span class="nx">alert</span><span class="p">(</span><span class="nx">user</span><span class="p">.</span><span class="nx">isAdmin</span><span class="p">);</span> <span class="c1">// false
+</span><span class="c1"></span>
+<span class="kd">function</span> <span class="nx">User</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// this = {};  (implicitly)
+</span><span class="c1"></span>
+    <span class="c1">// add properties to this
+</span><span class="c1"></span>    <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">isAdmin</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+
+    <span class="c1">// return this;  (implicitly)
+</span><span class="c1"></span><span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="optional-chaining-"></a><h2>Optional chaining <code>&quot;?.&quot;</code></h2>
+<p>In other words, <code>value?.prop</code>:</p>
+<ul>
+<li>works as <code>value.prop</code>, if <code>value</code> exists,</li>
+<li>otherwise (when <code>value</code> is <code>undefined/null</code>) it returns <code>undefined</code>.</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">user</span> <span class="o">=</span> <span class="p">{};</span>  <span class="c1">// a user without &#34;address&#34; property
+</span><span class="c1"></span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">user</span><span class="p">.</span><span class="nx">address</span><span class="p">.</span><span class="nx">street</span><span class="p">);</span>  <span class="c1">// Error!
+</span><span class="c1"></span><span class="nx">alert</span><span class="p">(</span> <span class="nx">user</span><span class="p">.</span><span class="nx">address</span><span class="o">?</span><span class="p">.</span><span class="nx">street</span> <span class="p">);</span>  <span class="c1">// undefined (no error)
+</span></code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="-and-"></a><h2><code>&quot;?.()&quot;</code> and <code>&quot;?.[]&quot;</code></h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">userAdmin</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">admin</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="s2">&#34;I am admin&#34;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kd">let</span> <span class="nx">userGuest</span> <span class="o">=</span> <span class="p">{};</span>
+
+<span class="nx">userAdmin</span><span class="p">.</span><span class="nx">admin</span><span class="o">?</span><span class="p">.();</span> <span class="c1">// I am admin
+</span><span class="c1"></span><span class="nx">userGuest</span><span class="p">.</span><span class="nx">admin</span><span class="o">?</span><span class="p">.();</span> <span class="c1">// nothing (no such method)
+</span><span class="c1"></span>
+<span class="c1">/////
+</span><span class="c1"></span><span class="kd">let</span> <span class="nx">key</span> <span class="o">=</span> <span class="s2">&#34;firstName&#34;</span><span class="p">;</span>
+
+<span class="kd">let</span> <span class="nx">user1</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">firstName</span><span class="o">:</span> <span class="s2">&#34;John&#34;</span>
+<span class="p">};</span>
+
+<span class="kd">let</span> <span class="nx">user2</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+
+<span class="nx">alert</span><span class="p">(</span> <span class="nx">user1</span><span class="o">?</span><span class="p">.[</span><span class="nx">key</span><span class="p">]</span> <span class="p">);</span> <span class="c1">// John
+</span><span class="c1"></span><span class="nx">alert</span><span class="p">(</span> <span class="nx">user2</span><span class="o">?</span><span class="p">.[</span><span class="nx">key</span><span class="p">]</span> <span class="p">);</span> <span class="c1">// undefined
+</span></code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="symbols"></a><h2>Symbols</h2>
+<p>A <code>symbol</code> represents a unique identifier.</p>
+<p>Symbols are guaranteed to be unique.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">id1</span> <span class="o">=</span> <span class="nx">Symbol</span><span class="p">(</span><span class="s2">&#34;id&#34;</span><span class="p">);</span>
+<span class="kd">let</span> <span class="nx">id2</span> <span class="o">=</span> <span class="nx">Symbol</span><span class="p">(</span><span class="s2">&#34;id&#34;</span><span class="p">);</span>
+
+<span class="nx">alert</span><span class="p">(</span><span class="nx">id1</span> <span class="o">==</span> <span class="nx">id2</span><span class="p">);</span> <span class="c1">// false
+</span></code></pre></td></tr></table>
+</div>
+</div><p>Symbols can be used for some <strong>hidden</strong> properties. These properties can be only accessed directly, cannot be accessed when another script loops over our object (e.g. in <code>for...in</code>).</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">id</span> <span class="o">=</span> <span class="nx">Symbol</span><span class="p">(</span><span class="s2">&#34;id&#34;</span><span class="p">);</span>
+<span class="kd">let</span> <span class="nx">user</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">name</span><span class="o">:</span> <span class="s2">&#34;John&#34;</span><span class="p">,</span>
+    <span class="nx">age</span><span class="o">:</span> <span class="mi">30</span><span class="p">,</span>
+    <span class="p">[</span><span class="nx">id</span><span class="p">]</span><span class="o">:</span> <span class="mi">123</span>
+<span class="p">};</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">key</span> <span class="k">in</span> <span class="nx">user</span><span class="p">)</span> <span class="nx">alert</span><span class="p">(</span><span class="nx">key</span><span class="p">);</span>  <span class="c1">// name, age (no symbols)
+</span><span class="c1"></span>
+<span class="c1">// The direct access by the symbol works.
+</span><span class="c1"></span><span class="nx">alert</span><span class="p">(</span> <span class="s2">&#34;Direct: &#34;</span> <span class="o">+</span> <span class="nx">user</span><span class="p">[</span><span class="nx">id</span><span class="p">]</span> <span class="p">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="global-symbols"></a><h3>Global symbols</h3>
+<p>There is a registry and we can put the application-wide symbols in that registry. These symbols are called <code>global symbols</code>.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="c1">// Read from the global registry.
+</span><span class="c1"></span><span class="kd">let</span> <span class="nx">id</span> <span class="o">=</span> <span class="nx">Symbol</span><span class="p">.</span><span class="k">for</span><span class="p">(</span><span class="s2">&#34;id&#34;</span><span class="p">);</span> <span class="c1">// if the symbol did not exist, it is created
+</span><span class="c1"></span>
+<span class="c1">// Read it again (maybe from another part of the code).
+</span><span class="c1"></span><span class="kd">let</span> <span class="nx">idAgain</span> <span class="o">=</span> <span class="nx">Symbol</span><span class="p">.</span><span class="k">for</span><span class="p">(</span><span class="s2">&#34;id&#34;</span><span class="p">);</span>
+
+<span class="c1">// The same symbol.
+</span><span class="c1"></span><span class="nx">alert</span><span class="p">(</span> <span class="nx">id</span> <span class="o">===</span> <span class="nx">idAgain</span> <span class="p">);</span> <span class="c1">// true
+</span><span class="c1"></span>
+
+<span class="c1">// Symbol.keyFor() is reverse of Symbol.key().
+</span><span class="c1">// Get symbol by name.
+</span><span class="c1"></span><span class="kd">let</span> <span class="nx">sym</span> <span class="o">=</span> <span class="nx">Symbol</span><span class="p">.</span><span class="k">for</span><span class="p">(</span><span class="s2">&#34;name&#34;</span><span class="p">);</span>
+<span class="kd">let</span> <span class="nx">sym2</span> <span class="o">=</span> <span class="nx">Symbol</span><span class="p">.</span><span class="k">for</span><span class="p">(</span><span class="s2">&#34;id&#34;</span><span class="p">);</span>
+
+<span class="c1">// Get name by symbol.
+</span><span class="c1"></span><span class="nx">alert</span><span class="p">(</span> <span class="nx">Symbol</span><span class="p">.</span><span class="nx">keyFor</span><span class="p">(</span><span class="nx">sym</span><span class="p">)</span> <span class="p">);</span> <span class="c1">// name
+</span><span class="c1"></span><span class="nx">alert</span><span class="p">(</span> <span class="nx">Symbol</span><span class="p">.</span><span class="nx">keyFor</span><span class="p">(</span><span class="nx">sym2</span><span class="p">)</span> <span class="p">);</span> <span class="c1">// id
+</span></code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="object-to-primitive-conversion"></a><h2>Object to primitive conversion</h2>
+<p><strong>All objects are <code>true</code> in a boolean context. There are only numeric and string conversions.</strong></p>
+<p>There are three variants of type conversion, so-called &ldquo;hints&rdquo;.</p>
+<ul>
+<li>
+<p><code>&quot;string&quot;</code></p>
+<p>object to string conversion, when we&rsquo;re doing an operation on an object that expects a string.</p>
+</li>
+<li>
+<p><code>&quot;number&quot;</code></p>
+<p>object to number conversion, like when we&rsquo;re doing maths.</p>
+</li>
+<li>
+<p><code>&quot;default&quot;</code></p>
+<p>Occurs in rare cases when the operator is &ldquo;not sure&rdquo; what type to expect.</p>
+<p>For instance, binary plus <code>+</code> can work both with strings (concatenates them) and numbers (add them), so both strings and numbers would do. So if a binary plus gets an object as an argument, it uses the &ldquo;default&rdquo; hint to convert it.</p>
+<p>Also, if an object is compared using <code>==</code> with a string, number or a symbol, it&rsquo;s also unclear which conversion should be done, so the <code>&quot;default&quot;</code> hint is used.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="c1">// binary plus uses the &#34;default&#34; hint
+</span><span class="c1"></span><span class="kd">let</span> <span class="nx">total</span> <span class="o">=</span> <span class="nx">obj1</span> <span class="o">+</span> <span class="nx">obj2</span><span class="p">;</span>
+
+<span class="c1">// obj == number uses the &#34;default&#34; hint
+</span><span class="c1"></span><span class="k">if</span> <span class="p">(</span><span class="nx">user</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span> <span class="p">...</span> <span class="p">};</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<p>The greater and less comparison operators, such as <code>&lt;</code> <code>&gt;</code>, can work with both strings and numbers too. Still, they use the <code>&quot;number&quot;</code> hint, not <code>&quot;default&quot;</code>. That’s for historical reasons.</p>
+<p>In practice though, we don’t need to remember these peculiar details, because all built-in objects except for one case (<code>Date</code> object) implement <code>&quot;default&quot;</code> conversion the same way as <code>&quot;number&quot;</code>. <strong>So if we treat <code>&quot;default&quot;</code> and <code>&quot;number&quot;</code> the same, like most built-ins do, then there are only two conversions.</strong></p>
+<p><strong>To do the conversion, JavaScript tries to find and call three object methods:</strong></p>
+<ol>
+<li>
+<p>Call <code>obj[Symbol.toPrimitive](hint)</code> – the method with the symbolic key <code>Symbol.toPrimitive</code> (system symbol), if such method exists,</p>
+</li>
+<li>
+<p>Otherwise if hint is <code>&quot;string&quot;</code></p>
+<p>try <code>obj.toString()</code> and <code>obj.valueOf()</code>, whatever exists.</p>
+</li>
+<li>
+<p>Otherwise if hint is <code>&quot;number&quot;</code> or <code>&quot;default&quot;</code></p>
+<p>try <code>obj.valueOf()</code> and <code>obj.toString()</code>, whatever exists.</p>
+</li>
+</ol>
+<a class="post-dummy-target" id="symboltoprimitive"></a><h3>Symbol.toPrimitive</h3>
+<p>There’s a built-in symbol named <code>Symbol.toPrimitive</code> that should be used to name the conversion method, like this:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="nx">obj</span><span class="p">[</span><span class="nx">Symbol</span><span class="p">.</span><span class="nx">toPrimitive</span><span class="p">]</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">hint</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// must return a primitive value
+</span><span class="c1"></span>  <span class="c1">// hint = one of &#34;string&#34;, &#34;number&#34;, &#34;default&#34;
+</span><span class="c1"></span><span class="p">};</span>
+
+
+<span class="kd">let</span> <span class="nx">user</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">name</span><span class="o">:</span> <span class="s2">&#34;John&#34;</span><span class="p">,</span>
+  <span class="nx">money</span><span class="o">:</span> <span class="mi">1000</span><span class="p">,</span>
+
+  <span class="p">[</span><span class="nx">Symbol</span><span class="p">.</span><span class="nx">toPrimitive</span><span class="p">](</span><span class="nx">hint</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="sb">`hint: </span><span class="si">${</span><span class="nx">hint</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nx">hint</span> <span class="o">==</span> <span class="s2">&#34;string&#34;</span> <span class="o">?</span> <span class="sb">`{name: &#34;</span><span class="si">${</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="si">}</span><span class="sb">&#34;}`</span> <span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">money</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="nx">alert</span><span class="p">(</span><span class="nx">user</span><span class="p">);</span>  <span class="c1">// hint: string -&gt; {name: &#34;John&#34;}
+</span><span class="c1"></span><span class="nx">alert</span><span class="p">(</span><span class="o">+</span><span class="nx">user</span><span class="p">);</span>  <span class="c1">// hint: number -&gt; 1000
+</span><span class="c1"></span><span class="nx">alert</span><span class="p">(</span><span class="nx">user</span> <span class="o">+</span> <span class="mi">500</span><span class="p">);</span>  <span class="c1">// hint: default -&gt; 1500
+</span></code></pre></td></tr></table>
+</div>
+</div><p>If there’s no <code>Symbol.toPrimitive</code> then JavaScript tries to find them and try in the order:</p>
+<ul>
+<li><code>toString</code> -&gt; <code>valueOf</code> for <code>&quot;string&quot;</code> hint.</li>
+<li><code>valueOf</code> -&gt; <code>toString</code> otherwise.</li>
+</ul>
+<p>These methods must return a primitive value. If <code>toString</code> or <code>valueOf</code> returns an object, then it’s ignored (same as if there were no method). In contrast, <code>Symbol.toPrimitive</code> must return a primitive, otherwise there will be an error.</p>
+<p>By default, a plain object has following <code>toString</code> and <code>valueOf</code> methods:</p>
+<ul>
+<li>The <code>toString</code> method returns a string <code>&quot;[object Object]&quot;</code>.</li>
+<li>The <code>valueOf</code> method returns the object itself.</li>
+</ul>
+<a class="post-dummy-target" id="further-conversions"></a><h3>Further conversions</h3>
+<p>As we know already, many operators and functions perform type conversions, e.g. multiplication <code>*</code> converts operands to numbers.</p>
+<p>If we pass an object as an argument, then there are two stages:</p>
+<ol>
+<li>The object is converted to a primitive (using the rules described above).</li>
+<li>If the resulting primitive isn&rsquo;t of the right type, it&rsquo;s converted.</li>
+</ol>
+<p>For instance:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="c1">// toString handles all conversions in the absence of other methods
+</span><span class="c1"></span>  <span class="nx">toString</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="s2">&#34;2&#34;</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="nx">alert</span><span class="p">(</span><span class="nx">obj</span> <span class="o">*</span> <span class="mi">2</span><span class="p">);</span> <span class="c1">// 4, object converted to primitive &#34;2&#34;, then multiplication made it a number
+</span></code></pre></td></tr></table>
+</div>
+</div><ol>
+<li>The multiplication <code>obj * 2</code> first converts the object to primitive (that’s a string <code>&quot;2&quot;</code>).</li>
+<li>Then <code>&quot;2&quot; * 2</code> becomes <code>2 * 2</code> (the string is converted to number).</li>
+</ol>
+<p>Binary plus will concatenate strings in the same situation, as it gladly accepts a string:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">toString</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="s2">&#34;2&#34;</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="nx">alert</span><span class="p">(</span><span class="nx">obj</span> <span class="o">+</span> <span class="mi">2</span><span class="p">);</span> <span class="c1">// 22 (&#34;2&#34; + 2), conversion to primitive returned a string =&gt; concatenation
+</span></code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="methods-of-primitives"></a><h2>Methods of primitives</h2>
+<p>7 primitive types: <code>string</code>, <code>number</code>, <code>bigint</code>, <code>boolean</code>, <code>symbol</code>, <code>null</code> and <code>undefined</code>.</p>
+<p>It would be great to access to methods and properties of strings, numbers, booleans and symbols.</p>
+<p>In order for that to work, a special &ldquo;object wrapper&rdquo; that provides the extra functionality is created, and then is destroyed. The &ldquo;object wrapper&rdquo; are different for each primitive type and are called: <code>String</code>, <code>Number</code>, <code>Boolean</code> and <code>Symbol</code>. Thus, they provide different sets of methods.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">str</span> <span class="o">=</span> <span class="s2">&#34;hello&#34;</span><span class="p">;</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">str</span><span class="p">.</span><span class="nx">toUpperCase</span><span class="p">());</span>  <span class="c1">// HELLO
+</span></code></pre></td></tr></table>
+</div>
+</div><p>Here&rsquo;s what actually happens in <code>str.toUpperCase()</code>:</p>
+<ol>
+<li>The string <code>str</code> is a primitive. So in the moment of accessing its property, a special object is created that knows the value of the string, and has useful methods, like <code>toUpperCase()</code>.</li>
+<li>That method runs and returns a new string (shown by <code>alert</code>).</li>
+<li>The special object is destroyed, leaving the primitive <code>str</code> alone.</li>
+</ol>
+<p>So primitives can provide methods, but they still remain lightweight.</p>
+<a class="post-dummy-target" id="constructors-stringnumberboolean-are-for-internal-use-only"></a><h3>Constructors <code>String</code>/<code>Number</code>/<code>Boolean</code> are for internal use only</h3>
+<p>For example, do not use <code>new Number(1)</code>, but you can use <code>Number(&quot;123&quot;)</code> to convert a string to number.</p>
+<a class="post-dummy-target" id="nullundefined-have-no-methods"></a><h3><code>null</code>/<code>undefined</code> have no methods</h3>
+<a class="post-dummy-target" id="numbers"></a><h2>Numbers</h2>
+<a class="post-dummy-target" id="regular-numbers-are--253---1--x--253---1"></a><h3>Regular numbers are <code>-(2^53 - 1) &lt;= x &lt;= 2^53 - 1</code></h3>
+<p>Stored in 64-bit format IEEE-754, aka. &ldquo;double precision floating point numbers&rdquo;. 52 bits are used to store the digits, 11 bits store the position of the decimal point (they are zero for integer numbers), and 1 bit is for the sign.</p>
+<p><code>BigInt</code> is used to represent integers not in regular number range.</p>
+<a class="post-dummy-target" id="supports-_-and-e"></a><h3>Supports <code>_</code> and <code>e</code>.</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">billion</span> <span class="o">=</span> <span class="mi">1_000_000_000</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">billion</span> <span class="o">=</span> <span class="mf">1e9</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="tostringbase"></a><h3><code>toString(base)</code></h3>
+<p><code>base</code> can vary from <code>2</code> to <code>36</code>. By default it&rsquo;s <code>10</code>.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript">
+<span class="nx">alert</span><span class="p">(</span><span class="mf">123456.</span><span class="p">.</span><span class="nx">toString</span><span class="p">(</span><span class="mi">36</span><span class="p">));</span>  <span class="c1">// Note two dots are used here
+</span><span class="c1"></span><span class="nx">alert</span><span class="p">((</span><span class="mi">123456</span><span class="p">).</span><span class="nx">toString</span><span class="p">(</span><span class="mi">36</span><span class="p">));</span>  <span class="c1">// Same as above
+</span></code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="imprecise-calculations"></a><h3>Imprecise calculations</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="c1">// For a number too big which would overflow the 64-bit storage,
+</span><span class="c1">// infinity is returned.
+</span><span class="c1"></span><span class="nx">alert</span><span class="p">(</span><span class="mf">1e500</span><span class="p">);</span>  <span class="c1">// Infinity
+</span><span class="c1"></span>
+<span class="c1">// Loss of precision
+</span><span class="c1"></span><span class="nx">alert</span><span class="p">(</span><span class="mf">0.1</span> <span class="o">+</span> <span class="mf">0.2</span> <span class="o">==</span> <span class="mf">0.3</span><span class="p">);</span>  <span class="c1">// false
+</span><span class="c1"></span><span class="nx">alert</span><span class="p">(</span> <span class="mf">0.1</span> <span class="o">+</span> <span class="mf">0.2</span> <span class="p">);</span> <span class="c1">// 0.30000000000000004
+</span></code></pre></td></tr></table>
+</div>
+</div><p>A number is stored in memory in its binary form, a sequence of bits – ones and zeroes. But fractions like <code>0.1</code>, <code>0.2</code> that look simple in the decimal numeric system are actually unending fractions in their binary form. Why?</p>
+<p><code>0.1</code> is one divided by ten 1/10, one-tenth. In decimal numeral system such numbers are easily representable. Compare it to one-third: 1/3. It becomes an endless fraction <code>0.33333(3)</code>.</p>
+<p>So, division by powers 10 is guaranteed to work well in the decimal system, but division by 3 is not. For the same reason, in the binary numeral system, the division by powers of 2 is guaranteed to work, but 1/10 becomes an endless binary fraction.</p>
+<p>There&rsquo;s just no way to store exactly <code>0.1</code> or exactly <code>0.2</code> using the binary system, just like there is no way to store one-third as a decimal fraction.</p>
+<p><code>toFixed(n)</code> could help work around the problem.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">sum</span> <span class="o">=</span> <span class="mf">0.1</span> <span class="o">+</span> <span class="mf">0.2</span><span class="p">;</span>
+<span class="nx">alert</span><span class="p">(</span> <span class="nx">sum</span><span class="p">.</span><span class="nx">toFixed</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="p">);</span> <span class="c1">// 0.30, actually it is string &#34;0.30&#34;
+</span><span class="c1"></span><span class="nx">alert</span><span class="p">(</span> <span class="o">+</span><span class="nx">sum</span><span class="p">.</span><span class="nx">toFixed</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="p">);</span> <span class="c1">// 0.3, use `+` to convert it to number
+</span></code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="isfinite-and-isnan"></a><h3><code>isFinite()</code> and <code>isNaN()</code></h3>
+<p>Two special numeric values:</p>
+<ul>
+<li><code>Infinity</code> (and <code>-Infinity</code>) is a special numeric value that is greater (less) than anything.</li>
+<li><code>NaN</code> represents an error.</li>
+</ul>
+<p><code>isNaN(value)</code> converts <code>value</code> to a number and then tests it for being <code>NaN</code>. You can just use <code>=== NaN</code>. Because <code>NaN</code> is unique in that it does not equal anything, including itself:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="nx">alert</span><span class="p">(</span> <span class="kc">NaN</span> <span class="o">===</span> <span class="kc">NaN</span> <span class="p">);</span> <span class="c1">// false
+</span></code></pre></td></tr></table>
+</div>
+</div><p><code>isFinite(value)</code> converts <code>value</code> to a number and returns true if it’s a regular number, not <code>NaN/Infinity/-Infinity</code>. It is used to validate whether a string value is a regular number:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">num</span> <span class="o">=</span> <span class="o">+</span><span class="nx">prompt</span><span class="p">(</span><span class="s2">&#34;Enter a number&#34;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">);</span>
+
+<span class="c1">// will be true unless you enter Infinity, -Infinity or not a number
+</span><span class="c1"></span><span class="nx">alert</span><span class="p">(</span> <span class="nb">isFinite</span><span class="p">(</span><span class="nx">num</span><span class="p">)</span> <span class="p">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>An empty or a space-only string is treated as <code>0</code> in all numeric functions including <code>isFinite</code>.</strong></p>
+<a class="post-dummy-target" id="objectis-compares-values-like--but-isnt-exactly-same-with-"></a><h3><code>Object.is</code> compares values like <code>===</code> but isn&rsquo;t exactly same with <code>===</code></h3>
+<ul>
+<li>It works with <code>NaN</code>: <code>Object.is(NaN, NaN) === true</code>, that&rsquo;s a good thing.</li>
+<li>Values <code>0</code> and <code>-0</code> are different: <code>Object.is(0, -0) === false</code>, technically that&rsquo;s true, because internally the number has a sign bit that may be different even if all other bits are zeroes.</li>
+<li>In all other cases, <code>Object.is(a, b)</code> is the same as <code>a === b</code>.</li>
+</ul>
+<a class="post-dummy-target" id="parseint-and-parsefloat"></a><h3><code>parseInt</code> and <code>parseFloat</code></h3>
+<p><code>alert(+&quot;100px&quot;)</code> outputs <code>NaN</code>. Because <code>+</code> or <code>Number()</code> conversion is strict.</p>
+<p>Then we have <code>parseInt</code> and <code>parseFloat</code> which &ldquo;read&rdquo; a number from a string until they can&rsquo;t. In case of an error, the gathered number is returned. The function <code>parseInt</code> returns an integer, whilst <code>parseFloat</code> will return a floating-point number:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="nx">alert</span><span class="p">(</span> <span class="nb">parseInt</span><span class="p">(</span><span class="s1">&#39;100px&#39;</span><span class="p">)</span> <span class="p">);</span> <span class="c1">// 100
+</span><span class="c1"></span><span class="nx">alert</span><span class="p">(</span> <span class="nb">parseFloat</span><span class="p">(</span><span class="s1">&#39;12.5em&#39;</span><span class="p">)</span> <span class="p">);</span> <span class="c1">// 12.5
+</span><span class="c1"></span>
+<span class="nx">alert</span><span class="p">(</span> <span class="nb">parseInt</span><span class="p">(</span><span class="s1">&#39;12.3&#39;</span><span class="p">)</span> <span class="p">);</span> <span class="c1">// 12, only the integer part is returned
+</span><span class="c1"></span><span class="nx">alert</span><span class="p">(</span> <span class="nb">parseFloat</span><span class="p">(</span><span class="s1">&#39;12.3.4&#39;</span><span class="p">)</span> <span class="p">);</span> <span class="c1">// 12.3, the second point stops the reading
+</span></code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="strings"></a><h2>Strings</h2>
+<a class="post-dummy-target" id="immutable"></a><h3>Immutable</h3>
+<a class="post-dummy-target" id="comparing-strings"></a><h3>Comparing strings</h3>
+<p>All strings are encoded using UTF-16. That is: each character has a corresponding numeric code. There are special methods that allow to get the character for the code and back.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="c1">// different case letters have different codes
+</span><span class="c1"></span><span class="nx">alert</span><span class="p">(</span> <span class="s2">&#34;z&#34;</span><span class="p">.</span><span class="nx">codePointAt</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="p">);</span> <span class="c1">// 122
+</span><span class="c1"></span><span class="nx">alert</span><span class="p">(</span> <span class="s2">&#34;Z&#34;</span><span class="p">.</span><span class="nx">codePointAt</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="p">);</span> <span class="c1">// 90
+</span><span class="c1"></span>
+<span class="nx">alert</span><span class="p">(</span> <span class="nb">String</span><span class="p">.</span><span class="nx">fromCodePoint</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span> <span class="p">);</span> <span class="c1">// Z
+</span><span class="c1"></span>
+<span class="c1">// 90 is 5a in hexadecimal system
+</span><span class="c1"></span><span class="nx">alert</span><span class="p">(</span> <span class="s1">&#39;\u005a&#39;</span> <span class="p">);</span> <span class="c1">// Z
+</span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">65</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;=</span> <span class="mi">220</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">str</span> <span class="o">+=</span> <span class="nb">String</span><span class="p">.</span><span class="nx">fromCodePoint</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nx">alert</span><span class="p">(</span> <span class="nx">str</span> <span class="p">);</span>
+<span class="c1">// ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
+</span><span class="c1">// ¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜ
+</span></code></pre></td></tr></table>
+</div>
+</div><p>So, <code>a &gt; Z</code> and <code>Ö &gt; O</code>.</p>
+<a class="post-dummy-target" id="correct-comparisons"></a><h3>Correct comparisons</h3>
+<p>Alphabets are different for different languages. So, the browser needs to know the language to compare.</p>
+<p><code>str1.localeCompare(str2[, locales[, options]])</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kr">const</span> <span class="nx">a</span> <span class="o">=</span> <span class="s1">&#39;Österreich&#39;</span><span class="p">;</span>
+<span class="kr">const</span> <span class="nx">b</span> <span class="o">=</span> <span class="s1">&#39;Zealand&#39;</span><span class="p">;</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span> <span class="o">&lt;</span> <span class="nx">b</span><span class="p">);</span>  <span class="c1">// false, means a &gt; b
+</span><span class="c1"></span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">localeCompare</span><span class="p">(</span><span class="nx">b</span><span class="p">));</span>  <span class="c1">// -1, means a &lt; b
+</span><span class="c1"></span>
+
+<span class="kr">const</span> <span class="nx">a</span> <span class="o">=</span> <span class="s1">&#39;réservé&#39;</span><span class="p">;</span> <span class="c1">// with accents, lowercase
+</span><span class="c1"></span><span class="kr">const</span> <span class="nx">b</span> <span class="o">=</span> <span class="s1">&#39;RESERVE&#39;</span><span class="p">;</span> <span class="c1">// no accents, uppercase
+</span><span class="c1"></span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">localeCompare</span><span class="p">(</span><span class="nx">b</span><span class="p">));</span>  <span class="c1">// 1
+</span><span class="c1"></span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">localeCompare</span><span class="p">(</span><span class="nx">b</span><span class="p">,</span> <span class="s1">&#39;en&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">sensitivity</span><span class="o">:</span> <span class="s1">&#39;base&#39;</span> <span class="p">}));</span>  <span class="c1">// 0
+</span></code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="arrays"></a><h2>Arrays</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">arr</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Array</span><span class="p">();</span>
+<span class="kd">let</span> <span class="nx">arr</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;apple&#34;</span><span class="p">,</span> <span class="s2">&#34;pear&#34;</span><span class="p">];</span>
+
+<span class="kd">let</span> <span class="nx">fruits</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;Apple&#34;</span><span class="p">,</span> <span class="s2">&#34;Orange&#34;</span><span class="p">,</span> <span class="s2">&#34;Pear&#34;</span><span class="p">];</span>
+<span class="nx">fruits</span><span class="p">.</span><span class="nx">pop</span><span class="p">();</span>  <span class="c1">// work with the end of the array
+</span><span class="c1"></span><span class="nx">fruits</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">&#34;Lemon&#34;</span><span class="p">);</span>  <span class="c1">// work with the end of the array
+</span><span class="c1"></span>
+<span class="nx">fruits</span><span class="p">.</span><span class="nx">shift</span><span class="p">();</span>  <span class="c1">// work with the beginning of the array
+</span><span class="c1"></span><span class="nx">fruits</span><span class="p">.</span><span class="nx">unshift</span><span class="p">(</span><span class="s2">&#34;Lemon&#34;</span><span class="p">);</span>  <span class="c1">// work with the beginning of the array
+</span><span class="c1"></span>
+<span class="nx">fruits</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">&#34;Orange&#34;</span><span class="p">,</span> <span class="s2">&#34;Lemon&#34;</span><span class="p">);</span>  <span class="c1">// add multiple elements at once
+</span><span class="c1"></span><span class="nx">fruits</span><span class="p">.</span><span class="nx">unshift</span><span class="p">(</span><span class="s2">&#34;Orange&#34;</span><span class="p">,</span> <span class="s2">&#34;Lemon&#34;</span><span class="p">);</span>  <span class="c1">// add multiple elements at once
+</span></code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="internals"></a><h3>Internals</h3>
+<p>An array is <strong>a special kind of object</strong>. The square brackets used to access a property <code>arr[0]</code> actually come from the object syntax. That’s essentially the same as <code>obj[key]</code>, where <code>arr</code> is the object, while numbers are used as keys.</p>
+<p>They extend objects providing special methods to work with <strong>ordered collections</strong> of data and also the <code>length</code> property. But at the core it’s still an object.</p>
+<p>Remember, there are only eight basic data types in JavaScript. Array is an object and thus behaves like an object.</p>
+<p>For instance, it is copied by reference:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">fruits</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;Banana&#34;</span><span class="p">]</span>
+
+<span class="kd">let</span> <span class="nx">arr</span> <span class="o">=</span> <span class="nx">fruits</span><span class="p">;</span> <span class="c1">// copy by reference (two variables reference the same array)
+</span><span class="c1"></span><span class="nx">alert</span><span class="p">(</span> <span class="nx">arr</span> <span class="o">===</span> <span class="nx">fruits</span> <span class="p">);</span> <span class="c1">// true
+</span><span class="c1"></span>
+<span class="nx">arr</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">&#34;Pear&#34;</span><span class="p">);</span> <span class="c1">// modify the array by reference
+</span><span class="c1"></span><span class="nx">alert</span><span class="p">(</span> <span class="nx">fruits</span> <span class="p">);</span> <span class="c1">// Banana, Pear - 2 items now
+</span></code></pre></td></tr></table>
+</div>
+</div><p>…But what makes arrays really special is their internal representation. The engine tries to store its elements <strong>in the contiguous memory area</strong>, one after another, just as depicted on the illustrations in this chapter, and there are other <strong>optimizations</strong> as well, to make arrays work really fast.</p>
+<p><strong>But they all break if we quit working with an array as with an &ldquo;ordered collection&rdquo; and start working with it as if it were a regular object.</strong></p>
+<p>For instance, technically we can do this:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">fruits</span> <span class="o">=</span> <span class="p">[];</span> <span class="c1">// make an array
+</span><span class="c1"></span><span class="nx">fruits</span><span class="p">[</span><span class="mi">99999</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span> <span class="c1">// assign a property with the index far greater than its length
+</span><span class="c1"></span><span class="nx">fruits</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">25</span><span class="p">;</span> <span class="c1">// create a property with an arbitrary name
+</span></code></pre></td></tr></table>
+</div>
+</div><p>That’s possible, because arrays are objects at their base. We can add any properties to them.</p>
+<p><strong>But the engine will see that we’re working with the array as with a regular object.</strong> Array-specific optimizations are not suited for such cases and will be turned off, their benefits disappear.</p>
+<p>The ways to misuse an array:</p>
+<ul>
+<li>Add a non-numeric property like <code>arr.test = 5</code>.</li>
+<li>Make holes, like: add <code>arr[0]</code> and then <code>arr[1000]</code> (and nothing between them).</li>
+<li>Fill the array in the reverse order, like <code>arr[1000]</code>, <code>arr[999]</code> and so on.</li>
+</ul>
+<p>Please think of arrays as special structures to work with the ordered data. They provide special methods for that. <strong>Arrays are carefully tuned inside JavaScript engines to work with contiguous ordered data, please use them this way. And if you need arbitrary keys, chances are high that you actually require a regular object <code>{}</code></strong>.</p>
+<a class="post-dummy-target" id="a-word-about-length"></a><h3>A word about &ldquo;length&rdquo;</h3>
+<p>&ldquo;length&rdquo; is actually not the count of values in the array, but the greatest numeric index plus one.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">fruits</span> <span class="o">=</span> <span class="p">[];</span>
+<span class="nx">fruits</span><span class="p">[</span><span class="mi">123</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&#34;Apple&#34;</span><span class="p">;</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">fruits</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>  <span class="c1">// 124
+</span></code></pre></td></tr></table>
+</div>
+</div><p>If we decrease the <code>length</code>, the array is truncated, and the process is irreversible.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">arr</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">];</span>
+
+<span class="nx">arr</span><span class="p">.</span><span class="nx">length</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">arr</span><span class="p">);</span>  <span class="c1">// [1, 2]
+</span><span class="c1"></span>
+<span class="nx">arr</span><span class="p">.</span><span class="nx">length</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">arr</span><span class="p">[</span><span class="mi">3</span><span class="p">]);</span>  <span class="c1">// undefined: the values do not return
+</span></code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="new-array"></a><h3><code>new Array()</code></h3>
+<p>If <code>new Array</code> is called with <strong>a single argument which is a number</strong>, then it creates an array <strong>without items, but with the given length</strong>.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">arr</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Array</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>  <span class="c1">// will it create an array of [2]? NO!!!
+</span><span class="c1"></span><span class="nx">alert</span><span class="p">(</span> <span class="nx">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">);</span>  <span class="c1">// undefined! no elements.
+</span><span class="c1"></span><span class="nx">alert</span><span class="p">(</span> <span class="nx">arr</span><span class="p">.</span><span class="nx">length</span> <span class="p">);</span>  <span class="c1">// length 2
+</span></code></pre></td></tr></table>
+</div>
+</div><p>In the code above, <code>new Array(number)</code> has all elements undefined.</p>
+<p><strong>To evade such surprises, we usually use square brackets, unless we really know what we’re doing.</strong></p>
+<a class="post-dummy-target" id="tostring"></a><h3>toString</h3>
+<p>Arrays have their own implementation of <code>toString</code> method that returns a comma-separated list of elements.</p>
+<p>For instance:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">arr</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
+
+<span class="nx">alert</span><span class="p">(</span> <span class="nx">arr</span> <span class="p">);</span> <span class="c1">// 1,2,3
+</span><span class="c1"></span><span class="nx">alert</span><span class="p">(</span> <span class="nb">String</span><span class="p">(</span><span class="nx">arr</span><span class="p">)</span> <span class="o">===</span> <span class="s1">&#39;1,2,3&#39;</span> <span class="p">);</span> <span class="c1">// true
+</span></code></pre></td></tr></table>
+</div>
+</div><p>Also, let’s try this:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="nx">alert</span><span class="p">(</span> <span class="p">[]</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">);</span> <span class="c1">// &#34;1&#34;
+</span><span class="c1"></span><span class="nx">alert</span><span class="p">(</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">);</span> <span class="c1">// &#34;11&#34;
+</span><span class="c1"></span><span class="nx">alert</span><span class="p">(</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">);</span> <span class="c1">// &#34;1,21&#34;
+</span></code></pre></td></tr></table>
+</div>
+</div><p>Arrays do not have <code>Symbol.toPrimitive</code>, neither a viable <code>valueOf</code>, they implement only <code>toString</code> conversion, so here <code>[]</code> becomes an empty string, <code>[1]</code> becomes <code>&quot;1&quot;</code> and <code>[1,2]</code> becomes <code>&quot;1,2&quot;</code>.</p>
+<p>When the binary plus <code>&quot;+&quot;</code> operator adds something to a string, it converts it to a string as well, so the next step looks like this:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="nx">alert</span><span class="p">(</span> <span class="s2">&#34;&#34;</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">);</span> <span class="c1">// &#34;1&#34;
+</span><span class="c1"></span><span class="nx">alert</span><span class="p">(</span> <span class="s2">&#34;1&#34;</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">);</span> <span class="c1">// &#34;11&#34;
+</span><span class="c1"></span><span class="nx">alert</span><span class="p">(</span> <span class="s2">&#34;1,2&#34;</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">);</span> <span class="c1">// &#34;1,21&#34;
+</span></code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="dont-compare-arrays-with-"></a><h3>Don&rsquo;t compare arrays with <code>==</code></h3>
+<p>Arrays in JavaScript, unlike some other programming languages, shouldn’t be compared with operator <code>==</code>.</p>
+<p>This operator has no special treatment for arrays, it works with them as with any objects.</p>
+<p>Let’s recall the rules:</p>
+<ul>
+<li>Two objects are equal <code>==</code> only if they’re references to the same object.</li>
+<li>If one of the arguments of <code>==</code> is an object, and the other one is a primitive, then the object gets converted to primitive, as explained in the chapter <code>Object to primitive conversion</code>.</li>
+<li>&hellip;With an exception of <code>null</code> and <code>undefined</code> that equal <code>==</code> each other and nothing else.</li>
+</ul>
+<p>The strict comparison <code>===</code> is even simpler, as it doesn&rsquo;t convert types.</p>
+<p>So, if we compare arrays with <code>==</code>, they are never the same, unless we compare two variables that reference exactly the same array.</p>
+<p>For example:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="nx">alert</span><span class="p">(</span> <span class="p">[]</span> <span class="o">==</span> <span class="p">[]</span> <span class="p">);</span> <span class="c1">// false
+</span><span class="c1"></span><span class="nx">alert</span><span class="p">(</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">);</span> <span class="c1">// false
+</span></code></pre></td></tr></table>
+</div>
+</div><p>These arrays are technically different objects. So they aren&rsquo;t equal. The <code>==</code> operator doesn&rsquo;t do item-by-item comparison.</p>
+<p>Comparison with primitives may give seemingly strange results as well:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="nx">alert</span><span class="p">(</span> <span class="mi">0</span> <span class="o">==</span> <span class="p">[]</span> <span class="p">);</span> <span class="c1">// true
+</span><span class="c1"></span>
+<span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;0&#39;</span> <span class="o">==</span> <span class="p">[]</span> <span class="p">);</span> <span class="c1">// false
+</span></code></pre></td></tr></table>
+</div>
+</div><p>Here, in both cases, we compare a primitive with an array object. So the array <code>[]</code> gets converted to primitive for the purpose of comparison and becomes an empty string &lsquo;&rsquo;.</p>
+<p>Then the comparison process goes on with the primitives, as described in the chapter <code>Type Conversions</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="c1">// after [] was converted to &#39;&#39;
+</span><span class="c1"></span><span class="nx">alert</span><span class="p">(</span> <span class="mi">0</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span> <span class="p">);</span> <span class="c1">// true, as &#39;&#39; becomes converted to number 0
+</span><span class="c1"></span>
+<span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;0&#39;</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span> <span class="p">);</span> <span class="c1">// false, no type conversion, different strings
+</span></code></pre></td></tr></table>
+</div>
+</div><p>So, how to compare arrays?</p>
+<p>That&rsquo;s simple: don&rsquo;t use the <code>==</code> operator. Instead, compare them item-by-item in a loop or using iteration methods.</p>
+<a class="post-dummy-target" id="array-methods"></a><h2>Array methods</h2>
+<a class="post-dummy-target" id="pushpop-shiftunshift"></a><h3><code>push</code>/<code>pop</code>, <code>shift</code>/<code>unshift</code></h3>
+<a class="post-dummy-target" id="splice"></a><h3><code>splice</code></h3>
+<p><code>splice</code> will shift the rest of elements and make them occupy the freed place.</p>
+<p><code>arr.splice(start[, deleteCount, elem1, ..., elemN])</code>: It modifies <code>arr</code> starting from the index <code>start</code>: removes <code>deleteCount</code> elements and then inserts <code>elem1</code>, &hellip;, <code>elemN</code> at their place. Returns the array of removed elements.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">arr</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;I&#34;</span><span class="p">,</span> <span class="s2">&#34;study&#34;</span><span class="p">,</span> <span class="s2">&#34;JavaScript&#34;</span><span class="p">,</span> <span class="s2">&#34;right&#34;</span><span class="p">,</span> <span class="s2">&#34;now&#34;</span><span class="p">];</span>
+
+<span class="nx">arr</span><span class="p">.</span><span class="nx">splice</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span> <span class="c1">// from index 1 remove 1 element
+</span><span class="c1">// arr = [&#34;I&#34;, &#34;JavaScript&#34;, &#34;right&#34;, &#34;now&#34;]
+</span><span class="c1"></span>
+<span class="c1">// remove 2 first elements and replace them with another
+</span><span class="c1"></span><span class="nx">arr</span><span class="p">.</span><span class="nx">splice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&#34;Let&#39;s&#34;</span><span class="p">,</span> <span class="s2">&#34;dance&#34;</span><span class="p">);</span>
+<span class="c1">// arr = [&#34;Let&#39;s&#34;, &#34;dance&#34;, &#34;right&#34;, &#34;now&#34;]
+</span><span class="c1"></span>
+<span class="c1">// from index 2
+</span><span class="c1">// delete 0
+</span><span class="c1">// then insert &#34;the&#34; and &#34;javascript&#34;
+</span><span class="c1"></span><span class="nx">arr</span><span class="p">.</span><span class="nx">splice</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&#34;the&#34;</span><span class="p">,</span> <span class="s2">&#34;javascript&#34;</span><span class="p">);</span>
+<span class="c1">// arr = [&#34;Let&#39;s&#34;, &#34;dance&#34;, &#34;the&#34;, &#34;javascript&#34;, &#34;right&#34;, &#34;now&#34;]
+</span><span class="c1"></span>
+<span class="c1">// from index -4 (one step from the end)
+</span><span class="c1">// delete 0 elements,
+</span><span class="c1">// then insert &#34;and&#34; and &#34;learn&#34;
+</span><span class="c1"></span><span class="nx">arr</span><span class="p">.</span><span class="nx">splice</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&#34;and&#34;</span><span class="p">,</span> <span class="s2">&#34;learn&#34;</span><span class="p">);</span>
+<span class="c1">// arr = [&#34;Let&#39;s&#34;, &#34;dance&#34;, &#34;and&#34;, &#34;learn&#34;, &#34;the&#34;, &#34;javascript&#34;, &#34;right&#34;, &#34;now&#34;]
+</span></code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="slice"></a><h3><code>slice</code></h3>
+<p><code>arr.slice([start], [end])</code> returns a new array copying to it all items from index <code>start</code> to <code>end</code> (not including <code>end</code>).</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">arr</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;t&#34;</span><span class="p">,</span> <span class="s2">&#34;e&#34;</span><span class="p">,</span> <span class="s2">&#34;s&#34;</span><span class="p">,</span> <span class="s2">&#34;t&#34;</span><span class="p">];</span>
+
+<span class="nx">alert</span><span class="p">(</span> <span class="nx">arr</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="p">);</span> <span class="c1">// e,s (copy from 1 to 3)
+</span><span class="c1"></span>
+<span class="nx">alert</span><span class="p">(</span> <span class="nx">arr</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span> <span class="p">);</span> <span class="c1">// s,t (copy from -2 till the end)
+</span><span class="c1"></span>
+<span class="kd">let</span> <span class="nx">arrB</span> <span class="o">=</span> <span class="nx">arr</span><span class="p">.</span><span class="nx">slice</span><span class="p">();</span> <span class="c1">// make a copy of whole arr.
+</span></code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="concat"></a><h3><code>concat</code></h3>
+<p><code>arr.concat(arg1, arg2...)</code> returns a new array containing items from <code>arr</code>, then <code>arg1</code>, <code>arg2</code> etc. If an argument <code>argN</code> is an array, then all its elements are copied. Otherwise, the argument itself is copied.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">arr</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">];</span>
+
+<span class="c1">// create an array from: arr and [3,4]
+</span><span class="c1"></span><span class="nx">alert</span><span class="p">(</span> <span class="nx">arr</span><span class="p">.</span><span class="nx">concat</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span> <span class="p">);</span> <span class="c1">// 1,2,3,4
+</span><span class="c1"></span>
+<span class="c1">// create an array from: arr and [3,4] and [5,6]
+</span><span class="c1"></span><span class="nx">alert</span><span class="p">(</span> <span class="nx">arr</span><span class="p">.</span><span class="nx">concat</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span> <span class="p">);</span> <span class="c1">// 1,2,3,4,5,6
+</span><span class="c1"></span>
+<span class="c1">// create an array from: arr and [3,4], then add values 5 and 6
+</span><span class="c1"></span><span class="nx">alert</span><span class="p">(</span> <span class="nx">arr</span><span class="p">.</span><span class="nx">concat</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span> <span class="p">);</span> <span class="c1">// 1,2,3,4,5,6
+</span></code></pre></td></tr></table>
+</div>
+</div><p>Normally, it only copies elements from arrays. Other objects, even if they look like arrays, are added as a whole:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">arr</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">];</span>
+
+<span class="kd">let</span> <span class="nx">arrayLike</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="mi">0</span><span class="o">:</span> <span class="s2">&#34;something&#34;</span><span class="p">,</span>
+  <span class="nx">length</span><span class="o">:</span> <span class="mi">1</span>
+<span class="p">};</span>
+
+<span class="nx">alert</span><span class="p">(</span> <span class="nx">arr</span><span class="p">.</span><span class="nx">concat</span><span class="p">(</span><span class="nx">arrayLike</span><span class="p">)</span> <span class="p">);</span> <span class="c1">// 1,2,[object Object]
+</span></code></pre></td></tr></table>
+</div>
+</div><p>But if an array-like object has a special <code>Symbol.isConcatSpreadable</code> property, then it’s treated as an array by <code>concat</code>: its elements are added instead:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">arr</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">];</span>
+
+<span class="kd">let</span> <span class="nx">arrayLike</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="mi">0</span><span class="o">:</span> <span class="s2">&#34;something&#34;</span><span class="p">,</span>
+  <span class="mi">1</span><span class="o">:</span> <span class="s2">&#34;else&#34;</span><span class="p">,</span>
+  <span class="p">[</span><span class="nx">Symbol</span><span class="p">.</span><span class="nx">isConcatSpreadable</span><span class="p">]</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="nx">length</span><span class="o">:</span> <span class="mi">2</span>
+<span class="p">};</span>
+
+<span class="nx">alert</span><span class="p">(</span> <span class="nx">arr</span><span class="p">.</span><span class="nx">concat</span><span class="p">(</span><span class="nx">arrayLike</span><span class="p">)</span> <span class="p">);</span> <span class="c1">// 1,2,something,else
+</span></code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="foreach"></a><h3><code>forEach</code></h3>
+<p><code>arr.forEach</code> allows to run a function for every element of the array.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="c1">// for each element call alert
+</span><span class="c1"></span><span class="p">[</span><span class="s2">&#34;Bilbo&#34;</span><span class="p">,</span> <span class="s2">&#34;Gandalf&#34;</span><span class="p">,</span> <span class="s2">&#34;Nazgul&#34;</span><span class="p">].</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">alert</span><span class="p">);</span>
+
+<span class="c1">// Elaborate about their positions in the target array:
+</span><span class="c1"></span>
+<span class="p">[</span><span class="s2">&#34;Bilbo&#34;</span><span class="p">,</span> <span class="s2">&#34;Gandalf&#34;</span><span class="p">,</span> <span class="s2">&#34;Nazgul&#34;</span><span class="p">].</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">item</span><span class="p">,</span> <span class="nx">index</span><span class="p">,</span> <span class="nx">array</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="nx">alert</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">item</span><span class="si">}</span><span class="sb"> is at index </span><span class="si">${</span><span class="nx">index</span><span class="si">}</span><span class="sb"> in </span><span class="si">${</span><span class="nx">array</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>The article was updated on 2021-02-18</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><span></span></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section><span class="tag">
+                        <a href="http://localhost:1313/forgetful/tags/javascript/"><i class="fas fa-tag fa-fw"></i>&nbsp;javascript</a>&nbsp;
+                    </span><span class="tag">
+                        <a href="http://localhost:1313/forgetful/tags/learning/"><i class="fas fa-tag fa-fw"></i>&nbsp;learning</a>&nbsp;
+                    </span></section>
+        <section>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="http://localhost:1313/forgetful/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="http://localhost:1313/forgetful/2020/12/nomachine-setup/" class="prev" rel="prev" title="Nomachine Setup"><i class="fas fa-angle-left fa-fw"></i>Nomachine Setup</a>
+            <a href="http://localhost:1313/forgetful/2021/04/wsl/" class="next" rel="next" title="WSL">WSL<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div class="post-comment"></div>
+    </article></div>
+            </main><footer class="footer">
+    <div class="copyright"><div class="copyright-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
+        </div>
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/Murray-LIANG" target="_blank">Murray-LIANG</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+    </div>
+</footer>
+</div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>
+            <span>&nbsp;</span>
+        </a><script src="/forgetful/js/lib/jquery/jquery.slim.min.js"></script><script src="/forgetful/js/lib/lazysizes/lazysizes.min.js"></script><script src="/forgetful/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script><link rel="stylesheet" href="/forgetful/css/lib/katex/katex.min.css"><script src="/forgetful/js/lib/katex/katex.min.js"></script><script defer src="/forgetful/js/lib/katex/auto-render.min.js"></script><link rel="stylesheet" href="/forgetful/css/lib/katex/copy-tex.min.css"><script defer src="/forgetful/js/lib/katex/copy-tex.min.js"></script><script defer src="/forgetful/js/lib/katex/mhchem.min.js"></script><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },{ left: "$", right: "$", display: false },]
+            });
+        });
+    </script><script src="/forgetful/js/blog.min.js"></script>
+</body>
+</html>

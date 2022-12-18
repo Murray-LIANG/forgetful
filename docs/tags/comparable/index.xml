@@ -2,22 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>comparable on Forgetful :/</title>
-    <link>https://murray-liang.github.io/forgetful/tags/comparable/</link>
+    <link>http://localhost:1313/forgetful/tags/comparable/</link>
     <description>Recent content in comparable on Forgetful :/</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
-    
-	<atom:link href="https://murray-liang.github.io/forgetful/tags/comparable/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate><atom:link href="http://localhost:1313/forgetful/tags/comparable/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Golang Comparable `==`</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/golang-comparable/</link>
+      <link>http://localhost:1313/forgetful/2020/02/golang-comparable/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/golang-comparable/</guid>
+      <guid>http://localhost:1313/forgetful/2020/02/golang-comparable/</guid>
       <description>Golang中的类型   基本类型：整型（int/uint/int8/uint8/int16/uint16/int32/uint32/int64/uint64/byte/rune等）、浮点数（float32/float64）、复数类型（complex64/complex128）、字符串（string）。
   复合类型（又叫聚合类型）：数组和结构体类型。
   引用类型：切片（slice）、map、channel、指针。

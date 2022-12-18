@@ -2,24 +2,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>pinterest on Forgetful :/</title>
-    <link>https://murray-liang.github.io/forgetful/tags/pinterest/</link>
+    <link>http://localhost:1313/forgetful/tags/pinterest/</link>
     <description>Recent content in pinterest on Forgetful :/</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
-    
-	<atom:link href="https://murray-liang.github.io/forgetful/tags/pinterest/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate><atom:link href="http://localhost:1313/forgetful/tags/pinterest/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Sharding Pinterest</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/sharding-pinterest/</link>
+      <link>http://localhost:1313/forgetful/2020/02/sharding-pinterest/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/sharding-pinterest/</guid>
-      <description>Note of https://medium.com/@Pinterest_Engineering/sharding-pinterest-how-we-scaled-our-mysql-fleet-3f341e96ca6f
-Feature Required  Create Pins. Like other Pins. Follow other Pinners. View a home feed of all the Pinners he/she follows. Support asking for N number of Pins in a board in a deterministic order (such as reverse creation time or user specified ordering).  Scale Required 50M Pins have been saved by Pinners onto 1B boards.
+      <guid>http://localhost:1313/forgetful/2020/02/sharding-pinterest/</guid>
+      <description>Note of https://medium.com/@Pinterest_Engineering/sharding-pinterest-how-we-scaled-our-mysql-fleet-3f341e96ca6f Feature Required  Create Pins. Like other Pins. Follow other Pinners. View a home feed of all the Pinners he/she follows. Support asking for N number of Pins in a board in a deterministic order (such as reverse creation time or user specified ordering).  Scale Required 50M Pins have been saved by Pinners onto 1B boards.
 Design Goals  Stable and high available. Low latency. Eventually consistency.</description>
     </item>
     

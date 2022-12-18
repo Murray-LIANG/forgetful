@@ -2,24 +2,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>generic group on Forgetful :/</title>
-    <link>https://murray-liang.github.io/forgetful/tags/generic-group/</link>
+    <link>http://localhost:1313/forgetful/tags/generic-group/</link>
     <description>Recent content in generic group on Forgetful :/</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
-    
-	<atom:link href="https://murray-liang.github.io/forgetful/tags/generic-group/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate><atom:link href="http://localhost:1313/forgetful/tags/generic-group/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>OpenStack Generic Group and Consistent Group</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/openstack-cg/</link>
+      <link>http://localhost:1313/forgetful/2020/02/openstack-cg/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/openstack-cg/</guid>
-      <description>References https://docs.openstack.org/cinder/latest/admin/blockstorage-groups.html https://docs.openstack.org/cinder/latest/contributor/groups.html
-Consistent Group For a group to support consistent group snapshot, the group specs in the corresponding group type should have the following entry:
+      <guid>http://localhost:1313/forgetful/2020/02/openstack-cg/</guid>
+      <description>References https://docs.openstack.org/cinder/latest/admin/blockstorage-groups.html https://docs.openstack.org/cinder/latest/contributor/groups.html Consistent Group For a group to support consistent group snapshot, the group specs in the corresponding group type should have the following entry:
 1  {&amp;#39;consistent_group_snapshot_enabled&amp;#39;: &amp;lt;is&amp;gt; True}   Similarly, for a volume to be in a group that supports consistent group snapshots, the volume type extra specs would also have the following entry:
 1  {&amp;#39;consistent_group_snapshot_enabled&amp;#39;: &amp;lt;is&amp;gt; True}   Cinder Cli Microversion  The minimum microversion to support group type and group specs is 3.</description>
     </item>

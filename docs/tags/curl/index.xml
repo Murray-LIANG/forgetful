@@ -2,22 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>curl on Forgetful :/</title>
-    <link>https://murray-liang.github.io/forgetful/tags/curl/</link>
+    <link>http://localhost:1313/forgetful/tags/curl/</link>
     <description>Recent content in curl on Forgetful :/</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
-    
-	<atom:link href="https://murray-liang.github.io/forgetful/tags/curl/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate><atom:link href="http://localhost:1313/forgetful/tags/curl/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>OpenStack Curl Command Examples</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/openstack-curl-rest-examples/</link>
+      <link>http://localhost:1313/forgetful/2020/02/openstack-curl-rest-examples/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/openstack-curl-rest-examples/</guid>
+      <guid>http://localhost:1313/forgetful/2020/02/openstack-curl-rest-examples/</guid>
       <description>1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27  # create volume curl -g -i \  -X POST http://192.168.77.63/volume/v2/2a97f77210a54665ba9df8a505df6624/volumes \  -H &amp;#34;User-Agent: python-cinderclient&amp;#34; \  -H &amp;#34;Content-Type: application/json&amp;#34; \  -H &amp;#34;Accept: application/json&amp;#34; \  -H &amp;#34;X-Auth-Token: {SHA1}5b729489a9259aae07eb591361c474bdad29e71d&amp;#34; \  -d &amp;#39; {&amp;#34;volume&amp;#34;: {&amp;#34;status&amp;#34;: &amp;#34;creating&amp;#34;, &amp;#34;user_id&amp;#34;: null, &amp;#34;name&amp;#34;: &amp;#34;v-m-3&amp;#34;, &amp;#34;imageRef&amp;#34;: null, &amp;#34;availability_zone&amp;#34;: null, &amp;#34;description&amp;#34;: null, &amp;#34;multiattach&amp;#34;: false, &amp;#34;attach_status&amp;#34;: &amp;#34;detached&amp;#34;, &amp;#34;volume_type&amp;#34;: null, &amp;#34;metadata&amp;#34;: {}, &amp;#34;consistencygroup_id&amp;#34;: null, &amp;#34;source_volid&amp;#34;: null, &amp;#34;snapshot_id&amp;#34;: null, &amp;#34;project_id&amp;#34;: null, &amp;#34;source_replica&amp;#34;: null, &amp;#34;size&amp;#34;: 1 } }&amp;#39;   1 2 3 4 5 6 7 8 9 10 11 12 13 14  # force detach curl -g -i \  -X POST \  http://192.</description>
     </item>
     

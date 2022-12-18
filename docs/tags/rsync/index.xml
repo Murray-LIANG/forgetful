@@ -2,22 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>rsync on Forgetful :/</title>
-    <link>https://murray-liang.github.io/forgetful/tags/rsync/</link>
+    <link>http://localhost:1313/forgetful/tags/rsync/</link>
     <description>Recent content in rsync on Forgetful :/</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
-    
-	<atom:link href="https://murray-liang.github.io/forgetful/tags/rsync/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate><atom:link href="http://localhost:1313/forgetful/tags/rsync/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Raspberrypi Backup Files Using crontab and rsync</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/raspberrypi-crontab-rsync-back/</link>
+      <link>http://localhost:1313/forgetful/2020/02/raspberrypi-crontab-rsync-back/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/raspberrypi-crontab-rsync-back/</guid>
+      <guid>http://localhost:1313/forgetful/2020/02/raspberrypi-crontab-rsync-back/</guid>
       <description>UPDATE: raspberrypi is not used any more. Mount the disks wd_disk is usb connected to the raspberrypi.
 seagate is usb connected to the router, which is exported as a NFS share.
 1 2 3  pi@raspberrypi:/ $ cat /etc/fstab UUID=F474B7AA74B76DCC /mnt/wd_disk ntfs-3g rw,defaults 0 0 192.168.2.1:/mnt/Seagate_Backup_Plus_Drive /mnt/seagate nfs rw,defaults 0 0   Crontab 1 2 3 4  pi@raspberrypi:/mnt/wd_disk/backup $ sudo crontab -e # Run the command at 11:30 PM every Wendsday.</description>

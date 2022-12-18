@@ -2,33 +2,29 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>certificate on Forgetful :/</title>
-    <link>https://murray-liang.github.io/forgetful/tags/certificate/</link>
+    <link>http://localhost:1313/forgetful/tags/certificate/</link>
     <description>Recent content in certificate on Forgetful :/</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
-    
-	<atom:link href="https://murray-liang.github.io/forgetful/tags/certificate/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate><atom:link href="http://localhost:1313/forgetful/tags/certificate/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Create a Self Signed Certificate</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/openssl-certificate/</link>
+      <link>http://localhost:1313/forgetful/2020/02/openssl-certificate/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/openssl-certificate/</guid>
+      <guid>http://localhost:1313/forgetful/2020/02/openssl-certificate/</guid>
       <description>Create root CA (Do this once) Create key for root CA 1 2 3  # Generate the private key for CA, which is used to sign certificates from others. # Remove `-des3` if dont want to protect the key with password. openssl genrsa -des3 -out root_ca.key 4096   Create root CA certificate and self sign it 1 2  openssl req -x509 -new -nodes -key root_ca.key -sha256 -days 1024 -out root_ca.</description>
     </item>
     
     <item>
       <title>Fix the git error on CentOS</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/fix-centos-git-certificate-error/</link>
+      <link>http://localhost:1313/forgetful/2020/02/fix-centos-git-certificate-error/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/fix-centos-git-certificate-error/</guid>
+      <guid>http://localhost:1313/forgetful/2020/02/fix-centos-git-certificate-error/</guid>
       <description>The error is related to corp certificate.
- sudo yum install -y ca-certificates download the emc certificates from: https://eos2git.cec.lab.emc.com/liangr/corp-notes/blob/master/emc_cert/emc_cacert.crt cp emc_cacert.crt /etc/pki/ca-trust/source/anchors/ run command: update-ca-trust extract  </description>
+ sudo yum install -y ca-certificates download the emc certificates from: https://eos2git.cec.lab.emc.com/liangr/corp-notes/blob/master/emc_cert/emc_cacert.crt  cp emc_cacert.crt /etc/pki/ca-trust/source/anchors/ run command: update-ca-trust extract  </description>
     </item>
     
   </channel>

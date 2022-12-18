@@ -43,7 +43,7 @@ The PID of `top` is 3 in the new namespace and 114177 in the regular namespace.
 
 ```console
 ➜  ~/git/cinder git:(850013325) ✗ 
-$ sudo nsenter -t 114063 --pid bash
+$ sudo nsenter -t 114063 -a bash
 ```
 
 ### Cgroups

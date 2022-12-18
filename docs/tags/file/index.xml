@@ -2,22 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>file on Forgetful :/</title>
-    <link>https://murray-liang.github.io/forgetful/tags/file/</link>
+    <link>http://localhost:1313/forgetful/tags/file/</link>
     <description>Recent content in file on Forgetful :/</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
-    
-	<atom:link href="https://murray-liang.github.io/forgetful/tags/file/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate><atom:link href="http://localhost:1313/forgetful/tags/file/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Block Storage and File Storage</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/block-storage-file-storage/</link>
+      <link>http://localhost:1313/forgetful/2020/02/block-storage-file-storage/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/block-storage-file-storage/</guid>
+      <guid>http://localhost:1313/forgetful/2020/02/block-storage-file-storage/</guid>
       <description>Block Storage   tgt framework could be used to implement a tgt server in user space.
   You could customize a new backend store type which could, for example, send the SCSI message in customized format via a socket. Then a user space program listening on the socket could deserialize from customized format and do some additional tasks on the SCSI message like multi-write them to different replicas.</description>
     </item>

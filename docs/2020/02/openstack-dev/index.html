@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
+    <head><script src="/forgetful/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=forgetful/livereload" data-no-instant defer></script>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>OpenStack Dev Tips | Forgetful :/</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noodp" />
-<meta name="Description" content="Notes about everything"><link rel="prev" href="https://murray-liang.github.io/forgetful/2020/02/openstack-devstack/" /><link rel="next" href="https://murray-liang.github.io/forgetful/2020/02/openstack-kolla-ansible/" /><link rel="canonical" href="https://murray-liang.github.io/forgetful/2020/02/openstack-dev/" />
+<meta name="Description" content="Notes about everything"><link rel="prev" href="http://localhost:1313/forgetful/2020/02/openstack-devstack/" /><link rel="next" href="http://localhost:1313/forgetful/2020/02/openstack-kolla-ansible/" /><link rel="canonical" href="http://localhost:1313/forgetful/2020/02/openstack-dev/" />
 <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -14,11 +14,13 @@
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff"><meta property="og:title" content="OpenStack Dev Tips" />
-<meta property="og:description" content="Add release notes 1 2 3 4 5 6  ---fixes:- | Dell EMC Unity Driver: Fixes `bug 1798529&lt;https://bugs.launchpad.net/cinder/&#43;bug/1798529&gt;`__toaddanoptionforforcedeletingthesnapshotevenifitisattachedtohosts.  " />
+<meta property="og:description" content="Add release notes 1 2 3 4 5 6  ---fixes:- |Dell EMC Unity Driver: Fixes `bug 1798529 &lt;https://bugs.launchpad.net/cinder/&#43;bug/1798529&gt;`_ to add an option for force deleting the snapshot even if it is attached to hosts.  Check storops version 1 2  import pkg_resources pkg_resources.get_distribution(&#34;storops&#34;).version   Or
+1  $ python -c &#34;import pkg_resources; print(pkg_resources.get_distribution(&#39;storops&#39;).version)&#34;   " />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://murray-liang.github.io/forgetful/2020/02/openstack-dev/" />
+<meta property="og:url" content="http://localhost:1313/forgetful/2020/02/openstack-dev/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2020-02-10T16:37:31+08:00" />
 <meta property="article:modified_time" content="2020-02-10T16:37:31+08:00" />
+
 <script type="application/ld+json">
     {
         "@context": "http://schema.org",
@@ -26,19 +28,19 @@
         "headline": "OpenStack Dev Tips",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/murray-liang.github.io\/forgetful\/2020\/02\/openstack-dev\/"
+            "@id": "http:\/\/localhost:1313\/forgetful\/2020\/02\/openstack-dev\/"
         },"image": {
                 "@type": "ImageObject",
-                "url": "https:\/\/murray-liang.github.io\/forgetful\/cover.png",
+                "url": "http:\/\/localhost:1313\/forgetful\/cover.png",
                 "width":  800 ,
                 "height":  600 
-            },"genre": "posts","keywords": "openstack, dev, tips","wordcount":  18 ,
-        "url": "https:\/\/murray-liang.github.io\/forgetful\/2020\/02\/openstack-dev\/","datePublished": "2020-02-10T16:37:31\x2b08:00","dateModified": "2020-02-10T16:37:31\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            },"genre": "posts","keywords": "openstack, dev, tips","wordcount":  50 ,
+        "url": "http:\/\/localhost:1313\/forgetful\/2020\/02\/openstack-dev\/","datePublished": "2020-02-10T16:37:31\u002b08:00","dateModified": "2020-02-10T16:37:31\u002b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "murray",
                 "logo": {
                 "@type": "ImageObject",
-                "url": "https:\/\/murray-liang.github.io\/forgetful\/logo.png",
+                "url": "http:\/\/localhost:1313\/forgetful\/logo.png",
                 "width":  127 ,
                 "height":  40 
                 }
@@ -55,22 +57,22 @@
         </script><div class="wrapper"><nav class="navbar">
     <div class="navbar-container">
         <div class="navbar-header animated bounceIn">
-            <a href="https://murray-liang.github.io/forgetful">Forgetful :/</a>
+            <a href="http://localhost:1313/forgetful/">Forgetful :/</a>
         </div>
-        <div class="navbar-menu"><a class="menu-item" href="https://murray-liang.github.io/forgetful/posts" title="">Posts</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/tags" title="">Tags</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/categories" title="">Categories</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"><i class="fas fa-language fa-fw"></i></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        <div class="navbar-menu"><a class="menu-item" href="http://localhost:1313/forgetful/posts" title="">Posts</a><a class="menu-item" href="http://localhost:1313/forgetful/tags" title="">Tags</a><a class="menu-item" href="http://localhost:1313/forgetful/categories" title="">Categories</a><a class="menu-item" href="http://localhost:1313/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"><i class="fas fa-language fa-fw"></i></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
         </div>
     </div>
 </nav><nav class="navbar-mobile">
     <div class="navbar-container">
         <div class="navbar-header">
             <div class="navbar-header-title animated bounceIn">
-                <a href="https://murray-liang.github.io/forgetful">Forgetful :/</a>
+                <a href="http://localhost:1313/forgetful/">Forgetful :/</a>
             </div>
             <div class="menu-toggle" id="menu-toggle">
                 <span></span><span></span><span></span>
             </div>
         </div>
-        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://murray-liang.github.io/forgetful/posts" title="">Posts</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/tags" title="">Tags</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/categories" title="">Categories</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="http://localhost:1313/forgetful/posts" title="">Posts</a><a class="menu-item" href="http://localhost:1313/forgetful/tags" title="">Tags</a><a class="menu-item" href="http://localhost:1313/forgetful/categories" title="">Categories</a><a class="menu-item" href="http://localhost:1313/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
         </div>
     </div>
 </nav>
@@ -80,13 +82,14 @@
                     <i class="fas fa-user-circle fa-fw"></i>Murray-LIANG
                 </a>&nbsp;</div>
             <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-02-10>2020-02-10</time>&nbsp;
-                <i class="fas fa-pencil-alt fa-fw"></i>about 18 words&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 50 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>1 min&nbsp;</div>
         </div><div class="post-toc" id="post-toc">
                 <h2 class="post-toc-title">Contents</h2>
                 <div class="post-toc-content"><nav id="TableOfContents">
   <ul>
     <li><a href="#add-release-notes">Add release notes</a></li>
+    <li><a href="#check-storops-version">Check storops version</a></li>
   </ul>
 </nav></div>
             </div>
@@ -101,13 +104,14 @@
                     <div class="post-toc-content"><nav id="TableOfContentsMobile">
   <ul>
     <li><a href="#add-release-notes">Add release notes</a></li>
+    <li><a href="#check-storops-version">Check storops version</a></li>
   </ul>
 </nav></div>
                 </details>
             </div><div class="post-content"><a class="post-dummy-target" id="add-release-notes"></a><h2>Add release notes</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -115,13 +119,33 @@
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-yaml" data-lang="yaml">---<span class="w">
-</span><span class="w"></span><span class="k">fixes</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- <span class="sd">|
-</span><span class="sd">    Dell EMC Unity Driver: Fixes `bug 1798529</span><span class="w">
-</span><span class="w">    </span>&lt;https<span class="p">:</span>//bugs.launchpad.net/cinder/+bug/<span class="m">1798529</span>&gt;`__<span class="w"> </span>to<span class="w"> </span>add<span class="w"> </span>an<span class="w"> </span>option<span class="w"> </span>for<span class="w">
-</span><span class="w">    </span>force<span class="w"> </span>deleting<span class="w"> </span>the<span class="w"> </span>snapshot<span class="w"> </span>even<span class="w"> </span>if<span class="w"> </span>it<span class="w"> </span>is<span class="w"> </span>attached<span class="w"> </span>to<span class="w"> </span>hosts.<span class="w">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nn">---</span><span class="w">
+</span><span class="w"></span><span class="nt">fixes</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="p">|</span><span class="sd">
+</span><span class="sd">    Dell EMC Unity Driver: Fixes `bug 1798529
+</span><span class="sd">    &lt;https://bugs.launchpad.net/cinder/+bug/1798529&gt;`_ to add an option for
+</span><span class="sd">    force deleting the snapshot even if it is attached to hosts.</span><span class="w">    
 </span></code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="check-storops-version"></a><h2>Check storops version</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">pkg_resources</span>
+<span class="n">pkg_resources</span><span class="o">.</span><span class="n">get_distribution</span><span class="p">(</span><span class="s2">&#34;storops&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">version</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Or</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="gp">$ </span>python -c <span class="s2">&#34;import pkg_resources; print(pkg_resources.get_distribution(&#39;storops&#39;).version)&#34;</span>
+</code></pre></td></tr></table>
 </div>
 </div></div><div class="post-footer" id="post-footer">
     <div class="post-info">
@@ -139,19 +163,19 @@
 
     <div class="post-info-more">
         <section><span class="tag">
-                        <a href="https://murray-liang.github.io/forgetful/tags/openstack/"><i class="fas fa-tag fa-fw"></i>&nbsp;openstack</a>&nbsp;
+                        <a href="http://localhost:1313/forgetful/tags/openstack/"><i class="fas fa-tag fa-fw"></i>&nbsp;openstack</a>&nbsp;
                     </span><span class="tag">
-                        <a href="https://murray-liang.github.io/forgetful/tags/dev/"><i class="fas fa-tag fa-fw"></i>&nbsp;dev</a>&nbsp;
+                        <a href="http://localhost:1313/forgetful/tags/dev/"><i class="fas fa-tag fa-fw"></i>&nbsp;dev</a>&nbsp;
                     </span><span class="tag">
-                        <a href="https://murray-liang.github.io/forgetful/tags/tips/"><i class="fas fa-tag fa-fw"></i>&nbsp;tips</a>&nbsp;
+                        <a href="http://localhost:1313/forgetful/tags/tips/"><i class="fas fa-tag fa-fw"></i>&nbsp;tips</a>&nbsp;
                     </span></section>
         <section>
-            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://murray-liang.github.io/forgetful">Home</a></span>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="http://localhost:1313/forgetful/">Home</a></span>
         </section>
     </div>
 
-    <div class="post-nav"><a href="https://murray-liang.github.io/forgetful/2020/02/openstack-devstack/" class="prev" rel="prev" title="OpenStack Devstack Tips"><i class="fas fa-angle-left fa-fw"></i>OpenStack Devstack Tips</a>
-            <a href="https://murray-liang.github.io/forgetful/2020/02/openstack-kolla-ansible/" class="next" rel="next" title="OpenStack Deployment using Kolla Ansible">OpenStack Deployment using Kolla Ansible<i class="fas fa-angle-right fa-fw"></i></a></div>
+    <div class="post-nav"><a href="http://localhost:1313/forgetful/2020/02/openstack-devstack/" class="prev" rel="prev" title="OpenStack Devstack Tips"><i class="fas fa-angle-left fa-fw"></i>OpenStack Devstack Tips</a>
+            <a href="http://localhost:1313/forgetful/2020/02/openstack-kolla-ansible/" class="next" rel="next" title="OpenStack Deployment using Kolla Ansible">OpenStack Deployment using Kolla Ansible<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 <div class="post-comment"></div>
     </article></div>
@@ -159,7 +183,7 @@
     <div class="copyright"><div class="copyright-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
         </div>
 
-        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/Murray-LIANG" target="_blank">Murray-LIANG</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/Murray-LIANG" target="_blank">Murray-LIANG</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
     </div>
 </footer>
 </div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>

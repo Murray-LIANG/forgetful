@@ -2,22 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>golang on Forgetful :/</title>
-    <link>https://murray-liang.github.io/forgetful/tags/golang/</link>
+    <link>http://localhost:1313/forgetful/tags/golang/</link>
     <description>Recent content in golang on Forgetful :/</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
-    
-	<atom:link href="https://murray-liang.github.io/forgetful/tags/golang/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate><atom:link href="http://localhost:1313/forgetful/tags/golang/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Golang Comparable `==`</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/golang-comparable/</link>
+      <link>http://localhost:1313/forgetful/2020/02/golang-comparable/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/golang-comparable/</guid>
+      <guid>http://localhost:1313/forgetful/2020/02/golang-comparable/</guid>
       <description>Golang中的类型   基本类型：整型（int/uint/int8/uint8/int16/uint16/int32/uint32/int64/uint64/byte/rune等）、浮点数（float32/float64）、复数类型（complex64/complex128）、字符串（string）。
   复合类型（又叫聚合类型）：数组和结构体类型。
   引用类型：切片（slice）、map、channel、指针。
@@ -32,10 +28,10 @@
     
     <item>
       <title>Golang init</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/golang-init/</link>
+      <link>http://localhost:1313/forgetful/2020/02/golang-init/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/golang-init/</guid>
+      <guid>http://localhost:1313/forgetful/2020/02/golang-init/</guid>
       <description>Initializing Packages on Import 1 2 3  func init() { rand.Seed(time.Now().UnixNano()) }   Above init codes ensure the initialization are performed prior to the package being used.
 Multiple Instances of init() The init() function can be declared multiple times throughout a package.
 In most cases, init() functions will execute in the order that you encounter them.
@@ -44,10 +40,10 @@ You can put init() in several files. They will be compiled in the alphabetical o
     
     <item>
       <title>Golang Interview Questions</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/golang-interview-questions/</link>
+      <link>http://localhost:1313/forgetful/2020/02/golang-interview-questions/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/golang-interview-questions/</guid>
+      <guid>http://localhost:1313/forgetful/2020/02/golang-interview-questions/</guid>
       <description>Explain what is go routine in GO? How you can stop go routine? A goroutine is a function which is capable of running concurrently with other functions.
 To stop goroutine, you pass the goroutine a signal channel, that signal channel is used to push a value into when you want the goroutine to stop. The goroutine polls that channel regularly as soon as it detects a signal, it quits.
 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17  Quit := make(chan bool) go func() { for { select { case &amp;lt;- quit: return default // do other stuff  } } }() // Do stuff  // Quit goroutine Quit &amp;lt;- true   Why would you prefer to use an empty struct{}?</description>
@@ -55,10 +51,10 @@ To stop goroutine, you pass the goroutine a signal channel, that signal channel 
     
     <item>
       <title>Golang Panic and Recover</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/golang-panic-recover/</link>
+      <link>http://localhost:1313/forgetful/2020/02/golang-panic-recover/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/golang-panic-recover/</guid>
+      <guid>http://localhost:1313/forgetful/2020/02/golang-panic-recover/</guid>
       <description>Panic Panics are similar to C++ and Java exceptions, but are only intended for run-time errors, such as following a nil pointer or attempting to index an array out of bounds.
 A panic stops the normal execution of a goroutine:
  When a program panics, it immediately starts to unwind the call stack. This continues until the program crashes and prints a stack trace, or until the built-in recover function is called.</description>
@@ -66,43 +62,41 @@ A panic stops the normal execution of a goroutine:
     
     <item>
       <title>Golang Stack Traces</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/golang-stack-traces/</link>
+      <link>http://localhost:1313/forgetful/2020/02/golang-stack-traces/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/golang-stack-traces/</guid>
-      <description>https://www.ardanlabs.com/blog/2015/01/stack-traces-in-go.html
-1 2 3 4 5 6 7 8 9 10  package main func main() { slice := make([]string, 2, 4) Example(slice, &amp;#34;hello&amp;#34;, 10) } func Example(slice []string, str string, i int) { panic(&amp;#34;Want stack trace&amp;#34;) }   You will get a stack track like this:
+      <guid>http://localhost:1313/forgetful/2020/02/golang-stack-traces/</guid>
+      <description>https://www.ardanlabs.com/blog/2015/01/stack-traces-in-go.html 1 2 3 4 5 6 7 8 9 10  package main func main() { slice := make([]string, 2, 4) Example(slice, &amp;#34;hello&amp;#34;, 10) } func Example(slice []string, str string, i int) { panic(&amp;#34;Want stack trace&amp;#34;) }   You will get a stack track like this:
 1 2 3 4 5 6 7  01 goroutine 1 [running]: 02 main.Example(0x2080c3f50, 0x2, 0x4, 0x425c0, 0x5, 0xa) /Users/bill/Spaces/Go/Projects/src/github.com/goinaction/code/ temp/main.go:9 +0x64 03 main.</description>
     </item>
     
     <item>
       <title>Golang Summer of Code</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/golang-soc/</link>
+      <link>http://localhost:1313/forgetful/2020/02/golang-soc/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/golang-soc/</guid>
+      <guid>http://localhost:1313/forgetful/2020/02/golang-soc/</guid>
       <description>Week 1 1. N-Way Merge Sort Given a int64 array with 16M unsorted numbers, use multiple goroutine to sort this array. Your implementation should be faster that the Quick Sort in single thread.
 Check list:
- Pass unit tests. Pass test cases. Analysis the bottle-neck via Go Profile.  Week 2 1. Read MIT MapReduce Courseand Complete Excercise. 2. Report 10 Most Frequent URLs from A Huge Set of URLs Given a file containing a huge set of URLs, use MapReduce and Shuffle to get the 10 most frequent URLs and their frequency.</description>
+ Pass unit tests. Pass test cases. Analysis the bottle-neck via Go Profile.  Week 2 1. Read MIT MapReduce Course and Complete Excercise. 2. Report 10 Most Frequent URLs from A Huge Set of URLs Given a file containing a huge set of URLs, use MapReduce and Shuffle to get the 10 most frequent URLs and their frequency.</description>
     </item>
     
     <item>
       <title>Golang Tips</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/golang-tips/</link>
+      <link>http://localhost:1313/forgetful/2020/02/golang-tips/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/golang-tips/</guid>
-      <description>Some Tips of Golang Context https://siadat.github.io/post/context
-Context package was initially designed to implement:
+      <guid>http://localhost:1313/forgetful/2020/02/golang-tips/</guid>
+      <description>Some Tips of Golang Context https://siadat.github.io/post/context Context package was initially designed to implement:
  Request cancellation Deadline  Instead of forcing a function to stop, the caller should inform it that its work is no longer needed. Caller sends the information about cancellation and let the function decide how to deal with it. For example, a function could clean up and return early when it is informed that its work is no longer needed.</description>
     </item>
     
     <item>
       <title>Goroutines</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/golang-goroutine/</link>
+      <link>http://localhost:1313/forgetful/2020/02/golang-goroutine/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/golang-goroutine/</guid>
+      <guid>http://localhost:1313/forgetful/2020/02/golang-goroutine/</guid>
       <description>Goroutines are a way of doing tasks concurrently in golang. They allow us to create and run multiple methods or functions concurrently in the same address space inexpensively.
 Goroutines are lightweight abstractions over threads because their creation and destruction are very cheap as compared to threads, and they are scheduled over OS threads.
 Goroutines vs. Threads Goroutines are NOT any faster than threads.
@@ -111,10 +105,10 @@ Memory consumption The creation of Goroutines require much less memory as compar
     
     <item>
       <title>Non-Blocking IO in Go</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/golang-non-blocking-io/</link>
+      <link>http://localhost:1313/forgetful/2020/02/golang-non-blocking-io/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/golang-non-blocking-io/</guid>
+      <guid>http://localhost:1313/forgetful/2020/02/golang-non-blocking-io/</guid>
       <description>If you are using Go you are probably using non-blocking IO.
 What is non-blocking IO? A simple explanation: It allows you to read() and write() to a file descriptor (that is, any type of open file be it a socket, pipe, a file on disk, whatever) without having these calls block just because the file is not ready.
 It&amp;rsquo;s just something like this:

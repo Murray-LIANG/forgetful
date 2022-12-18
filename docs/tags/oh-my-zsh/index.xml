@@ -2,22 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>oh my zsh on Forgetful :/</title>
-    <link>https://murray-liang.github.io/forgetful/tags/oh-my-zsh/</link>
+    <link>http://localhost:1313/forgetful/tags/oh-my-zsh/</link>
     <description>Recent content in oh my zsh on Forgetful :/</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
-    
-	<atom:link href="https://murray-liang.github.io/forgetful/tags/oh-my-zsh/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate><atom:link href="http://localhost:1313/forgetful/tags/oh-my-zsh/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Oh My Zsh Tips</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/oh-my-zsh-tips/</link>
+      <link>http://localhost:1313/forgetful/2020/02/oh-my-zsh-tips/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/oh-my-zsh-tips/</guid>
+      <guid>http://localhost:1313/forgetful/2020/02/oh-my-zsh-tips/</guid>
       <description>Installation  sudo apt install -y zsh sh -c &amp;quot;$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)&amp;quot; git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions  Customized Configuration  In ~/.zshrc, set ZSH_THEME to robbyrussell. Modify plugins to: 1 2 3 4  plugins=( git zsh-autosuggestions )    Append below lines to ~/.zshrc. 1 2 3 4 5 6 7 8 9 10  export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE=&amp;#39;fg=10&amp;#39; export GOPATH=~/git/go export PATH=$PATH:$GOPATH/bin:/snap/bin # Jupyter notebook alias inote=&amp;#39;cd /mnt/hgfs/liangr-win10/git/ipython &amp;amp;&amp;amp; \ nohup /home/liangr/git/ml/venv/py36/bin/jupyter notebook \ --ip 0.</description>
     </item>
     

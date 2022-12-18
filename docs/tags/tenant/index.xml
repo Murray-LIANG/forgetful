@@ -2,24 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>tenant on Forgetful :/</title>
-    <link>https://murray-liang.github.io/forgetful/tags/tenant/</link>
+    <link>http://localhost:1313/forgetful/tags/tenant/</link>
     <description>Recent content in tenant on Forgetful :/</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
-    
-	<atom:link href="https://murray-liang.github.io/forgetful/tags/tenant/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate><atom:link href="http://localhost:1313/forgetful/tags/tenant/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>OpenStack Setup Tenant</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/openstack-setup-tenant/</link>
+      <link>http://localhost:1313/forgetful/2020/02/openstack-setup-tenant/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/openstack-setup-tenant/</guid>
+      <guid>http://localhost:1313/forgetful/2020/02/openstack-setup-tenant/</guid>
       <description>Prerequisites  Have the account to the OpenStack env.  Steps Login to the OpenStack GUI. Open 192.168.1.254 in Chrome or other web browser.
-[Do for the first time] Setup the Networks  Navigate Project -&amp;gt; Network -&amp;gt; Networks, click Create Network. Input the network name and create a Subnet. Suggest using private subnets like: 172.16.*.* to 172.30.*.*. Input the DNS servers.  Navigate Project -&amp;gt; Network -&amp;gt; Routers, click Create Router.</description>
+[Do for the first time] Setup the Networks  Navigate Project -&amp;gt; Network -&amp;gt; Networks, click Create Network. Input the network name and create a Subnet. Suggest using private subnets like: 172.16.*.* to 172.30.*.*. Input the DNS servers.     Navigate Project -&amp;gt; Network -&amp;gt; Routers, click Create Router.</description>
     </item>
     
   </channel>

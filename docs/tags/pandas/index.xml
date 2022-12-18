@@ -2,22 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>pandas on Forgetful :/</title>
-    <link>https://murray-liang.github.io/forgetful/tags/pandas/</link>
+    <link>http://localhost:1313/forgetful/tags/pandas/</link>
     <description>Recent content in pandas on Forgetful :/</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
-    
-	<atom:link href="https://murray-liang.github.io/forgetful/tags/pandas/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate><atom:link href="http://localhost:1313/forgetful/tags/pandas/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Pip Download and Install Pandas</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/pip-download-install-pandas/</link>
+      <link>http://localhost:1313/forgetful/2020/02/pip-download-install-pandas/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/pip-download-install-pandas/</guid>
+      <guid>http://localhost:1313/forgetful/2020/02/pip-download-install-pandas/</guid>
       <description>Pip Download and Install 1 2 3 4 5 6  $ # Download $ pip download --platform win_amd64 --only-binary=:all: --python-version 37 --implementation cp --abi cp37m pandas $ # Install $ pip install --no-index --find-links=. pandas   </description>
     </item>
     

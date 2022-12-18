@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>observer on Forgetful :/</title>
+    <link>http://localhost:1313/forgetful/tags/observer/</link>
+    <description>Recent content in observer on Forgetful :/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Tue, 01 Dec 2020 11:21:10 +0800</lastBuildDate><atom:link href="http://localhost:1313/forgetful/tags/observer/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Reactive Programming, RX and RxJava</title>
+      <link>http://localhost:1313/forgetful/2020/12/reactive-programming-rxjava/</link>
+      <pubDate>Tue, 01 Dec 2020 11:21:10 +0800</pubDate>
+      
+      <guid>http://localhost:1313/forgetful/2020/12/reactive-programming-rxjava/</guid>
+      <description>Reactive programming Reactive means acting in response to a situation rather than creating or controlling it: reacting to it. Reactive programming is actually similar to this definition, meaning writing code that reacts to changes.
+It’s actually a way of coding with asynchronous data streams that will make it easier for us to code apps and interfaces that respond dynamically to changes in data. Meaning that whenever we have changes in the data, our app will respond reactively to those changes.</description>
+    </item>
+    
+  </channel>
+</rss>

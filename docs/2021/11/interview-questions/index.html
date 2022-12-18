@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head><script src="/forgetful/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=forgetful/livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Interview Questions | Forgetful :/</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="Notes about everything"><link rel="prev" href="http://localhost:1313/forgetful/2021/04/wsl/" /><link rel="next" href="http://localhost:1313/forgetful/2021/11/pacemaker-tutorial/" /><link rel="canonical" href="http://localhost:1313/forgetful/2021/11/interview-questions/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff"><meta property="og:title" content="Interview Questions" />
+<meta property="og:description" content=" 自我介绍 简单介绍项目 经常使用的数据结构有哪些，他们有什么区别，在要用的时候会怎么选 看项目，使用了REST和gRPC，这两个都是API，在使用过程中有什么相同和不同，什么时候用 哪一个 protobuffer和JSON的用处和不同 有没有贡献过社区项目，使用git的话，一般是个什么样的步骤 有没有接触过异步编程，简单说说 比较私人的问题，可以选择不回答，为什么从美国回国找工作  数据结构  数组与链表 排序，及其复杂度  插入：稳定，平均/最差时间复杂度 O(n²)，元素基本有序时最好时间复杂度 O(n)，空间复杂度 O(1)。 希尔：不稳定，平均时间复杂度 O(n^1.3^)，最差时间复杂度 O(n²)，最好时间复杂度 O(n)，空间复杂度 O(1)。 堆：不稳定，时间复杂度 O(nlogn)，空间复杂度 O(1)。 冒泡：稳定，平均/最坏时间复杂度 O(n²)，元素基本有序时最好时间复杂度 O(n)，空间复杂度 O(1)。 快排：不稳定，平均/最好时间复杂度 O(nlogn)，元素基本有序时最坏时间复杂度 O(n²)，空间复杂度 O(logn)。 合并：任何情况时间复杂度都为 O(nlogn)，空间复杂度为 O(n)。   heap/堆如何进行插入和删除的 树，树的遍历  Linux linux interview questions 计算机网络 https://www.eet-china.com/mp/a68780.html  计算机网络体系结构 TCP vs UDP，TCP如何保证可靠性   " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/forgetful/2021/11/interview-questions/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-11-12T16:41:13+08:00" />
+<meta property="article:modified_time" content="2021-11-12T16:41:20+08:00" />
+
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Interview Questions",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/localhost:1313\/forgetful\/2021\/11\/interview-questions\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "http:\/\/localhost:1313\/forgetful\/cover.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "posts","keywords": "interview questions","wordcount":  47 ,
+        "url": "http:\/\/localhost:1313\/forgetful\/2021\/11\/interview-questions\/","datePublished": "2021-11-12T16:41:13\u002b08:00","dateModified": "2021-11-12T16:41:20\u002b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "murray",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "http:\/\/localhost:1313\/forgetful\/logo.png",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": ""
+    }
+    </script><link rel="stylesheet" href="/forgetful/css/style.min.css"><link rel="stylesheet" href="/forgetful/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/forgetful/css/lib/forkawesome/forkawesome.min.css"><link rel="stylesheet" href="/forgetful/css/lib/animate/animate.min.css"></head>
+    <body><script>
+            if (!window.localStorage || !window.localStorage.getItem('theme')) {
+                window.isDark = 'dark' === 'dark';
+            } else {
+                window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            }
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header animated bounceIn">
+            <a href="http://localhost:1313/forgetful/">Forgetful :/</a>
+        </div>
+        <div class="navbar-menu"><a class="menu-item" href="http://localhost:1313/forgetful/posts" title="">Posts</a><a class="menu-item" href="http://localhost:1313/forgetful/tags" title="">Tags</a><a class="menu-item" href="http://localhost:1313/forgetful/categories" title="">Categories</a><a class="menu-item" href="http://localhost:1313/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"><i class="fas fa-language fa-fw"></i></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav><nav class="navbar-mobile">
+    <div class="navbar-container">
+        <div class="navbar-header">
+            <div class="navbar-header-title animated bounceIn">
+                <a href="http://localhost:1313/forgetful/">Forgetful :/</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="http://localhost:1313/forgetful/posts" title="">Posts</a><a class="menu-item" href="http://localhost:1313/forgetful/tags" title="">Tags</a><a class="menu-item" href="http://localhost:1313/forgetful/categories" title="">Categories</a><a class="menu-item" href="http://localhost:1313/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav>
+<main class="main">
+                <div class="container"><article class="page"><h1 class="post-title animated flipInX">Interview Questions</h1><div class="post-meta">
+            <div class="post-meta-main"><a class="author" href="https://github.com/Murray-LIANG" rel="author" target="_blank">
+                    <i class="fas fa-user-circle fa-fw"></i>Murray-LIANG
+                </a>&nbsp;</div>
+            <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2021-11-12>2021-11-12</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 47 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>1 min&nbsp;</div>
+        </div><div class="post-toc" id="post-toc">
+                <h2 class="post-toc-title">Contents</h2>
+                <div class="post-toc-content"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#数据结构">数据结构</a></li>
+    <li><a href="#linux">Linux</a></li>
+    <li><a href="#计算机网络">计算机网络</a></li>
+  </ul>
+</nav></div>
+            </div>
+            <div class="post-toc-mobile" id="post-toc-mobile">
+                <details>
+                    <summary>
+                        <div class="post-toc-title">
+                            <span>Contents</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="post-toc-content"><nav id="TableOfContentsMobile">
+  <ul>
+    <li><a href="#数据结构">数据结构</a></li>
+    <li><a href="#linux">Linux</a></li>
+    <li><a href="#计算机网络">计算机网络</a></li>
+  </ul>
+</nav></div>
+                </details>
+            </div><div class="post-content"><ul>
+<li>自我介绍</li>
+<li>简单介绍项目</li>
+<li>经常使用的数据结构有哪些，他们有什么区别，在要用的时候会怎么选</li>
+<li>看项目，使用了REST和gRPC，这两个都是API，在使用过程中有什么相同和不同，什么时候用
+哪一个</li>
+<li>protobuffer和JSON的用处和不同</li>
+<li>有没有贡献过社区项目，使用git的话，一般是个什么样的步骤</li>
+<li>有没有接触过异步编程，简单说说</li>
+<li>比较私人的问题，可以选择不回答，为什么从美国回国找工作</li>
+</ul>
+<a class="post-dummy-target" id="数据结构"></a><h2>数据结构</h2>
+<ul>
+<li>数组与链表</li>
+<li>排序，及其复杂度
+<ul>
+<li>插入：稳定，平均/最差时间复杂度 O(n²)，元素基本有序时最好时间复杂度 O(n)，空间复杂度 O(1)。</li>
+<li>希尔：不稳定，平均时间复杂度 O(n^1.3^)，最差时间复杂度 O(n²)，最好时间复杂度 O(n)，空间复杂度 O(1)。</li>
+<li>堆：不稳定，时间复杂度 O(nlogn)，空间复杂度 O(1)。</li>
+<li>冒泡：稳定，平均/最坏时间复杂度 O(n²)，元素基本有序时最好时间复杂度 O(n)，空间复杂度 O(1)。</li>
+<li>快排：不稳定，平均/最好时间复杂度 O(nlogn)，元素基本有序时最坏时间复杂度 O(n²)，空间复杂度 O(logn)。</li>
+<li>合并：任何情况时间复杂度都为 O(nlogn)，空间复杂度为 O(n)。</li>
+</ul>
+</li>
+<li>heap/堆如何进行插入和删除的</li>
+<li>树，树的遍历</li>
+</ul>
+<a class="post-dummy-target" id="linux"></a><h2>Linux</h2>
+<p><a href="linux-interview-questions.md">linux interview questions</a>
+</p>
+<a class="post-dummy-target" id="计算机网络"></a><h2>计算机网络</h2>
+<p><a href="https://www.eet-china.com/mp/a68780.html" target="_blank">https://www.eet-china.com/mp/a68780.html</a>
+</p>
+<ul>
+<li>计算机网络体系结构</li>
+<li>TCP vs UDP，TCP如何保证可靠性</li>
+<li></li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>The article was updated on 2021-11-12</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><span></span></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section><span class="tag">
+                        <a href="http://localhost:1313/forgetful/tags/interview-questions/"><i class="fas fa-tag fa-fw"></i>&nbsp;interview questions</a>&nbsp;
+                    </span></section>
+        <section>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="http://localhost:1313/forgetful/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="http://localhost:1313/forgetful/2021/04/wsl/" class="prev" rel="prev" title="WSL"><i class="fas fa-angle-left fa-fw"></i>WSL</a>
+            <a href="http://localhost:1313/forgetful/2021/11/pacemaker-tutorial/" class="next" rel="next" title="Pacemaker Tutorial">Pacemaker Tutorial<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div class="post-comment"></div>
+    </article></div>
+            </main><footer class="footer">
+    <div class="copyright"><div class="copyright-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
+        </div>
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/Murray-LIANG" target="_blank">Murray-LIANG</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+    </div>
+</footer>
+</div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>
+            <span>&nbsp;</span>
+        </a><script src="/forgetful/js/lib/jquery/jquery.slim.min.js"></script><script src="/forgetful/js/lib/lazysizes/lazysizes.min.js"></script><script src="/forgetful/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script><link rel="stylesheet" href="/forgetful/css/lib/katex/katex.min.css"><script src="/forgetful/js/lib/katex/katex.min.js"></script><script defer src="/forgetful/js/lib/katex/auto-render.min.js"></script><link rel="stylesheet" href="/forgetful/css/lib/katex/copy-tex.min.css"><script defer src="/forgetful/js/lib/katex/copy-tex.min.js"></script><script defer src="/forgetful/js/lib/katex/mhchem.min.js"></script><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },{ left: "$", right: "$", display: false },]
+            });
+        });
+    </script><script src="/forgetful/js/blog.min.js"></script>
+</body>
+</html>

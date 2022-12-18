@@ -2,22 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>pause container on Forgetful :/</title>
-    <link>https://murray-liang.github.io/forgetful/tags/pause-container/</link>
+    <link>http://localhost:1313/forgetful/tags/pause-container/</link>
     <description>Recent content in pause container on Forgetful :/</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate>
-    
-	<atom:link href="https://murray-liang.github.io/forgetful/tags/pause-container/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 10 Feb 2020 16:37:31 +0800</lastBuildDate><atom:link href="http://localhost:1313/forgetful/tags/pause-container/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Kubernetes What is Pause Container</title>
-      <link>https://murray-liang.github.io/forgetful/2020/02/kubernetes-what-is-pause-container/</link>
+      <link>http://localhost:1313/forgetful/2020/02/kubernetes-what-is-pause-container/</link>
       <pubDate>Mon, 10 Feb 2020 16:37:31 +0800</pubDate>
       
-      <guid>https://murray-liang.github.io/forgetful/2020/02/kubernetes-what-is-pause-container/</guid>
+      <guid>http://localhost:1313/forgetful/2020/02/kubernetes-what-is-pause-container/</guid>
       <description>Why We Need Pods Docker supports containers, which are great for deploying single units of software. However, this model can become a bit cumbersome when you want to run multiple pieces of software together. You often see this when developers create Docker images that use supervisord as an entrypoint to start and manage multiple processes. For production systems, many have found that it is instead more useful to deploy those applications in groups of containers that are partially isolated and partially share on environment.</description>
     </item>
     

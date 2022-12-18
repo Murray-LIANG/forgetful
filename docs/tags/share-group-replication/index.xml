@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>share group replication on Forgetful :/</title>
+    <link>http://localhost:1313/forgetful/tags/share-group-replication/</link>
+    <description>Recent content in share group replication on Forgetful :/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Tue, 23 Jun 2020 15:45:28 +0800</lastBuildDate><atom:link href="http://localhost:1313/forgetful/tags/share-group-replication/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>OpenStack Manila Share Group Replication Dev Tips</title>
+      <link>http://localhost:1313/forgetful/2020/06/openstack-manila-share-group-replication-dev-tips/</link>
+      <pubDate>Tue, 23 Jun 2020 15:45:28 +0800</pubDate>
+      
+      <guid>http://localhost:1313/forgetful/2020/06/openstack-manila-share-group-replication-dev-tips/</guid>
+      <description>When Share Group Replication Creation Succeed    Share
+Replication
+Type create_replica
+/delete_replica
+Implemented Group
+Replication
+Type create_share
+_group_replica
+Implemented Succeed in share group replication creation Note     write/read/dr/None yes/no None yes or no no, raise error from share_group/api.    write/read/dr/None yes/no write/read/dr yes yes    write/read/dr yes write/read/dr no yes, the default implementation is creating replicas for shares in the group.</description>
+    </item>
+    
+  </channel>
+</rss>

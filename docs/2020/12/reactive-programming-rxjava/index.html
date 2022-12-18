@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head><script src="/forgetful/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=forgetful/livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Reactive Programming, RX and RxJava | Forgetful :/</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="Notes about everything"><link rel="prev" href="http://localhost:1313/forgetful/2020/11/python-async-programming/" /><link rel="next" href="http://localhost:1313/forgetful/2020/12/nomachine-setup/" /><link rel="canonical" href="http://localhost:1313/forgetful/2020/12/reactive-programming-rxjava/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff"><meta property="og:title" content="Reactive Programming, RX and RxJava" />
+<meta property="og:description" content="Reactive programming Reactive means acting in response to a situation rather than creating or controlling it: reacting to it. Reactive programming is actually similar to this definition, meaning writing code that reacts to changes.
+It’s actually a way of coding with asynchronous data streams that will make it easier for us to code apps and interfaces that respond dynamically to changes in data. Meaning that whenever we have changes in the data, our app will respond reactively to those changes." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/forgetful/2020/12/reactive-programming-rxjava/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-12-01T11:21:10+08:00" />
+<meta property="article:modified_time" content="2020-12-01T11:21:17+08:00" />
+
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Reactive Programming, RX and RxJava",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/localhost:1313\/forgetful\/2020\/12\/reactive-programming-rxjava\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "http:\/\/localhost:1313\/forgetful\/cover.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "posts","keywords": "reactive programming, reactivex, rx, rxjava, observer, observable","wordcount":  853 ,
+        "url": "http:\/\/localhost:1313\/forgetful\/2020\/12\/reactive-programming-rxjava\/","datePublished": "2020-12-01T11:21:10\u002b08:00","dateModified": "2020-12-01T11:21:17\u002b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "murray",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "http:\/\/localhost:1313\/forgetful\/logo.png",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": ""
+    }
+    </script><link rel="stylesheet" href="/forgetful/css/style.min.css"><link rel="stylesheet" href="/forgetful/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/forgetful/css/lib/forkawesome/forkawesome.min.css"><link rel="stylesheet" href="/forgetful/css/lib/animate/animate.min.css"></head>
+    <body><script>
+            if (!window.localStorage || !window.localStorage.getItem('theme')) {
+                window.isDark = 'dark' === 'dark';
+            } else {
+                window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            }
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header animated bounceIn">
+            <a href="http://localhost:1313/forgetful/">Forgetful :/</a>
+        </div>
+        <div class="navbar-menu"><a class="menu-item" href="http://localhost:1313/forgetful/posts" title="">Posts</a><a class="menu-item" href="http://localhost:1313/forgetful/tags" title="">Tags</a><a class="menu-item" href="http://localhost:1313/forgetful/categories" title="">Categories</a><a class="menu-item" href="http://localhost:1313/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"><i class="fas fa-language fa-fw"></i></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav><nav class="navbar-mobile">
+    <div class="navbar-container">
+        <div class="navbar-header">
+            <div class="navbar-header-title animated bounceIn">
+                <a href="http://localhost:1313/forgetful/">Forgetful :/</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="http://localhost:1313/forgetful/posts" title="">Posts</a><a class="menu-item" href="http://localhost:1313/forgetful/tags" title="">Tags</a><a class="menu-item" href="http://localhost:1313/forgetful/categories" title="">Categories</a><a class="menu-item" href="http://localhost:1313/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav>
+<main class="main">
+                <div class="container"><article class="page"><h1 class="post-title animated flipInX">Reactive Programming, RX and RxJava</h1><div class="post-meta">
+            <div class="post-meta-main"><a class="author" href="https://github.com/Murray-LIANG" rel="author" target="_blank">
+                    <i class="fas fa-user-circle fa-fw"></i>Murray-LIANG
+                </a>&nbsp;</div>
+            <div class="post-meta-other"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-12-01>2020-12-01</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 853 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>5 min&nbsp;</div>
+        </div><div class="post-toc" id="post-toc">
+                <h2 class="post-toc-title">Contents</h2>
+                <div class="post-toc-content"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#reactive-programming">Reactive programming</a></li>
+    <li><a href="#reactivex-or-rx">ReactiveX or Rx</a></li>
+    <li><a href="#why-reactivex">Why ReactiveX?</a></li>
+    <li><a href="#observables-and-observers-in-rx">Observables and Observers in Rx</a></li>
+    <li><a href="#single">Single</a></li>
+    <li><a href="#subject">Subject</a></li>
+    <li><a href="#hot-and-cold-observables">Hot and Cold Observables</a></li>
+    <li><a href="#operators">Operators</a></li>
+    <li><a href="#schedulers">Schedulers</a></li>
+  </ul>
+</nav></div>
+            </div>
+            <div class="post-toc-mobile" id="post-toc-mobile">
+                <details>
+                    <summary>
+                        <div class="post-toc-title">
+                            <span>Contents</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="post-toc-content"><nav id="TableOfContentsMobile">
+  <ul>
+    <li><a href="#reactive-programming">Reactive programming</a></li>
+    <li><a href="#reactivex-or-rx">ReactiveX or Rx</a></li>
+    <li><a href="#why-reactivex">Why ReactiveX?</a></li>
+    <li><a href="#observables-and-observers-in-rx">Observables and Observers in Rx</a></li>
+    <li><a href="#single">Single</a></li>
+    <li><a href="#subject">Subject</a></li>
+    <li><a href="#hot-and-cold-observables">Hot and Cold Observables</a></li>
+    <li><a href="#operators">Operators</a></li>
+    <li><a href="#schedulers">Schedulers</a></li>
+  </ul>
+</nav></div>
+                </details>
+            </div><div class="post-content"><a class="post-dummy-target" id="reactive-programming"></a><h2>Reactive programming</h2>
+<p>Reactive means <strong>acting in response</strong> to a situation rather than <strong>creating</strong> or <strong>controlling</strong> it: reacting to it. Reactive programming is actually similar to this definition, meaning writing code that <strong>reacts to changes</strong>.</p>
+<p>It’s actually a way of coding with <strong>asynchronous data streams</strong> that will make it easier for us to code apps and interfaces that respond dynamically to changes in data. Meaning that whenever we have changes in the data, our app will respond reactively to those changes.</p>
+<p>In programming, <strong>data streams</strong> are a sequence of data elements made available over time which can be accessed in sequential order. In other words, <strong>a flow of data ordered in time</strong>.</p>
+<p>So, reactive programming is way of coding **event-based **programs with <strong>data streams asynchronously</strong>.</p>
+<a class="post-dummy-target" id="reactivex-or-rx"></a><h2>ReactiveX or Rx</h2>
+<p>Reactive eXtension is a <strong>library</strong> for <strong>event-based</strong> and <strong>asynchronous</strong> programming by using <strong>data streams</strong> sequences.</p>
+<p>Rx abstracts away concerns about low-level threading, synchronization, thread-safety and much more and it’s a non-blocking I/O: as the tasks runs on <strong>the background thread</strong>, this will allow us to perform smooth and continuous user experience tasks <strong>without blocking the main thread</strong>.</p>
+<p>In Rx, everything is a data stream, which can be observed, and whenever a value is emitted to the stream some actions will take place. <strong>Those data streams can be anything: events (for examples click events), http calls, variable changes … and even errors.</strong></p>
+<p>We will be creating data streams all the time, which we can <strong>observe</strong>, <strong>iterate</strong> over and make some operations on those data using <strong>operators</strong> like filter, transform, select, combine…</p>
+<ul>
+<li>Observe: observer pattern.</li>
+<li>Iterate: iterator pattern.</li>
+<li>Operations: functional programming.</li>
+</ul>
+<a class="post-dummy-target" id="why-reactivex"></a><h2>Why ReactiveX?</h2>
+<p>Rx will enhance the <strong>performance</strong> and specially the <strong>user experience</strong> of our applications so that our users <strong>won’t be blocked</strong> waiting for results and have a nice and smooth running application.</p>
+<a class="post-dummy-target" id="observables-and-observers-in-rx"></a><h2>Observables and Observers in Rx</h2>
+<p><figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="https://miro.medium.com/max/700/1*WlUfDpwXYdT7RVh0Ds1eyw.png" alt="" class="lazyload"></figure>
+</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="n">Integer</span><span class="o">[]</span> <span class="n">numbers</span> <span class="o">=</span> <span class="o">{</span><span class="n">10</span><span class="o">,</span><span class="n">20</span><span class="o">,</span><span class="n">30</span><span class="o">};</span>
+
+<span class="c1">// Create observable of integers
+</span><span class="c1"></span><span class="n">Observable</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">observable</span> <span class="o">=</span> <span class="n">Observable</span><span class="o">.</span><span class="na">from</span><span class="o">(</span><span class="n">numbers</span><span class="o">);</span>
+
+<span class="c1">// Subscribe to the created observable
+</span><span class="c1"></span><span class="n">Subscription</span> <span class="n">subscription</span> <span class="o">=</span> <span class="n">observable</span><span class="o">.</span><span class="na">subscribe</span><span class="o">(</span><span class="k">new</span> <span class="n">Observer</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;()</span> <span class="o">{</span>
+
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onNext</span><span class="o">(</span><span class="n">Integer</span> <span class="n">value</span><span class="o">){</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;Current value: &#34;</span><span class="o">,</span> <span class="n">value</span><span class="o">);</span>
+  <span class="o">}</span>
+  
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onError</span><span class="o">(</span><span class="n">Throwable</span> <span class="n">e</span><span class="o">){</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;Error occured: &#34;</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+  <span class="o">}</span>
+
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onCompleted</span><span class="o">(){</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;Completed&#34;</span><span class="o">);</span>
+  <span class="o">}</span>
+
+<span class="o">};</span>
+
+<span class="c1">// Unsubscribing the subscription
+</span><span class="c1"></span><span class="n">subscription</span><span class="o">.</span><span class="na">unsubscribe</span><span class="o">();</span>
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="single"></a><h2>Single</h2>
+<p>A Single is something like an Observable, but it emits only either one value or an error. When subscribing, it only uses 2 methods instead of 3 (<code>onNext</code>, <code>onError</code>, <code>onCompleted</code>). Those 2 methods are:</p>
+<ul>
+<li>onSuccess</li>
+<li>onError</li>
+</ul>
+<p>A Single can call only one method either <code>onSuccess</code> or <code>onError</code>.</p>
+<a class="post-dummy-target" id="subject"></a><h2>Subject</h2>
+<p>A subject is special type of reactive that can be an observable and an observer. It can emit values or events, accept subscriptions and add new elements into the sequence.</p>
+<ul>
+<li>AsyncSubject</li>
+<li>BehaviorSubject</li>
+<li>PublishSubject</li>
+<li>ReplaySubject</li>
+</ul>
+<a class="post-dummy-target" id="hot-and-cold-observables"></a><h2>Hot and Cold Observables</h2>
+<ul>
+<li>
+<p><strong>Cold</strong> observables are those whom <strong>data are created inside them</strong>, and they begin emitting values only when an observer <strong>subscribes</strong> to those type of observables meaning it <strong>emits values only when requested</strong>. Some use cases examples: database queries, web services, reading or downloading files&hellip;</p>
+<p>The data are produced <strong>inside</strong> of the observables so it’s <strong>not shared</strong> between subscribers, since each subscriber have its own private source.</p>
+<p><code>Of</code>, <code>From</code>, <code>Range</code>, <code>Interval</code>, <code>Timer</code> operators create cold observables.</p>
+</li>
+<li>
+<p><strong>Hot</strong> observables are those who start emitting values whether the observer is ready or not. Meaning that these observables start emitting values before the subscription is made it does not wait for observers to subscribe (No control on emission rate).</p>
+<p>The data is produced <strong>outside</strong> of the observable, for example: mouse and keyboard events, UI events, system events, time&hellip;</p>
+<p><code>fromEvent()</code> operator creates hot observables.</p>
+<p>Those type of observables are able to <strong>share</strong> data between multiple observers and the subscription has no side effects.</p>
+</li>
+</ul>
+<a class="post-dummy-target" id="operators"></a><h2>Operators</h2>
+<p>Operate on an observable and return an observable.</p>
+<p>Categories:</p>
+<ul>
+<li>Creating: <code>Create</code>, <code>From</code>, <code>Interval</code>, <code>Just</code>.</li>
+<li>Transforming: <code>Map</code>, <code>FlatMap</code>, <code>Scan</code>.</li>
+<li>Filtering: <code>Debounce</code>, <code>Filter</code>, <code>Skip</code>, <code>Take</code>.</li>
+<li>Combining: <code>Merge</code>, <code>Join</code>, <code>Switch</code>, <code>Zip</code>.</li>
+<li>Error: <code>Catch</code>, <code>Retry</code>.</li>
+<li>Utility: <code>Delay</code>, <code>Do</code>, <code>Subscribe</code>, <code>SubscribeOn</code>, <code>ObserveOn</code>.</li>
+</ul>
+<p>More detail about operators: <a href="http://reactivex.io/documentation/operators.html" target="_blank">http://reactivex.io/documentation/operators.html</a>
+</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="n">Observable</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">observable</span> <span class="o">=</span> <span class="n">Observable</span><span class="o">.</span><span class="na">from</span><span class="o">(</span><span class="k">new</span> <span class="n">Integer</span><span class="o">[]</span> <span class="o">{</span><span class="n">3</span><span class="o">,</span><span class="n">6</span><span class="o">,</span><span class="n">8</span><span class="o">,</span><span class="n">1</span><span class="o">});</span>
+
+<span class="n">observable</span>
+  <span class="o">.</span><span class="na">filter</span><span class="o">(</span><span class="n">i</span> <span class="o">-&gt;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">4</span><span class="o">)</span>
+  <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">i</span> <span class="o">-&gt;</span> <span class="n">i</span><span class="o">+</span><span class="n">1</span><span class="o">)</span>
+  <span class="o">.</span><span class="na">subscribe</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">::</span><span class="n">print</span><span class="o">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="schedulers"></a><h2>Schedulers</h2>
+<p>Rx is library for asynchronous programming, and by asynchronous we mean executing multiple code blocks simultaneously, each code block will runs on its own thread.</p>
+<p>So we need to manage these thread to get a <strong>better performance</strong> and prevent problems like memory leaks, and that’s where schedulers comes in handy.</p>
+<p>Schedulers in Rx are the ones responsible for telling the observables and observers, <strong>on which thread they should run</strong>. In order to do so Rx introduce 2 main operators to manage these threads:</p>
+<ul>
+<li><code>SubscribeOn()</code>: allow you to specify on which thread the observable should operate.</li>
+<li><code>ObserveOn()</code>: Specify on which scheduler an observer should observe the observable.</li>
+</ul>
+<p>Note that if you don’t specify which thread to execute the operators on, by default, it keeps running on the same thread in which the subscription is created.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="n">postService</span><span class="o">.</span><span class="na">getPosts</span><span class="o">()</span>
+  <span class="o">.</span><span class="na">observeOn</span><span class="o">(</span><span class="n">AndroidSchedulers</span><span class="o">.</span><span class="na">mainThread</span><span class="o">())</span>
+  <span class="o">.</span><span class="na">subscribeOn</span><span class="o">(</span><span class="n">Schedulers</span><span class="o">.</span><span class="na">io</span><span class="o">())</span>
+  <span class="o">.</span><span class="na">subscribe</span><span class="o">({</span> <span class="n">result</span> <span class="o">-&gt;</span>
+       <span class="n">handleResponse</span><span class="o">(</span><span class="n">result</span><span class="o">)</span>
+     <span class="o">},</span> 
+     <span class="o">{</span> <span class="n">throwable</span> <span class="o">-&gt;</span>
+       <span class="n">throwable</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">()</span>
+   <span class="o">})</span>
+</code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>The article was updated on 2020-12-01</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><span></span></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section><span class="tag">
+                        <a href="http://localhost:1313/forgetful/tags/reactive-programming/"><i class="fas fa-tag fa-fw"></i>&nbsp;reactive programming</a>&nbsp;
+                    </span><span class="tag">
+                        <a href="http://localhost:1313/forgetful/tags/reactivex/"><i class="fas fa-tag fa-fw"></i>&nbsp;reactivex</a>&nbsp;
+                    </span><span class="tag">
+                        <a href="http://localhost:1313/forgetful/tags/rx/"><i class="fas fa-tag fa-fw"></i>&nbsp;rx</a>&nbsp;
+                    </span><span class="tag">
+                        <a href="http://localhost:1313/forgetful/tags/rxjava/"><i class="fas fa-tag fa-fw"></i>&nbsp;rxjava</a>&nbsp;
+                    </span><span class="tag">
+                        <a href="http://localhost:1313/forgetful/tags/observer/"><i class="fas fa-tag fa-fw"></i>&nbsp;observer</a>&nbsp;
+                    </span><span class="tag">
+                        <a href="http://localhost:1313/forgetful/tags/observable/"><i class="fas fa-tag fa-fw"></i>&nbsp;observable</a>&nbsp;
+                    </span></section>
+        <section>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="http://localhost:1313/forgetful/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="http://localhost:1313/forgetful/2020/11/python-async-programming/" class="prev" rel="prev" title="Python Asynchronous Programming"><i class="fas fa-angle-left fa-fw"></i>Python Asynchronous Programming</a>
+            <a href="http://localhost:1313/forgetful/2020/12/nomachine-setup/" class="next" rel="next" title="Nomachine Setup">Nomachine Setup<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div class="post-comment"></div>
+    </article></div>
+            </main><footer class="footer">
+    <div class="copyright"><div class="copyright-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
+        </div>
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/Murray-LIANG" target="_blank">Murray-LIANG</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+    </div>
+</footer>
+</div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>
+            <span>&nbsp;</span>
+        </a><script src="/forgetful/js/lib/jquery/jquery.slim.min.js"></script><script src="/forgetful/js/lib/lazysizes/lazysizes.min.js"></script><script src="/forgetful/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script><link rel="stylesheet" href="/forgetful/css/lib/katex/katex.min.css"><script src="/forgetful/js/lib/katex/katex.min.js"></script><script defer src="/forgetful/js/lib/katex/auto-render.min.js"></script><link rel="stylesheet" href="/forgetful/css/lib/katex/copy-tex.min.css"><script defer src="/forgetful/js/lib/katex/copy-tex.min.js"></script><script defer src="/forgetful/js/lib/katex/mhchem.min.js"></script><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },{ left: "$", right: "$", display: false },]
+            });
+        });
+    </script><script src="/forgetful/js/blog.min.js"></script>
+</body>
+</html>

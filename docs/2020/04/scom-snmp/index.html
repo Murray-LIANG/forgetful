@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
+    <head><script src="/forgetful/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=forgetful/livereload" data-no-instant defer></script>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>SCOM and SNMP | Forgetful :/</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noodp" />
-<meta name="Description" content="Notes about everything"><link rel="prev" href="https://murray-liang.github.io/forgetful/2020/04/ssh-tunnel/" /><link rel="canonical" href="https://murray-liang.github.io/forgetful/2020/04/scom-snmp/" />
+<meta name="Description" content="Notes about everything"><link rel="prev" href="http://localhost:1313/forgetful/2020/04/ssh-tunnel/" /><link rel="next" href="http://localhost:1313/forgetful/2020/05/openstack-manila/" /><link rel="canonical" href="http://localhost:1313/forgetful/2020/04/scom-snmp/" />
 <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -14,14 +14,15 @@
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff"><meta property="og:title" content="SCOM and SNMP" />
-<meta property="og:description" content="References  SCOM 2019 installation: https://www.prajwaldesai.com/scom-1801-install-guide/  Integration with Unity SNMP Agent Steps   Install snmp agent on a Windows 10 machine: 10.245.54.154. The snmp agent is configured to manage Unity: 10.245.101.39.
+<meta property="og:description" content="References  SCOM 2019 installation: https://www.prajwaldesai.com/scom-1801-install-guide/   Integration with Unity SNMP Agent Steps   Install snmp agent on a Windows 10 machine: 10.245.54.154. The snmp agent is configured to manage Unity: 10.245.101.39.
   The SCOM is deployed on a Windows Server 2019 machine: 10.245.54.155.
   Configure SCOM to discover snmp device.
-3.1 Create a Discovery Rule. 3.2 After a rule is created, a new network device could be discovered." />
+3.1 Create a Discovery Rule.  3.2 After a rule is created, a new network device could be discovered." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://murray-liang.github.io/forgetful/2020/04/scom-snmp/" />
+<meta property="og:url" content="http://localhost:1313/forgetful/2020/04/scom-snmp/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2020-04-29T10:50:52+08:00" />
 <meta property="article:modified_time" content="2020-04-29T10:51:12+08:00" />
+
 <script type="application/ld+json">
     {
         "@context": "http://schema.org",
@@ -29,19 +30,19 @@
         "headline": "SCOM and SNMP",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/murray-liang.github.io\/forgetful\/2020\/04\/scom-snmp\/"
+            "@id": "http:\/\/localhost:1313\/forgetful\/2020\/04\/scom-snmp\/"
         },"image": {
                 "@type": "ImageObject",
-                "url": "https:\/\/murray-liang.github.io\/forgetful\/cover.png",
+                "url": "http:\/\/localhost:1313\/forgetful\/cover.png",
                 "width":  800 ,
                 "height":  600 
             },"genre": "posts","keywords": "scom, snmp","wordcount":  1148 ,
-        "url": "https:\/\/murray-liang.github.io\/forgetful\/2020\/04\/scom-snmp\/","datePublished": "2020-04-29T10:50:52\x2b08:00","dateModified": "2020-04-29T10:51:12\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+        "url": "http:\/\/localhost:1313\/forgetful\/2020\/04\/scom-snmp\/","datePublished": "2020-04-29T10:50:52\u002b08:00","dateModified": "2020-04-29T10:51:12\u002b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "murray",
                 "logo": {
                 "@type": "ImageObject",
-                "url": "https:\/\/murray-liang.github.io\/forgetful\/logo.png",
+                "url": "http:\/\/localhost:1313\/forgetful\/logo.png",
                 "width":  127 ,
                 "height":  40 
                 }
@@ -58,22 +59,22 @@
         </script><div class="wrapper"><nav class="navbar">
     <div class="navbar-container">
         <div class="navbar-header animated bounceIn">
-            <a href="https://murray-liang.github.io/forgetful">Forgetful :/</a>
+            <a href="http://localhost:1313/forgetful/">Forgetful :/</a>
         </div>
-        <div class="navbar-menu"><a class="menu-item" href="https://murray-liang.github.io/forgetful/posts" title="">Posts</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/tags" title="">Tags</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/categories" title="">Categories</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"><i class="fas fa-language fa-fw"></i></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        <div class="navbar-menu"><a class="menu-item" href="http://localhost:1313/forgetful/posts" title="">Posts</a><a class="menu-item" href="http://localhost:1313/forgetful/tags" title="">Tags</a><a class="menu-item" href="http://localhost:1313/forgetful/categories" title="">Categories</a><a class="menu-item" href="http://localhost:1313/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"><i class="fas fa-language fa-fw"></i></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
         </div>
     </div>
 </nav><nav class="navbar-mobile">
     <div class="navbar-container">
         <div class="navbar-header">
             <div class="navbar-header-title animated bounceIn">
-                <a href="https://murray-liang.github.io/forgetful">Forgetful :/</a>
+                <a href="http://localhost:1313/forgetful/">Forgetful :/</a>
             </div>
             <div class="menu-toggle" id="menu-toggle">
                 <span></span><span></span><span></span>
             </div>
         </div>
-        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="https://murray-liang.github.io/forgetful/posts" title="">Posts</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/tags" title="">Tags</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/categories" title="">Categories</a><a class="menu-item" href="https://murray-liang.github.io/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="http://localhost:1313/forgetful/posts" title="">Posts</a><a class="menu-item" href="http://localhost:1313/forgetful/tags" title="">Tags</a><a class="menu-item" href="http://localhost:1313/forgetful/categories" title="">Categories</a><a class="menu-item" href="http://localhost:1313/forgetful/about" title="">About</a><a class="menu-item" href="https://github.com/Murray-LIANG/forgetful" title="简体中文"></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
         </div>
     </div>
 </nav>
@@ -135,7 +136,8 @@
                 </details>
             </div><div class="post-content"><a class="post-dummy-target" id="references"></a><h2>References</h2>
 <ol>
-<li>SCOM 2019 installation: <a href="https://www.prajwaldesai.com/scom-1801-install-guide/">https://www.prajwaldesai.com/scom-1801-install-guide/</a></li>
+<li>SCOM 2019 installation: <a href="https://www.prajwaldesai.com/scom-1801-install-guide/" target="_blank">https://www.prajwaldesai.com/scom-1801-install-guide/</a>
+</li>
 </ol>
 <a class="post-dummy-target" id="integration-with-unity-snmp-agent"></a><h2>Integration with Unity SNMP Agent</h2>
 <a class="post-dummy-target" id="steps"></a><h3>Steps</h3>
@@ -148,7 +150,7 @@
 </li>
 <li>
 <p>Configure SCOM to discover snmp device.</p>
-<p>3.1 Create a <code>Discovery Rule</code>. 
+<p>3.1 Create a <code>Discovery Rule</code>.
 <figure><img src="/forgetful/svg/loading.min.svg" data-sizes="auto" data-src="/forgetful/images/scom-discover-rules.png" alt="" class="lazyload"></figure>
 </p>
 <p>3.2 After a rule is created, a new network device could be discovered.
@@ -186,11 +188,11 @@
 <p>6.2 Run command to send trap.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-powershell" data-lang="powershell"><span class="nb">PS </span><span class="n">C:</span><span class="p">\</span><span class="n">usr</span><span class="p">\</span><span class="n">bin</span><span class="p">&gt;</span> <span class="p">.\</span><span class="n">snmptrap</span><span class="p">.</span><span class="n">exe</span> <span class="n">-v</span> <span class="n">2c</span> <span class="n">-c</span> <span class="n">public</span> <span class="n">10</span><span class="p">.</span><span class="n">245</span><span class="p">.</span><span class="n">54</span><span class="p">.</span><span class="n">155</span> <span class="n">2404</span> <span class="n">1</span><span class="p">.</span><span class="n">3</span><span class="p">.</span><span class="n">6</span><span class="p">.</span><span class="n">1</span><span class="p">.</span><span class="n">4</span><span class="p">.</span><span class="n">1</span><span class="p">.</span><span class="n">1139</span><span class="p">.</span><span class="n">103</span><span class="p">.</span><span class="n">1</span><span class="p">.</span><span class="n">18</span><span class="p">.</span><span class="n">2</span><span class="p">.</span><span class="n">6</span> <span class="n">1</span><span class="p">.</span><span class="n">3</span><span class="p">.</span><span class="n">6</span><span class="p">.</span><span class="n">1</span><span class="p">.</span><span class="n">4</span><span class="p">.</span><span class="n">1</span><span class="p">.</span><span class="n">1139</span><span class="p">.</span><span class="n">103</span><span class="p">.</span><span class="n">1</span><span class="p">.</span><span class="n">18</span><span class="p">.</span><span class="n">1</span><span class="p">.</span><span class="n">1</span> <span class="n">s</span> <span class="s2">&#34;spa&#34;</span>
+<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="nb">PS </span><span class="n">C:</span><span class="p">\</span><span class="n">usr</span><span class="p">\</span><span class="n">bin</span><span class="p">&gt;</span> <span class="p">.\</span><span class="n">snmptrap</span><span class="p">.</span><span class="n">exe</span> <span class="n">-v</span> <span class="n">2c</span> <span class="n">-c</span> <span class="n">public</span> <span class="n">10</span><span class="p">.</span><span class="n">245</span><span class="p">.</span><span class="n">54</span><span class="p">.</span><span class="n">155</span> <span class="n">2404</span> <span class="n">1</span><span class="p">.</span><span class="n">3</span><span class="p">.</span><span class="n">6</span><span class="p">.</span><span class="n">1</span><span class="p">.</span><span class="n">4</span><span class="p">.</span><span class="n">1</span><span class="p">.</span><span class="n">1139</span><span class="p">.</span><span class="n">103</span><span class="p">.</span><span class="n">1</span><span class="p">.</span><span class="n">18</span><span class="p">.</span><span class="n">2</span><span class="p">.</span><span class="n">6</span> <span class="n">1</span><span class="p">.</span><span class="n">3</span><span class="p">.</span><span class="n">6</span><span class="p">.</span><span class="n">1</span><span class="p">.</span><span class="n">4</span><span class="p">.</span><span class="n">1</span><span class="p">.</span><span class="n">1139</span><span class="p">.</span><span class="n">103</span><span class="p">.</span><span class="n">1</span><span class="p">.</span><span class="n">18</span><span class="p">.</span><span class="n">1</span><span class="p">.</span><span class="n">1</span> <span class="n">s</span> <span class="s2">&#34;spa&#34;</span>
 <span class="nb">PS </span><span class="n">C:</span><span class="p">\</span><span class="n">usr</span><span class="p">\</span><span class="n">bin</span><span class="p">&gt;</span>
 </code></pre></td></tr></table>
 </div>
@@ -208,13 +210,14 @@
 <a class="post-dummy-target" id="misc"></a><h3>Misc</h3>
 <ol>
 <li>
-<p>Code change in branch <a href="https://github.com/emc-openstack/snmp-agent/tree/scom-integration">https://github.com/emc-openstack/snmp-agent/tree/scom-integration</a></p>
+<p>Code change in branch <a href="https://github.com/emc-openstack/snmp-agent/tree/scom-integration" target="_blank">https://github.com/emc-openstack/snmp-agent/tree/scom-integration</a>
+</p>
 </li>
 <li>
 <p><code>snmptrap</code> command reference:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -241,32 +244,32 @@
 </span><span class="lnt">25
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback"># Here is an example (To simplify, no auth protocol and encryption is used here.):
-sudo snmptrap --clientAddr=&lt;mgmt_ip&gt; -v 3 -l noAuthNoPriv -u &lt;user name&gt; -e 0x800004730508001BFF771C &lt;host&gt;:&lt;port&gt; \
-    2404 \
-    1.3.6.1.4.1.1139.103.1.18.2.6 \
-    1.3.6.1.4.1.1139.103.1.18.1.1 s &#34;spa&#34; \
-    1.3.6.1.4.1.1139.103.1.18.1.2 s &#34;AlertServicesSnmpTest&#34; \
-    1.3.6.1.4.1.1139.103.1.18.1.3 s &#34;14:100001&#34; \
-    1.3.6.1.4.1.1139.103.1.18.1.4 s &#34;This is a test message to be sent in an SNMP trap.&#34;
-
-parameters:
-    -v &lt;snmp version&gt;: 1/2c/3
-    -a &lt;auth protocol&gt;: MD5/SHA
-    -A &lt;password&gt;: if specified -a
-    -x &lt;encrypt protocol&gt;: AES/DES
-    -X &lt;password&gt;: if specified -x
-    -l &lt;security level&gt;: noAuthNoPriv|authNoPriv|authPriv
-    -u &lt;user name&gt;: The same as what configured on GUI.
-    -e &lt;engineID&gt;: 0x800004730508001BFF771C (two parts: engineID (0x8000047305) + MACAddress of mgmt port)
-    &lt;host&gt;:&lt;port&gt;: Host and port of the specified SNMP trap destination.
-    -n &lt;context name&gt;: always empty, not specified.
-    &lt;uptime&gt;: Using command “papi_get.sh uptime” to get the current up time.
-    &lt;trapOID&gt;: TrapOID, actually is the severity of the alert, refer to above definitions “Severity”. Now almost all our alerts use the following severities: critical, error, warning, notice, info.
-    &lt;payload&gt;: The data of the SNMP trap. Contains following fields: Node, Component(Alert Component), SymptomID(Alert Message ID), SymptomText(Alert Message).
-        Each field contains of 3 parts: oid, type and data.
-        OID is the defined “Data Types” above, type is always ‘s’ means string, data is specified to every fields.
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="gp"># </span>Here is an example <span class="o">(</span>To simplify, no auth protocol and encryption is used here.<span class="o">)</span>:
+<span class="go">sudo snmptrap --clientAddr=&lt;mgmt_ip&gt; -v 3 -l noAuthNoPriv -u &lt;user name&gt; -e 0x800004730508001BFF771C &lt;host&gt;:&lt;port&gt; \
+</span><span class="go">    2404 \
+</span><span class="go">    1.3.6.1.4.1.1139.103.1.18.2.6 \
+</span><span class="go">    1.3.6.1.4.1.1139.103.1.18.1.1 s &#34;spa&#34; \
+</span><span class="go">    1.3.6.1.4.1.1139.103.1.18.1.2 s &#34;AlertServicesSnmpTest&#34; \
+</span><span class="go">    1.3.6.1.4.1.1139.103.1.18.1.3 s &#34;14:100001&#34; \
+</span><span class="go">    1.3.6.1.4.1.1139.103.1.18.1.4 s &#34;This is a test message to be sent in an SNMP trap.&#34;
+</span><span class="go"></span><span class="err">
+</span><span class="err"></span><span class="go">parameters:
+</span><span class="go">    -v &lt;snmp version&gt;: 1/2c/3
+</span><span class="go">    -a &lt;auth protocol&gt;: MD5/SHA
+</span><span class="go">    -A &lt;password&gt;: if specified -a
+</span><span class="go">    -x &lt;encrypt protocol&gt;: AES/DES
+</span><span class="go">    -X &lt;password&gt;: if specified -x
+</span><span class="go">    -l &lt;security level&gt;: noAuthNoPriv|authNoPriv|authPriv
+</span><span class="go">    -u &lt;user name&gt;: The same as what configured on GUI.
+</span><span class="go">    -e &lt;engineID&gt;: 0x800004730508001BFF771C (two parts: engineID (0x8000047305) + MACAddress of mgmt port)
+</span><span class="go">    &lt;host&gt;:&lt;port&gt;: Host and port of the specified SNMP trap destination.
+</span><span class="go">    -n &lt;context name&gt;: always empty, not specified.
+</span><span class="go">    &lt;uptime&gt;: Using command “papi_get.sh uptime” to get the current up time.
+</span><span class="go">    &lt;trapOID&gt;: TrapOID, actually is the severity of the alert, refer to above definitions “Severity”. Now almost all our alerts use the following severities: critical, error, warning, notice, info.
+</span><span class="go">    &lt;payload&gt;: The data of the SNMP trap. Contains following fields: Node, Component(Alert Component), SymptomID(Alert Message ID), SymptomText(Alert Message).
+</span><span class="go">        Each field contains of 3 parts: oid, type and data.
+</span><span class="go">        OID is the defined “Data Types” above, type is always ‘s’ means string, data is specified to every fields.
+</span></code></pre></td></tr></table>
 </div>
 </div><p>The payload in the example:</p>
 <pre><code> Node: 1.3.6.1.4.1.1139.103.1.18.1.1 s &quot;spa&quot;
@@ -298,7 +301,7 @@ parameters:
 <p><strong>It was resolved by adding OIDs: <code>1.3.6.1.2.1.1.1.0</code> to <code>snmp-agent</code>. Refer to the change of <code>scom-integration</code> branch.</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">  1
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
 </span><span class="lnt">  2
 </span><span class="lnt">  3
 </span><span class="lnt">  4
@@ -464,171 +467,171 @@ parameters:
 </span><span class="lnt">164
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    Execution point: rfc3412.receiveMessage:request
-2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * transportDomain: 1.3.6.1.6.1.1.0
-2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * transportAddress: 10.245.54.155@55486 (local 0.0.0.0@11161)
-2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * securityModel: 2
-2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * securityName: public
-2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * securityLevel: 1
-2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * PDU: GetRequestPDU:
- request-id=16140311
- error-status=noError
- error-index=0
- variable-bindings=VarBindList:
-  VarBind:
-   name=1.3.6.1.2.1.1.1.0
-   =_BindValue:
-    unSpecified=
-
-  VarBind:
-   name=1.3.6.1.2.1.1.2.0
-   =_BindValue:
-    unSpecified=
-
-  VarBind:
-   name=1.3.6.1.2.1.1.4.0
-   =_BindValue:
-    unSpecified=
-
-  VarBind:
-   name=1.3.6.1.2.1.1.5.0
-   =_BindValue:
-    unSpecified=
-
-  VarBind:
-   name=1.3.6.1.2.1.1.6.0
-   =_BindValue:
-    unSpecified=
-
-
-2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    Execution point: rfc3412.returnResponsePdu
-2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * transportDomain: 1.3.6.1.6.1.1.0
-2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * transportAddress: 10.245.54.155@55486 (local 0.0.0.0@11161)
-2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * securityModel: 2
-2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * securityName: public
-2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * securityLevel: 1
-2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * PDU: ResponsePDU:
- request-id=16140311
- error-status=noAccess
- error-index=1
- variable-bindings=VarBindList:
-  VarBind:
-   name=1.3.6.1.2.1.1.1.0
-   =_BindValue:
-    unSpecified=
-
-  VarBind:
-   name=1.3.6.1.2.1.1.2.0
-   =_BindValue:
-    unSpecified=
-
-  VarBind:
-   name=1.3.6.1.2.1.1.4.0
-   =_BindValue:
-    unSpecified=
-
-  VarBind:
-   name=1.3.6.1.2.1.1.5.0
-   =_BindValue:
-    unSpecified=
-
-  VarBind:
-   name=1.3.6.1.2.1.1.6.0
-   =_BindValue:
-    unSpecified=
-
-
-2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    Execution point: rfc3412.receiveMessage:request
-2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * transportDomain: 1.3.6.1.6.1.1.0
-2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * transportAddress: 10.245.54.155@55488 (local 0.0.0.0@11161)
-2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * securityModel: 1
-2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * securityName: public
-2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * securityLevel: 1
-2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * PDU: GetRequestPDU:
- request-id=16140312
- error-status=noError
- error-index=0
- variable-bindings=VarBindList:
-  VarBind:
-   name=1.3.6.1.2.1.1.1.0
-   value=ObjectSyntax:
-    simple=SimpleSyntax:
-     empty=
-
-
-  VarBind:
-   name=1.3.6.1.2.1.1.2.0
-   value=ObjectSyntax:
-    simple=SimpleSyntax:
-     empty=
-
-
-  VarBind:
-   name=1.3.6.1.2.1.1.4.0
-   value=ObjectSyntax:
-    simple=SimpleSyntax:
-     empty=
-
-
-  VarBind:
-   name=1.3.6.1.2.1.1.5.0
-   value=ObjectSyntax:
-    simple=SimpleSyntax:
-     empty=
-
-
-  VarBind:
-   name=1.3.6.1.2.1.1.6.0
-   value=ObjectSyntax:
-    simple=SimpleSyntax:
-     empty=
-
-
-2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    Execution point: rfc3412.returnResponsePdu
-2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * transportDomain: 1.3.6.1.6.1.1.0
-2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * transportAddress: 10.245.54.155@55488 (local 0.0.0.0@11161)
-2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * securityModel: 1
-2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * securityName: public
-2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * securityLevel: 1
-2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * PDU: GetResponsePDU:
- request-id=16140312
- error-status=noSuchName
- error-index=1
- variable-bindings=VarBindList:
-  VarBind:
-   name=1.3.6.1.2.1.1.1.0
-   value=ObjectSyntax:
-    simple=SimpleSyntax:
-     empty=
-
-
-  VarBind:
-   name=1.3.6.1.2.1.1.2.0
-   value=ObjectSyntax:
-    simple=SimpleSyntax:
-     empty=
-
-
-  VarBind:
-   name=1.3.6.1.2.1.1.4.0
-   value=ObjectSyntax:
-    simple=SimpleSyntax:
-     empty=
-
-
-  VarBind:
-   name=1.3.6.1.2.1.1.5.0
-   value=ObjectSyntax:
-    simple=SimpleSyntax:
-     empty=
-
-
-  VarBind:
-   name=1.3.6.1.2.1.1.6.0
-   value=ObjectSyntax:
-    simple=SimpleSyntax:
-     empty=
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="go">2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    Execution point: rfc3412.receiveMessage:request
+</span><span class="go">2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * transportDomain: 1.3.6.1.6.1.1.0
+</span><span class="go">2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * transportAddress: 10.245.54.155@55486 (local 0.0.0.0@11161)
+</span><span class="go">2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * securityModel: 2
+</span><span class="go">2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * securityName: public
+</span><span class="go">2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * securityLevel: 1
+</span><span class="go">2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * PDU: GetRequestPDU:
+</span><span class="go"> request-id=16140311
+</span><span class="go"> error-status=noError
+</span><span class="go"> error-index=0
+</span><span class="go"> variable-bindings=VarBindList:
+</span><span class="go">  VarBind:
+</span><span class="go">   name=1.3.6.1.2.1.1.1.0
+</span><span class="go">   =_BindValue:
+</span><span class="go">    unSpecified=
+</span><span class="go"></span><span class="err">
+</span><span class="err"></span><span class="go">  VarBind:
+</span><span class="go">   name=1.3.6.1.2.1.1.2.0
+</span><span class="go">   =_BindValue:
+</span><span class="go">    unSpecified=
+</span><span class="go"></span><span class="err">
+</span><span class="err"></span><span class="go">  VarBind:
+</span><span class="go">   name=1.3.6.1.2.1.1.4.0
+</span><span class="go">   =_BindValue:
+</span><span class="go">    unSpecified=
+</span><span class="go"></span><span class="err">
+</span><span class="err"></span><span class="go">  VarBind:
+</span><span class="go">   name=1.3.6.1.2.1.1.5.0
+</span><span class="go">   =_BindValue:
+</span><span class="go">    unSpecified=
+</span><span class="go"></span><span class="err">
+</span><span class="err"></span><span class="go">  VarBind:
+</span><span class="go">   name=1.3.6.1.2.1.1.6.0
+</span><span class="go">   =_BindValue:
+</span><span class="go">    unSpecified=
+</span><span class="go"></span><span class="err">
+</span><span class="err">
+</span><span class="err"></span><span class="go">2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    Execution point: rfc3412.returnResponsePdu
+</span><span class="go">2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * transportDomain: 1.3.6.1.6.1.1.0
+</span><span class="go">2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * transportAddress: 10.245.54.155@55486 (local 0.0.0.0@11161)
+</span><span class="go">2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * securityModel: 2
+</span><span class="go">2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * securityName: public
+</span><span class="go">2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * securityLevel: 1
+</span><span class="go">2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * PDU: ResponsePDU:
+</span><span class="go"> request-id=16140311
+</span><span class="go"> error-status=noAccess
+</span><span class="go"> error-index=1
+</span><span class="go"> variable-bindings=VarBindList:
+</span><span class="go">  VarBind:
+</span><span class="go">   name=1.3.6.1.2.1.1.1.0
+</span><span class="go">   =_BindValue:
+</span><span class="go">    unSpecified=
+</span><span class="go"></span><span class="err">
+</span><span class="err"></span><span class="go">  VarBind:
+</span><span class="go">   name=1.3.6.1.2.1.1.2.0
+</span><span class="go">   =_BindValue:
+</span><span class="go">    unSpecified=
+</span><span class="go"></span><span class="err">
+</span><span class="err"></span><span class="go">  VarBind:
+</span><span class="go">   name=1.3.6.1.2.1.1.4.0
+</span><span class="go">   =_BindValue:
+</span><span class="go">    unSpecified=
+</span><span class="go"></span><span class="err">
+</span><span class="err"></span><span class="go">  VarBind:
+</span><span class="go">   name=1.3.6.1.2.1.1.5.0
+</span><span class="go">   =_BindValue:
+</span><span class="go">    unSpecified=
+</span><span class="go"></span><span class="err">
+</span><span class="err"></span><span class="go">  VarBind:
+</span><span class="go">   name=1.3.6.1.2.1.1.6.0
+</span><span class="go">   =_BindValue:
+</span><span class="go">    unSpecified=
+</span><span class="go"></span><span class="err">
+</span><span class="err">
+</span><span class="err"></span><span class="go">2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    Execution point: rfc3412.receiveMessage:request
+</span><span class="go">2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * transportDomain: 1.3.6.1.6.1.1.0
+</span><span class="go">2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * transportAddress: 10.245.54.155@55488 (local 0.0.0.0@11161)
+</span><span class="go">2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * securityModel: 1
+</span><span class="go">2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * securityName: public
+</span><span class="go">2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * securityLevel: 1
+</span><span class="go">2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * PDU: GetRequestPDU:
+</span><span class="go"> request-id=16140312
+</span><span class="go"> error-status=noError
+</span><span class="go"> error-index=0
+</span><span class="go"> variable-bindings=VarBindList:
+</span><span class="go">  VarBind:
+</span><span class="go">   name=1.3.6.1.2.1.1.1.0
+</span><span class="go">   value=ObjectSyntax:
+</span><span class="go">    simple=SimpleSyntax:
+</span><span class="go">     empty=
+</span><span class="go"></span><span class="err">
+</span><span class="err">
+</span><span class="err"></span><span class="go">  VarBind:
+</span><span class="go">   name=1.3.6.1.2.1.1.2.0
+</span><span class="go">   value=ObjectSyntax:
+</span><span class="go">    simple=SimpleSyntax:
+</span><span class="go">     empty=
+</span><span class="go"></span><span class="err">
+</span><span class="err">
+</span><span class="err"></span><span class="go">  VarBind:
+</span><span class="go">   name=1.3.6.1.2.1.1.4.0
+</span><span class="go">   value=ObjectSyntax:
+</span><span class="go">    simple=SimpleSyntax:
+</span><span class="go">     empty=
+</span><span class="go"></span><span class="err">
+</span><span class="err">
+</span><span class="err"></span><span class="go">  VarBind:
+</span><span class="go">   name=1.3.6.1.2.1.1.5.0
+</span><span class="go">   value=ObjectSyntax:
+</span><span class="go">    simple=SimpleSyntax:
+</span><span class="go">     empty=
+</span><span class="go"></span><span class="err">
+</span><span class="err">
+</span><span class="err"></span><span class="go">  VarBind:
+</span><span class="go">   name=1.3.6.1.2.1.1.6.0
+</span><span class="go">   value=ObjectSyntax:
+</span><span class="go">    simple=SimpleSyntax:
+</span><span class="go">     empty=
+</span><span class="go"></span><span class="err">
+</span><span class="err">
+</span><span class="err"></span><span class="go">2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    Execution point: rfc3412.returnResponsePdu
+</span><span class="go">2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * transportDomain: 1.3.6.1.6.1.1.0
+</span><span class="go">2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * transportAddress: 10.245.54.155@55488 (local 0.0.0.0@11161)
+</span><span class="go">2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * securityModel: 1
+</span><span class="go">2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * securityName: public
+</span><span class="go">2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * securityLevel: 1
+</span><span class="go">2020-05-07 09:49:01,521 snmpagent_unity.agent Thread-1 DEBUG    * PDU: GetResponsePDU:
+</span><span class="go"> request-id=16140312
+</span><span class="go"> error-status=noSuchName
+</span><span class="go"> error-index=1
+</span><span class="go"> variable-bindings=VarBindList:
+</span><span class="go">  VarBind:
+</span><span class="go">   name=1.3.6.1.2.1.1.1.0
+</span><span class="go">   value=ObjectSyntax:
+</span><span class="go">    simple=SimpleSyntax:
+</span><span class="go">     empty=
+</span><span class="go"></span><span class="err">
+</span><span class="err">
+</span><span class="err"></span><span class="go">  VarBind:
+</span><span class="go">   name=1.3.6.1.2.1.1.2.0
+</span><span class="go">   value=ObjectSyntax:
+</span><span class="go">    simple=SimpleSyntax:
+</span><span class="go">     empty=
+</span><span class="go"></span><span class="err">
+</span><span class="err">
+</span><span class="err"></span><span class="go">  VarBind:
+</span><span class="go">   name=1.3.6.1.2.1.1.4.0
+</span><span class="go">   value=ObjectSyntax:
+</span><span class="go">    simple=SimpleSyntax:
+</span><span class="go">     empty=
+</span><span class="go"></span><span class="err">
+</span><span class="err">
+</span><span class="err"></span><span class="go">  VarBind:
+</span><span class="go">   name=1.3.6.1.2.1.1.5.0
+</span><span class="go">   value=ObjectSyntax:
+</span><span class="go">    simple=SimpleSyntax:
+</span><span class="go">     empty=
+</span><span class="go"></span><span class="err">
+</span><span class="err">
+</span><span class="err"></span><span class="go">  VarBind:
+</span><span class="go">   name=1.3.6.1.2.1.1.6.0
+</span><span class="go">   value=ObjectSyntax:
+</span><span class="go">    simple=SimpleSyntax:
+</span><span class="go">     empty=
+</span></code></pre></td></tr></table>
 </div>
 </div><a class="post-dummy-target" id="2-scom-could-fail-to-discover-the-network-device-with-error-no-response-ping"></a><h4>2. SCOM could fail to discover the network device with error <code>No Response Ping</code>.</h4>
 <p>This happens mostly after the SCOM server reboots.</p>
@@ -649,16 +652,17 @@ parameters:
 
     <div class="post-info-more">
         <section><span class="tag">
-                        <a href="https://murray-liang.github.io/forgetful/tags/scom/"><i class="fas fa-tag fa-fw"></i>&nbsp;scom</a>&nbsp;
+                        <a href="http://localhost:1313/forgetful/tags/scom/"><i class="fas fa-tag fa-fw"></i>&nbsp;scom</a>&nbsp;
                     </span><span class="tag">
-                        <a href="https://murray-liang.github.io/forgetful/tags/snmp/"><i class="fas fa-tag fa-fw"></i>&nbsp;snmp</a>&nbsp;
+                        <a href="http://localhost:1313/forgetful/tags/snmp/"><i class="fas fa-tag fa-fw"></i>&nbsp;snmp</a>&nbsp;
                     </span></section>
         <section>
-            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://murray-liang.github.io/forgetful">Home</a></span>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="http://localhost:1313/forgetful/">Home</a></span>
         </section>
     </div>
 
-    <div class="post-nav"><a href="https://murray-liang.github.io/forgetful/2020/04/ssh-tunnel/" class="prev" rel="prev" title="SSH Tunnel"><i class="fas fa-angle-left fa-fw"></i>SSH Tunnel</a></div>
+    <div class="post-nav"><a href="http://localhost:1313/forgetful/2020/04/ssh-tunnel/" class="prev" rel="prev" title="SSH Tunnel"><i class="fas fa-angle-left fa-fw"></i>SSH Tunnel</a>
+            <a href="http://localhost:1313/forgetful/2020/05/openstack-manila/" class="next" rel="next" title="OpenStack Manila">OpenStack Manila<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 <div class="post-comment"></div>
     </article></div>
@@ -666,7 +670,7 @@ parameters:
     <div class="copyright"><div class="copyright-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
         </div>
 
-        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/Murray-LIANG" target="_blank">Murray-LIANG</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/Murray-LIANG" target="_blank">Murray-LIANG</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
     </div>
 </footer>
 </div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>
