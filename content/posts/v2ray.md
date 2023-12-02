@@ -99,9 +99,8 @@ https://umrhe.com/a-key-to-install-the-latest-kernel-and-open-the-bbr-accelerati
 # apt install socat
 # curl https://get.acme.sh | sh
 # source ~/.bashrc
-# # 以下命令会临时监听，运行前保证80端口没被占用。
-# acme.sh --issue -d www.lifeisfun.ml --standalone --keylength ec-256 \
-    --server letsencrypt --force
+# # 以下命令会临时监听，运行前保证80端口没被占用。比如用`systemctl stop nginx`。
+# acme.sh --issue -d www.lifeisfun.ml --standalone --keylength ec-256 --force
 # acme.sh --install-cert -d www.lifeisfun.ml --ecc \
     --key-file /etc/v2ray/private_key.pem \
     --fullchain-file /etc/v2ray/fullchain.pem \
