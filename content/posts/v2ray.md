@@ -97,15 +97,13 @@ https://umrhe.com/a-key-to-install-the-latest-kernel-and-open-the-bbr-accelerati
 ### 1. 生成证书
 ```console
 # apt install socat
-# curl https://get.acme.sh | sh
+# curl https://get.acme.sh | sh -s email=my@example.com
 # source ~/.bashrc
-# # 以下命令会临时监听，运行前保证80端口没被占用。
-# acme.sh --issue -d www.lifeisfun.ml --standalone --keylength ec-256 \
-    --server letsencrypt --force
-# acme.sh --install-cert -d www.lifeisfun.ml --ecc \
-    --key-file /etc/v2ray/private_key.pem \
-    --fullchain-file /etc/v2ray/fullchain.pem \
-    --reloadcmd "service nginx force-reload"
+# acme.sh --issue -d www.gptl.monster -w /usr/share/nginx/html --keylength ec-256 --force
+# acme.sh --install-cert -d www.gptl.monster --ecc \
+  --key-file /etc/v2ray/gptl_private_key.pem \
+  --fullchain-file /etc/v2ray/gptl_fullchain.pem \
+  --reloadcmd "service nginx force-reload"
 
 # # 不用以下命令了
 # # apt install certbot
