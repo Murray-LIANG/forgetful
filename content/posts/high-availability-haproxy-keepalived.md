@@ -29,6 +29,7 @@ auto_collapse_toc: true
 ... ...
 
 frontend www
+    # Only listen on below ip and port.
     bind load_balancer_anchor_IP:80 # to which the floating IP binds
     default_backend nginx_pool
 

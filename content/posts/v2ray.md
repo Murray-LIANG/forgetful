@@ -95,6 +95,8 @@ https://umrhe.com/a-key-to-install-the-latest-kernel-and-open-the-bbr-accelerati
 而且所有流量都包裹在SSL/TLS的包中，不容易被解析。一个看似对一个nginx server的https包，里面包裹着http ws（vmess）的包，再里面便是真实的数据包。
 
 ### 1. 生成证书
+https://tlanyan.me/use-lets-encrypt-certificate/
+
 ```console
 # apt install socat
 # curl https://get.acme.sh | sh -s email=my@example.com
@@ -224,3 +226,23 @@ server {
 4. 大概要等一会儿生效。
 5. 通过`ping www.lifeisfun.ml`，来查看是不是使用了CDN。或者通过 www.lifeisfun.ml/cdn-cgi/trace 查看。
 
+## Routines
+
+### Renew certificates
+
+The certificate will expire every 3 months. 
+
+Add an entry in `/etc/crontab` to renew certificates every 2 months.
+```console
+root@ss:~# cat /etc/crontab
+# /etc/crontab: system-wide crontab
+... snip ...
+0  0    0 */2 0 root    /usr/bin/certbot renew
+... snip ...
+```
+
+### Renew the domain name
+
+Google Calendar notification added.
+
+https://my.freenom.com/clientarea.php?action=domains
